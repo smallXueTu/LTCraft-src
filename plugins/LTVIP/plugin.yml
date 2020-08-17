@@ -1,0 +1,17 @@
+name: LTVIP
+main: LTVIP\Main
+version: 1.0.0
+api: [2.0.0]
+load: POSTWORLD
+author: 雪兔丶
+depend: ["LTLogin"]
+commands:
+ vip:
+  description: VIP系统
+  permission: LTVIP
+ mtps:
+  description: 开启或关闭被拉功能
+  permission: LTVIP
+permissions:
+ LTVIP:
+  default: true

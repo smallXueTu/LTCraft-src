@@ -1,0 +1,120 @@
+---
+MenuType: 0
+InventoryType: 0
+MenuName: §l§a传送菜单
+items:
+- item:
+  - 138
+  - 0
+  - 1
+  nametag: §c主城
+  commands: []
+  teleport: 750:4:16:zc
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 57
+  - 0
+  - 1
+  nametag: §a土豪地皮
+  commands: []
+  teleport: 36:65:-552:dp
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 45
+  - 0
+  - 1
+  nametag: 普通地皮
+  commands: []
+  teleport: 152:65:152:land
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 20
+  - 0
+  - 1
+  nametag: §e新手地皮
+  commands: []
+  teleport: 317:33:457:jm
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 276
+  - 0
+  - 1
+  nametag: §dPVP竞技场\n§e§l>>§d需要等级:§350
+  commands: []
+  teleport: 128:46:128:pvp
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 121
+  - 0
+  - 1
+  nametag: §d末地
+  commands:
+    - '%playerw ender'
+  teleport: ~
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 87
+  - 0
+  - 1
+  nametag: §d地狱
+  commands:
+    - '%playerw nether'
+  teleport: ~
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 2
+  - 0
+  - 1
+  nametag: §9资源世界
+  commands: 
+  - '%playerw zy'
+  teleport: ~
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 220
+  - 0
+  - 1
+  nametag: §9创造世界\n§e§l>>§d需要等级:§330
+  commands: []
+  teleport: 312:4:153:create
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 397
+  - 2
+  - 1
+  nametag: §a暗影岛屿 §d<<§e副本大厅§d>>
+  commands: []
+  teleport: -273:104:452:pve
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+name: Warp
+...

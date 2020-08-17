@@ -1,0 +1,55 @@
+name: LTCraft
+main: LTCraft\Main
+version: 1.0.0
+api: 2.0.0
+load: POSTWORLD
+depend: ["LTMultiWorld","MyPlot", "LTEntity"]
+author: 雪兔丶
+commands:
+ admin:
+  description: 服务器管理主指令
+  permission: LTCraft.op
+ setmana:
+  description: 设置手持物品的Mana
+  permission: LTCraft.op
+ clean:
+  description: 清理垃圾指令
+  permission: LTCraft.op
+ empty:
+  description: 清空自己的背包！
+  permission: LTCraft.all
+ id:
+  description: 手持物品ID
+  permission: LTCraft.all
+ bt:
+  description: 回到传送前的位置
+  permission: LTCraft.all
+ sj:
+  description: 新手教程
+  permission: LTCraft.all
+ setip:
+  description: 设置交互IP
+  permission: LTCraft.op
+ sign:
+  description: 修改木牌内容
+  permission: LTCraft.all
+ prefix:
+  description: 称号
+  permission: LTCraft.op
+ addcount:
+  description: 增加地皮数量 非控制台请勿使用这个命令
+  permission: LTCraft.op
+ setname:
+  description: 设置手持物品名字
+  permission: LTCraft.op
+ 强制命令:
+  description: 强制一个玩家执行命令
+  permission: LTCraft.op
+ 强制说话:
+  description: 强制一个玩家说话
+  permission: LTCraft.op
+permissions:
+ LTCraft.op:
+  default: op
+ LTCraft.all:
+  default: true

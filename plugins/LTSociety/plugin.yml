@@ -1,0 +1,14 @@
+name: LTSociety
+main: LTSociety\Main
+version: 1.0.0
+api: [2.0.0]
+load: POSTWORLD
+author: 雪兔丶
+depend: ["LTMultiWorld"]
+commands:
+ 公会:
+  description: §eLTCraft公会系统
+  permission: all
+permissions:
+ all:
+  default: true

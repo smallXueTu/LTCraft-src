@@ -1,0 +1,35 @@
+---
+武器名: 玄晶之刃碎片
+武器ID: "409"
+粒子: false
+PVE:
+  攻击力: 280
+  吸血: 0.030000
+  燃烧: 0
+  药水(Damager): false
+  雷击: false
+  群回: 0
+  穿甲: 0
+PVP:
+  攻击力: 30
+  吸血: 0
+  燃烧: 0
+  药水(Damager): false
+  药水(Entity): false
+  击飞: 0
+  击退: 0
+  雷击: false
+  冰冻: false
+  击杀提示: false
+  真实伤害: 0
+  穿甲: 0
+  重伤: 0
+手持提示: §a玄晶之刃碎片 PVE武器 @ed伤害 @ex%吸血 §d[中级]
+全员可用: false
+类型: pve
+分解可获得: false
+最大星级: false
+等级: 中级
+可以叠加: 64
+介绍: false
+...

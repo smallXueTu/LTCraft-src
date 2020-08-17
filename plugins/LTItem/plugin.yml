@@ -1,0 +1,14 @@
+name: LTItem
+main: LTItem\Main
+version: 1.0.0
+api: [2.0.0]
+load: POSTWORLD
+depend: ["LTMultiWorld"]
+author: 雪兔丶
+commands:
+ tw:
+  description: LT神器系统
+  permission: LTItem
+permissions:
+ LTItem:
+  default: true

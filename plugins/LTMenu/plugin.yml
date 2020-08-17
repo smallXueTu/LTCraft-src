@@ -1,0 +1,14 @@
+name: LTMenu
+main: LTMenu\Main
+version: 1.0.0
+api: [2.0.0]
+load: POSTWORLD
+author: 雪兔丶
+depend: ["LTItem"]
+commands:
+ menu:
+  description: 服务器菜单
+  permission: LTMenu.all
+permissions:
+ LTMenu.all:
+  default: true

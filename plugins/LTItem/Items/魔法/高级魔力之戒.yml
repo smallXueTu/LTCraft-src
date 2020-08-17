@@ -1,0 +1,11 @@
+---
+名字: |-
+  高级魔力之戒
+  §l§dMana:§a&Mana&§c/§a&MaxMana&
+ID: "383:15"
+手持提示: 高级魔力之戒 Mana：&Mana&/&MaxMana&
+叠加最大: 1
+全员可用: true
+使用提示: false
+最大Mana: 100000
+...

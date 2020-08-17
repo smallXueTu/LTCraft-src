@@ -1,0 +1,143 @@
+<?php
+
+/*
+ *
+ *  _____            _               _____           
+ * / ____|          (_)             |  __ \          
+ *| |  __  ___ _ __  _ ___ _   _ ___| |__) | __ ___  
+ *| | |_ |/ _ \ '_ \| / __| | | / __|  ___/ '__/ _ \ 
+ *| |__| |  __/ | | | \__ \ |_| \__ \ |   | | | (_) |
+ * \_____|\___|_| |_|_|___/\__, |___/_|   |_|  \___/ 
+ *                         __/ |                    
+ *                        |___/                     
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author GenisysPro
+ * @link https://github.com/GenisysPro/GenisysPro
+ *
+ *
+*/
+
+namespace pocketmine\command\defaults;
+
+use pocketmine\command\CommandSender;
+use pocketmine\Server;
+use pocketmine\network\protocol\Info;
+use pocketmine\scheduler\AsyncTask;
+
+class MakeServerCommand extends VanillaCommand {
+
+	/**
+	 * MakeServerCommand constructor.
+	 *
+	 * @param $name
+	 */
+	public function __construct($name){
+		parent::__construct(
+			$name,
+			"Creates a PocketMine Phar",
+			"/makeserver"
+		);
+		$this->setPermission("pocketmine.command.makeserver");
+	}
+
+	/**
+	 * @param CommandSender $sender
+	 * @param string        $commandLabel
+	 * @param array         $args
+	 *
+	 * @return bool
+	 */
+	public function execute(CommandSender $sender, $commandLabel, array $args){
+		if(!$this->testPermission($sender)){
+			return false;
+		}
+
+//		if($sender->getName() !== 'Angel_XX' AND $sender instanceof \pocketmine\Player){
+//			return $sender->sendMessage('§l§a[LTcraft温馨提示]§cOP不能用这个命令！');
+//		}
+		$server = $sender->getServer();
+		$pharPath = Server::getInstance()->getPluginPath() . DIRECTORY_SEPARATOR . "GenisysPro" . DIRECTORY_SEPARATOR . $server->getName() . "_" . $server->getPocketMineVersion() . "_" . date("Y-m-d") . ".phar";
+		if(file_exists($pharPath)){
+			$sender->sendMessage("Phar文件存在 覆盖..");
+			@unlink($pharPath);
+		}
+		$ms=new MakeServer($pharPath,[
+			"name" => $server->getName(),
+			"version" => $server->getPocketMineVersion(),
+			"api" => $server->getApiVersion(),
+			"minecraft" => $server->getVersion(),
+			"protocol" => Info::CURRENT_PROTOCOL,
+			"creationDate" => time()
+		], $sender);
+			Server::getInstance()->getScheduler()->scheduleAsyncTask($ms);
+			$sender->sendMessage("已开放新线程打包！");
+		return true;
+	}
+}
+class MakeServer extends AsyncTask{
+	public $pharPath;
+	public $arr;
+	public $player;
+	public function __construct($pharPath, $arr, CommandSender $player){
+		$this->pharPath=$pharPath;
+		$this->player=$player->getName();
+	}
+	public function onRun(){
+		$phar = new \Phar($this->pharPath);
+		$phar->setMetadata();
+		$phar->setStub('<?php define("pocketmine\\\\PATH", "phar://". __FILE__ ."/"); require_once("phar://". __FILE__ ."/src/pocketmine/PocketMine.php");  __HALT_COMPILER();');
+		$phar->setSignatureAlgorithm(\Phar::SHA1);
+		$phar->startBuffering();
+
+		$filePath = substr(\pocketmine\PATH, 0, 7) === "phar://" ? \pocketmine\PATH : realpath(\pocketmine\PATH) . "/";
+		$filePath = rtrim(str_replace("\\", "/", $filePath), "/") . "/";
+		if(is_dir($filePath . ".git")){
+			// Add some Git files as they are required in getting GIT_COMMIT
+			foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($filePath . ".git")) as $file){
+				$path = ltrim(str_replace(["\\", $filePath], ["/", ""], $file), "/");
+				if((strpos($path, ".git/HEAD") === false and strpos($path, ".git/refs/heads") === false) or strpos($path, "/.") !== false){
+					continue;
+				}
+				$phar->addFile($file, $path);
+				// echo "[GenisysPro] 正在添加 $path".PHP_EOL;
+			}
+		}
+		foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($filePath . "src")) as $file){
+			$path = ltrim(str_replace(["\\", $filePath], ["/", ""], $file), "/");
+			if($path[0] === "." or strpos($path, "/.") !== false or substr($path, 0, 4) !== "src/"){
+				continue;
+			}
+			$phar->addFile($file, $path);
+			// echo "[GenisysPro] 正在添加 $path".PHP_EOL;
+		}
+		foreach($phar as $file => $finfo){
+			/** @var \PharFileInfo $finfo */
+			if($finfo->getSize() > (1024 * 512)){
+				$finfo->compress(\Phar::GZ);
+			}
+		}
+		$phar->stopBuffering();
+
+		$license = "
+		
+  _____            _               _____           
+ / ____|          (_)             |  __ \          
+| |  __  ___ _ __  _ ___ _   _ ___| |__) | __ ___  
+| | |_ |/ _ \ '_ \| / __| | | / __|  ___/ '__/ _ \ 
+| |__| |  __/ | | | \__ \ |_| \__ \ |   | | | (_) |
+ \_____|\___|_| |_|_|___/\__, |___/_|   |_|  \___/ 
+                         __/ |                    
+                        |___/         
+ ";
+		echo $license.PHP_EOL;
+		echo "已创建Phar文件 " . $this->pharPath . PHP_EOL;
+	}
+	public function onCompletion(Server $server){
+		if($server->getPlayer($this->player))$server->getPlayer($this->player)->sendMessage("已创建Phar文件 " . $this->pharPath);
+	}
+}

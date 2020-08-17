@@ -1,0 +1,14 @@
+name: LTLogin
+main: LTLogin\LTLogin
+version: 1.0.0
+api: [2.0.0]
+load: POSTWORLD
+depend: ["LTMultiWorld"]
+author: 雪兔丶
+commands:
+ login:
+  permission: LTLogin.all
+ description: 登录主命令
+permissions:
+ LTLogin.all:
+  default: true

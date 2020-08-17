@@ -1,0 +1,31 @@
+---
+武器名: §6Mingzai2006
+武器ID: "262"
+粒子: false
+射速: "20"
+子弹模型: arrow
+PVP:
+  攻击力: 30
+  吸血: 0
+  真实伤害: 0
+  燃烧: 0
+  药水(Damager): false
+  药水(Entity): false
+  击飞: 0
+  穿甲: 0
+  击退: 0
+  雷击: false
+  冰冻: false
+  击杀提示: false
+  重伤: 0
+手持提示: '@ed @ex @pd @px'
+最大星级: false
+等级: 定制
+爆炸: false
+无条件真实伤害: false
+全员可用: false
+分解可获得: false
+可以叠加: false
+介绍: false
+类型: false
+...

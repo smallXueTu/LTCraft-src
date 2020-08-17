@@ -1,0 +1,39 @@
+---
+武器名: §c焚极血龙
+武器ID: "262:22"
+射速: "20"
+子弹模型: snowball
+粒子: false
+PVE:
+  攻击力: 1500
+  吸血: 0.050000
+  群回: 0
+  燃烧: 0
+  穿甲: 0
+  药水(Damager): false
+  雷击: false
+PVP:
+  攻击力: 30
+  吸血: 0.050000
+  真实伤害: 0
+  燃烧: 0
+  药水(Damager): false
+  药水(Entity): false
+  击飞: 0
+  穿甲: 0
+  击退: 0
+  雷击: false
+  冰冻: false
+  击杀提示: §c焚极血龙斩{entity}
+  重伤: 0
+手持提示: §c焚极血龙  @ed  @ex  @pd @ex
+最大星级: false
+等级: 定制
+爆炸: false
+无条件真实伤害: false
+全员可用: false
+分解可获得: false
+可以叠加: false
+介绍: false
+类型: false
+...

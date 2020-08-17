@@ -1,0 +1,14 @@
+name: LTPet
+main: LTPet\Main
+version: 1.0.0
+api: [2.0.0]
+load: POSTWORLD
+depend: ["MyPlot"]
+author: 雪兔丶
+commands:
+ 宠物:
+  description: 宠物插件主指令
+  permission: LTPet.all
+permissions:
+ LTPet.all:
+  default: true

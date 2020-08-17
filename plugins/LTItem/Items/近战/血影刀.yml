@@ -1,0 +1,35 @@
+---
+武器名: 血影刀
+武器ID: "268"
+粒子: false
+PVE:
+  攻击力: 0
+  吸血: 0
+  群回: 0
+  燃烧: 0
+  药水(Damager): false
+  雷击: false
+  穿甲: 0
+PVP:
+  攻击力: 100
+  真实伤害: 0
+  穿甲: 30
+  吸血: 0.200000
+  燃烧: 0
+  药水(Damager): false
+  药水(Entity): false
+  击飞: 0
+  击退: 0
+  雷击: 1:100
+  冰冻: false
+  击杀提示: §l§e{entity}§d被§a{damager}§d终结!
+  重伤: 0
+手持提示: 血影刀 PVP:100 30%穿甲 0.2吸血 [仙器]
+最大星级: false
+等级: 仙器
+全员可用: true
+分解可获得: false
+可以叠加: false
+介绍: false
+类型: pvp
+...

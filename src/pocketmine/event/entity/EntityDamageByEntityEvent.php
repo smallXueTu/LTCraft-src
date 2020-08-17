@@ -1,0 +1,87 @@
+<?php
+
+/**
+ *
+ *  ____            _        _   __  __ _                  __  __ ____
+ * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \
+ * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
+ * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/
+ * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_|
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author PocketMine Team
+ * @link   http://www.pocketmine.net/
+ *
+ *
+ */
+
+namespace pocketmine\event\entity;
+
+use pocketmine\entity\Effect;
+use pocketmine\entity\Entity;
+use pocketmine\Player;
+
+class EntityDamageByEntityEvent extends EntityDamageEvent {
+
+	/** @var Entity */
+	private $damager;
+	/** @var float */
+	private $knockBack;
+
+	/**
+	 * @param Entity    $damager
+	 * @param Entity    $entity
+	 * @param int       $cause
+	 * @param int|int[] $damage
+	 * @param float     $knockBack
+	 */
+	public function __construct(Entity $damager, Entity $entity, $cause, $damage, $knockBack = 0.4, $zs=false){
+		$this->damager = $damager;
+		$this->knockBack = $knockBack;
+		parent::__construct($entity, $cause, $damage, $zs);
+		$this->addAttackerModifiers($damager);
+	}
+
+	/**
+	 * @param Entity $damager
+	 */
+	protected function addAttackerModifiers(Entity $damager){
+		if($this->getCause() === self::CAUSE_THORNS)return;
+		if($damager->hasEffect(Effect::STRENGTH)){
+			$this->setRateDamage(0.3 * $damager->getEffect(Effect::STRENGTH)->getAmplifier(), self::MODIFIER_GAIN);
+		}
+
+		if($damager->hasEffect(Effect::WEAKNESS)){
+			$eff_level = 0.2 * $damager->getEffect(Effect::WEAKNESS)->getAmplifier();
+			if($eff_level > 1){
+				$eff_level = 1;
+			}
+			$this->setRateDamage($eff_level, self::MODIFIER_OFFSET);
+		}
+	}
+
+	/**
+	 * @return Entity
+	 */
+	public function getDamager(){
+		return $this->damager;
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getKnockBack(){
+		return $this->knockBack;
+	}
+
+	/**
+	 * @param float $knockBack
+	 */
+	public function setKnockBack($knockBack){
+		$this->knockBack = $knockBack;
+	}
+}

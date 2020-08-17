@@ -1,0 +1,31 @@
+---
+武器名: 院长之斧
+武器ID: "271"
+无限耐久: true
+粒子: false
+射速: 20
+子弹模型: snowball
+PVE:
+  攻击力: 1300
+  吸血: "0.2"
+  燃烧: false
+  药水(Damager): false
+  雷击: 1:100
+PVP:
+  攻击力: 80
+  吸血: "0.2"
+  燃烧: false
+  药水(Damager): false
+  药水(Entity): false
+  击飞: "5"
+  击退: "5"
+  雷击: 1:100
+  冰冻: false
+  击杀提示: §o§l§6游龙§1当归海，§b海不迎我§e院长§d也～§e院长§a使用§4超大螺旋丸§3击杀{entity}
+手持提示: false
+全员可用: false
+爆炸: false
+允许无限耐久: false
+类型: false
+无条件真实伤害: false
+...

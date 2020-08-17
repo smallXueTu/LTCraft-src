@@ -1,0 +1,1076 @@
+---
+MenuType: 0
+InventoryType: 0
+MenuName: §l§a兑换菜单
+items:
+- item:
+  - 397
+  - 4
+  - 1
+  nametag: F1兑换菜单
+  commands: ~
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  multilevel:
+  - item:
+    - 268
+    - 0
+    - 1
+    nametag: |-
+     §a破易桃木剑
+     §e§l>>需要材料木棍×32
+     §e§l>>需要材料木板×64
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:破易桃木剑:1
+    cost_item: 材料:材料木棍:32&材料:材料木板:64
+    multilevel: false
+  - item:
+    - 268
+    - 0
+    - 1
+    nametag: |-
+     §a桃木剑
+     §e§l>>需要破易的桃木剑×1
+     §e§l>>需要腐肉×64
+     §e§l>>Level-1之证
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:桃木剑:1
+    cost_item: 近战:破易桃木剑:1&367:0:64&材料:Level-1之证:1
+    multilevel: false
+  - item:
+    - 298
+    - 0
+    - 1
+    nametag: |-
+      §a噬皮者皮革之帽
+      §e§l>>需要异化皮革×5
+      §e§l>>需要噬皮者皮革
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:噬皮者皮革之帽:1
+    cost_item: 材料:异化皮革:5&材料:噬皮者皮革:1
+    multilevel: false
+  - item:
+    - 299
+    - 0
+    - 1
+    nametag: |-
+      §a噬皮者皮革之甲
+      §e§l>>需要异化皮革×8
+      §e§l>>需要噬皮者皮革
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:噬皮者皮革之甲:1
+    cost_item: 材料:异化皮革:5&材料:噬皮者皮革:1
+    multilevel: false
+  - item:
+    - 300
+    - 0
+    - 1
+    nametag: |-
+      §a噬皮者皮革之膝
+      §e§l>>需要异化皮革×7
+      §e§l>>需要噬皮者皮革
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:噬皮者皮革之膝:1
+    cost_item: 材料:异化皮革:7&材料:噬皮者皮革:1
+    multilevel: false
+  - item:
+    - 301
+    - 0
+    - 1
+    nametag: |-
+      §a噬皮者皮革之靴
+      §e§l>>需要异化皮革×4
+      §e§l>>需要噬皮者皮革
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:噬皮者皮革之靴:1
+    cost_item: 材料:异化皮革:4&材料:噬皮者皮革:1
+    multilevel: false
+- item:
+  - 397
+  - 4
+  - 1
+  nametag: F2兑换菜单
+  commands: ~
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  multilevel:
+  - item:
+    - 347
+    - 0
+    - 1
+    nametag: |-
+      §a骑士徽章
+      §e§l>>需要骑士碎片×8
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:骑士徽章:1
+    cost_item: 材料:骑士碎片:8
+    multilevel: false
+  - item:
+    - 267
+    - 0
+    - 1
+    nametag: |-
+     §a骑士长剑
+     §e§l>>需要骑士徽章×8
+     §e§l>>需要骑士精华之刃碎片×25"
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:骑士长剑:1
+    cost_item: 材料:骑士徽章:8&近战:骑士精华之刃碎片:25
+    multilevel: false
+  - item:
+    - 302
+    - 0
+    - 1
+    nametag: |-
+     §a骑士之帽
+     §e§l>>需要骑士铁粒×10
+     §e§l>>需要骑士之证×1"
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:骑士之帽:1
+    cost_item: 材料:骑士铁粒:10&材料:骑士之证:1
+    multilevel: false
+  - item:
+    - 303
+    - 0
+    - 1
+    nametag: |-
+     §a骑士之甲
+     §e§l>>需要骑士铁粒×16
+     §e§l>>需要骑士之证×1"
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:骑士之甲:1
+    cost_item: 材料:骑士铁粒:16&材料:骑士之证:1
+    multilevel: false
+  - item:
+    - 304
+    - 0
+    - 1
+    nametag: |-
+     §a骑士之膝
+     §e§l>>需要骑士铁粒×14
+     §e§l>>需要骑士之证×1"
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:骑士之膝:1
+    cost_item: 材料:骑士铁粒:14&材料:骑士之证:1
+    multilevel: false
+  - item:
+    - 305
+    - 0
+    - 1
+    nametag: |-
+     §a骑士之靴
+     §e§l>>需要骑士铁粒×8
+     §e§l>>需要骑士之证×1"
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:骑士之靴:1
+    cost_item: 材料:骑士铁粒:8&材料:骑士之证:1
+    multilevel: false
+- item:
+  - 397
+  - 4
+  - 1
+  nametag: F3兑换菜单
+  commands: ~
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  multilevel:
+  - item:
+    - 368
+    - 0
+    - 1
+    nametag: |-
+      §a沙漠珍珠
+      §e§l>>需要需要沙之星×6
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:沙晶珍珠:1
+    cost_item: 材料:沙之星:6
+    multilevel: false
+  - item:
+    - 283
+    - 0
+    - 1
+    nametag: |-
+     §a沙之刃
+     §e§l>>需要需要沙晶珍珠×10
+     §e§l>>需要沙漠之心×18"
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:沙之刃:1
+    cost_item: 材料:沙晶珍珠:10&材料:沙漠之心:18
+    multilevel: false
+  - item:
+    - 314
+    - 0
+    - 1
+    nametag: |-
+     §a沙金头盔
+     §e§l>>需要需要沙漠金粒×8
+     §e§l>>需要沙之魂×2"
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:沙金头盔:1
+    cost_item: 材料:沙漠金粒:8&材料:沙之魂:2
+    multilevel: false
+  - item:
+    - 315
+    - 0
+    - 1
+    nametag: |-
+     §a沙金胸甲
+     §e§l>>需要需要沙漠金粒×16
+     §e§l>>需要沙之魂×2"
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:沙金胸甲:1
+    cost_item: 材料:沙漠金粒:16&材料:沙之魂:2
+    multilevel: false
+  - item:
+    - 316
+    - 0
+    - 1
+    nametag: |-
+     §a沙金护膝
+     §e§l>>需要需要沙漠金粒×14
+     §e§l>>需要沙之魂×2"
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:沙金护膝:1
+    cost_item: 材料:沙漠金粒:14&材料:沙之魂:2
+    multilevel: false
+  - item:
+    - 317
+    - 0
+    - 1
+    nametag: |-
+     §a沙金之靴
+     §e§l>>需要需要沙漠金粒×8
+     §e§l>>需要沙之魂×2"
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:沙金之靴:1
+    cost_item: 材料:沙漠金粒:8&材料:沙之魂:2
+    multilevel: false
+- item:
+  - 397
+  - 4
+  - 1
+  nametag: F4兑换菜单
+  commands: ~
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  multilevel:
+  - item:
+    - 302
+    - 0
+    - 1
+    nametag: |-
+      §a生化铁锁之帽
+      §e§l>>需要生化铁锁碎片×10
+      §e§l>>需要生化珍珠×5
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:生化铁锁之帽:1
+    cost_item: 材料:生化铁锁碎片:10&材料:生化珍珠:5
+    multilevel: false
+  - item:
+    - 303
+    - 0
+    - 1
+    nametag: |-
+      §a生化铁锁之甲
+      §e§l>>需要生化铁锁碎片×16
+      §e§l>>需要生化珍珠×8
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:生化铁锁之甲:1
+    cost_item: 材料:生化铁锁碎片:16&材料:生化珍珠:8
+    multilevel: false
+  - item:
+    - 304
+    - 0
+    - 1
+    nametag: |-
+      §a生化铁锁之膝
+      §e§l>>需要生化铁锁碎片×14
+      §e§l>>需要生化珍珠×7
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:生化铁锁之膝:1
+    cost_item: 材料:生化铁锁碎片:14&材料:生化珍珠:7
+    multilevel: false
+  - item:
+    - 305
+    - 0
+    - 1
+    nametag: |-
+      §a生化铁锁之靴
+      §e§l>>需要生化铁锁碎片×8
+      §e§l>>需要生化珍珠×4
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:生化铁锁之靴:1
+    cost_item: 材料:生化铁锁碎片:8&材料:生化珍珠:4
+    multilevel: false
+  - item:
+    - 283
+    - 0
+    - 1
+    nametag: |-
+     §a生化之刃
+     §e§l>>需要生化铁粒×30
+     §e§l>>需要生化之杖×3"
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:生化之刃:1
+    cost_item: 材料:生化铁粒:30&近战:生化之杖:3
+    multilevel: false
+- item:
+  - 397
+  - 4
+  - 1
+  nametag: F5兑换菜单
+  commands: ~
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  multilevel:
+  - item:
+    - 265
+    - 0
+    - 1
+    nametag: |-
+      §a熔炼铁锭
+      §e§l>>需要火焰粉×1
+      §e§l>>需要铁锭×1(F2 骑士傀儡掉落)
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:熔炼铁锭:1
+    cost_item: 377:0:1&265:0:1
+    multilevel: false
+  - item:
+    - 388
+    - 0
+    - 1
+    nametag: |-
+      §a玄之晶
+      §e§l>>需要玄之晶碎片×2
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:玄之晶:1
+    cost_item: 材料:玄之晶碎片:2
+    multilevel: false
+  - item:
+    - 276
+    - 0
+    - 1
+    nametag: |-
+      §a玄晶之刃
+      §e§l>>需要玄之晶×16
+      §e§l>>需要玄晶之刃碎片×5
+      §e§l>>需要熔炼铁锭×20
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:玄晶之刃:1
+    cost_item: 材料:玄之晶:16&材料:熔炼铁锭:20&近战:玄晶之刃碎片:5
+    multilevel: false
+  - item:
+    - 310
+    - 0
+    - 1
+    nametag: |-
+      §a玄晶炼造帽
+      §e§l>>需要玄之晶×5
+      §e§l>>需要玄晶之钻×5
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:玄晶炼造帽:1
+    cost_item: 材料:玄之晶:5&材料:玄晶之钻:5
+    multilevel: false
+  - item:
+    - 311
+    - 0
+    - 1
+    nametag: |-
+      §a玄晶炼造甲
+      §e§l>>需要玄之晶×8
+      §e§l>>需要玄晶之钻×8
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:玄晶炼造甲:1
+    cost_item: 材料:玄之晶:8&材料:玄晶之钻:8
+    multilevel: false
+  - item:
+    - 312
+    - 0
+    - 1
+    nametag: |-
+      §a玄晶炼造膝
+      §e§l>>需要玄之晶×7
+      §e§l>>需要玄晶之钻×8
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:玄晶炼造膝:1
+    cost_item: 材料:玄之晶:7&材料:玄晶之钻:7
+    multilevel: false
+  - item:
+    - 313
+    - 0
+    - 1
+    nametag: |-
+      §a玄晶炼造靴
+      §e§l>>需要玄之晶×4
+      §e§l>>需要玄晶之钻×8
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:玄晶炼造靴:1
+    cost_item: 材料:玄之晶:4&材料:玄晶之钻:4
+    multilevel: false
+- item:
+  - 397
+  - 4
+  - 1
+  nametag: F6兑换菜单
+  commands: ~
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  multilevel:
+  - item:
+    - 303
+    - 0
+    - 1
+    nametag: |-
+      §a密室熔炼胸甲
+      §e§l>>需要密室熔炼材料×16
+      §e§l>>需要弗伦晶×16
+      §e§l>>需要饿狼之心×16
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:密室熔炼胸甲:1
+    cost_item: 材料:密室熔炼材料:16&材料:饿狼之心:16&材料:弗伦晶:16
+    multilevel: false
+  - item:
+    - 302
+    - 0
+    - 1
+    nametag: |-
+      §a密室熔炼头盔
+      §e§l>>需要密室熔炼材料×10
+      §e§l>>需要弗伦晶×10
+      §e§l>>需要饿狼之心×10
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:密室熔炼头盔:1
+    cost_item: 材料:密室熔炼材料:10&材料:饿狼之心:10&材料:弗伦晶:10
+    multilevel: false
+  - item:
+    - 304
+    - 0
+    - 1
+    nametag: |-
+      §a密室熔炼护膝
+      §e§l>>需要密室熔炼材料×14
+      §e§l>>需要弗伦晶×14
+      §e§l>>需要饿狼之心×14
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:密室熔炼护膝:1
+    cost_item: 材料:密室熔炼材料:14&材料:饿狼之心:14&材料:弗伦晶:14
+  - item:
+    - 305
+    - 0
+    - 1
+    nametag: |-
+      §a密室熔炼靴
+      §e§l>>需要密室熔炼材料×8
+      §e§l>>需要弗伦晶×8
+      §e§l>>需要饿狼之心×8
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:密室熔炼靴:1
+    cost_item: 材料:密室熔炼材料:8&材料:饿狼之心:8&材料:弗伦晶:8
+    multilevel: false
+  - item:
+    - 276
+    - 0
+    - 1
+    nametag: |-
+      §a水晶之痕
+      §e§l>>需要密室岩浆膏×30
+      §e§l>>需要晶之精华×16
+      §e§l>>需要密室蜘蛛眼×16
+      §e§l>>需要火之晶×10
+      §e§l>>需要唤魔石×8
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:水晶之痕:1
+    cost_item: 材料:密室岩浆膏:30&材料:晶之精华:16&材料:密室蜘蛛眼:16&材料:火之晶:10&材料:唤魔石:8
+    multilevel: false
+- item:
+  - 397
+  - 4
+  - 1
+  nametag: F7兑换菜单
+  commands: ~
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  multilevel:
+  - item:
+    - 315
+    - 0
+    - 1
+    nametag: |-
+      §a灭世者之甲
+      §e§l>>需要碎骨铁锭×16
+      §e§l>>需要风暴粒子×16
+      §e§l>>需要嗜血宝晶×16
+      §e§l>>需要灭世能量石×12
+      §e§l>>需要夺命之魂×30
+      §c§l>>需要密室熔炼胸甲
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:灭世者之甲:1
+    cost_item: 材料:碎骨铁锭:16&材料:风暴粒子:16&材料:嗜血宝晶:16&材料:灭世能量石:12&材料:夺命之魂:30&盔甲:密室熔炼胸甲:1
+    multilevel: false
+  - item:
+    - 314
+    - 0
+    - 1
+    nametag: |-
+      §a灭世者之帽
+      §e§l>>需要碎骨铁锭×16
+      §e§l>>需要风暴粒子×16
+      §e§l>>需要嗜血宝晶×16
+      §e§l>>需要灭世能量石×12
+      §e§l>>需要夺命之魂×30
+      §c§l>>需要密室熔炼头盔
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:灭世者之帽:1
+    cost_item: 材料:碎骨铁锭:16&材料:风暴粒子:16&材料:嗜血宝晶:16&材料:灭世能量石:12&材料:夺命之魂:30&盔甲:密室熔炼头盔:1
+    multilevel: false
+  - item:
+    - 316
+    - 0
+    - 1
+    nametag: |-
+      §a灭世者之膝
+      §e§l>>需要碎骨铁锭×16
+      §e§l>>需要风暴粒子×16
+      §e§l>>需要嗜血宝晶×16
+      §e§l>>需要灭世能量石×12
+      §e§l>>需要夺命之魂×30
+      §c§l>>需要密室熔炼护膝
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:灭世者之膝:1
+    cost_item: 材料:碎骨铁锭:16&材料:风暴粒子:16&材料:嗜血宝晶:16&材料:灭世能量石:12&材料:夺命之魂:30&盔甲:密室熔炼护膝:1
+    multilevel: false
+  - item:
+    - 317
+    - 0
+    - 1
+    nametag: |-
+      §a灭世者之靴
+      §e§l>>需要碎骨铁锭×16
+      §e§l>>需要风暴粒子×16
+      §e§l>>需要嗜血宝晶×16
+      §e§l>>需要灭世能量石×12
+      §e§l>>需要夺命之魂×30
+      §c§l>>需要密室熔炼靴
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:灭世者之靴:1
+    cost_item: 材料:碎骨铁锭:16&材料:风暴粒子:16&材料:嗜血宝晶:16&材料:灭世能量石:12&材料:夺命之魂:30&盔甲:密室熔炼靴:1
+    multilevel: false
+  - item:
+    - 289
+    - 0
+    - 1
+    nametag: |-
+      §a灭世者
+      §e§l>>需要命末能量瓶×16
+      §e§l>>需要破坏者水晶×16
+      §e§l>>需要黎明之光×16
+      §e§l>>需要审判者之誓×32
+      §e§l>>需要破碎钻石×30
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:灭世者:1
+    cost_item: 材料:命末能量瓶:16&材料:破坏者水晶:16&材料:黎明之光:16&材料:审判者之誓:32&材料:破碎钻石:30
+    multilevel: false
+  - item:
+    - 339
+    - 0
+    - 1
+    nametag: |-
+      §a终极武器图纸
+      §e§l>>需要终极武器图纸碎片×64
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:终极武器图纸:1
+    cost_item: 材料:终极武器图纸碎片:64
+    multilevel: false
+- item:
+  - 397
+  - 4
+  - 1
+  nametag: F8兑换菜单
+  commands: ~
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  multilevel:
+  - item:
+    - 298
+    - 0
+    - 1
+    nametag: |-
+      §a深渊面具
+      §e§l>>需要绯红印记之心×12
+      §e§l>>需要暗影狼之心×12
+      §e§l>>需要锋喙鸟羽毛×12
+      §e§l>>需要巨龙羽毛×6
+      §c§l>>需要灭世者之帽
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:深渊面具:1
+    cost_item: 材料:绯红印记之心:12&材料:暗影狼之心:12&材料:锋喙鸟羽毛:12&材料:巨龙羽毛:6&盔甲:灭世者之帽:1
+    multilevel: false
+  - item:
+    - 300
+    - 0
+    - 1
+    nametag: |-
+      §a巨龙之膝
+      §e§l>>需要绯红印记之心×12
+      §e§l>>需要暗影狼之心×12
+      §e§l>>需要锋喙鸟羽毛×12
+      §e§l>>需要巨龙羽毛×6
+      §c§l>>需要灭世者之膝
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:巨龙之膝:1
+    cost_item: 材料:绯红印记之心:12&材料:暗影狼之心:12&材料:锋喙鸟羽毛:12&材料:巨龙羽毛:6&盔甲:灭世者之膝:1
+    multilevel: false
+  - item:
+    - 299
+    - 0
+    - 1
+    nametag: |-
+      §a狂徒铠甲
+      §e§l>>需要绯红印记之心×12
+      §e§l>>需要暗影狼之心×12
+      §e§l>>需要锋喙鸟羽毛×12
+      §e§l>>需要巨龙羽毛×6
+      §e§l>>需要灭世者之甲
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:狂徒铠甲:1
+    cost_item: 材料:绯红印记之心:12&材料:暗影狼之心:12&材料:锋喙鸟羽毛:12&材料:巨龙羽毛:6&盔甲:灭世者之甲:1
+    multilevel: false
+  - item:
+    - 301
+    - 0
+    - 1
+    nametag: |-
+      §a水银之靴
+      §e§l>>需要绯红印记之心×12
+      §e§l>>需要暗影狼之心×12
+      §e§l>>需要锋喙鸟羽毛×12
+      §e§l>>需要巨龙羽毛×6
+      §c§l>>需要灭世者之靴
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 盔甲:水银之靴:1
+    cost_item: 材料:绯红印记之心:12&材料:暗影狼之心:12&材料:锋喙鸟羽毛:12&材料:巨龙羽毛:6&盔甲:灭世者之靴:1
+    multilevel: false
+  - item:
+    - 54
+    - 0
+    - 1
+    nametag: |-
+      §a奖励箱-基因
+      §d§l>>为了证明你的实力
+      §d§l>>你需要集齐以下材料来兑换
+      §e§l>>需要苍蓝雕纹之心×32
+      §e§l>>需要远古石甲×32
+      §e§l>>需要魔沼蛙之心×32
+      §e§l>>需要纳什之牙×24
+      §d§l>>放置地面等待四小时后打开
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:奖励箱-基因:1
+    cost_item: 材料:苍蓝雕纹之心:32&材料:远古石甲:32&材料:魔沼蛙之心:32&材料:纳什之牙:24
+    multilevel: false
+- item:
+  - 397
+  - 2
+  - 1
+  nametag: T1兑换菜单
+  commands: ~
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  multilevel:
+  - item:
+    - 281
+    - 0
+    - 1
+    nametag: |-
+     §a盔甲熔炼坛 1天使用权
+     §e§l>>需要盔甲熔炼坛碎片×16
+     §e§l>>需要熔炼之心×3
+    commands:
+    - '%serveradmin addm %p ArmorInlay 1'
+    teleport: ~
+    price: 0
+    give_item: ~
+    cost_item: 材料:盔甲熔炼坛碎片:16&材料:熔炼之心:3
+    multilevel: false
+  - item:
+    - 281
+    - 0
+    - 1
+    nametag: |-
+     §a武器熔炼坛 1天使用权
+     §e§l>>需要武器熔炼坛碎片×16
+     §e§l>>需要熔炼之心×3
+    commands:
+    - '%serveradmin addm %p WeaponInlay 1'
+    teleport: ~
+    price: 0
+    give_item: ~
+    cost_item: 材料:武器熔炼坛碎片:16&材料:熔炼之心:3
+    multilevel: false
+  - item:
+    - 339
+    - 0
+    - 1
+    nametag: |-
+      §a高级战靴图纸
+      §e§l>>需要高级战靴图纸碎片×64
+      §e§l>>需要粘粘球×3
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:高级战靴图纸:1
+    cost_item: 材料:高级战靴图纸碎片:64&材料:粘粘球:3
+    multilevel: false
+  - item:
+    - 339
+    - 0
+    - 1
+    nametag: |-
+      §a高级护膝图纸
+      §e§l>>需要高级武器图纸碎片×64
+      §e§l>>需要粘粘球×3
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:高级护膝图纸:1
+    cost_item: 材料:高级护膝图纸碎片:64&材料:粘粘球:3
+    multilevel: false
+  - item:
+    - 339
+    - 0
+    - 1
+    nametag: |-
+      §a高级胸甲图纸
+      §e§l>>需要高级武器图纸碎片×64
+      §e§l>>需要粘粘球×3
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:高级胸甲图纸:1
+    cost_item: 材料:高级胸甲图纸碎片:64&材料:粘粘球:3
+    multilevel: false
+  - item:
+    - 339
+    - 0
+    - 1
+    nametag: |-
+      §a高级头盔图纸
+      §e§l>>需要高级武器图纸碎片×64
+      §e§l>>需要粘粘球×3
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:高级头盔图纸:1
+    cost_item: 材料:高级头盔图纸碎片:64&材料:粘粘球:3
+    multilevel: false
+  - item:
+    - 339
+    - 0
+    - 1
+    nametag: |-
+      §a高级武器图纸
+      §e§l>>需要高级武器图纸碎片×64
+      §e§l>>需要粘粘球×3
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:高级武器图纸:1
+    cost_item: 材料:高级武器图纸碎片:64&材料:粘粘球:3
+    multilevel: false
+- item:
+  - 397
+  - 2
+  - 1
+  nametag: T2兑换菜单
+  commands: ~
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  multilevel:
+  - item:
+    - 388
+    - 0
+    - 1
+    nametag: |-
+      §a祝福水晶
+      §e§l>>需要冰雪球×16
+      §e§l>>需要冰晶之粒×26
+      §e§l>>需要冰雪的祝福×5
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:祝福水晶:1
+    cost_item: 材料:冰雪球:16&材料:冰晶之粒:26&材料:冰雪的祝福:5
+    multilevel: false
+  - item:
+    - 54
+    - 0
+    - 1
+    nametag: |-
+      §a空奖励箱
+      §e§l>>需要奖励箱合成木板×48
+      §e§l>>需要冰雪之钻×20
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:空奖励箱:1
+    cost_item: 材料:奖励箱合成木板:48&材料:冰雪之钻:20
+    multilevel: false
+- item:
+  - 397
+  - 2
+  - 1
+  nametag: T3兑换菜单
+  commands: ~
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  multilevel:
+  - item:
+    - 384
+    - 0
+    - 1
+    nametag: |-
+      §a神秘饰品奖励
+      §d§l>>为了证明你的实力
+      §d§l>>你需要集齐以下材料来兑换
+      §e§l>>需要暗黑元素晶体×16
+      §e§l>>需要寒冰元素晶体×16
+      §e§l>>需要火元素晶体×16
+      §e§l>>需要炙元素晶体×16
+      §e§l>>需要毒元素晶体×16
+      §e§l>>需要元素之心×10
+      §d§l>>神秘饰品奖励可以放到空
+      §d§l>>奖励箱开开启神秘礼包哦
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:神秘饰品奖励:1
+    cost_item: 材料:暗黑元素晶体:16&材料:火元素晶体:16&材料:寒冰元素晶体:16&材料:炙元素晶体:16&材料:毒元素晶体:16&材料:元素之心:10
+    multilevel: false
+- item:
+  - 397
+  - 1
+  - 1
+  nametag: S1兑换菜单
+  commands: ~
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  multilevel:
+  - item:
+    - 399
+    - 0
+    - 1
+    nametag: |-
+      §a勇者武器礼包
+      §d§l>>为了证明你的实力
+      §d§l>>你需要集齐以下材料来兑换
+      §e§l>>掌控者的头颅×10
+      §e§l>>主宰者之心×10
+      §e§l>>灭魂者的灵魂×10
+      §e§l>>地狱之火×10
+      §d§l>>暗影岛屿觉醒台开启！
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:勇者武器礼包:1
+    cost_item: 材料:掌控者的头颅:10&材料:主宰者之心:10&材料:灭魂者的灵魂:10&材料:地狱之火:10
+    multilevel: false
+- item:
+  - 339
+  - 0
+  - 1
+  nametag: 其他兑换
+  commands: ~
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  multilevel:
+  # - item:
+    # - 347
+    # - 0
+    # - 1
+    # nametag: |-
+      # §a背包空间+1
+      # §c§l>>最大空间为80个！！
+      # §e§l>>需要:空间水晶×5(T6掉落)
+    # commands:
+    # - '%serveradmin ais %p'
+    # teleport: ~
+    # price: 0
+    # give_item: ~
+    # cost_item: 材料:空间水晶:5
+    # multilevel: false
+  - item:
+    - 2
+    - 0
+    - 1
+    nametag: |-
+      §a地皮上线+1
+      §e§l>>需要:服务器吉祥物×5(T6掉落)
+    commands:
+    - '%serveraddcount %p'
+    teleport: ~
+    price: 0
+    give_item: ~
+    cost_item: 材料:服务器吉祥物:5
+    multilevel: false
+  - item:
+    - 339
+    - 0
+    - 1
+    nametag: |-
+      §a史诗武器图纸
+      §e§l>>需要:史诗武器图纸碎片×5(神秘武器奖励开启)
+      §d§l>>可用来合成史诗武器
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:史诗武器图纸:1
+    cost_item: 材料:史诗武器图纸碎片:5
+    multilevel: false
+  - item:
+    - 337
+    - 0
+    - 1
+    nametag: |-
+      §a觉醒石
+      §e§l>>需要:熔炼残渣×10(合成高级武器失败品)
+      §e§l>>需要:觉醒石碎片×20
+      §d§l>>可用觉醒武器
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:觉醒石:1
+    cost_item: 材料:觉醒石碎片:20&材料:熔炼残渣:10
+    multilevel: false
+  - item:
+    - 340
+    - 0
+    - 1
+    nametag: |-
+      §a碎片熔炼坛 1天使用权
+      §e§l>>需要:碎片熔炼坛碎片×30
+      §d§l>>可使用武器碎片来合成指定武器
+    commands:
+    - '%serveradmin addm %p DebrisShop 1'
+    teleport: ~
+    price: 0
+    give_item: ~
+    cost_item: 材料:碎片熔炼坛碎片:30
+    multilevel: false
+...

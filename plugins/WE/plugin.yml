@@ -1,0 +1,57 @@
+name: WE
+main: WorldEditor\WorldEditor
+version: 1.0.3
+api: 1.2.0
+author: Kagehis4
+website: https://github.com/ryuzaki01/pocketmine-WorldEditor
+commands:
+ 魔法:
+  description: 切换魔杖的功能,使之生效(变成创世魔杖)或失效(变成普通破铁锄).
+  permission: worldeditor
+ 剪切:
+  description: 剪切当前选中的方块编辑区域.
+  permission: worldeditor.command
+ 复制:
+  description: 复制当前选中的方块编辑区域.
+  permission: worldeditor.command
+ 粘贴:
+  description: 把剪切或复制的方块编辑区域粘贴到当前位置.
+  permission: worldeditor.command
+ 实心:
+  description: 自动生成半径为r的实心球形方块区域.
+  permission: worldeditor.command
+ 空心:
+  description: 自动生成半径为r的空心球形方块区域.
+  permission: worldeditor.command
+ 清除:
+  description: 清除当前选择的方块编辑区域起点坐标和终点坐标.
+  permission: worldeditor.command
+ 限制:
+  description: 设置可编辑的方块数目上限.
+  permission: worldeditor.command
+ 坐标1:
+  description: 把你当前所站的位置设为方块编辑区域的起点坐标.
+  permission: worldeditor.command
+ 坐标2:
+  description: 把你当前所站的位置设为方块编辑区域的终点坐标.
+  permission: worldeditor.command
+ 置换:
+  description: 把选中的方块编辑区域内所有方块替换为给定ID的方块(点石成金)
+  permission: worldeditor.command
+ 替换:
+  description: 把选中的方块编辑区域内的某种方块ID替换为特定的方块ID(局部替换).
+  permission: worldeditor.command
+ 创世神:
+  description: 列出创世神插件相关的常用命令
+  permission: worldeditor.command
+ 魔杖:
+  description: 上帝赋予建筑师们的神之手:创世魔杖.
+  permission: worldeditor.command
+permissions:
+    worldeditor:
+        default: op
+        description: "All the permissions to use the World Editor"
+        children:
+            worldeditor.command:
+                default: op
+                description: "Allow the usage of the WorldEditor command"

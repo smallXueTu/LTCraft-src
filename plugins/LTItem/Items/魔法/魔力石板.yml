@@ -1,0 +1,11 @@
+---
+名字: |-
+  魔力石板
+  §l§dMana:§a&Mana&§c/§a&MaxMana&
+ID: "383:28"
+手持提示: 魔力石板 Mana：&Mana&/&MaxMana&
+叠加最大: 1
+全员可用: true
+使用提示: false
+最大Mana: 10000
+...

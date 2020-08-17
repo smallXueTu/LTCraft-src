@@ -1,0 +1,239 @@
+---
+name: Menu
+MenuType: 0
+InventoryType: 0
+MenuName: §l§a服务器菜单
+items:
+- item:
+  - 51
+  - 0
+  - 1
+  nametag: §d§l服务器商店\n§e§l>>§d再次点击打开！\n§e§l>>§d里面的绿宝石可以回收噢！
+  commands:
+  - '%openShop'
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  unlock: false
+  multilevel: false
+- item:
+  - 388
+  - 0
+  - 1
+  nametag: §d§l服务器回收分解商店\n§e§l>>§d再次点击打开！\n§e§l>>§d进入请点击白纸查看说明!
+  commands:
+  - '%openSell'
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  unlock: false
+  multilevel: false
+- item:
+  - 381
+  - 0
+  - 1
+  nametag: §d§l传送菜单\n§e§l>>§d再次点击打开！
+  commands:
+  - '%openWarp'
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  unlock: false
+  multilevel: false
+- item:
+  - 397
+  - 4
+  - 1
+  nametag: §d§l材料兑换中心\n§e§l>>§d再次点击打开！
+  commands:
+  - '%openMaterialShop'
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  unlock: "GTo:1"
+  multilevel: false
+- item:
+  - 285
+  - 0
+  - 1
+  nametag: §d§l魔法材料兑换\n§e§l>>§d再次点击打开！
+  commands:
+  - '%openManaShop'
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  unlock: false
+  multilevel: false
+- item:
+  - 145
+  - 0
+  - 1
+  nametag: §d§l装备操作菜单\n§e§l>>§d再次点击打开！\n§e§l>>§d进入请点击白纸查看说明!
+  commands:
+  - '%openInlay'
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  unlock: "GTo:5"
+  multilevel: false
+- item:
+  - 321
+  - 0
+  - 1
+  nametag: §d§l饰品菜单\n§e§l>>§d再次点击打开！\n§e§l>>§d进入请点击白纸查看说明!
+  commands:
+  - '%openOrnaments'
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  unlock: false
+  multilevel: false
+- item:
+  - 45
+  - 0
+  - 1
+  nametag: §d§l我的地皮！\n§e§l>>§d再次点击打开！
+  commands:
+  - '%openPlot'
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  unlock: "plot"
+  multilevel: false
+- item:
+  - 355
+  - 0
+  - 1
+  nametag: §d§l我的家！\n§e§l>>§d再次点击打开！
+  commands:
+  - '%openHome'
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  unlock: "home"
+  multilevel: false
+- item:
+  - 339
+  - 0
+  - 1
+  nametag: §d§l吞垃圾菜单,垃圾可以放进去\n§e§l>>§d再次点击打开！
+  commands:
+  - '%openGarbage'
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  unlock: false
+  multilevel: false
+- item:
+  - 130
+  - 0
+  - 1
+  nametag: §d§l快捷末影箱
+  commands:
+  - '%openEnderChest'
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  unlock: "GTo:3"
+  multilevel: false
+- item:
+  - 54
+  - 0
+  - 1
+  nametag: §d§l菜单随身箱子\n§e§l>>您必须是VIP才可以使用这个功能项\n§e§l>>§dVIP1 1页\n§e§l>>§dVIP2 2页\n§e§l>>§dVIP3 3页
+  commands:
+  - '%openMenuChest'
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  unlock: "GTo:4"
+  multilevel: false
+- item:
+  - 281
+  - 0
+  - 1
+  nametag: §d§l武器熔炼坛\n§e§l>>§d你需要用材料兑换打开权限\n§e§l>>§d可在§a(T1兑换)§d来查看如何获得打开权限
+  commands:
+  - '%testopenWeaponInlay'
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  unlock: "GTo:5"
+  multilevel: false
+- item:
+  - 281
+  - 0
+  - 1
+  nametag: §d§l盔甲熔炼坛\n§e§l>>§d你需要用材料兑换打开权限\n§e§l>>§d可在§a(T1兑换)§d来查看如何获得打开权限
+  commands:
+  - '%testopenArmorInlay'
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  unlock: "GTo:5"
+  multilevel: false
+- item:
+  - 340
+  - 0
+  - 1
+  nametag: §d§l碎片熔炼坛\n§e§l>>§d你需要用材料兑换打开权限\n§e§l>>§d可在§a(其他兑换)§d来查看如何获得打开权限
+  commands:
+  - '%testopenDebrisShop'
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  unlock: "GTo:5"
+  multilevel: false
+- item:
+  - 264
+  - 0
+  - 1
+  nametag: §d§l交易所\n§e§l>>§d再次点击打开！
+  commands:
+  - '%openExchange'
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  unlock: "GTo:2"
+  multilevel: false
+- item:
+  - 287
+  - 0
+  - 1
+  nametag: §d§l在线状态验证,重置击杀次数\n§e§l>>打开请点击绿色羊毛!\n§e§l>>§d再次点击打开！
+  commands:
+  - '%openValidation'
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  unlock: "GTo:6"
+  multilevel: false
+- item:
+  - 368
+  - 0
+  - 1
+  nametag: §d§l菜单说明\n§e§l>>红色羊毛=请检查是否满足兑换条件\n§e§l>>黄色羊毛=请确认背包有空间\n§e§l>>鱼=请关闭菜单
+  commands: ~
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+...

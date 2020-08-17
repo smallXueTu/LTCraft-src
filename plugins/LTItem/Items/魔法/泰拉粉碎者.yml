@@ -1,0 +1,13 @@
+---
+名字: |-
+  泰拉粉碎者
+  §l§d&Level&级
+  §l§dMana:§a&Mana&§c/§a&MaxMana&
+  §o§d§k§e§c§k§o§3§k§2§k§5§d§k§9§c§k
+ID: "285"
+手持提示: 泰拉粉碎者 Mana：&Mana&/&MaxMana&
+叠加最大: 1
+全员可用: true
+最大Mana: 50000000
+使用提示: false
+...

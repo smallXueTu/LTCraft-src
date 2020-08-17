@@ -1,0 +1,203 @@
+---
+MenuType: 0
+InventoryType: 0
+MenuName: §l§a兑换菜单
+items:
+  - item:
+      - 383
+      - 28
+      - 1
+    nametag: |-
+      §a魔力石板
+      §e§l>>需要:活石×8
+      §e§l>>需要:魔力钻石×1
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 魔法:魔力石板:1
+    cost_item: 材料:魔力钻石:1&材料:活石:8
+    multilevel: false
+  - item:
+      - 383
+      - 13
+      - 1
+    nametag: |-
+      §a魔力之戒
+      §e§l>>需要:魔力石板×1
+      §e§l>>需要:魔力钢锭×4
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 魔法:魔力之戒:1
+    cost_item: 魔法:魔力石板:1&材料:魔力钢锭:4
+    multilevel: false
+  - item:
+      - 383
+      - 15
+      - 1
+    nametag: |-
+      §a高级魔力之戒
+      §e§l>>需要:魔力之戒×1
+      §e§l>>需要:泰拉钢锭×4
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 魔法:高级魔力之戒:1
+    cost_item: 魔法:魔力之戒:1&材料:泰拉钢锭:4
+    multilevel: false
+  - item:
+      - 383
+      - 23
+      - 1
+    nametag: |-
+      §a活木枝×4
+      §e§l>>需要:活木×2
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:活木枝:4
+    cost_item: 材料:活木:2
+    multilevel: false
+  - item:
+      - 262
+      - 6
+      - 1
+    nametag: |-
+      §a魔力法杖×4
+      §e§l>>需要:活木枝×2
+      §e§l>>需要:魔力钻石×1
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 魔法:魔力法杖:1
+    cost_item: 材料:活木枝:2&材料:魔力钻石:1
+    multilevel: false
+  - item:
+      - 219
+      - 0
+      - 1
+    nametag: |-
+      §a魔力钢块
+      §e§l>>需要:魔力钢锭×9
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:魔力钢块:1
+    cost_item: 材料:魔力钢锭:9
+    multilevel: false
+  - item:
+      - 235
+      - 0
+      - 1
+    nametag: |-
+      §a魔力钻块
+      §e§l>>需要:魔力钻石×9
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:魔力钻块:1
+    cost_item: 材料:魔力钻石:9
+    multilevel: false
+  - item:
+      - 153
+      - 0
+      - 1
+    nametag: |-
+      §a魔力转换器
+      §e§l>>需要:活石×4
+      §e§l>>需要:红石块×4
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:魔力转换器:1
+    cost_item: 材料:活石:4&152:0:4
+    multilevel: false
+  - item:
+      - 245
+      - 0
+      - 1
+    nametag: |-
+      §a魔力缓存器
+      §e§l>>需要:魔力钻石×3
+      §e§l>>需要:魔力玻璃×6
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:魔力缓存器:1
+    cost_item: 材料:魔力钻石:3&材料:魔力玻璃:6
+    multilevel: false
+  - item:
+      - 151
+      - 0
+      - 1
+    nametag: |-
+      §a泰拉凝聚板
+      §e§l>>需要:青金石块×3
+      §e§l>>需要:魔力钢锭×1
+      §e§l>>需要:魔力钻石×1
+      §e§l>>需要:魔力珍珠×1
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:泰拉凝聚板:1
+    cost_item: 22:0:3&材料:魔力钢锭:1&材料:魔力钻石:1&材料:魔力珍珠:1
+    multilevel: false
+  - item:
+      - 285
+      - 0
+      - 1
+    nametag: |-
+      §a泰拉粉碎者
+      §e§l>>需要:泰拉钢锭×4
+      §e§l>>需要:魔力石板×1
+      §e§l>>需要:活木枝×2
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 魔法:泰拉粉碎者:1
+    cost_item: 材料:泰拉钢锭:4&魔法:魔力石板:1&材料:活木枝:2
+    multilevel: false
+  - item:
+      - 286
+      - 0
+      - 1
+    nametag: |-
+      §a泰拉断裂者
+      §e§l>>需要:泰拉钢锭×4
+      §e§l>>需要:萤石块×1
+      §e§l>>需要:活木枝×2
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 魔法:泰拉断裂者:1
+    cost_item: 材料:泰拉钢锭:4&89:0:1&材料:活木枝:2
+    multilevel: false
+  - item:
+      - 262
+      - 1
+      - 1
+    nametag: |-
+      §a泰拉钢刃
+      §e§l>>需要:泰拉钢锭×2
+      §e§l>>需要:活木枝×1
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 魔法:泰拉钢刃:1
+    cost_item: 材料:泰拉钢锭:2&材料:活木枝:1
+    multilevel: false
+  - item:
+      - 383
+      - 41
+      - 1
+    nametag: |-
+      §a盖亚魂锭
+      §e§l>>需要:泰拉钢锭×1
+      §e§l>>需要:盖亚之魂×4
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:盖亚魂锭:1
+    cost_item: 材料:泰拉钢锭:1&材料:盖亚之魂:4
+    multilevel: false
+...

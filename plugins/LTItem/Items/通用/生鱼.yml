@@ -1,0 +1,38 @@
+---
+武器名: 生鱼
+武器ID: "349"
+射速: "20"
+子弹模型: snowball
+粒子: false
+PVE:
+  攻击力: 1100
+  吸血: 0.030000
+  群回: 0
+  燃烧: 0
+  穿甲: 0
+  药水(Damager): false
+  雷击: false
+PVP:
+  攻击力: 130
+  吸血: 0
+  真实伤害: 0
+  燃烧: 0
+  药水(Damager): false
+  药水(Entity): false
+  击飞: 0
+  穿甲: 0
+  击退: 0
+  雷击: false
+  冰冻: false
+  击杀提示: 爆炸了...梦醒了 {entity}离别....
+手持提示: false
+最大星级: false
+等级: 定制
+爆炸: false
+无条件真实伤害: false
+全员可用: false
+分解可获得: false
+可以叠加: false
+介绍: false
+类型: false
+...

@@ -1,0 +1,222 @@
+---
+MenuType: 0
+InventoryType: 0
+MenuName: §l§a碎片兑换菜单
+items:
+- item:
+  - 276
+  - 0
+  - 1
+  nametag: 高级武器区
+  commands: ~
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  multilevel:
+  - item:
+    - 370
+    - 0
+    - 1
+    nametag: |-
+     §a虎牙之刃
+     §e§l>>高级武器碎片×4
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:虎牙之刃:1
+    cost_item: 材料:高级武器碎片:5
+    multilevel: false
+  - item:
+    - 369
+    - 0
+    - 1
+    nametag: |-
+     §a天罡棒
+     §e§l>>高级武器碎片×4
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:虎牙之刃:1
+    cost_item: 材料:高级武器碎片:4
+    multilevel: false
+  - item:
+    - 450
+    - 0
+    - 1
+    nametag: |-
+     §a乌龙锤
+     §e§l>>高级武器碎片×3
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:乌龙锤:1
+    cost_item: 材料:高级武器碎片:3
+    multilevel: false
+  - item:
+    - 283
+    - 0
+    - 1
+    nametag: |-
+     §a七星鎏虹剑
+     §e§l>>高级武器碎片×3
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:七星鎏虹剑:1
+    cost_item: 材料:高级武器碎片:3
+    multilevel: false
+- item:
+  - 276
+  - 0
+  - 1
+  nametag: 终极武器区
+  commands: ~
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  multilevel:
+  - item:
+    - 276
+    - 0
+    - 1
+    nametag: |-
+     §a万人斩-冥界的咆哮
+     §e§l>>终极武器碎片×10
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:万人斩-冥界的咆哮:1
+    cost_item: 材料:终极武器碎片:10
+    multilevel: false
+  - item:
+    - 282
+    - 0
+    - 1
+    nametag: |-
+     §a死亡之舞
+     §e§l>>终极武器碎片×8
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:死亡之舞:1
+    cost_item: 材料:终极武器碎片:8
+    multilevel: false
+  - item:
+    - 294
+    - 0
+    - 1
+    nametag: |-
+     §a尼尔巴斯的饮血镰
+     §e§l>>终极武器碎片×8
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:尼尔巴斯的饮血镰:1
+    cost_item: 材料:终极武器碎片:8
+    multilevel: false
+  - item:
+    - 450
+    - 0
+    - 1
+    nametag: |-
+     §a死亡黑狼图腾
+     §e§l>>终极武器碎片×6
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:死亡黑狼图腾:1
+    cost_item: 材料:终极武器碎片:6
+    multilevel: false
+  - item:
+    - 283
+    - 0
+    - 1
+    nametag: |-
+     §a流星锤
+     §e§l>>终极武器碎片×6
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:流星锤:1
+    cost_item: 材料:终极武器碎片:5
+    multilevel: false
+  - item:
+    - 261
+    - 0
+    - 1
+    nametag: |-
+     §a幽灵手弩
+     §e§l>>终极武器碎片×6
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:流星锤:1
+    cost_item: 材料:终极武器碎片:4
+    multilevel: false
+- item:
+  - 276
+  - 0
+  - 1
+  nametag: 史诗武器区
+  commands: ~
+  teleport: ~
+  price: 0
+  give_item: ~
+  cost_item: ~
+  multilevel:
+  - item:
+    - 369
+    - 0
+    - 1
+    nametag: |-
+     §a烈火金箍棒
+     §e§l>>史诗武器碎片×16
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:烈火金箍棒:1
+    cost_item: 材料:史诗武器碎片:16
+    multilevel: false
+  - item:
+    - 282
+    - 0
+    - 1
+    nametag: |-
+     §a诸神狱焰剑
+     §e§l>>史诗武器碎片×12
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:诸神狱焰剑:1
+    cost_item: 材料:史诗武器碎片:12
+    multilevel: false
+  - item:
+    - 267
+    - 0
+    - 1
+    nametag: |-
+     §a村正妖刀
+     §e§l>>史诗武器碎片×14
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:村正妖刀:1
+    cost_item: 材料:史诗武器碎片:14
+    multilevel: false
+  - item:
+    - 271
+    - 0
+    - 1
+    nametag: |-
+     §a盘古斧
+     §e§l>>史诗武器碎片×8
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 近战:死亡黑狼图腾:1
+    cost_item: 材料:史诗武器碎片:8
+    multilevel: false
+name: DebrisShop
+...

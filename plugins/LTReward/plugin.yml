@@ -1,0 +1,14 @@
+name: LTReward
+main: reward\Main
+version: 1.0.0
+depend: ["MyPlot"]
+api: [2.0.0]
+load: POSTWORLD
+author: 雪兔丶
+commands:
+ new:
+  permission: LTReward.new
+  description: create a new NPC to Reward
+permissions:
+ LTReward.new:
+  default: op

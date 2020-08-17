@@ -1,0 +1,35 @@
+---
+武器名: 星空神剑
+武器ID: "276"
+粒子: false
+PVE:
+  攻击力: 300
+  吸血: 0
+  燃烧: 5
+  药水(Damager): false
+  雷击: false
+  群回: 0
+  穿甲: 0
+PVP:
+  攻击力: 30
+  吸血: 0
+  燃烧: 3
+  药水(Damager): false
+  药水(Entity): false
+  击飞: 0
+  击退: 0
+  雷击: false
+  冰冻: "2:0.05"
+  击杀提示: §l§e{entity}§a已被§e{damager}§a使用主播的§d星空神剑§a送西
+  穿甲: 0
+  真实伤害: 0
+  重伤: 0
+手持提示: false
+全员可用: false
+类型: false
+最大星级: false
+分解可获得: false
+等级: 定制
+可以叠加: false
+介绍: false
+...

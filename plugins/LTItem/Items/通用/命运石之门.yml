@@ -1,0 +1,39 @@
+---
+武器名: 命运石之门
+武器ID: "372"
+粒子: false
+PVE:
+  攻击力: 1300
+  吸血: 0.050000
+  群回: 1
+  燃烧: 0
+  穿甲: 0
+  药水(Damager): false
+  雷击: 0:100
+PVP:
+  攻击力: 100
+  吸血: 0.050000
+  真实伤害: 0
+  燃烧: 1
+  药水(Damager): false
+  药水(Entity): 20:5:1:100
+  击飞: 0
+  穿甲: 0
+  击退: 0
+  雷击: false
+  冰冻: false
+  击杀提示: §l§e一切都是命运石之门的选择
+  重伤: 0
+手持提示: §cSteins Gate PVE:@ed PVP:@pd
+最大星级: false
+等级: 定制
+全员可用: false
+分解可获得: false
+可以叠加: false
+介绍: false
+类型: false
+射速: 20
+子弹模型: EnderPearl
+爆炸: false
+无条件真实伤害: false
+...

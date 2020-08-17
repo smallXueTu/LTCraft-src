@@ -1,0 +1,30 @@
+---
+武器名: §l§ed旧梦§aの§e胖次
+武器ID: "312"
+射速: "20"
+子弹模型: EnderPearl
+粒子: false
+PVP:
+  攻击力: 80
+  吸血: 0.050000
+  真实伤害: 0
+  燃烧: 0
+  药水(Damager): false
+  药水(Entity): false
+  击飞: 0
+  穿甲: 0
+  击退: 0
+  雷击: false
+  冰冻: false
+  击杀提示: §o§l§d性欲之神§e{damager}§c使用蓝§e胖次§6击杀了§c{entity}
+手持提示: false
+最大星级: false
+等级: 定制
+爆炸: false
+无条件真实伤害: false
+全员可用: false
+分解可获得: false
+可以叠加: false
+介绍: false
+类型: false
+...

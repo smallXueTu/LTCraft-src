@@ -1,0 +1,40 @@
+---
+武器名: |-
+  §d§l神秘之剑
+  §fPVP：5/PVE：300
+  §d自身效果：
+  §a吸血10%
+  §fPVE武器
+武器ID: "276"
+粒子: false
+PVE:
+  攻击力: 300
+  吸血: "0.10"
+  燃烧: 0
+  药水(Damager): false
+  雷击: false
+  群回: 0
+  穿甲: 0
+PVP:
+  攻击力: 5
+  吸血: 0
+  燃烧: 0
+  药水(Damager): false
+  药水(Entity): false
+  击飞: 0
+  击退: 0
+  雷击: false
+  冰冻: false
+  击杀提示: false
+  真实伤害: 0
+  穿甲: 0
+  重伤: 0
+手持提示: §d§l神秘之剑:§c伤害PVE:@ed§a吸血:@ex% §d[仙器]
+全员可用: true
+类型: pve
+分解可获得: false
+最大星级: false
+等级: 仙器
+可以叠加: false
+介绍: false
+...

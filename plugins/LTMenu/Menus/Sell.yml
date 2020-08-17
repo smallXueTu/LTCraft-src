@@ -1,0 +1,271 @@
+---
+MenuType: 3
+InventoryType: 6
+MenuName: §l§a回收商店
+items:
+- item:
+  - 17
+  - 0
+  - 1
+  nametag: 木头 单价:100/个
+  commands: []
+  teleport: ~
+  money: 100
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 264
+  - 0
+  - 1
+  nametag: 钻石 单价:300/个
+  commands: []
+  teleport: ~
+  money: 300
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 266
+  - 0
+  - 1
+  nametag: 金锭 单价:250/个
+  commands: []
+  teleport: ~
+  money: 250
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 265
+  - 0
+  - 1
+  nametag: 铁定 单价:200/个
+  commands: []
+  teleport: ~
+  money: 200
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 351
+  - 4
+  - 1
+  nametag: 青金石 单价:150/个
+  commands: []
+  teleport: ~
+  money: 150
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 331
+  - 0
+  - 1
+  nametag: 红石粉 单价:100/个
+  commands: []
+  teleport: ~
+  money: 100
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 263
+  - 0
+  - 1
+  nametag: 煤矿 单价:50/个
+  commands: []
+  teleport: ~
+  money: 50
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 338
+  - 0
+  - 1
+  nametag: 甘蔗 单价:15/个
+  commands: []
+  teleport: ~
+  money: 15
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 81
+  - 0
+  - 1
+  nametag: 仙人掌 单价:15/个
+  commands: []
+  teleport: ~
+  money: 15
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 295
+  - 0
+  - 1
+  nametag: 种子 单价:15/个
+  commands: []
+  teleport: ~
+  money: 15
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 296
+  - 0
+  - 1
+  nametag: 麦子 单价:15/个
+  commands: []
+  teleport: ~
+  money: 15
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 458
+  - 0
+  - 1
+  nametag: 甜菜种子 单价:15/个
+  commands: []
+  teleport: ~
+  money: 15
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 457
+  - 0
+  - 1
+  nametag: 甜菜 单价:15/个
+  commands: []
+  teleport: ~
+  money: 15
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 391
+  - 0
+  - 1
+  nametag: 萝卜 单价:15/个
+  commands: []
+  teleport: ~
+  money: 15
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 392
+  - 0
+  - 1
+  nametag: 土豆 单价:15/个
+  commands: []
+  teleport: ~
+  money: 15
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 388
+  - 0
+  - 1
+  nametag: 绿宝石 单价:600/个
+  commands: []
+  teleport: ~
+  money: 600
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 4
+  - 0
+  - 1
+  nametag: 原石 单价:15/个
+  commands: []
+  teleport: ~
+  money: 15
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 1
+  - 1
+  - 1
+  nametag: 石头 单价:15/个
+  commands: []
+  teleport: ~
+  money: 15
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 3
+  - 0
+  - 1
+  nametag: 泥土 单价:15/个
+  commands: []
+  teleport: ~
+  money: 15
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 349
+  - 0
+  - 1
+  nametag: 咸鱼 单价:30/个
+  commands: []
+  teleport: ~
+  money: 30
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 103
+  - 0
+  - 1
+  nametag: 西瓜 单价:200/个
+  commands: []
+  teleport: ~
+  money: 200
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+- item:
+  - 351
+  - 0
+  - 1
+  nametag: 副本材料 单价:100/个
+  commands: []
+  teleport: ~
+  money: 100
+  price: "0"
+  give_item: ~
+  cost_item: ~
+  multilevel: false
+name: Sell
+...

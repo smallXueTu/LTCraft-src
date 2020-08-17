@@ -1,0 +1,35 @@
+---
+武器名: 暗灭之刃
+武器ID: "272"
+粒子: false
+PVE:
+  攻击力: 3000
+  吸血: 0.03
+  群回: 80
+  燃烧: 0
+  药水(Damager): false
+  雷击: false
+  穿甲: false
+PVP:
+  攻击力: 0
+  真实伤害: 0
+  穿甲: 0
+  吸血: 0
+  燃烧: 0
+  药水(Damager): false
+  药水(Entity): false
+  击飞: 0
+  击退: 0
+  重伤: 0
+  雷击: 0
+  冰冻: false
+  击杀提示: false
+手持提示: §l§e暗灭之刃 3000PVE 80群回 3%吸血 [仙器]
+最大星级: false
+等级: 仙器
+全员可用: true
+分解可获得: false
+可以叠加: false
+介绍: false
+类型: PVE
+...

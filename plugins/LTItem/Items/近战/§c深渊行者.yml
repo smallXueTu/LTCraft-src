@@ -1,0 +1,35 @@
+---
+武器名: §c深渊行者
+武器ID: "261"
+粒子: false
+PVE:
+  攻击力: 10
+  吸血: 0
+  群回: 0
+  燃烧: 0
+  穿甲: 0
+  药水(Damager): false
+  雷击: false
+PVP:
+  攻击力: 30
+  吸血: 0
+  真实伤害: 0
+  燃烧: 0
+  药水(Damager): false
+  药水(Entity): false
+  击飞: 0
+  穿甲: 0
+  击退: 0
+  雷击: false
+  冰冻: false
+  击杀提示: §l§e{entity}被§a深渊行者§d[§e233/§4233§d]射♂死了
+  重伤: 0
+手持提示: false
+最大星级: false
+等级: 定制
+全员可用: false
+分解可获得: false
+可以叠加: false
+介绍: false
+类型: false
+...

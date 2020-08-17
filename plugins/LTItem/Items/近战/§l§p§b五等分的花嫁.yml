@@ -1,0 +1,35 @@
+---
+武器名: §l§p§b五等分的花嫁
+武器ID: "262"
+粒子: false
+PVE:
+  攻击力: 4134
+  吸血: 0.200000
+  群回: 12
+  燃烧: 0
+  穿甲: 0
+  药水(Damager): false
+  雷击: false
+PVP:
+  攻击力: 50
+  吸血: 0
+  真实伤害: 0
+  燃烧: 0
+  药水(Damager): false
+  药水(Entity): false
+  击飞: 0
+  穿甲: 0
+  击退: 6
+  雷击: false
+  冰冻: false
+  击杀提示: §l§p§4{entity}§e被§6kys§e送去吃§5五等分的牢饭
+  重伤: 0
+手持提示: false
+最大星级: false
+等级: 定制
+全员可用: false
+分解可获得: false
+可以叠加: false
+介绍: false
+类型: false
+...

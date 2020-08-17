@@ -1,0 +1,38 @@
+---
+武器名: §2最吊打狗棒
+武器ID: "280"
+射速: "20"
+子弹模型: snowball
+粒子: false
+PVE:
+  攻击力: 2000
+  吸血: 0.050000
+  群回: 0
+  燃烧: 0
+  穿甲: 0
+  药水(Damager): false
+  雷击: false
+PVP:
+  攻击力: 260
+  吸血: 0.700000
+  真实伤害: 0
+  燃烧: 5
+  药水(Damager): false
+  药水(Entity): false
+  击飞: 0
+  穿甲: 0
+  击退: 5
+  雷击: false
+  冰冻: false
+  击杀提示: '{entity}被{damager}打的屁滚尿流。{entity}是不是很快乐'
+手持提示: PVE伤害@ed PVP伤害@ex 吸血@ex
+最大星级: false
+等级: 定制
+爆炸: false
+无条件真实伤害: false
+全员可用: false
+分解可获得: false
+可以叠加: false
+介绍: false
+类型: false
+...

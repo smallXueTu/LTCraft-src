@@ -1,0 +1,69 @@
+name: LTMultiTeleport
+author: 雪兔丶
+api: 1.0.0
+version: 1.2.2
+main: LTMultiTeleport\Main
+depend: ["LTMultiWorld"]
+load: POSTWORLD
+description: 多功能传送插件
+commands:
+ 地标:
+  description: 输入/地标 地标ID 传送到这个地标
+ warp:
+  description: 输入/warp 地标ID 传送到这个地标
+ 设置地标:
+  description: 输入/设置地标 地标名 设置一个地标
+ setwarp:
+  description: 输入/设置地标 地标名 设置一个地标
+ 删除地标:
+  description: 输入/删除地标 地标名 设置一个地标
+ delwarp:
+  description: 输入/delwarp 地标名 设置一个地标
+ 地标列表:
+  description: 输入/地标列表 查看地标信息
+ warplist:
+  description: 输入/warplist 查看地标信息
+ 传送帮助:
+  description: 输入/传送帮助 查看本传送插件的所有功能
+ tpahelp:
+  description: 输入/tpahere 查看本传送插件的所有功能
+ 随机传送:
+  description: 输入/随机传送 随机流放到当前世界
+ wild:
+  description: 输入/wild 随机流放到当前世界
+ 传送到这:
+  description: 输入/传送到这 玩家名称 即可请求玩家传送到你当前的位置
+ tpahere:
+  description: 输入/tphere 玩家名称 即可请求玩家传送到你当前的位置
+ 传送:
+  description: 输入/传送 玩家名称 请求家传送到该玩家的位置
+ tpa:
+  description: 输入/tpa 玩家名称 请求家传送到该玩家的位置
+ 安家:
+  description: 输入/安家 设置家的位置
+ sethome:
+  description: 输入/sethome 设置家的位置
+ 回家:
+  description: 输入/回家 回到设置的家的位置
+ home:
+  description: 输入/home 回到设置的家的位置
+ 返回:
+  description: 输入/返回 回到上次死亡点
+ back:
+  description: 输入/back 回到上次死亡点
+ 同意:
+  description: 输入/同意 同意当前的请求
+ 拒绝:
+  description: 输入/拒绝 拒绝当前的请求
+ 全体传送:
+  description: 输入/全体传送 请求所有玩家传送到你的位置
+ tpall:
+  description: 输入/tpall 请求所有玩家传送到你的位置
+ 家列表:
+  description: 输入/家列表 查看你全部的家
+ homelist:
+  description: 输入/homelist 查看你全部的家
+ 删除家:
+  description: 输入/删除家 来删除你的家
+ delhome:
+  description: 输入/delhome 来删除你的家

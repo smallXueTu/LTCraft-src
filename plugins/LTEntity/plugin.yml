@@ -1,0 +1,12 @@
+name: LTEntity
+main: LTEntity\Main
+version: 2.3.7
+api:
+- 2.0.0
+load: POSTWORLD
+depend: ["LTMultiWorld"]
+author: shenqitieba
+
+commands:
+  ma:
+    description: /ma help 帮助

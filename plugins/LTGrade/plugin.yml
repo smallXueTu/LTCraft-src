@@ -1,0 +1,20 @@
+name: LTGrade
+main: LTGrade\Main
+version: 1.0.0
+api: [2.0.0]
+load: POSTWORLD
+depend: ["LTCraft"]
+author: 雪兔丶
+commands:
+ grade:
+  description: 等级系统
+  permission: LTGrade
+ 血量格式:
+  description: 设置血量格式
+  permission: LTGrade
+ task:
+  description: 任务系统
+  permission: LTGrade
+permissions:
+ LTGrade:
+  default: true

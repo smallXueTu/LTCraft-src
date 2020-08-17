@@ -1,0 +1,31 @@
+---
+武器名: 太一
+武器ID: "352"
+粒子: false
+射速: 20
+子弹模型: snowball
+PVP:
+  攻击力: 100
+  吸血: "100"
+  燃烧: "6"
+  药水(Damager): false
+  药水(Entity): false
+  击飞: 0
+  击退: 0
+  雷击: 1:100
+  冰冻: false
+  击杀提示: §d§lxiao_xi_fan§a以上帝之名黑化§c{entity}
+  穿甲: 0
+  真实伤害: 0
+  重伤: 0
+手持提示: false
+全员可用: false
+爆炸: 100
+无条件真实伤害: false
+类型: false
+最大星级: false
+分解可获得: false
+等级: 定制
+可以叠加: false
+介绍: false
+...

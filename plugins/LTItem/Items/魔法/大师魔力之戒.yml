@@ -1,0 +1,13 @@
+---
+名字: |-
+  大师魔力之戒
+  §l§d灵魂绑定至: &owner&
+  §l§a饰品
+  §l§eMana:§a&Mana&§c/§a&MaxMana&
+ID: "383:12"
+手持提示: 大师魔力之戒 Mana：&Mana&/&MaxMana&
+使用提示: false
+叠加最大: 1
+全员可用: false
+最大Mana: 10000000
+...

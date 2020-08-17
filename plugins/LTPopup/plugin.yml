@@ -1,0 +1,28 @@
+name: LTPopup
+main: LTPopup\Popup
+version: 1.0.0
+api: 2.0.0
+depend: ["LTSociety"]
+load: POSTWORLD
+author: 雪兔丶
+commands:
+ 重启:
+  permission: LTPopup.admin
+  description: 重启服务器
+ 取消重启:
+  permission: LTPopup.admin
+  description: 取消重启服务器
+ 禁言:
+  permission: LTPopup.admin
+  description: 禁言一个玩家
+ ui设置:
+  permission: LTPopup.all
+  description: 管理UI的设置
+ 聊天同步:
+  permission: LTPopup.admin
+  description: QQ群聊天同步
+permissions:
+ LTPopup.admin:
+  default: op
+ LTPopup.all:
+  default: true

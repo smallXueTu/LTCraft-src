@@ -1,0 +1,39 @@
+---
+武器名: Angel2
+武器ID: "276"
+射速: "1"
+子弹模型: arrow
+粒子: false
+PVE:
+  攻击力: 10
+  吸血: 0
+  群回: 0
+  燃烧: 0
+  穿甲: 0
+  药水(Damager): false
+  雷击: false
+PVP:
+  攻击力: 10
+  吸血: 0
+  真实伤害: 0
+  燃烧: 0
+  药水(Damager): false
+  药水(Entity): false
+  击飞: 100
+  穿甲: 0
+  击退: 100
+  雷击: false
+  冰冻: false
+  击杀提示: false
+  重伤: 0
+手持提示: §4至§2高§3无§9上a
+最大星级: false
+等级: 定制
+爆炸: false
+无条件真实伤害: false
+全员可用: false
+分解可获得: false
+可以叠加: false
+介绍: false
+类型: false
+...

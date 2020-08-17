@@ -1,0 +1,14 @@
+name: LTLove
+main: LTLove\Main
+version: 1.0.0
+api: [2.0.0]
+depend: ["MyPlot"]
+load: POSTWORLD
+author: 雪兔丶
+commands:
+ 结婚:
+  description: 结婚系统
+  permission: LTLove
+permissions:
+ LTLove:
+  default: true

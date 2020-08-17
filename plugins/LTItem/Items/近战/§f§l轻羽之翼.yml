@@ -1,0 +1,35 @@
+---
+武器名: §f§l轻羽之翼
+武器ID: "288"
+粒子: false
+PVE:
+  攻击力: 2000
+  吸血: 0.200000
+  群回: 0
+  燃烧: 0
+  穿甲: 0
+  药水(Damager): false
+  雷击: 0:100
+PVP:
+  攻击力: 35
+  吸血: 0.100000
+  真实伤害: 0
+  燃烧: 0
+  药水(Damager): false
+  药水(Entity): false
+  击飞: 0
+  穿甲: 0
+  击退: 0
+  雷击: false
+  冰冻: false
+  击杀提示: false
+  重伤: 0
+手持提示: false
+最大星级: false
+等级: 定制
+全员可用: false
+分解可获得: false
+可以叠加: false
+介绍: false
+类型: false
+...

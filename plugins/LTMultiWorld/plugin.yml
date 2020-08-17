@@ -1,0 +1,33 @@
+﻿name: LTMultiWorld
+main: LTMultiWorld\LTMultiWorld
+version: 1.0.8
+depend: ["MyPlot"]
+api: 
+- 1.0.0
+author: Whale
+load: POSTWORLD
+commands:
+ w:
+  description: §6多世界传送指令
+ pvp:
+  description: §6开启或关闭PVP模式
+ lw:
+  description: §6查看世界列表
+ makemap:
+  permission: World.unload
+  description: §6新地图生成器
+ setworld:
+  permission: World.unload
+  description: §6多世界其他功能
+permissions:
+ World:
+  default: op
+  description: SWorld permission
+  children:
+     World.load:
+      default: op
+      description: load a world
+     World.unload:
+      default: op
+      description: unload a world
+    

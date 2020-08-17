@@ -1,0 +1,32 @@
+---
+setmoney:
+- 发钱
+seemoney:
+- 查询
+mymoney:
+- 钱包
+pay:
+- 支付
+givemoney:
+- 给钱
+takedebt:
+- 借贷
+economys:
+- 经济
+topmoney:
+- 富豪榜
+setlang:
+- 语言
+takemoney:
+- 偷钱
+bank:
+- 银行
+mydebt:
+- 债务
+returndebt:
+- 还贷
+bankadmin:
+- 管钱
+mystatus:
+- 查账
+...
