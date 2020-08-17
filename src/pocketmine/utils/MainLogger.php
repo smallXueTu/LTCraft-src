@@ -288,7 +288,7 @@ class MainLogger extends \AttachableThreadedLogger {
 		if(isset($this->consoleCallback)){
 			call_user_func($this->consoleCallback);
 		}
-		if($this->server == null or $this->server->getPort()!=19132)return;
+		if($this->server == null or $this->server->getPort()!=19132 or $this->server->ltcraft->get('test'))return;
 		if($this->attachment instanceof \ThreadedLoggerAttachment){
 			$this->attachment->call($level, $message);
 		}

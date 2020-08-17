@@ -2365,7 +2365,7 @@ class Server{
 				$this->network->unregisterInterface($interface);
 			}
 			//copy('/root/server.log', '/root/logs/'.date("Y-m-d H:i:s").'.log');
-			unlink('/root/server.log');
+			if (!$this->ltcraft->get('test'))unlink('/root/server.log');
 			gc_collect_cycles();
 		}catch(\Throwable $e){
 			$this->logger->logException($e);
@@ -2877,7 +2877,8 @@ class Server{
 			}
 		}
         // $this->interface->server->addSTAQueue('刷新玩家包');
-		if($this->tickCounter%20===0 and $this->getPort()==19132){
+        //TODO 改善它
+		if($this->tickCounter%20===0 and $this->getPort()==19132 and !$this->ltcraft->get('test')){
 			$status=[];
 			$status['count']=count($this->players);
 			$status['players']=[];
