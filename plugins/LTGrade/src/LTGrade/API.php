@@ -168,7 +168,10 @@ class API{
 					case 'f5':
 						$name='玄之广场';
 					break;
-					case 't7':
+                    case 'f6':
+                        $name='神秘密室';
+                        break;
+					case 'f7':
 						$name='死神竞技场';
 					break;
 					case 't8':
