@@ -170,49 +170,53 @@ class InlayInventory extends OperationInventory{
 									$item->initW($item->getConfig());
 								break;
 								case '凋零魔切':
-									if($item->getDType()==='pvp'){//武器类型等于pvp的话..
-										$effects=$item->getPVPEntityEffects();
-										if(isset($effects[20]) and $effects[20][3]<100){
-											$aeffects=Weapon::explodeEffect($nbt['attribute'][15]);
-											$zy=$effects[20]->getAmplifier();//原药水等级
-											$ay=$aeffects[20]??0;
-											if(isset($aeffects[20]))
-												$aeffects[20]+=$i->getCount();
-											else 
-												$aeffects[20]=$i->getCount();
-											if($zy+$aeffects[20]>100){
-												$aeffects[20]=100-$zy;
-											}
-											$str='';
-											foreach($aeffects as $key=>$v){
-												$str+=$v[0].':'.$v[1].'&';
-											}
-											$str=substr($str,0,strlen($str)-1);
-											$count=$aeffects[20]-$ay;
-											$nbt['attribute'][15]=new StringTag('', $str);
-											$item->setNamedTag($nbt);
-											$item->initW($item->getConfig());
-										}
+									if($item->getDType()==='pvp'){//武器类型等于pvp的话.
+                                        $effects=$item->getPVPEntityEffects();
+                                        if(isset($effects[20]) and $effects[20][1]<100){
+                                            $effects=$item->getOriginalPVPEntityEffects();
+                                            $aEffects=Weapon::explodeEffect($nbt['attribute'][15]);//array[ID] = 概率
+                                            $trigger = $effects[20][1];//原概率
+                                            $aTrigger = $aEffects[20]??0;//附加的概率
+                                            if(isset($aEffects[19]))
+                                                $aEffects[20]+=$i->getCount();
+                                            else
+                                                $aEffects[20]=$i->getCount();
+                                            if($trigger+$aEffects[19]>100){
+                                                $aEffects[20]=100-$trigger;
+                                            }
+                                            $str='';
+                                            foreach($aEffects as $id=>$t){//ID => 概率
+                                                $str.=$id.':'.$t.'&';
+                                            }
+                                            $str=substr($str,0,strlen($str)-1);
+                                            $count=$aEffects[20]-$aTrigger;//之前附加的等级-刚附加的等级
+                                            $nbt['attribute'][15]=new StringTag('', $str);
+                                            $item->setNamedTag($nbt);
+                                            $item->initW($item->getConfig());
+                                        }
 									}
 								break;
 								case '中毒魔切':
 									if($item->getDType()==='pvp'){
 										$effects=$item->getPVPEntityEffects();
-										if(isset($effects[19]) and $effects[19][3]<100){
-											$aeffects=Weapon::explodeEffect($nbt['attribute'][15]);
-											$zy=$effects[19]->getAmplifier();//原药水等级
-											$ay=$aeffects[19]??0;
-											if(isset($aeffects[19]))
-												$aeffects[19]+=$i->getCount();
-											else 
-												$aeffects[19]=$i->getCount();
-											if($zy+$aeffects[19]>100){
-												$aeffects[19]=100-$zy;
+										if(isset($effects[19]) and $effects[19][1]<100){
+                                            $effects=$item->getOriginalPVPEntityEffects();
+											$aEffects=Weapon::explodeEffect($nbt['attribute'][15]);//array[ID] = 概率
+											$trigger = $effects[19][1];//原概率 例子：为1
+											$aTrigger = $aEffects[19]??0;//附加的概率 例子：为50
+											if(isset($aEffects[19]))
+                                                $aEffects[19]+=$i->getCount();//例子：50+64=114
+											else
+                                                $aEffects[19]=$i->getCount();
+											if($trigger+$aEffects[19]>100){//例子：1+114 肯定大于100
+                                                $aEffects[19]=100-$trigger;//例子：100-1 = 99
 											}
 											$str='';
-											foreach($aeffects as $key=>$v)$str+=$v[0].':'.$v[1].'&';
+											foreach($aEffects as $id=>$t){//ID => 概率
+											    $str.=$id.':'.$t.'&';
+                                            }
 											$str=substr($str,0,strlen($str)-1);
-											$count=$aeffects[19]-$ay;
+											$count=$aEffects[19]-$aTrigger;//之前附加的等级-刚附加的等级 例子：99-50 = 49
 											$nbt['attribute'][15]=new StringTag('', $str);
 											$item->setNamedTag($nbt);
 											$item->initW($item->getConfig());

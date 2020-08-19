@@ -190,10 +190,12 @@ class Weapon extends Item implements LTItem {
 			if($this->WeaponType!=='远程'){
 				$this->PVEdamage=$conf['PVE']['攻击力'];
 				$this->PVEArmour=$conf['PVE']['穿甲']??0;
-				if($conf['PVE']['药水(Damager)']!==false)foreach(explode('@', $conf['PVE']['药水(Damager)']) as $eff){
-					$effInfo=explode(':', $eff);
-					$this->PVEDamgerEffects[]=[Effect::getEffect($effInfo[0])->setDuration($effInfo[2]*20)->setAmplifier($effInfo[1]), $effInfo[3]];
-				}
+				if($conf['PVE']['药水(Damager)']!==false){
+				    foreach(explode('@', $conf['PVE']['药水(Damager)']) as $eff){
+                        $effInfo=explode(':', $eff);
+                        $this->PVEDamgerEffects[$effInfo[0]]=[Effect::getEffect($effInfo[0])->setDuration($effInfo[2]*20)->setAmplifier($effInfo[1]), $effInfo[3]];
+                    }
+                }
 				$this->PVELightning =  $conf['PVE']['雷击']==false?false:explode(':', $conf['PVE']['雷击']);
 				$this->PVEFire = $conf['PVE']['燃烧'];
 				$this->groupOfBack = $conf['PVE']['群回'];
@@ -202,14 +204,18 @@ class Weapon extends Item implements LTItem {
 			$this->PVPdamage=$conf['PVP']['攻击力'];
 			$this->PVPArmour=$conf['PVP']['穿甲']??0;
 			if(isset($conf['技能CD']))$this->SkillCD=$conf['技能CD'];
-			if($conf['PVP']['药水(Entity)']!==false)foreach(explode('@', $conf['PVP']['药水(Entity)']) as $eff){
-				$effInfo=explode(':', $eff);
-				$this->PVPEntityEffects[]=[Effect::getEffect($effInfo[0])->setDuration($effInfo[2]*20)->setAmplifier($effInfo[1]), $effInfo[3]];
+			if($conf['PVP']['药水(Entity)']!==false){
+			    foreach(explode('@', $conf['PVP']['药水(Entity)']) as $eff) {
+                    $effInfo = explode(':', $eff);
+                    $this->PVPEntityEffects[$effInfo[0]] = [Effect::getEffect($effInfo[0])->setDuration($effInfo[2] * 20)->setAmplifier($effInfo[1]), $effInfo[3]];
+                }
 			}
-			if($conf['PVP']['药水(Damager)']!==false)foreach(explode('@', $conf['PVP']['药水(Damager)']) as $eff){
-				$effInfo=explode(':', $eff);
-				$this->PVPDamgerEffects[]=[Effect::getEffect($effInfo[0])->setDuration($effInfo[2]*20)->setAmplifier($effInfo[1]), $effInfo[3]];
-			}
+			if($conf['PVP']['药水(Damager)']!==false){
+			    foreach(explode('@', $conf['PVP']['药水(Damager)']) as $eff){
+                    $effInfo=explode(':', $eff);
+                    $this->PVPDamgerEffects[$effInfo[0]]=[Effect::getEffect($effInfo[0])->setDuration($effInfo[2]*20)->setAmplifier($effInfo[1]), $effInfo[3]];
+                }
+            }
 			$this->PVPLightning = $conf['PVP']['雷击']==false?false:explode(':', $conf['PVP']['雷击']);
 			$this->PVPVampire = $conf['PVP']['吸血'];
 			$this->PVPFire = $conf['PVP']['燃烧'];
@@ -301,8 +307,8 @@ class Weapon extends Item implements LTItem {
 					if($this->PVPLightning==false)$this->PVPLightning=[1, 0];
 					$this->PVPLightning[1]+=$nbt['attribute'][5];
 				}
-				$this->addPVPEntityEffects($nbt['attribute'][14]);
-				$this->addPVPDamgerEffects($nbt['attribute'][15]);
+				$this->addPVPEntityEffects($nbt['attribute'][15]);
+				$this->addPVPDamgerEffects($nbt['attribute'][14]);
 				$this->RealDamage+=$nbt['attribute'][8];
 			}
 			$this->SkillCD-=$nbt['attribute'][10];
@@ -437,9 +443,40 @@ class Weapon extends Item implements LTItem {
 	public function getPVEDamgerEffects(){
 		return $this->PVEDamgerEffects;
 	}
+	public function getOriginalPVPEntityEffects(){
+	    $arr = [];
+        if($this->getConfig()['PVP']['药水(Entity)']!==false) {
+            foreach (explode('@', $this->getConfig()['PVP']['药水(Entity)']) as $eff) {
+                $effInfo = explode(':', $eff);
+                $arr[$effInfo[0]] = [Effect::getEffect($effInfo[0])->setDuration($effInfo[2] * 20)->setAmplifier($effInfo[1]), $effInfo[3]];
+            }
+        }
+        return $arr;
+	}
+	public function getOriginalPVEDamgerEffects(){
+	    $arr = [];
+        if($this->getConfig()['PVE']['药水(Damager)']!==false) {
+            foreach (explode('@', $this->getConfig()['PVE']['药水(Damager)']) as $eff) {
+                $effInfo = explode(':', $eff);
+                $arr[$effInfo[0]] = [Effect::getEffect($effInfo[0])->setDuration($effInfo[2] * 20)->setAmplifier($effInfo[1]), $effInfo[3]];
+            }
+        }
+        return $arr;
+	}
+	public function getOriginalPVPDamgerEffects(){
+	    $arr = [];
+        if($this->getConfig()['PVP']['药水(Damager)']!==false) {
+            foreach (explode('@', $this->getConfig()['PVP']['药水(Damager)']) as $eff) {
+                $effInfo = explode(':', $eff);
+                $arr[$effInfo[0]] = [Effect::getEffect($effInfo[0])->setDuration($effInfo[2] * 20)->setAmplifier($effInfo[1]), $effInfo[3]];
+            }
+        }
+        return $arr;
+	}
 	public function addPVEDamgerEffects($effectInfo){
-		if($effectInfo==='')return;
+        if(strlen(trim($effectInfo))<=0)return;
 		foreach(explode('@', $effectInfo) as $eff){
+            if(strlen(trim($eff))<=0)continue;
 			$effInfo = explode(':', $eff);
 			if(isset($this->PVEDamgerEffects[$effInfo[0]])){
 				$this->PVEDamgerEffects[$effInfo[0]][1] += $effInfo[1];
@@ -452,13 +489,12 @@ class Weapon extends Item implements LTItem {
 		return $this->PVPEntityEffects;
 	}
 	public function addPVPEntityEffects($effectInfo){
-		if($effectInfo==='')return;
+        if(strlen(trim($effectInfo))<=0)return;
 		foreach(explode('@', $effectInfo) as $eff){
-			$effInfo = explode(':', $eff);
-			if(isset($this->PVPEntityEffects[$effInfo[0]])){
-				$this->PVPEntityEffects[$effInfo[0]] = $effInfo[1];
-			}elseif($effInfo[2]>0 and $effInfo[1]>0){
-				$this->PVPEntityEffects[$effInfo[0]] = 1;
+            if(strlen(trim($eff))<=0)continue;
+			$effInfo = explode(':', $eff);//0ID  1概率
+			if(isset($this->PVPEntityEffects[$effInfo[0]])){//如果这个武器不带这个药水效果就忽略
+				$this->PVPEntityEffects[$effInfo[0]][1] += $effInfo[1]??0;//原来的概率+附加的概率
 			}
 		}
 	}
@@ -466,13 +502,12 @@ class Weapon extends Item implements LTItem {
 		return $this->PVPDamgerEffects;
 	}
 	public function addPVPDamgerEffects($effectInfo){
-		if($effectInfo==='')return;
+		if(strlen(trim($effectInfo))<=0)return;
 		foreach(explode('@', $effectInfo) as $eff){
-			$effInfo = explode(':', $eff);
-			if(isset($this->PVPDamgerEffects[$effInfo[0]])){
-				$this->PVPDamgerEffects[$effInfo[0]] = $effInfo[1];
-			}elseif($effInfo[2]>0 and $effInfo[1]>0){
-				$this->PVPDamgerEffects[$effInfo[0]] = 1;
+            if(strlen(trim($eff))<=0)continue;
+			$effInfo = explode(':', $eff);//0ID  1概率
+			if(isset($this->PVPDamgerEffects[$effInfo[0]])){//如果这个武器不带这个药水效果就忽略
+				$this->PVPDamgerEffects[$effInfo[0]][1] = $effInfo[1]??0;//原来的概率+附加的概率
 			}
 		}
 	}
@@ -772,10 +807,12 @@ class Weapon extends Item implements LTItem {
 		return $this->conf['可以叠加']==false?1:(int) $this->conf['可以叠加'];
 	}
 	public static function explodeEffect(String $string){
+        if(strlen(trim($string))<=0)return [];
 		$effects=[];
 		foreach(explode('&', $string) as $effect){
-			$tmp=explode(':', $effect);
-			$effects[$tmp[0]]=$tmp;
+		    if (strlen(trim($effect)<=0))continue;
+			$tmp=explode(':', $effect);//ID:概率
+			$effects[$tmp[0]]=$tmp[1];
 		}
 		return $effects;
 	}
