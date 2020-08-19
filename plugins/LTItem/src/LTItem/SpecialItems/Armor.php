@@ -23,7 +23,7 @@ class Armor extends Item implements LTItem{
 	private $controlReduce = 0;
 	private $ArmorName;
 	private $binding = '*';
-	private $conf;
+    private array $conf;
 	public $colorInfo = [0, 0];
 	public function __construct(array $conf, int $count, CompoundTag $nbt, $init=true){
 		$idInfo=explode(':',$conf['ID']);
@@ -35,6 +35,17 @@ class Armor extends Item implements LTItem{
 		$this->ArmorName = $this->getNamedTag()['armor'][1];
 		$this->binding = strtolower($this->getNamedTag()['armor'][0]);
 	}
+
+    /**
+     * @return array 配置
+     */
+	public function getConfig(){
+	    return $this->conf;
+    }
+
+    /**
+     * @param $conf array 配置
+     */
 	public function initW($conf){
 		try{
 			$nbt=$this->getNamedTag();
@@ -73,6 +84,11 @@ class Armor extends Item implements LTItem{
 			Server::getInstance()->getLogger()->warning($this->getWeaponType().':'.$this->getLTName().'配置文件出错 在'.$e->getLine());
 		}
 	}
+
+    /**
+     * @param null $conf
+     * @return array|bool|mixed
+     */
 	public function getConf($conf = null){
 		if($conf === null){
 			return $this->conf;
@@ -80,6 +96,10 @@ class Armor extends Item implements LTItem{
 			return $this->conf[$conf]??false;
 		}
 	}
+
+    /**
+     * @return mixed|string类型
+     */
 	public function getTypeName(){
 		return '盔甲';
 	}
@@ -103,6 +123,10 @@ class Armor extends Item implements LTItem{
 		if($level>$this->getLevel())self::upGrade($this->getLTName(), $level);
 		$this->getNamedTag()['armor'][9] = new StringTag('',$level);
 	}
+
+    /**
+     * @return float|int 最大等级
+     */
 	public function getMaxLevel(){
 		return $this->getNamedTag()['armor'][11]*10;
 	}
@@ -112,6 +136,11 @@ class Armor extends Item implements LTItem{
 	public function getMaxX(){
 		return $this->conf['最大星级'];
 	}
+
+    /**
+     * @param $exp
+     * @return float|int 升级经验
+     */
 	public function addExp($exp){
 		$nbt=$this->getNamedTag();
 		$yexp=$nbt['armor'][9];

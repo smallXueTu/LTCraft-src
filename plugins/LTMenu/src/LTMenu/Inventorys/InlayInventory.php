@@ -288,6 +288,7 @@ class InlayInventory extends OperationInventory{
 									$nbt['armor'][4]=new StringTag('',$nbt['armor'][4]+1*$i->getCount());
 									if($nbt['armor'][4]>$item->getAttribute('附加血量最大值'))$nbt['armor'][4]=new StringTag('',$item->getAttribute('附加血量最大值'));
 									$count=$nbt['armor'][4]-$count;
+                                    $item->setNamedTag($nbt);
 									$item->initW($item->getConfig());
 								break;
 								case '减控水晶':
@@ -296,6 +297,7 @@ class InlayInventory extends OperationInventory{
 									$nbt['armor'][7]=new StringTag('',$nbt['armor'][7]+1*$i->getCount());
 									if($nbt['armor'][7]>$item->getAttribute('附加控制减少最大值'))$nbt['armor'][7]=new StringTag('',$item->getAttribute('附加控制减少最大值'));
 									$count=$nbt['armor'][7]-$count;
+                                    $item->setNamedTag($nbt);
 									$item->initW($item->getConfig());
 								break;
 								case '黑色金刚石':
@@ -304,6 +306,7 @@ class InlayInventory extends OperationInventory{
 									$nbt['armor'][3]=new StringTag('',$nbt['armor'][3]+1*$i->getCount());
 									if($nbt['armor'][3]>$item->getAttribute('附加护甲最大值'))$nbt['armor'][3]=new StringTag('',$item->getAttribute('附加护甲最大值'));
 									$count=$nbt['armor'][3]-$count;
+                                    $item->setNamedTag($nbt);
 									$item->initW($item->getConfig());
 								break;
 								case '高级盔甲经验水晶':
@@ -331,7 +334,11 @@ class InlayInventory extends OperationInventory{
 									// $item->setCustomName(preg_replace('#(§a★)+(§f★)+#', $level, $name));
 								break;
 							}
+                            $i->setCount($i->getCount()-$count);
+                            if($i->getCount()<=0)$i=Item::get(0);
+                            $this->setItem($index-1,$i);
 						}
+                        $this->setItem(0, $item);
 					break;
 					default:
 						$open->error();
