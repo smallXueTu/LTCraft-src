@@ -124,7 +124,20 @@ class Item extends Entity {
 		$hasUpdate = $this->entityBaseTick($tickDiff);
 
 		if($this->isAlive()){
-
+            if($this->age == 1){
+                if ($this->getItem()->getCount() < $this->getItem()->getMaxStackSize()){
+                    foreach ($this->getLevel()->getEntities() as $entity){
+                        if ($entity->isAlive() and $entity instanceof Item and $this !== $entity){
+                            if ($entity->distance($this)<=3 and $this->getItem()->getCount()+$entity->getItem()->getCount() <= $this->getItem()->getMaxStackSize() and $this->getItem()->equals($entity->getItem())){
+                                $item = $this->getItem();
+                                $item->setCount($this->getItem()->getCount()+$entity->getItem()->getCount());
+                                $this->setItem($item);
+                                $entity->close();
+                            }
+                        }
+                    }
+                }
+            }
 			if($this->pickupDelay > 0 and $this->pickupDelay < 32767){ //Infinite delay
 				$this->pickupDelay -= $tickDiff;
 				if($this->pickupDelay < 0){
@@ -155,21 +168,7 @@ class Item extends Entity {
 			}
 			if($currentTick % 5 == 0)
 				$this->updateMovement();
-			if($this->age == 1){
-                if ($this->getItem()->getCount() < $this->getItem()->getMaxStackSize()){
-                    foreach ($this->getLevel()->getEntities() as $entity){
-                        if ($entity instanceof Item and $this!=$entity){
-                            if ($entity->distance($this)<=3 and $this->getItem()->getCount()+$entity->getItem()->getCount() <= $this->getItem()->getMaxStackSize() and $this->getItem()->equals($entity->getItem())){
-                                $item = $this->getItem();
-                                $item->setCount($this->getItem()->getCount()+$entity->getItem()->getCount());
-                                $this->setItem($item);
-                                $entity->close();
-                            }
-                        }
-                    }
-                }
-            }
-			$time = $this->getItem() instanceof LTItem?20*60*30:20*60;
+			$time = $this->getItem() instanceof LTItem?20*60*15:20*60;
 			if($this->age > $time){
 				// $this->server->getPluginManager()->callEvent($ev = new ItemDespawnEvent($this));
 				// if($ev->isCancelled()){
