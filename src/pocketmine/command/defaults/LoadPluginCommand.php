@@ -55,7 +55,7 @@ class LoadPluginCommand extends VanillaCommand {
 			return false;
 		}
 //		if($sender->getName() !== 'Angel_XX' AND $sender instanceof \pocketmine\Player){
-//			return $sender->sendMessage('§l§a[LTcraft温馨提示]§cOP不能用这个命令！');
+//			return $sender->sendMessage('§l§a[提示]§cOP不能用这个命令！');
 //		}
 
 		if(count($args) === 0){

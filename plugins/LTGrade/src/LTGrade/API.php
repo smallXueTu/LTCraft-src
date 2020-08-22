@@ -106,12 +106,6 @@ class API{
 						$armorB=95;
 				$this->attributes[$type]='§d护甲:'.$armor.' 实际伤害减少('.$armorB.'%%%%)';
 			break;
-			// case self::POWER:
-				// $damageJ=0;
-				// if(($l=$this->player->getEffect(5))!==null)
-					// $damageJ+=$l->getAmplifier()*30;
-				// $this->attributes[$type]='§3伤害加成:'.$damageJ.'%%%%';
-			// break;
 			case self::TASK:
 				$this->attributes[$type]=str_replace('\n',PHP_EOL . self::$tab,$this->player->getTask()->getTaskMessage());
 			break;

@@ -74,40 +74,40 @@ class Main extends PluginBase implements Listener{
 	    $NAME = strtoupper($player->getName());
 		$yname=$player->getName();
 	    if(!($player instanceof Player))
-			$player->sendMessage('§l§a[LTcraft温馨提示]§e请不要在控制台输入本指令');
+			$player->sendMessage('§l§a[提示]§e请不要在控制台输入本指令');
 	    else{
     	switch(strtolower($cmd)){
 			case '设置地标':
 			case 'setwarp':
-				if(!$player->isOp())return $player->sendMessage('§l§a[LTcraft温馨提示]§c只有管理员才可以使用这个指令');
-				if(!isset($args[0]))return $player->sendMessage('§l§a[LTcraft温馨提示]§c格式错误, 缺少地标名, §2/setwarp|设置地标 地标名');
+				if(!$player->isOp())return $player->sendMessage('§l§a[提示]§c只有管理员才可以使用这个指令');
+				if(!isset($args[0]))return $player->sendMessage('§l§a[提示]§c格式错误, 缺少地标名, §2/setwarp|设置地标 地标名');
 				if($player->level->getProvider()->addWarp($args[0], $player->asPosition())===true)
-					$player->sendMessage('§l§a[LTcraft温馨提示]§a地标设置成功! ');
+					$player->sendMessage('§l§a[提示]§a地标设置成功! ');
 				else
-					$player->sendMessage('§l§a[LTcraft温馨提示]§c地标设置失败，请检查是否存在 ');
+					$player->sendMessage('§l§a[提示]§c地标设置失败，请检查是否存在 ');
 				$this->upDateWarps();
 				return;
 			case '删除地标':
 			case 'delwarp':
-				if(!$player->isOp())return $player->sendMessage('§l§a[LTcraft温馨提示]§c只有管理员才可以使用这个指令');
-				if(!isset($args[0]))return $player->sendMessage('§l§a[LTcraft温馨提示]§c格式错误, 缺少地标名, §2/delwarp|删除地标 地标名');
+				if(!$player->isOp())return $player->sendMessage('§l§a[提示]§c只有管理员才可以使用这个指令');
+				if(!isset($args[0]))return $player->sendMessage('§l§a[提示]§c格式错误, 缺少地标名, §2/delwarp|删除地标 地标名');
 				if($player->level->getProvider()->delWarp($args[0])===true)
-					$player->sendMessage('§l§a[LTcraft温馨提示]§a地标删除成功! ');
+					$player->sendMessage('§l§a[提示]§a地标删除成功! ');
 				else
-					$player->sendMessage('§l§a[LTcraft温馨提示]§c地标删除失败，请检查是否存在 ');
+					$player->sendMessage('§l§a[提示]§c地标删除失败，请检查是否存在 ');
 				$this->upDateWarps();
 				return;
 			case '地标':
 			case 'warp':
-				if(!isset($args[0]))return $player->sendMessage('§l§a[LTcraft温馨提示]§c请输入地标名, 输入§2/warplist|地标列表 §7来查看所有的地标');
-				if(!isset($this->warps[$args[0]]))return $player->sendMessage('§l§a[LTcraft温馨提示]§c不存在这个地标 输入§2/warplist|地标列表 §7来查看所有的地标');
+				if(!isset($args[0]))return $player->sendMessage('§l§a[提示]§c请输入地标名, 输入§2/warplist|地标列表 §7来查看所有的地标');
+				if(!isset($this->warps[$args[0]]))return $player->sendMessage('§l§a[提示]§c不存在这个地标 输入§2/warplist|地标列表 §7来查看所有的地标');
 				if($player->teleport($this->warps[$args[0]]))
-				$player->sendMessage('§l§a[LTcraft温馨提示]§a传送成功! 已将你传送到'.$args[0]);
+				$player->sendMessage('§l§a[提示]§a传送成功! 已将你传送到'.$args[0]);
 				return;
 			case '地标列表':
 			case 'warplist':
 				if(!isset($args[0]))$args[0]=1;
-			    if(!is_numeric($args[0]) or $args[0]<1 or floor($args[0])!=$args[0])return $player->sendMessage('§l§a[LTcraft温馨提示]§c/warplist|地标列表 页码(数字) §7查看所有地标');
+			    if(!is_numeric($args[0]) or $args[0]<1 or floor($args[0])!=$args[0])return $player->sendMessage('§l§a[提示]§c/warplist|地标列表 页码(数字) §7查看所有地标');
 				if($args[0]>ceil(count($this->warps)/7))$args[0]=ceil(count($this->warps)/7);
 				$player->sendMessage('§6-------< 地标列表 第§b'.$args[0].'/'. ceil(count($this->warps)/7) .'§6页 -------< ');
 			    $send = null;
@@ -127,9 +127,9 @@ class Main extends PluginBase implements Listener{
 			    return;
 			case '全体传送':
 			case 'tpall':
-				if($player->getGrade()<130)return $player->sendMessage('§l§a[LTcraft温馨提示]§c你需要130级才可以使用这个功能！');
+				if($player->getGrade()<130)return $player->sendMessage('§l§a[提示]§c你需要130级才可以使用这个功能！');
 				$Money  = EconomyAPI::getInstance()->myMoney($name);				
-				if($Money < 50000)return $player->sendMessage('§l§a[LTcraft温馨提示]§c余额不足全,体传送需要 §d50000 §c橙币而你只有 §d'.$Money.' §c橙币');
+				if($Money < 50000)return $player->sendMessage('§l§a[提示]§c余额不足全,体传送需要 §d50000 §c橙币而你只有 §d'.$Money.' §c橙币');
 				foreach($this->getServer()->getOnlinePlayers() as $p){
 				    $n = $p->getName();
 					if(!isset($this->Request[$n]) or ($p->distance($player)<10 and $p->getLevel()===$player->getLevel()))continue;
@@ -143,7 +143,7 @@ class Main extends PluginBase implements Listener{
 						$p->sendMessage('§4> §7你有 §245 §7秒的时间考虑');
 					}
                 }
-				$player->sendMessage('§l§a[LTcraft温馨提示]§c请求成功！');
+				$player->sendMessage('§l§a[提示]§c请求成功！');
 				EconomyAPI::getInstance()->reduceMoney($name, 5000, '全员结合消耗');			
 			    return;
 			case '传送帮助':
@@ -167,12 +167,12 @@ class Main extends PluginBase implements Listener{
 			case '随机传送':
 			case 'wild':
 			    if ($player->getLevel()->getName()!='zy'){
-                    $player->sendMessage('§l§a[LTcraft温馨提示]§c你只能在资源世界使用这个命令。');
+                    $player->sendMessage('§l§a[提示]§c你只能在资源世界使用这个命令。');
                     return true;
                 }
 			    if (isset($this->lastTeleportTick[$yname]) and $this->server->getTick() - $this->lastTeleportTick[$yname] <= 20*10){
                     $this->lastTeleportTick[$yname] = $this->server->getTick();
-                    $player->sendMessage('§l§a[LTcraft温馨提示]§c冷却中...');
+                    $player->sendMessage('§l§a[提示]§c冷却中...');
 			        return true;
                 }
 				$x=mt_rand(-10000,10000);
@@ -182,24 +182,24 @@ class Main extends PluginBase implements Listener{
                 $this->server->getScheduler()->scheduleDelayedTask(new CallbackTask(function (Player $player, $x, $z) {
                     if (!$player->isOnline())return;
                     if($player->teleport(new Position($x,$player->getLevel()->getHighestBlockAt($x,$z) + 1,$z,$player->getLevel()), null, null, true, false, true))
-                        $player->sendMessage('§l§a[LTcraft温馨提示]§a传送成功');
+                        $player->sendMessage('§l§a[提示]§a传送成功');
                     else
-                        $player->sendMessage('§l§a[LTcraft温馨提示]§c传送失败');
+                        $player->sendMessage('§l§a[提示]§c传送失败');
                 }, [$player, $x, $z]), 5);
                 return true;
 			case 'tpahere':
 			case '传送到这':
-			    if(!isset($args[0]) || $args[0]==null)return $player->sendMessage('§l§a[LTcraft温馨提示]§c输入错误 格式§2/传送到这|tpahere 玩家名 §c请求该玩家传送到你的位置');
+			    if(!isset($args[0]) || $args[0]==null)return $player->sendMessage('§l§a[提示]§c输入错误 格式§2/传送到这|tpahere 玩家名 §c请求该玩家传送到你的位置');
 				$target=$this->getServer()->getPlayer($args[0]);
                 if(!$target){
-					$player->sendMessage('§l§a[LTcraft温馨提示]§c该玩家不存在或不在线, 请检查名称拼写');
-					$player->sendMessage('§l§a[LTcraft温馨提示]§c你可以简写玩家名字，比如Angel_XX你只需要输入/tpahere an 要确保服务器只有这一个an开头的！不然就要输入/tpahere ang or /tpahere ange');
+					$player->sendMessage('§l§a[提示]§c该玩家不存在或不在线, 请检查名称拼写');
+					$player->sendMessage('§l§a[提示]§c你可以简写玩家名字，比如Angel_XX你只需要输入/tpahere an 要确保服务器只有这一个an开头的！不然就要输入/tpahere ang or /tpahere ange');
 					return;
 					}
 					$n=$target->getName();
 				if($this->Request[$n]['RequestTime'] >= time()){
-					$player->sendMessage('§l§a[LTcraft温馨提示]§c已经有人提早邀请他了');
-					$player->sendMessage('§l§a[LTcraft温馨提示]§c请等待他的选择或者等待一段时间当前邀请过期后再发出请求');
+					$player->sendMessage('§l§a[提示]§c已经有人提早邀请他了');
+					$player->sendMessage('§l§a[提示]§c请等待他的选择或者等待一段时间当前邀请过期后再发出请求');
 					return;
 					}
 						$target->sendMessage('§6-------< 单人传送 >-------');
@@ -209,22 +209,22 @@ class Main extends PluginBase implements Listener{
 						$this->Request[$n]['Request']=$yname;
 						$this->Request[$n]['RequestTime']=time()+30;
 						$this->Request[$n]['RequestType']=2;
-						$player->sendMessage('§l§a[LTcraft温馨提示]§a已成功发送请求给'.$n.', 请等待结果.');
+						$player->sendMessage('§l§a[提示]§a已成功发送请求给'.$n.', 请等待结果.');
                 unset($data,$Money,$TpCost,$player);				
 			    return;
 			case 'tpa':
 			case '传送':
-			    if(!isset($args[0]) || $args[0]==null)return $player->sendMessage('§l§a[LTcraft温馨提示]§c输入错误 格式§2/传送|tpa 玩家名 §c请求到该玩家的位置');
+			    if(!isset($args[0]) || $args[0]==null)return $player->sendMessage('§l§a[提示]§c输入错误 格式§2/传送|tpa 玩家名 §c请求到该玩家的位置');
 					$target=$this->getServer()->getPlayer($args[0]);
                 if(!$target){
-					$player->sendMessage('§l§a[LTcraft温馨提示]§c该玩家不存在或不在线, 请检查名称拼写');
-					$player->sendMessage('§l§a[LTcraft温馨提示]§c你可以简写玩家名字，比如Angel_XX你只需要输入/tpa an 要确保服务器只有这一个an开头的！不然就要输入/tpa ang or /tpa ange');
+					$player->sendMessage('§l§a[提示]§c该玩家不存在或不在线, 请检查名称拼写');
+					$player->sendMessage('§l§a[提示]§c你可以简写玩家名字，比如Angel_XX你只需要输入/tpa an 要确保服务器只有这一个an开头的！不然就要输入/tpa ang or /tpa ange');
 					return;
 				}
 				$n=$target->getName();
 				if($this->Request[$n]['RequestTime'] >= time()){
-					$player->sendMessage('§l§a[LTcraft温馨提示]§c已经有人提早邀请他了');
-					$player->sendMessage('§l§a[LTcraft温馨提示]§c请等待他的选择或者等待一段时间当前邀请过期后再发出请求');
+					$player->sendMessage('§l§a[提示]§c已经有人提早邀请他了');
+					$player->sendMessage('§l§a[提示]§c请等待他的选择或者等待一段时间当前邀请过期后再发出请求');
 					return;
 				}
 						$target->sendMessage('§6-------< 单人传送 >-------');
@@ -234,62 +234,62 @@ class Main extends PluginBase implements Listener{
 						$this->Request[$n]['Request']=$yname;
 						$this->Request[$n]['RequestTime']=time()+30;
 						$this->Request[$n]['RequestType']=1;
-						$player->sendMessage('§l§a[LTcraft温馨提示]§a已成功发送请求给'.$n.', 请等待结果.');
+						$player->sendMessage('§l§a[提示]§a已成功发送请求给'.$n.', 请等待结果.');
                 unset($data,$Money,$TpCost);				
 			    break;
 			case '安家':
 			case 'sethome':
-				if(!isset($args[0]))return $player->sendMessage('§l§a[LTcraft温馨提示]§e用法/sethome|安家 家的名字');
+				if(!isset($args[0]))return $player->sendMessage('§l§a[提示]§e用法/sethome|安家 家的名字');
 				$Money=EconomyAPI::getInstance()->myMoney($name);			
-				if($Money < 500)return $player->sendMessage('§l§a[LTcraft温馨提示]§c您的余额不足设置家的位置,需要§2'. 500 .' §c而你只有 §2'.$Money);
+				if($Money < 500)return $player->sendMessage('§l§a[提示]§c您的余额不足设置家的位置,需要§2'. 500 .' §c而你只有 §2'.$Money);
 				EconomyAPI::getInstance()->reduceMoney($name, 500, '设置家消耗');	
 				if($player->addHome($args[0],$player->asPosition())){
 					if($player->getAStatusIsDone('设置家')==false){
-						$player->sendMessage('§l§a[LTcraft温馨提示]§a恭喜你解锁了菜单新功能:§c家列表§a你现在可以在菜单中快捷回家了！');
+						$player->sendMessage('§l§a[提示]§a恭喜你解锁了菜单新功能:§c家列表§a你现在可以在菜单中快捷回家了！');
 						$player->addAStatus('设置家');
                         $player->newProgress('温暖的家', '设置一个家');
 					}
-					return $player->sendMessage('§l§a[LTcraft温馨提示]§a已保存家的位置, 输入§2/回家 '.$args[0].'§a即可回到温暖的家了');
+					return $player->sendMessage('§l§a[提示]§a已保存家的位置, 输入§2/回家 '.$args[0].'§a即可回到温暖的家了');
 					
 				}else
-					return $player->sendMessage('§l§a[LTcraft温馨提示]§c你已经有这个家了，换个名字吧');
+					return $player->sendMessage('§l§a[提示]§c你已经有这个家了，换个名字吧');
 				break;
 			case '回家':
 			case 'home':
-				if(!isset($args[0]))return $player->sendMessage('§l§a[LTcraft温馨提示]§e用法/home|回家 家的名字');
+				if(!isset($args[0]))return $player->sendMessage('§l§a[提示]§e用法/home|回家 家的名字');
 					if(($home=$player->getHome($args[0]))!==false){
 						if(!$home->level->isClosed()){
 							if($player->teleport($home))
-								$player->sendMessage('§l§a[LTcraft温馨提示]§a传送成功');
+								$player->sendMessage('§l§a[提示]§a传送成功');
 						}else 
-							return $player->sendMessage('§l§a[LTcraft温馨提示]§c目标失效，请检查世界是否存在');
-				}else return $player->sendMessage('§l§a[LTcraft温馨提示]§c这个家不存在');
+							return $player->sendMessage('§l§a[提示]§c目标失效，请检查世界是否存在');
+				}else return $player->sendMessage('§l§a[提示]§c这个家不存在');
 			    break;
 			case '返回':
 			case 'back':
-				if($player->getLastDie()===false)return $player->sendMessage('§l§a[LTcraft温馨提示]§c没有死亡记录');
+				if($player->getLastDie()===false)return $player->sendMessage('§l§a[提示]§c没有死亡记录');
 				if($player->teleport($player->getLastDie(),null,null,false))
-					$player->sendMessage('§l§a[LTCraft温馨提示]§a传送成功, 已将您传送到上次死亡地.');
+					$player->sendMessage('§l§a[提示]§a传送成功, 已将您传送到上次死亡地.');
 			    break;
 			case '同意':
 				if($this->Request[$yname]['RequestTime']==null){
-					$player->sendMessage('§l§a[LTcraft温馨提示]§e还木有任何人对你发出传送请求呢');
+					$player->sendMessage('§l§a[提示]§e还木有任何人对你发出传送请求呢');
 					return;}
 				
 				if($this->Request[$yname]['RequestTime'] < time()){
-					$player->sendMessage('§l§a[LTcraft温馨提示]§e当前请求已失效, 请让对方重新发送请求.');
+					$player->sendMessage('§l§a[提示]§e当前请求已失效, 请让对方重新发送请求.');
 					return;}
 				
-				if(!$this->isOnline($this->Request[$yname]['Request']))return $player->sendMessage('§l§a[LTcraft温馨提示]§c该玩家已离线.');
+				if(!$this->isOnline($this->Request[$yname]['Request']))return $player->sendMessage('§l§a[提示]§c该玩家已离线.');
 				if($this->Request[$yname]['RequestType']==1){
 					foreach($this->getServer()->getOnlinePlayers() as $P){
 						if(strtolower($P->getName())==strtolower($this->Request[$yname]['Request'])){
 							if($P->teleport($player)){
-								$player->sendMessage('§l§a[LTcraft温馨提示]§a传送'.$P->getName().'成功.');
-								$P->sendMessage('§l§a[LTcraft温馨提示]§a传送'.$player->getName().'成功.');
+								$player->sendMessage('§l§a[提示]§a传送'.$P->getName().'成功.');
+								$P->sendMessage('§l§a[提示]§a传送'.$player->getName().'成功.');
 							}else{
-								$player->sendMessage('§l§a[LTcraft温馨提示]§c传送'.$P->getName().'失败了！');
-								$P->sendMessage('§l§a[LTcraft温馨提示]§c传送'.$player->getName().'失败了！.');
+								$player->sendMessage('§l§a[提示]§c传送'.$P->getName().'失败了！');
+								$P->sendMessage('§l§a[提示]§c传送'.$player->getName().'失败了！.');
 							}
 						}
 					}
@@ -298,11 +298,11 @@ class Main extends PluginBase implements Listener{
 						if(strtolower($P->getName())==strtolower($this->Request[$yname]['Request'])){
 							//$player是请求传送到$P这的人
 							if($player->teleport($P)){
-								$P->sendMessage('§l§a[LTcraft温馨提示]§a传送'.$player->getName().'成功.');
-								$player->sendMessage('§l§a[LTcraft温馨提示]§a传送'.$P->getName().'成功.');
+								$P->sendMessage('§l§a[提示]§a传送'.$player->getName().'成功.');
+								$player->sendMessage('§l§a[提示]§a传送'.$P->getName().'成功.');
 							}else{
-								$P->sendMessage('§l§a[LTcraft温馨提示]§a传送'.$player->getName().'失败了！');
-								$player->sendMessage('§l§a[LTcraft温馨提示]§a传送'.$P->getName().'失败了！');
+								$P->sendMessage('§l§a[提示]§a传送'.$player->getName().'失败了！');
+								$player->sendMessage('§l§a[提示]§a传送'.$P->getName().'失败了！');
 							}
 						}
 					}
@@ -314,7 +314,7 @@ class Main extends PluginBase implements Listener{
 			case '家列表':
 			case 'homelist':
 				if(!isset($args[0]))$args[0]=1;
-				if(!is_numeric($args[0]) or $args[0]<1 or floor($args[0])!=$args[0])return $player->sendMessage('§l§a[LTcraft温馨提示]§c/homelist|家列表 页码(数字) §7查看所有家');
+				if(!is_numeric($args[0]) or $args[0]<1 or floor($args[0])!=$args[0])return $player->sendMessage('§l§a[提示]§c/homelist|家列表 页码(数字) §7查看所有家');
 				$homes=$player->getHomes();
 				if($args[0]>ceil(count($homes)/7))$args[0]=ceil(count($homes)/7);
 				$player->sendMessage('§6-------< 家列表 第§b'.$args[0].'/'. ceil(count($homes)/7) .'§6页 -------< ');
@@ -335,7 +335,7 @@ class Main extends PluginBase implements Listener{
 				$player->sendMessage($send);
 				return;
 					/*
-					if(count($homes)<=0)return $player->sendMessage('§l§a[LTcraft温馨提示]§c你还没家呢');
+					if(count($homes)<=0)return $player->sendMessage('§l§a[提示]§c你还没家呢');
 					$home='';
 					$i=0;
 					foreach($homes as $name=>$pos){
@@ -346,16 +346,16 @@ class Main extends PluginBase implements Listener{
 						}else
 							$home.=$name.",";
 					}
-					$player->sendMessage("§l§a[LTcraft温馨提示]§e你的家:\n".substr($home,0,strlen($home)-1));
+					$player->sendMessage("§l§a[提示]§e你的家:\n".substr($home,0,strlen($home)-1));
 				break;
 				*/
 				case '删除家':
 				case 'delhome':
-					if(!isset($args[0]))return $player->sendMessage('§l§a[LTcraft温馨提示]§c用法：/删除家|delhome 家的名字');
+					if(!isset($args[0]))return $player->sendMessage('§l§a[提示]§c用法：/删除家|delhome 家的名字');
 					if($player->delHome($args[0]))
 						$player->sendMessage('§4> §7成功删除家：'.$args[0]);
 					else
-						$player->sendMessage('§l§a[LTcraft温馨提示]§c家'.$args[0].'不存在');
+						$player->sendMessage('§l§a[提示]§c家'.$args[0].'不存在');
 					break;
 			}
 		}

@@ -70,7 +70,7 @@ class EnchantCommand extends VanillaCommand {
 			return true;
 		}
 //		if($sender->getName() !== 'Angel_XX' AND $sender instanceof \pocketmine\Player and $player!==$sender){
-//			return $sender->sendMessage('§l§a[LTcraft温馨提示]§cOP不能给其他玩家附魔哦！');
+//			return $sender->sendMessage('§l§a[提示]§cOP不能给其他玩家附魔哦！');
 //		}
 
 		$enchantId = $args[1];

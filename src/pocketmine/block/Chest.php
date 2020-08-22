@@ -219,15 +219,15 @@ class Chest extends Transparent {
 			}
 			if($chest->isRewardBox()){
 				if(count($chest->getInventory()->getViewers())>=1 and !$player->isOp()){
-					$player->sendMessage('§l§a[LTCraft温馨提示]§c这个奖励箱已经有人在使用了！');
+					$player->sendMessage('§l§a[提示]§c这个奖励箱已经有人在使用了！');
 					return true;
 				}
 				if($chest->getRewardBoxName()!==strtolower($player->getName()) and !$player->isOp()){
-					$player->sendMessage('§l§a[LTCraft温馨提示]§c这个不是你的奖励箱！');
+					$player->sendMessage('§l§a[提示]§c这个不是你的奖励箱！');
 					return true;
 				}
 				if($chest->openIng() and !$player->isOp()){
-					$player->sendMessage('§l§a[LTCraft温馨提示]§c这个箱子正在打开中!当前还剩余:'.Utils::Sec2Time($chest->getOpenTime()-time()));
+					$player->sendMessage('§l§a[提示]§c这个箱子正在打开中!当前还剩余:'.Utils::Sec2Time($chest->getOpenTime()-time()));
 					return true;
 				}
 				// var_dump($chest->namedtag);
@@ -277,7 +277,7 @@ class Chest extends Transparent {
 												$explosion = new Explosion($this, 4, $this, true, null);
 												$explosion->explodeAA();
 												$explosion->explodeB();
-												$player->sendMessage('§l§a[LTCraft温馨提示]§c很不幸~你在开启箱子的时候出现了意外导致箱子爆炸了！');
+												$player->sendMessage('§l§a[提示]§c很不幸~你在开启箱子的时候出现了意外导致箱子爆炸了！');
 												return true;
 										break;
 									}
@@ -324,7 +324,7 @@ class Chest extends Transparent {
 												$explosion = new Explosion($this, 4, $this, true, null);
 												$explosion->explodeAA();
 												$explosion->explodeB();
-												$player->sendMessage('§l§a[LTCraft温馨提示]§c很不幸~你在开启箱子的时候出现了意外导致箱子爆炸了！');
+												$player->sendMessage('§l§a[提示]§c很不幸~你在开启箱子的时候出现了意外导致箱子爆炸了！');
 												return true;
 											break;
 										}
@@ -357,7 +357,7 @@ class Chest extends Transparent {
 												$explosion = new Explosion($this, 4, $this, true, null);
 												$explosion->explodeAA();
 												$explosion->explodeB();
-												$player->sendMessage('§l§a[LTCraft温馨提示]§c很不幸~你在开启箱子的时候出现了意外导致箱子爆炸了！');
+												$player->sendMessage('§l§a[提示]§c很不幸~你在开启箱子的时候出现了意外导致箱子爆炸了！');
 												return true;
 											break;
 										}
@@ -401,24 +401,24 @@ class Chest extends Transparent {
 											case $rand>=150:
 												$explosion = new Explosion($this, 4, $this, true, null);
 												$explosion->explodeB();
-												$player->sendMessage('§l§a[LTCraft温馨提示]§c很不幸~你在开启箱子的时候出现了意外导致箱子爆炸了！');
+												$player->sendMessage('§l§a[提示]§c很不幸~你在开启箱子的时候出现了意外导致箱子爆炸了！');
 												return true;
 											break;
 											case $rand<=100://这个箱子失败了 要爆炸了..
 												$explosion = new Explosion($this, 4, $this, true, null);
 												$explosion->explodeAA();
 												$explosion->explodeB();
-												$player->sendMessage('§l§a[LTCraft温馨提示]§c很不幸~你在开启箱子的时候出现了意外导致箱子爆炸了！');
+												$player->sendMessage('§l§a[提示]§c很不幸~你在开启箱子的时候出现了意外导致箱子爆炸了！');
 												return true;
 											break;
 										}
 									break;
 								}
 							}else{
-								$player->sendMessage('§l§a[LTCraft温馨提示]§c箱子出现了意外！');
+								$player->sendMessage('§l§a[提示]§c箱子出现了意外！');
 							}
 						}else{
-							$player->sendMessage('§l§a[LTCraft温馨提示]§c你必须手持宝箱之钥来打开它！');
+							$player->sendMessage('§l§a[提示]§c你必须手持宝箱之钥来打开它！');
 							return true;
 						}
 					}
@@ -442,7 +442,7 @@ class Chest extends Transparent {
 							break;
 						}
 					}else{
-						$player->sendMessage('§l§a[LTCraft温馨提示]§c你必须手持宝箱之钥来打开它！');
+						$player->sendMessage('§l§a[提示]§c你必须手持宝箱之钥来打开它！');
 						return true;
 					}
 				}

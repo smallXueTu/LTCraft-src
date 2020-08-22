@@ -44,7 +44,7 @@ class Events implements Listener{
 		$player->setDataFlag(Player::DATA_FLAGS, Player::DATA_FLAG_IMMOBILE, true);
 		if($name=='steve'){
 			$player->getServer()->getScheduler()->scheduleDelayedTask(new CallbackTask([$this,"send"],['steve',$player]), 20);
-			$player->sendMessage('§l§a[LTcraft温馨提示]§c请退出到设置重新修改游戏ID！！！',true);
+			$player->sendMessage('§l§a[提示]§c请退出到设置重新修改游戏ID！！！',true);
 			self::$status[$name]='steve';
 			return;
 		}
@@ -60,14 +60,14 @@ class Events implements Listener{
 		if($data===null){//未注册
 			if(isset($this->more[$name]) and count($this->more[$name])>2){
 				$player->getServer()->getScheduler()->scheduleDelayedTask(new CallbackTask([$this,"send"],['more',$player]), 20);
-				$player->sendMessage('§l§a[LTcraft温馨提示]§e你这个设备注册的账号太多了！！！',true);
+				$player->sendMessage('§l§a[提示]§e你这个设备注册的账号太多了！！！',true);
 				self::$status[$name]='more';
 			}else{
 				self::$status[$name]='register';
 				$player->getServer()->getScheduler()->scheduleDelayedTask(new CallbackTask([$this,"send"],['register',$player]), 20);
-				$player->sendMessage('§l§a[LTcraft温馨提示]§e感谢你在千万服务器选择了§aL§eT§3C§5r§8a§7f§4t',true);
-				$player->sendMessage('§l§a[LTcraft温馨提示]§e注册代表你已同意LTCraft用户协议,输入§d"用户协议"§e查看协议,你可以不游玩和不同意此协议',true);
-				$player->sendMessage('§l§a[LTcraft温馨提示]§e为了更好的游戏，请直接输入密码发送来注册你的账号！',true);
+				$player->sendMessage('§l§a[提示]§e感谢你在千万服务器选择了§aL§eT§3C§5r§8a§7f§4t',true);
+				$player->sendMessage('§l§a[提示]§e注册代表你已同意LTCraft用户协议,输入§d"用户协议"§e查看协议,你可以不游玩和不同意此协议',true);
+				$player->sendMessage('§l§a[提示]§e为了更好的游戏，请直接输入密码发送来注册你的账号！',true);
 			}
 			$player->getTask()->chechTask();
 			$player->getTask()->updateTaskMessage();
@@ -77,11 +77,11 @@ class Events implements Listener{
 			if($this->datas[$name]['VIP']!==null){
 				$data=explode(':', $this->datas[$name]['VIP']);
 				 if($data[1] <= time()) {
-					$player->sendMessage('§l§a[LTcraft温馨提示]§c你的VIP到期了！',true);
+					$player->sendMessage('§l§a[提示]§c你的VIP到期了！',true);
 					$player->setGamemode(0);
 					$this->server->dataBase->pushService('1'.chr(2)."update user set VIP=NULL where name='{$name}'");
 				} else {
-					$player->sendMessage('§l§a[LTcraft温馨提示]§a尊敬的VIP，你的VIP截止到'.date("Y年m月d日H时i分s秒", $data[1]),true);
+					$player->sendMessage('§l§a[提示]§a尊敬的VIP，你的VIP截止到'.date("Y年m月d日H时i分s秒", $data[1]),true);
 					$player->setVIP((int)$data[0]);
 					$player->getBuff()->addLucky($player->isVIP()*10);
 				}
@@ -89,8 +89,8 @@ class Events implements Listener{
 			self::$status[$name]='login';
 			$player->setDataFlag(Player::DATA_FLAGS, Player::DATA_FLAG_IMMOBILE, false);
 			$player->getServer()->getScheduler()->scheduleDelayedTask(new CallbackTask([$this,"send"],['login',$player]), 20);
-			$player->sendMessage('§l§a[LTcraft温馨提示]§e请输入你设置的密码来登录！',true);
-			$player->sendMessage('§l§a[LTcraft温馨提示]§e如果你没设置过密码请更换游戏ID！',true);
+			$player->sendMessage('§l§a[提示]§e请输入你设置的密码来登录！',true);
+			$player->sendMessage('§l§a[提示]§e如果你没设置过密码请更换游戏ID！',true);
 		}
 		$player->getTask()->chechTask();
 		$player->getTask()->updateTaskMessage();
@@ -340,7 +340,7 @@ class Events implements Listener{
 				if(isset(self::$password[$name])){
 					if($password==='top'){
 						$player->sendMessage('§l§a----------------------------------',true);
-						$player->sendMessage('§l§a[LTcraft温馨提示]§e请输入你要注册的密码',true);
+						$player->sendMessage('§l§a[提示]§e请输入你要注册的密码',true);
 						unset(self::$password[$name]);
 						return;
 					}
@@ -350,11 +350,11 @@ class Events implements Listener{
 						$player->isLogin = true;
 						self::$status[$name]=true;
 						$player->sendMessage('§l§a----------------------------------',true);
-						$player->sendMessage('§l§a[LTcraft温馨提示]§e你的密码：§d'.$password.'§e请记牢哦！');
+						$player->sendMessage('§l§a[提示]§e你的密码：§d'.$password.'§e请记牢哦！');
 						$player->addTitle('§l§a注册成功','§l§e祝你游戏愉快,注意下方倒计时！',20,20,5);
 						$player->setDataFlag(Player::DATA_FLAGS, Player::DATA_FLAG_IMMOBILE, false);
 						$this->datas[$name]=['password'=>$password];
-						$player->sendMessage('§l§a[LTcraft温馨提示]§e推荐您绑定邮箱，用于找回密码，输入§d/login emali 邮箱地址§e来绑定');
+						$player->sendMessage('§l§a[提示]§e推荐您绑定邮箱，用于找回密码，输入§d/login emali 邮箱地址§e来绑定');
 						$player->getInventory()->sendContents($player);
 						$player->getInventory()->sendArmorContents($player);
 						if (!EconomyAPI::getInstance()->checkAccount($player))EconomyAPI::getInstance()->openAccount($player);
@@ -370,19 +370,19 @@ class Events implements Listener{
 						return;
 					}else{
 						$player->sendMessage('§l§a----------------------------------',true);
-						$player->sendMessage('§l§a[LTcraft温馨提示]§c两次密码不一致，请重新输入，回到上一步直接输入top',true);
+						$player->sendMessage('§l§a[提示]§c两次密码不一致，请重新输入，回到上一步直接输入top',true);
 						return;
 					}
 				}
 				$check=$this->checkPassword($password);
 				if($check!==true){
 					$player->sendMessage('§l§a----------------------------------',true);
-					$player->sendMessage('§l§a[LTcraft温馨提示]§c'.$check ,true);
+					$player->sendMessage('§l§a[提示]§c'.$check ,true);
 					return;
 				}
 				$player->sendMessage('§l§a----------------------------------',true);
-				$player->sendMessage('§l§a[LTcraft温馨提示]§e请再发送一遍密码来确认！！',true);
-				$player->sendMessage('§l§a[LTcraft温馨提示]§e回到上一步直接输入top',true);
+				$player->sendMessage('§l§a[提示]§e请再发送一遍密码来确认！！',true);
+				$player->sendMessage('§l§a[提示]§e回到上一步直接输入top',true);
 				self::$password[$name]=$password;
 			break;
 			case 'login':
@@ -391,10 +391,10 @@ class Events implements Listener{
 					$player->isLogin = true;
 					self::$status[$name]=true;
 					$player->sendMessage('§l§a----------------------------------',true);
-					$player->sendMessage('§l§a[LTcraft温馨提示]§a登录成功，欢迎回来！');
+					$player->sendMessage('§l§a[提示]§a登录成功，欢迎回来！');
 					$player->addTitle('§l§a登录成功','§l§e祝你游戏愉快',20,20,5);
-					if($this->datas[$name]['email']==NULL)$player->sendMessage('§l§a[LTcraft温馨提示]§e推荐您绑定邮箱，用于找回密码，输入§d/login emali 邮箱地址§e来绑定');
-					if($this->datas[$name]['qq']==NULL)$player->sendMessage('§l§a[LTcraft温馨提示]§e你还没绑定QQ，输入§d/login qq QQ号§e来绑定');
+					if($this->datas[$name]['email']==NULL)$player->sendMessage('§l§a[提示]§e推荐您绑定邮箱，用于找回密码，输入§d/login emali 邮箱地址§e来绑定');
+					if($this->datas[$name]['qq']==NULL)$player->sendMessage('§l§a[提示]§e你还没绑定QQ，输入§d/login qq QQ号§e来绑定');
 					$os=$player->getDeviceOS()==1?'Android':'IOS';
 					$this->server->broadcastTip('§e来自§d'.$os.'型号'.$player->phone.'§e的玩家§a'.$player->getName().'§e加入游戏',null,2);
                     $player->teleport($player->getExitPos(),null,null,false, true);
@@ -408,7 +408,7 @@ class Events implements Listener{
 					$player->getInventory()->sendContents($player);
 					if(!$player->getAStatusIsDone('新手教程')){
 						$player->sendMessage('§l§c----------------------------------',true);
-						$player->sendMessage('§l§a[LTcraft温馨提示]§c你视乎还未完成新手教程,输入/sj完成一下吧,我们会赠送您一把武器！',true);
+						$player->sendMessage('§l§a[提示]§c你视乎还未完成新手教程,输入/sj完成一下吧,我们会赠送您一把武器！',true);
 					}
 					$player->getInventory()->sendArmorContents($player);
 					if(isset($this->more[$name])){
@@ -425,7 +425,7 @@ class Events implements Listener{
 					return;
 				}else{
 					$player->sendMessage('§l§a----------------------------------',true);
-					$player->sendMessage('§l§a[LTcraft温馨提示]§c对不起，密码错误！！',true);
+					$player->sendMessage('§l§a[提示]§c对不起，密码错误！！',true);
 					return;
 				}
 			break;

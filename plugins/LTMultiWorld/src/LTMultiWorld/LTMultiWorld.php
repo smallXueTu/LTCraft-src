@@ -44,16 +44,16 @@ class LTMultiWorld extends PluginBase implements Listener
 		/*	case 'pvp':
 				if($sender->getPVPStatus()){
 					$sender->setPVPStatus(false);
-					$sender->sendMessage('§l§a[LTcraft温馨提示]§e成功关闭PVP');
+					$sender->sendMessage('§l§a[提示]§e成功关闭PVP');
 					return true;
 				}else{
 					$sender->setPVPStatus(true);
-					$sender->sendMessage('§l§a[LTcraft温馨提示]§e成功开启PVP');
+					$sender->sendMessage('§l§a[提示]§e成功开启PVP');
 					return true;
 				}*/
 			case "setworld":
 //				if($sender->getName() !== 'Angel_XX' AND $sender instanceof Player){
-//					return $sender->sendMessage('§l§a[LTcraft温馨提示]§c你没有权限执行这个命令！');
+//					return $sender->sendMessage('§l§a[提示]§c你没有权限执行这个命令！');
 //				}
 				if(isset($args[0]))
 				{
@@ -189,20 +189,20 @@ class LTMultiWorld extends PluginBase implements Listener
 				        $l = $args[0];
 				        if ($this->getServer()->isLevelLoaded($l)){
 							if($sender->teleport($this->getServer()->getLevelByName($l)->getSafeSpawn()))
-								$sender->sendMessage('§l§a[LTcraft温馨提示]§a你被传送到了世界'.$l);
+								$sender->sendMessage('§l§a[提示]§a你被传送到了世界'.$l);
 				        }else{
-				            $sender->sendMessage('§l§a[LTcraft温馨提示]§c这个世界没有被加载!');
+				            $sender->sendMessage('§l§a[提示]§c这个世界没有被加载!');
 				        }
 				    }else{
-				        $sender->sendMessage('§l§a[LTcraft温馨提示]§c请输入一个地图名');
+				        $sender->sendMessage('§l§a[提示]§c请输入一个地图名');
 				    }
 			    }else{
-				    $sender->sendMessage('§l§a[LTcraft温馨提示]§c你不是一个玩家');
+				    $sender->sendMessage('§l§a[提示]§c你不是一个玩家');
 				}
 				return true;
 			case "makemap":
 //				if($sender->getName() !== 'Angel_XX' AND $sender instanceof Player){
-//					return $sender->sendMessage('§l§a[LTcraft温馨提示]§c你没有权限执行这个命令！');
+//					return $sender->sendMessage('§l§a[提示]§c你没有权限执行这个命令！');
 //				}
 				if(isset($args[0])){
 					$name=$args[0];

@@ -432,25 +432,25 @@ class Main extends PluginBase implements Listener{
 			if($to instanceof Position){
 				if($toName==='pvp' AND $grade<50){
 					$event->setCancelled(true);
-					$entity->sendMessage('§l§a[LTcraft温馨提示]§c你需要等级大于等于50才可以通往这个世界！');
+					$entity->sendMessage('§l§a[提示]§c你需要等级大于等于50才可以通往这个世界！');
 					return;
 				}elseif($toName==='s1' AND $grade<120){
 					$event->setCancelled(true);
-					$entity->sendMessage('§l§a[LTcraft温馨提示]§c你需要等级大于等于120才可以通往这个世界！');
+					$entity->sendMessage('§l§a[提示]§c你需要等级大于等于120才可以通往这个世界！');
 					return;
 				// }elseif($toName==='create' AND $grade<30){
 				}elseif($toName==='create'){
 					$event->setCancelled(true);
-					// $entity->sendMessage('§l§a[LTcraft温馨提示]§c你需要等级大于等于30才可以通往这个世界！');
-					$entity->sendMessage('§l§a[LTcraft温馨提示]§c暂不开放！');
+					// $entity->sendMessage('§l§a[提示]§c你需要等级大于等于30才可以通往这个世界！');
+					$entity->sendMessage('§l§a[提示]§c暂不开放！');
 					return;
 				}elseif($toName==='s2' AND $entity->getGTo()<6){
 					$event->setCancelled(true);
-					$entity->sendMessage('§l§a[LTcraft温馨提示]§c你需要完成主线任务才可以进入这个世界！');
+					$entity->sendMessage('§l§a[提示]§c你需要完成主线任务才可以进入这个世界！');
 					return;
 				}elseif($toName==='boss'){
 					if($grade<180){
-						$entity->sendMessage('§l§a[LTcraft温馨提示]§c你需要等级180才可以通往这个世界！');
+						$entity->sendMessage('§l§a[提示]§c你需要等级180才可以通往这个世界！');
 						$event->setCancelled(true);
 						return;
 					}elseif(count($to->getLevel()->getPlayers())>=5){
@@ -459,7 +459,7 @@ class Main extends PluginBase implements Listener{
 							if($name==strtolower($entity->getName()))$canJoin=true;
 						}
 						if(!$canJoin){
-							$entity->sendMessage('§l§a[LTcraft温馨提示]§cBoss世界人数已经满了！');
+							$entity->sendMessage('§l§a[提示]§cBoss世界人数已经满了！');
 							$event->setCancelled(true);
 							return;
 						}
@@ -471,7 +471,7 @@ class Main extends PluginBase implements Listener{
 							if($name==strtolower($entity->getName()))$canJoin=true;
 						}
 						if(!$canJoin){
-							$entity->sendMessage('§l§a[LTcraft温馨提示]§cBoss战斗已经开始了！');
+							$entity->sendMessage('§l§a[提示]§cBoss战斗已经开始了！');
 							$event->setCancelled(true);
 							return;
 						}
@@ -482,14 +482,14 @@ class Main extends PluginBase implements Listener{
 				}
 				if(in_array($toName, ['t1', 't2', 't3', 't4', 't5', 't6', 's1'])){
 					if($entity->getGTo()<6){
-						$entity->sendMessage('§l§a[LTcraft温馨提示]§c你需要完成主线任务才可以进入这个世界！');
+						$entity->sendMessage('§l§a[提示]§c你需要完成主线任务才可以进入这个世界！');
 						$event->setCancelled(true);
 						return;
 					}
 					switch($toName){
 						case 't1':
 							if($entity->getMaxDamage()<500){
-								$entity->sendMessage('§l§a[LTcraft温馨提示]§c你的伤害不足与进入这个世界！');
+								$entity->sendMessage('§l§a[提示]§c你的伤害不足与进入这个世界！');
 								$event->setCancelled(true);
 							}else{
 								$entity->setFlying(false);
@@ -497,7 +497,7 @@ class Main extends PluginBase implements Listener{
 						break;
 						case 't2':
 							if($entity->getMaxDamage()<1000){
-								$entity->sendMessage('§l§a[LTcraft温馨提示]§c你的伤害不足与进入这个世界！');
+								$entity->sendMessage('§l§a[提示]§c你的伤害不足与进入这个世界！');
 								$event->setCancelled(true);
 							}else{
 								$entity->setFlying(false);
@@ -505,7 +505,7 @@ class Main extends PluginBase implements Listener{
 						break;
 						case 't3':
 							if($entity->getMaxDamage()<1200){
-								$entity->sendMessage('§l§a[LTcraft温馨提示]§c你的伤害不足与进入这个世界！');
+								$entity->sendMessage('§l§a[提示]§c你的伤害不足与进入这个世界！');
 								$event->setCancelled(true);
 							}else{
 								$entity->setFlying(false);
@@ -513,7 +513,7 @@ class Main extends PluginBase implements Listener{
 						break;
 						case 't4':
 							if($entity->isVIP()<2){
-								$entity->sendMessage('§l§a[LTcraft温馨提示]§c你需要VIP2及以上才可以进入这个世界！');
+								$entity->sendMessage('§l§a[提示]§c你需要VIP2及以上才可以进入这个世界！');
 								$event->setCancelled(true);
 							}else{
 								$entity->setFlying(false);
@@ -521,7 +521,7 @@ class Main extends PluginBase implements Listener{
 						break;
 						case 't5':
 							if($entity->getMaxDamage()<1500){
-								$entity->sendMessage('§l§a[LTcraft温馨提示]§c你的伤害不足与进入这个世界！');
+								$entity->sendMessage('§l§a[提示]§c你的伤害不足与进入这个世界！');
 								$event->setCancelled(true);
 							}else{
 								$entity->setFlying(false);
@@ -529,7 +529,7 @@ class Main extends PluginBase implements Listener{
 						break;
 						case 't6':
 							if($entity->getMaxDamage()<2000){
-								$entity->sendMessage('§l§a[LTcraft温馨提示]§c你的伤害不足与进入这个世界！');
+								$entity->sendMessage('§l§a[提示]§c你的伤害不足与进入这个世界！');
 								$event->setCancelled(true);
 							}else{
 								$entity->setFlying(false);
@@ -539,12 +539,12 @@ class Main extends PluginBase implements Listener{
 					return;
 				}
 				if(in_array($toName, ['f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9']) and $toName[1] >$entity->getGTo()){
-					$entity->sendMessage(('§l§a[LTcraft温馨提示]§c你需要毕业F'.($toName[1] -1) .'才可以进入这个世界！'));
+					$entity->sendMessage(('§l§a[提示]§c你需要毕业F'.($toName[1] -1) .'才可以进入这个世界！'));
 					$event->setCancelled(true);
 					return;
 				}
 				// if(in_array($toName, ['f6', 'f7', 'f8']) and 6>$entity->getGTo()){
-					// $entity->sendMessage('§l§a[LTcraft温馨提示]§c你需要毕业F5才可以进入这个世界！');
+					// $entity->sendMessage('§l§a[提示]§c你需要毕业F5才可以进入这个世界！');
 					// $event->setCancelled(true);
 					// return;
 				// }
@@ -614,25 +614,25 @@ class Main extends PluginBase implements Listener{
 		if(isset($this->locks[$name])){
 			$id=$event->getBlock()->getID();
 			if($id!='54'){
-				$player->sendMessage('§l§a[LTCraft温馨提示]§e已取消锁箱子操作!');
+				$player->sendMessage('§l§a[提示]§e已取消锁箱子操作!');
 				$event->setCancelled();
 				unset($this->locks[$name]);
 				return;
 			}
-			if($event->isCancelled())return $player->sendMessage('§l§a[LTCraft温馨提示]§e你没有权限锁这个的箱子');
+			if($event->isCancelled())return $player->sendMessage('§l§a[提示]§e你没有权限锁这个的箱子');
 			if($this->locks[$name]=='lock'){
 				if($block->lock($player))
-					$player->sendMessage('§l§a[LTCraft温馨提示]§a锁箱子成功！');
+					$player->sendMessage('§l§a[提示]§a锁箱子成功！');
 				else
-					$player->sendMessage('§l§a[LTCraft温馨提示]§c锁箱子失败，可能是这个箱子被锁了！');
+					$player->sendMessage('§l§a[提示]§c锁箱子失败，可能是这个箱子被锁了！');
 				$event->setCancelled();
 				if($this->getName()!=='Angel_XX')unset($this->locks[$name]);
 				return;
 			}else{
 				if($block->unlock($player))
-					$player->sendMessage('§l§a[LTCraft温馨提示]§a解锁箱子成功！');
+					$player->sendMessage('§l§a[提示]§a解锁箱子成功！');
 				else
-					$player->sendMessage('§l§a[LTCraft温馨提示]§c解锁箱子失败，可能是这个箱子没被锁了！');
+					$player->sendMessage('§l§a[提示]§c解锁箱子失败，可能是这个箱子没被锁了！');
 				$event->setCancelled();
 				if($this->getName()!=='Angel_XX')unset($this->locks[$name]);
 				return;
@@ -656,63 +656,63 @@ class Main extends PluginBase implements Listener{
 				if(!($sign instanceof Sign))return;
 				$sign->setLineText((int)$this->sign[$player->getName()][0], $this->sign[$name][1]);
 				unset($this->sign[$name]);
-				$player->sendMessage('§l§a[LTCraft温馨提示]§a修改完成！');
+				$player->sendMessage('§l§a[提示]§a修改完成！');
 				return;
 			}else{
 				$xyz=$block->getLevel()->getName().':'.$block->getX().':'.$block->getY().':'.$block->getZ();
 				switch($xyz){
 					case 'zc:742:4:78'://维修木牌
-						if($player->getGamemode()===1)return $player->sendMessage('§l§a[LTcraft温馨提示]§c创造模式不能维修装备');
+						if($player->getGamemode()===1)return $player->sendMessage('§l§a[提示]§c创造模式不能维修装备');
 						$hand=$player->getInventory()->getItemInHand();
 						$itemid=$hand->getID();
-						if($itemid===0)return $player->sendMessage('§l§a[LTcraft温馨提示]§c你手上啥都没拿呢');
-						if($hand->getMaxDurability()===false)return $player->sendMessage('§l§a[LTcraft温馨提示]§c这个物品不支持维修');
-						if($hand->getDamage()===0)return $player->sendMessage('§l§a[LTcraft温馨提示]§c这个装备不需要维修');
-						if(EconomyAPI::getInstance()->myMoney($player)<=5000)return $player->sendMessage('§l§a[LTcraft温馨提示]§c你没有足够的钱来维修装备');
+						if($itemid===0)return $player->sendMessage('§l§a[提示]§c你手上啥都没拿呢');
+						if($hand->getMaxDurability()===false)return $player->sendMessage('§l§a[提示]§c这个物品不支持维修');
+						if($hand->getDamage()===0)return $player->sendMessage('§l§a[提示]§c这个装备不需要维修');
+						if(EconomyAPI::getInstance()->myMoney($player)<=5000)return $player->sendMessage('§l§a[提示]§c你没有足够的钱来维修装备');
 						$hand->setDamage(0);
 						$player->getInventory()->setItemInHand($hand);
 						EconomyAPI::getInstance()->reduceMoney($player, 5000, '耐久维修');
-						$player->sendMessage("§l§a[LTcraft温馨提示]§a维修完成，扣除5000金币");
+						$player->sendMessage("§l§a[提示]§a维修完成，扣除5000金币");
 					break;
 					case 'zc:742:4:77'://更改绑定
-						if($player->getGamemode()===1)return $player->sendMessage('§l§a[LTcraft温馨提示]§c创造模式不能维升级装备');
+						if($player->getGamemode()===1)return $player->sendMessage('§l§a[提示]§c创造模式不能维升级装备');
 						$hand=$player->getInventory()->getItemInHand();
 						if($hand instanceof Weapon or $hand instanceof Armor){
 							$this->status[$player->getName()]='binding';
-							$player->sendMessage("§l§a[LTcraft温馨提示]§a您想把这个装备转让给谁? 请在聊天框打出来~");
-							$player->sendMessage("§l§a[LTcraft温馨提示]§a输入exit退出更改绑定！");
+							$player->sendMessage("§l§a[提示]§a您想把这个装备转让给谁? 请在聊天框打出来~");
+							$player->sendMessage("§l§a[提示]§a输入exit退出更改绑定！");
 						}else{
-							$player->sendMessage("§l§a[LTcraft温馨提示]§c更换绑定仅限武器和盔甲哦~");
+							$player->sendMessage("§l§a[提示]§c更换绑定仅限武器和盔甲哦~");
 						}
 					break;
 					case 'zc:742:4:76'://命名
-						if($player->getGamemode()===1)return $player->sendMessage('§l§a[LTcraft温馨提示]§c请切换到生存模式来命名');
+						if($player->getGamemode()===1)return $player->sendMessage('§l§a[提示]§c请切换到生存模式来命名');
 						$this->status[$player->getName()]='rename';
-						$player->sendMessage('§l§a[LTcraft温馨提示]§e请在聊天框输入你要命名的名字！输入exit退出!');
+						$player->sendMessage('§l§a[提示]§e请在聊天框输入你要命名的名字！输入exit退出!');
 					break;
 					/*
 					case 'zc:741:4:73'://飞行商店
 						if($player->getFlyTime()===0){
-							$player->sendMessage("§l§a[LTcraft温馨提示]§e请输入需要购买的天数：");
-							$player->sendMessage("§l§a[LTcraft温馨提示]§e输入exit或0取消购买");
+							$player->sendMessage("§l§a[提示]§e请输入需要购买的天数：");
+							$player->sendMessage("§l§a[提示]§e输入exit或0取消购买");
 							$this->status[$name]='buyFly';
-						}else $player->sendMessage("§l§a[LTcraft温馨提示]§c你已经拥有飞行权限");
+						}else $player->sendMessage("§l§a[提示]§c你已经拥有飞行权限");
 					break;
 					*/
 					case 'zc:741:4:71'://修改称号商店
 						if($player->getPrefix()=='无称号')
-							return $player->sendMessage("§l§a[LTcraft温馨提示]§c请先购买称号");
+							return $player->sendMessage("§l§a[提示]§c请先购买称号");
 						$c=Popup::getInstance()->cfg->get('聊天格式');
-						$player->sendMessage("§l§a[LTcraft温馨提示]§e请输入新称号：");
-						$player->sendMessage("§l§a[LTcraft温馨提示]§e在0-30字符，中文占3个字符 输入exit退出");
+						$player->sendMessage("§l§a[提示]§e请输入新称号：");
+						$player->sendMessage("§l§a[提示]§e在0-30字符，中文占3个字符 输入exit退出");
 						$this->status[$name]='ModifyPreFix';
 						break;
 					case 'zc:741:4:72'://称号商店
 						if($player->getPrefix()=='无称号'){
-							$player->sendMessage("§l§a[LTcraft温馨提示]§e请输入称号：");
-							$player->sendMessage("§l§a[LTcraft温馨提示]§e在0-30字符，中文占3个字符 输入exit退出");
+							$player->sendMessage("§l§a[提示]§e请输入称号：");
+							$player->sendMessage("§l§a[提示]§e在0-30字符，中文占3个字符 输入exit退出");
 							$this->status[$name]='buyPreFix';
-						}else return $player->sendMessage("§l§a[LTcraft温馨提示]§c您已经购买了！");
+						}else return $player->sendMessage("§l§a[提示]§c您已经购买了！");
 					break;
 					default:
 						$sign = $event->getPlayer()->getLevel()->getTile($block);
@@ -727,7 +727,7 @@ class Main extends PluginBase implements Listener{
 				}
 			}
 		}elseif(isset($this->sign[$name])){
-			$player->sendMessage('§l§a[LTCraft温馨提示]§e已取消修改木牌!');
+			$player->sendMessage('§l§a[提示]§e已取消修改木牌!');
 			$event->setCancelled();
 			unset($this->sign[$name]);
 			return;
@@ -844,7 +844,7 @@ class Main extends PluginBase implements Listener{
 //						 $pos->level->dropItem($pos->add(0.5, 0.5, 0.5), $drop);
 //				if(!$player->isOp() and $player->getGamemode()!=1 and !$player->closed)
 				if($player->getGamemode()!=1 and !$player->closed)
-					$player->sendCenterTip('§l§a[LTcraft温馨提示]§e该方块为op or 创造放置的！');
+					$player->sendCenterTip('§l§a[提示]§e该方块为op or 创造放置的！');
 				$sql="delete FROM ".$pos->level->getName()."_b WHERE X='{$pos->getX()}' AND Y='{$pos->getY()}' AND Z='{$pos->getZ()}'";
 				$this->getServer()->dataBase->pushService('1'.chr(2).$sql);
 			}else{
@@ -935,7 +935,7 @@ class Main extends PluginBase implements Listener{
         $tile=$level->getTile($block);
         if($tile instanceof \pocketmine\tile\Chest){
             if(isset($tile->namedtag->lockName) and $tile->namedtag->lockName->getValue()!==strtolower($player->getName())){
-                $player->sendMessage('§l§a[LTcraft温馨提示]§a这不是你的箱子哦！');
+                $player->sendMessage('§l§a[提示]§a这不是你的箱子哦！');
                 $event->setCancelled(true);
                 return;
             }
@@ -1022,7 +1022,7 @@ class Main extends PluginBase implements Listener{
 			break;
 			case 'create':
 				$player->setGamemode(1,false,true);
-				$player->sendMessage('§l§e[LTcraft注意]§c你可以输入§d/w zc§c返回主城');
+				$player->sendMessage('§l§e[注意]§c你可以输入§d/w zc§c返回主城');
 			break;
 		}
 		// var_dump($this->conf->getNested('世界欢迎标题.'.$tname));
@@ -1060,65 +1060,65 @@ class Main extends PluginBase implements Listener{
 	public function onCommand(CommandSender $sender, Command $cmd, $label, array $args){
 		switch(strtolower($cmd)){
 		case 'prefix':
-//			if($sender instanceof Player AND $sender->getName()!=='Angel_XX')return $sender->sendMessage("§l§a[LTcraft温馨提示]§c权限不够");
-			if(count($args)<2)return $sender->sendMessage("§l§a[LTcraft温馨提示]§c用法:/修改称号 ID 称号");
+//			if($sender instanceof Player AND $sender->getName()!=='Angel_XX')return $sender->sendMessage("§l§a[提示]§c权限不够");
+			if(count($args)<2)return $sender->sendMessage("§l§a[提示]§c用法:/修改称号 ID 称号");
 			$target=$this->getServer()->getPlayer($args[0]);
 			if($target){
 				array_shift($args);
 				$prefix=implode(" ", $args);
 				$target->setPrefix(self::merge_spaces($prefix));
 				Popup::getInstance()->updateNameTag($target);
-				$sender->sendMessage("§l§a[LTcraft温馨提示]§a修改成功!");
-			}else $sender->sendMessage("§l§a[LTcraft温馨提示]§c玩家不在线！");
+				$sender->sendMessage("§l§a[提示]§a修改成功!");
+			}else $sender->sendMessage("§l§a[提示]§c玩家不在线！");
 			break;
 		case '强制命令':
 //			if($sender instanceof Player AND $sender->getName()!=='Angel_XX')return;
-			if(count($args)<2)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法/强制命令 玩家 命令');
+			if(count($args)<2)return $sender->sendMessage('§l§a[提示]§c用法/强制命令 玩家 命令');
 			$player=$this->getServer()->getPlayer($args[0]);
-			if(!$player)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c目标不在线');
+			if(!$player)return $sender->sendMessage('§l§a[提示]§c目标不在线');
 			array_shift($args);
 			$this->getServer()->dispatchCommand($player, implode(" ", $args));
-			$sender->sendMessage('§l§a[LTcraft温馨提示]§a执行成功');
+			$sender->sendMessage('§l§a[提示]§a执行成功');
 		break;
 		case 'setip':
 //			if($sender instanceof Player AND $sender->getName()!=='Angel_XX')return;
-			if(count($args)<1)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法/setip ip');
+			if(count($args)<1)return $sender->sendMessage('§l§a[提示]§c用法/setip ip');
 			$this->getServer()->getRakLibInterface()->getInterface()->server->pushMainToThreadPacket('WEDsetip€'.$args[0]);
 		break;
 		case '强制说话':
 //			if($sender instanceof Player AND $sender->getName()!=='Angel_XX')return;
-			if(count($args)<2)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法/强制说话 玩家 内容');
+			if(count($args)<2)return $sender->sendMessage('§l§a[提示]§c用法/强制说话 玩家 内容');
 			$player=$this->getServer()->getPlayer($args[0]);
-			if(!$player)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c目标不在线');
+			if(!$player)return $sender->sendMessage('§l§a[提示]§c目标不在线');
 			array_shift($args);
 			Popup::getInstance()->onPlayerChat(new PlayerChatEvent($player,implode(" ", $args)));
-			$sender->sendMessage('§l§a[LTcraft温馨提示]§a执行成功');
+			$sender->sendMessage('§l§a[提示]§a执行成功');
 		break;
 		/*
 		case '锁':
-			if($sender->isOp())return $sender->sendMessage('§l§a[LTcraft温馨提示]§cOP禁止此操作！');
+			if($sender->isOp())return $sender->sendMessage('§l§a[提示]§cOP禁止此操作！');
 			$this->locks[$sender->getName()]='lock';
-			$sender->sendMessage('§l§a[LTcraft温馨提示]§a请点击要锁的箱子!');
+			$sender->sendMessage('§l§a[提示]§a请点击要锁的箱子!');
 		break;
 		case '开':
-			if($sender->isOp() and $sender->getName()!=='Angel_XX')return $sender->sendMessage('§l§a[LTcraft温馨提示]§cOP禁止此操作！');
+			if($sender->isOp() and $sender->getName()!=='Angel_XX')return $sender->sendMessage('§l§a[提示]§cOP禁止此操作！');
 			$this->locks[$sender->getName()]='unlock';
-			$sender->sendMessage('§l§a[LTcraft温馨提示]§a请点击要解锁的箱子!');
+			$sender->sendMessage('§l§a[提示]§a请点击要解锁的箱子!');
 		break;
 		*/
 		case 'bt'://上次传送点
 			if($sender->lastPos!==null){
 				if(!$sender->lastPos->getLevel()->isClosed()){
 					if($sender->teleport($sender->lastPos,null,null,true))
-					$sender->sendMessage('§l§a[LTcraft温馨提示]§a传送成功！');
-				}else $sender->sendMessage('§l§a[LTcraft温馨提示]§a目标失效！');
-			}else $sender->sendMessage('§l§a[LTcraft温馨提示]§c没有记录。');
+					$sender->sendMessage('§l§a[提示]§a传送成功！');
+				}else $sender->sendMessage('§l§a[提示]§a目标失效！');
+			}else $sender->sendMessage('§l§a[提示]§c没有记录。');
 		break;
 		case 'sign':
-			if(!($sender instanceof Player) or !isset($args[1]) or !is_numeric($args[0]))return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法:/sign 行数[1-4] 内容');
+			if(!($sender instanceof Player) or !isset($args[1]) or !is_numeric($args[0]))return $sender->sendMessage('§l§a[提示]§c用法:/sign 行数[1-4] 内容');
 			array_shift($args);
 			$this->sign[$sender->getName()]=[(int)$args[0], implode(" ", $args)];
-			$sender->sendMessage('§l§a[LTcraft温馨提示]§a请点击木牌!');
+			$sender->sendMessage('§l§a[提示]§a请点击木牌!');
 		break;
 		case 'addcount'://增加地皮数量
 			if($sender instanceof Player or !isset($args[0]))return;
@@ -1131,31 +1131,31 @@ class Main extends PluginBase implements Listener{
 		case 'empty'://清空背包
 			if(isset($args[0]) and $args[0]==strtolower($sender->getName())){
 				$sender->getInventory()->ClearAll();
-				$sender->sendMessage('§l§a[LTcraft温馨提示]§a清理完成');
+				$sender->sendMessage('§l§a[提示]§a清理完成');
 			}else{
-				$sender->sendMessage('§l§a[LTcraft温馨提示]§a确认清空背包请输入/empty '.strtolower($sender->getName()));
+				$sender->sendMessage('§l§a[提示]§a确认清空背包请输入/empty '.strtolower($sender->getName()));
 			}
 		break;
 //		case 'drop'://丢弃开关
 //			$this->drop[$sender->getName()] = time();
-//			$sender->sendMessage('§l§a[LTcraft温馨提示]§a开启丢弃特殊物品成功,你可以在30内任意丢弃物品！');
-//			$sender->sendMessage('§l§c[LTcraft温馨警告]§e为什么输入这个指令才能丢弃？§c因为经典UI很容易不小心丢武器！§d这30秒最好原地静止等待结束!');
+//			$sender->sendMessage('§l§a[提示]§a开启丢弃特殊物品成功,你可以在30内任意丢弃物品！');
+//			$sender->sendMessage('§l§c[警告]§e为什么输入这个指令才能丢弃？§c因为经典UI很容易不小心丢武器！§d这30秒最好原地静止等待结束!');
 //		break;
 		case 'setname'://设置手持物品名字
 //			if($sender instanceof Player AND $sender->getName()!=='Angel_XX')return;
-			if(count($args)<2)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法/setname 玩家 名字');
+			if(count($args)<2)return $sender->sendMessage('§l§a[提示]§c用法/setname 玩家 名字');
 			$player=$this->getServer()->getPlayer($args[0]);
 			if($player){
 				$hand=$player->getInventory()->getItemInHand();
 				$hand->setCustomName($args[1]);
 				$hand->setNamedTag($hand->getNamedTag());
 				$player->getInventory()->setItemInHand($hand);
-				return $sender->sendMessage('§l§a[LTcraft温馨提示]§a完成');
-			}else return $sender->sendMessage('§l§a[LTcraft温馨提示]§c玩家不在线');
+				return $sender->sendMessage('§l§a[提示]§a完成');
+			}else return $sender->sendMessage('§l§a[提示]§c玩家不在线');
 		break;
 		case 'setmana'://设置手持物Mana
 //			if($sender instanceof Player AND $sender->getName()!=='Angel_XX')return;
-			if(count($args)<2)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法/setMana 玩家 Mana');
+			if(count($args)<2)return $sender->sendMessage('§l§a[提示]§c用法/setMana 玩家 Mana');
 			$player=$this->getServer()->getPlayer($args[0]);
 			if($player){
 				$hand=$player->getInventory()->getItemInHand();
@@ -1163,13 +1163,13 @@ class Main extends PluginBase implements Listener{
 				if ($hand instanceof Mana){
                     $hand->addMana($mana>$hand->getMaxMana()?$hand->getMaxMana():$mana);
                     $player->getInventory()->setItemInHand($hand);
-                    return $sender->sendMessage('§l§a[LTcraft温馨提示]§a完成');
+                    return $sender->sendMessage('§l§a[提示]§a完成');
                 }
-                return $sender->sendMessage('§l§a[LTcraft温馨提示]§a清手持魔法物品！');
-			}else return $sender->sendMessage('§l§a[LTcraft温馨提示]§c玩家不在线');
+                return $sender->sendMessage('§l§a[提示]§a清手持魔法物品！');
+			}else return $sender->sendMessage('§l§a[提示]§c玩家不在线');
 		break;
 		case 'id'://手持ID
-			return $sender->sendMessage(('§l§a[LTcraft温馨提示]§a手持:'.$sender->getInventory()->getItemInHand()->getId().':'.$sender->getInventory()->getItemInHand()->getDamage()));
+			return $sender->sendMessage(('§l§a[提示]§a手持:'.$sender->getInventory()->getItemInHand()->getId().':'.$sender->getInventory()->getItemInHand()->getDamage()));
 		break;
 		case 'sj'://新手教程
 		// if(isset($args[0]))
@@ -1230,12 +1230,12 @@ class Main extends PluginBase implements Listener{
 				$this->cleanTime(10);
 		break;
 		case 'admin':
-//			if($sender instanceof Player AND $sender->getName()!='Angel_XX')return $sender->sendMessage('§l§a[LTcraft温馨提示]§c你没有这个权限！');
-			if(!isset($args[0]))return $sender->sendMessage('§l§a[LTcraft温馨提示]§c未知命令！');
+//			if($sender instanceof Player AND $sender->getName()!='Angel_XX')return $sender->sendMessage('§l§a[提示]§c你没有这个权限！');
+			if(!isset($args[0]))return $sender->sendMessage('§l§a[提示]§c未知命令！');
 			switch(strtolower($args[0])){
 				case 'ct'://清空这个世界的tile
 					foreach($sender->getLevel()->getTiles() as $tile)$tile->close();
-					return $sender->sendMessage('§l§a[LTcraft温馨提示]§c完成');
+					return $sender->sendMessage('§l§a[提示]§c完成');
 				break;
 				case 'upc'://每日刷新
 					$this->updateHeadCountConfig();
@@ -1246,7 +1246,7 @@ class Main extends PluginBase implements Listener{
 					// }
 				break;
 				case 'addm'://增加菜单使用权
-					if(count($args)<3)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法/admin addm id 菜单 天数');
+					if(count($args)<3)return $sender->sendMessage('§l§a[提示]§c用法/admin addm id 菜单 天数');
 					$player=$this->getServer()->getPlayer($args[1]);
 					if($player){
 						if($args[3]==0){
@@ -1254,7 +1254,7 @@ class Main extends PluginBase implements Listener{
 						}else{
 							$player->addMenu($args[2], time()+86400*$args[3]);
 						}
-					}else return $sender->sendMessage('§l§a[LTcraft温馨提示]§c玩家不在线');
+					}else return $sender->sendMessage('§l§a[提示]§c玩家不在线');
 				break;
 				case 'cmode'://切换模式
 					$mode = $this->config->get("模式", 0);
@@ -1274,86 +1274,86 @@ class Main extends PluginBase implements Listener{
 						}	
 					}
 					$this->config->save();
-					$sender->sendMessage(('§l§a[LTcraft温馨提示]§a成功更改模式!'));
+					$sender->sendMessage(('§l§a[提示]§a成功更改模式!'));
 				break;
 				case 'ais'://为目标增加背包空间
-					if(count($args)<2)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法/admin ais id');
+					if(count($args)<2)return $sender->sendMessage('§l§a[提示]§c用法/admin ais id');
 					$player=$this->getServer()->getPlayer($args[1]);
 					if($player){
-						if($player->getGamemode()!==0)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c目标不是生存！');
+						if($player->getGamemode()!==0)return $sender->sendMessage('§l§a[提示]§c目标不是生存！');
 						if(!self::addInvSlot($player))
-							$sender->sendMessage('§l§a[LTcraft温馨提示]§c目标背包已达最大值！');
-					}else return $sender->sendMessage('§l§a[LTcraft温馨提示]§c玩家不在线');
+							$sender->sendMessage('§l§a[提示]§c目标背包已达最大值！');
+					}else return $sender->sendMessage('§l§a[提示]§c玩家不在线');
 				break;
 				case 'amt'://添加移动粒子
-					if(count($args)<2)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法/admin amt id');
+					if(count($args)<2)return $sender->sendMessage('§l§a[提示]§c用法/admin amt id');
 					$all=$this->playerConfig->get('爱心粒子',[]);
 					if(isset($all[strtolower($args[1])])){
 						unset($all[strtolower($args[1])]);
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§c成功删除！');
+						$sender->sendMessage('§l§a[提示]§c成功删除！');
 					}else{
 						$all[strtolower($args[1])]=true;
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§c成功添加！');
+						$sender->sendMessage('§l§a[提示]§c成功添加！');
 					}
 					$this->playerConfig->set('爱心粒子',$all);
 				break;
 				case 'setv'://设置最大视野
-					if(count($args)<2)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法/admin setv id 视野[4-14]');
+					if(count($args)<2)return $sender->sendMessage('§l§a[提示]§c用法/admin setv id 视野[4-14]');
 					$all=$this->playerConfig->get('视野范围',[]);
 					if($args[2]==4 and isset($all[strtolower($args[1])])){
 						unset($all[strtolower($args[1])]);
 					}else{
 						$all[strtolower($args[1])]=$args[2];
 					}
-					$sender->sendMessage('§l§a[LTcraft温馨提示]§c修改成功！');
+					$sender->sendMessage('§l§a[提示]§c修改成功！');
 					$this->playerConfig->set('视野范围',$all);
 					$this->playerConfig->save();
 				break;
 				case 'seth'://设置人头
-					if(count($args)<2)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法/admin seth id 人头');
+					if(count($args)<2)return $sender->sendMessage('§l§a[提示]§c用法/admin seth id 人头');
 					$this->Head->set(strtolower($args[1]), $args[2]);
-					$sender->sendMessage('§l§a[LTcraft温馨提示]§c修改成功！');
+					$sender->sendMessage('§l§a[提示]§c修改成功！');
 				break;
 				case 'amj'://添加移动监测
-					if(count($args)<2)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法/admin amt id');
+					if(count($args)<2)return $sender->sendMessage('§l§a[提示]§c用法/admin amt id');
 					$player=$this->getServer()->getPlayerExact($args[1]);
 					if($player){
 						$name=strtolower($player->getName());
 						if($player->moveCheck===false){
 							$player->moveCheck=true;
-							$sender->sendMessage('§l§a[LTcraft温馨提示]§c成功添加！');
+							$sender->sendMessage('§l§a[提示]§c成功添加！');
 							$this->getServer()->dataBase->pushService('1'.chr(2)."update user set moveCheck=1 where name='{$name}'");
 						}else{
 							$player->moveCheck=false;
-							$sender->sendMessage('§l§a[LTcraft温馨提示]§c成功删除！');
+							$sender->sendMessage('§l§a[提示]§c成功删除！');
 							$this->getServer()->dataBase->pushService('1'.chr(2)."update user set moveCheck=0 where name='{$name}'");
 						}
 					}else{
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§c玩家不在线');
+						$sender->sendMessage('§l§a[提示]§c玩家不在线');
 					}
 				break;
 				case 'ast'://添加击杀特效
-					if(count($args)<2)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法/admin ast id');
+					if(count($args)<2)return $sender->sendMessage('§l§a[提示]§c用法/admin ast id');
 					$all=$this->playerConfig->get('击杀特效',[]);
 					if(isset($all[strtolower($args[1])])){
 						unset($all[strtolower($args[1])]);
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§c成功删除！');
+						$sender->sendMessage('§l§a[提示]§c成功删除！');
 					}else{
 						$all[strtolower($args[1])]=true;
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§c成功添加！');
+						$sender->sendMessage('§l§a[提示]§c成功添加！');
 					}
 					$this->playerConfig->set('击杀特效',$all);
 					$this->playerConfig->save();
 				break;
 				// case 'adt'://添加受伤特效
-					// if(count($args)<2)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法/admin adt id');
+					// if(count($args)<2)return $sender->sendMessage('§l§a[提示]§c用法/admin adt id');
 					// $all=$this->conf->get('受伤爆炸',[]);
 					// if(isset($all[strtolower($args[1])])){
 						// unset($all[strtolower($args[1])]);
-						// $sender->sendMessage('§l§a[LTcraft温馨提示]§c成功删除！');
+						// $sender->sendMessage('§l§a[提示]§c成功删除！');
 					// }else{
 						// $all[strtolower($args[1])]=true;
-						// $sender->sendMessage('§l§a[LTcraft温馨提示]§c成功添加！');
+						// $sender->sendMessage('§l§a[提示]§c成功添加！');
 					// }
 					// $this->conf->set('受伤爆炸',$all);
 					// $this->conf->save();
@@ -1362,22 +1362,22 @@ class Main extends PluginBase implements Listener{
 					if($this->autoRestart){
 						$this->autoRestart=false;
 						$this->config->set('自动重启',false);
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§a关闭自动重启');
+						$sender->sendMessage('§l§a[提示]§a关闭自动重启');
 					}else{
 						$this->autoRestart=true;
 						$this->config->set('自动重启',true);
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§a开启自动重启');
+						$sender->sendMessage('§l§a[提示]§a开启自动重启');
 					}
 				break;
 				case 'alu'://刷新无用世界
 					if(self::$allLevelUpdate){
 						self::$allLevelUpdate=false;
 						$this->config->set('刷新全部世界开关',false);
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§a刷新生存世界');
+						$sender->sendMessage('§l§a[提示]§a刷新生存世界');
 					}else{
 						self::$allLevelUpdate=true;
 						$this->config->set('刷新全部世界开关',true);
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§a刷新全部世界');
+						$sender->sendMessage('§l§a[提示]§a刷新全部世界');
 					}
 				break;
 				case 'tpall'://将所有人拉倒身边
@@ -1398,7 +1398,7 @@ class Main extends PluginBase implements Listener{
 				/*
 				case 'setop'://设置op
 					if(count($args)<3){
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§c未知命令！');
+						$sender->sendMessage('§l§a[提示]§c未知命令！');
 						unset($sender,$cmd,$label,$args);
 						return;
 					}
@@ -1412,13 +1412,13 @@ class Main extends PluginBase implements Listener{
 							$player->getEnderChestInventory()->ClearAll();
 							$this->getServer()->removeOp($player->getName());
 							$player->setFlyTime(0);
-							$sender->sendMessage('§l§a[LTcraft温馨提示]§c你不再是OP');
+							$sender->sendMessage('§l§a[提示]§c你不再是OP');
 							$this->ops->remove(strtolower($args[1]));
 							$this->ops->save();
 						}else{
 							$this->ops->set(strtolower($args[1]),1);
 							$this->ops->save();
-							$sender->sendMessage('§l§a[LTcraft温馨提示]§a成功将玩家'.$args[1].'移除');
+							$sender->sendMessage('§l§a[提示]§a成功将玩家'.$args[1].'移除');
 						}
 					}else{
 						if($args[2]==0){
@@ -1428,12 +1428,12 @@ class Main extends PluginBase implements Listener{
 						}
 						$this->ops->save();
 						$this->getServer()->addOp($op);
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§a成功将玩家'.$args[1].'添加至名单');
+						$sender->sendMessage('§l§a[提示]§a成功将玩家'.$args[1].'添加至名单');
 					}
 				break;
 				*/
 				default:
-					return $sender->sendMessage('§l§a[LTcraft温馨提示]§c未知命令！');
+					return $sender->sendMessage('§l§a[提示]§c未知命令！');
 				break;
 			}
 			break;
@@ -1563,6 +1563,9 @@ class Main extends PluginBase implements Listener{
 					}
 					$this->updateRanking();
 				}
+                if($entity->getName()=='Angel_XX'){
+                    $damager->newProgress('惊天动地', '', 'challenge');
+                }
 				if(isset($this->playerConfig->get('击杀特效',[])[strtolower($damager->getName())])){
 					self::dieParticle($entity->getX(), $entity->getY(), $entity->getZ(), $entity->getLevel());
 				}
@@ -1582,7 +1585,7 @@ class Main extends PluginBase implements Listener{
 			}
 			if(isset($this->status[$Yname])){
 				unset($this->status[$Yname]);
-				return $player->sendMessage("§l§a[LTcraft温馨提示]§e你退出了！");
+				return $player->sendMessage("§l§a[提示]§e你退出了！");
 			}
 		}
 		// $this->target=$ms;
@@ -1592,14 +1595,14 @@ class Main extends PluginBase implements Listener{
 			switch($this->status[$Yname]){
 				case 'rename':
 					$hand=$player->getInventory()->getItemInHand();
-					if(\LTItem\Main::isThisItem($hand))return $player->sendMessage("§l§a[LTcraft温馨提示]§c特殊物品不能命名");
-					if(strlen(preg_replace('#§.#','',$ms))>=30)return $player->sendMessage("§l§a[LTcraft温馨提示]§c长度不能超过30!");
-					if(EconomyAPI::getInstance()->myMoney($player)<10000)return $player->sendMessage("§l§a[LTcraft温馨提示]§c你没有10000橙币！!");
+					if(\LTItem\Main::isThisItem($hand))return $player->sendMessage("§l§a[提示]§c特殊物品不能命名");
+					if(strlen(preg_replace('#§.#','',$ms))>=30)return $player->sendMessage("§l§a[提示]§c长度不能超过30!");
+					if(EconomyAPI::getInstance()->myMoney($player)<10000)return $player->sendMessage("§l§a[提示]§c你没有10000橙币！!");
 					$hand->setCustomName($ms);
 					$hand->setNamedTag($hand->getNamedTag());
 					$player->getInventory()->setItemInHand($hand);
 					EconomyAPI::getInstance()->reduceMoney($player, 10000, '物品修改名字');
-					$player->sendMessage("§l§a[LTcraft温馨提示]§a命名完成，扣除10000橙币！");
+					$player->sendMessage("§l§a[提示]§a命名完成，扣除10000橙币！");
 					unset($this->status[$Yname]);
 				break;
 				/*
@@ -1607,109 +1610,109 @@ class Main extends PluginBase implements Listener{
 					$ms=(int)$ms;
 					if($ms==0){
 						unset($this->status[$Yname]);
-						return $player->sendMessage("§l§a[LTcraft温馨提示]§a成功取消购买");
+						return $player->sendMessage("§l§a[提示]§a成功取消购买");
 					}
-					if($ms<1)return $player->sendMessage("§l§a[LTcraft温馨提示]§c请输入整数 并且大于等于1");
+					if($ms<1)return $player->sendMessage("§l§a[提示]§c请输入整数 并且大于等于1");
 					$NeedMoney=100000*$ms;
-					if(EconomyAPI::getInstance()->myMoney($player)<$NeedMoney)return $player->sendMessage("§l§a[LTcraft温馨提示]§c你没有足够的钱来飞行");
+					if(EconomyAPI::getInstance()->myMoney($player)<$NeedMoney)return $player->sendMessage("§l§a[提示]§c你没有足够的钱来飞行");
 					EconomyAPI::getInstance()->reduceMoney($player, $NeedMoney, '购买飞行');
 					$player->setFlyTime(strtotime("+".$ms." day"));
 					$player->checkFly();
-					$player->sendMessage("§l§a[LTcraft温馨提示]§a成功花费{$NeedMoney}金币购买了{$ms}天的飞行");
+					$player->sendMessage("§l§a[提示]§a成功花费{$NeedMoney}金币购买了{$ms}天的飞行");
 					unset($this->status[$Yname]);
 				break;
 				*/
 				case 'shelves':
-					if($player->isOp() or $player->getGamemode()==1)return $player->sendMessage("§l§a[LTcraft温馨提示]§cOP或创造不能上架！");
+					if($player->isOp() or $player->getGamemode()==1)return $player->sendMessage("§l§a[提示]§cOP或创造不能上架！");
 					$hand=$player->getInventory()->getItemInHand();
 					if($hand instanceof \LTItem\LTItem and !($hand instanceof \LTItem\Mana\Mana)){
 						if($hand instanceof Weapon){
-							if(!$hand->canUse($player))return $player->sendMessage("§l§a[LTcraft温馨提示]§c这个物品不是你的！");
+							if(!$hand->canUse($player))return $player->sendMessage("§l§a[提示]§c这个物品不是你的！");
 							if($hand->getAttribute('全员可用', true)==false){
 								if(Open::getNumber($player, ['材料','武器解绑水晶',1])){
 									Open::removeItem($player, ['材料','武器解绑水晶',1]);
-									if($hand->getWlevel()=='定制')return $player->sendMessage("§l§a[LTcraft温馨提示]§a定制武器不可以上架交易所哦~");
+									if($hand->getWlevel()=='定制')return $player->sendMessage("§l§a[提示]§a定制武器不可以上架交易所哦~");
 								}else{
-									return $player->sendMessage("§l§a[LTcraft温馨提示]§c你背包里没有武器解绑水晶哦~");
+									return $player->sendMessage("§l§a[提示]§c你背包里没有武器解绑水晶哦~");
 								}
 							}
 						}elseif($hand instanceof Armor){
-							if(!$hand->canUse($player))return $player->sendMessage("§l§a[LTcraft温馨提示]§c这个物品不是你的！");
+							if(!$hand->canUse($player))return $player->sendMessage("§l§a[提示]§c这个物品不是你的！");
 							if($hand->getAttribute('全员可用', true)==false){
 								if(Open::getNumber($player, ['材料','盔甲解绑水晶',1])){
 									Open::removeItem($player, ['材料','盔甲解绑水晶',1]);
 								}else{
-									return $player->sendMessage("§l§a[LTcraft温馨提示]§c你背包里没有盔甲解绑水晶哦~");
+									return $player->sendMessage("§l§a[提示]§c你背包里没有盔甲解绑水晶哦~");
 								}
 							}
 						}
-						if($hand instanceof Material and $hand->getLTName()==='§a点击地面打开菜单')return $player->sendMessage("§l§a[LTcraft温馨提示]§c这个材料禁止上架！~");
+						if($hand instanceof Material and $hand->getLTName()==='§a点击地面打开菜单')return $player->sendMessage("§l§a[提示]§c这个材料禁止上架！~");
 						$Exchange=LTMenu::getInstance()->getExchange();
 						if(($re=$Exchange->addGood($hand, $player, $ms))===true){
 							$player->getInventory()->setItemInHand(Item::get(0));
-							$player->sendMessage("§l§a[LTcraft温馨提示]§c上架成功!");
+							$player->sendMessage("§l§a[提示]§c上架成功!");
 						}else{
-							$player->sendMessage("§l§a[LTcraft温馨提示]§c上架失败".$re);
+							$player->sendMessage("§l§a[提示]§c上架失败".$re);
 						}
 					}else{
-						return $player->sendMessage("§l§a[LTcraft温馨提示]§c你只能出售类型:[近战 远程 通用 材料 盔甲 饰品]!");
+						return $player->sendMessage("§l§a[提示]§c你只能出售类型:[近战 远程 通用 材料 盔甲 饰品]!");
 					}
 					unset($this->status[$Yname]);
 				break;
 				case 'buyPreFix':
-					if(EconomyAPI::getInstance()->myMoney($player)<10000)return $player->sendMessage("§l§a[LTcraft温馨提示]§c你没有足够的钱来称号");
-					if(strlen(preg_replace('#§.#','',$ms))>=30)return $player->sendMessage("§l§a[LTcraft温馨提示]§c长度不能超过30!");
+					if(EconomyAPI::getInstance()->myMoney($player)<10000)return $player->sendMessage("§l§a[提示]§c你没有足够的钱来称号");
+					if(strlen(preg_replace('#§.#','',$ms))>=30)return $player->sendMessage("§l§a[提示]§c长度不能超过30!");
 					$player->setPrefix(self::merge_spaces($ms));
 					EconomyAPI::getInstance()->reduceMoney($player, 10000, '购买称号');
-					$player->sendMessage("§l§a[LTcraft温馨提示]§a购买成功");
+					$player->sendMessage("§l§a[提示]§a购买成功");
 					Popup::getInstance()->updateNameTag($player);
 					unset($this->status[$Yname]);
 				break;
 				case 'binding':
 					$hand=$player->getInventory()->getItemInHand();
-					if(!($hand instanceof \LTItem\LTItem) or $hand instanceof Material or $hand instanceof BaseOrnaments)return $player->sendMessage("§l§a[LTcraft温馨提示]§c请手持武器或者盔甲！");
+					if(!($hand instanceof \LTItem\LTItem) or $hand instanceof Material or $hand instanceof BaseOrnaments)return $player->sendMessage("§l§a[提示]§c请手持武器或者盔甲！");
 					if(!$hand->canUse($player) and !$player->isOp()){
 						unset($this->status[$Yname]);
-						return $player->sendMessage("§l§a[LTcraft温馨提示]§c这个物品不是你的！");
+						return $player->sendMessage("§l§a[提示]§c这个物品不是你的！");
 					}
 					if($this->getServer()->getPlayerExact($ms)===null){
 						unset($this->status[$Yname]);
-						return $player->sendMessage("§l§a[LTcraft温馨提示]§a为了准确性请确认目标玩家在线!");
+						return $player->sendMessage("§l§a[提示]§a为了准确性请确认目标玩家在线!");
 					}
 					if($hand instanceof Weapon){
 						if(Open::getNumber($player, ['材料','武器解绑水晶',1])){
 							Open::removeItem($player, ['材料','武器解绑水晶',1]);
 							if($hand->getWlevel()=='定制'){
 								unset($this->status[$Yname]);
-								return $player->sendMessage("§l§a[LTcraft温馨提示]§a定制武器不可以解绑哦~");
+								return $player->sendMessage("§l§a[提示]§a定制武器不可以解绑哦~");
 							}
 							$hand=$hand->setBinding($ms);
 							$player->getInventory()->setItemInHand($hand);
-							$player->sendMessage("§l§a[LTcraft温馨提示]§a更换绑定成功~");
+							$player->sendMessage("§l§a[提示]§a更换绑定成功~");
 						}else{
-							$player->sendMessage("§l§a[LTcraft温馨提示]§c你背包里没有武器解绑水晶哦~");
+							$player->sendMessage("§l§a[提示]§c你背包里没有武器解绑水晶哦~");
 						}
 					}elseif($hand instanceof Armor){
 						if(Open::getNumber($player, ['材料','盔甲解绑水晶',1])){
 							Open::removeItem($player, ['材料','盔甲解绑水晶',1]);
 							$hand=$hand->setBinding($ms);
 							$player->getInventory()->setItemInHand($hand);
-							$player->sendMessage("§l§a[LTcraft温馨提示]§a更换绑定成功~");
+							$player->sendMessage("§l§a[提示]§a更换绑定成功~");
 						}else{
-							$player->sendMessage("§l§a[LTcraft温馨提示]§c你背包里没有盔甲解绑水晶哦~");
+							$player->sendMessage("§l§a[提示]§c你背包里没有盔甲解绑水晶哦~");
 						}
 					}else{
-						$player->sendMessage("§l§a[LTcraft温馨提示]§c更换绑定仅限武器和盔甲哦~");
+						$player->sendMessage("§l§a[提示]§c更换绑定仅限武器和盔甲哦~");
 					}
 					unset($this->status[$Yname]);
 				break;
 				case 'ModifyPreFix':
 					$money=EconomyAPI::getInstance()->myMoney($player);
-					if(3000>$money)return $player->sendMessage("§l§a[LTcraft温馨提示]§c你没有足够的钱来修改称号");
-					if(strlen(preg_replace('#§.#','',$ms))>=30)return $player->sendMessage("§l§a[LTcraft温馨提示]§c长度不能超过30!");
+					if(3000>$money)return $player->sendMessage("§l§a[提示]§c你没有足够的钱来修改称号");
+					if(strlen(preg_replace('#§.#','',$ms))>=30)return $player->sendMessage("§l§a[提示]§c长度不能超过30!");
 					$player->setPrefix(self::merge_spaces($ms));
 					EconomyAPI::getInstance()->reduceMoney($player, 3000, '修改称号');
-					$player->sendMessage("§l§a[LTcraft温馨提示]§a修改成功");
+					$player->sendMessage("§l§a[提示]§a修改成功");
 					Popup::getInstance()->updateNameTag($player);
 					unset($this->status[$Yname]);
 				break;

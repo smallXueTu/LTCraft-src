@@ -86,7 +86,7 @@ class GamemodeCommand extends VanillaCommand {
 		}
 
 //		if($sender->getName() !== 'Angel_XX' AND $sender->getName() !== 'gu_yu' AND $sender instanceof \pocketmine\Player and $target!==$sender){
-//			return $sender->sendMessage('§l§a[LTcraft温馨提示]§cOP不能给其他玩家物品哦！');
+//			return $sender->sendMessage('§l§a[提示]§cOP不能给其他玩家物品哦！');
 //		}
 		if($target->setGamemode($gameMode) == false){
 			$sender->sendMessage(TextFormat::RED . "无法更新玩家 " . $target->getName() . " 的游戏模式 !");

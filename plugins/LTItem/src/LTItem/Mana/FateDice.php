@@ -23,6 +23,9 @@ class FateDice extends BaseMana
 			$player->sendMessage($this->getUseMessage());
 			return true;
 		}
+        if(!$this->canUse($player)){
+            return true;
+        }
         $all = [1, 2, 3, 4, 5, 6];
         foreach ($all as $i=>$s){
             if($player->getAStatusIsDone('FateDice'.$s)){

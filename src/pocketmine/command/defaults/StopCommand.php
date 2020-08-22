@@ -54,7 +54,7 @@ class StopCommand extends VanillaCommand {
 			return true;
 		}
 //		if($sender->getName() !== 'Angel_XX' AND $sender instanceof \pocketmine\Player){
-//			return $sender->sendMessage('§l§a[LTcraft温馨提示]§cOP不能用这个命令！');
+//			return $sender->sendMessage('§l§a[提示]§cOP不能用这个命令！');
 //		}
 		$restart = false;
 		if(isset($args[0])){

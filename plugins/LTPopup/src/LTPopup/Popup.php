@@ -182,7 +182,7 @@ class Popup extends PluginBase implements Listener{
 		case '禁言':
 			if(count($args)<2)return $sender->sendMessage('§a[LTcraft温馨提示]§c用法/禁言 玩家 秒');
 			$player=$this->getServer()->getPlayer($args[0]);
-			if(!$player)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c目标不在线');
+			if(!$player)return $sender->sendMessage('§l§a[提示]§c目标不在线');
 			$this->SayManager[$player->getName()]->setShield((int)$args[1]);
 			$player->sendMessage('§a[LTcraft温馨提示]§e你被禁言'.(int)$args[1].'秒');
 			$sender->sendMessage('§a[LTcraft温馨提示]§a禁言成功');

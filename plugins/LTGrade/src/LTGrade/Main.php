@@ -106,7 +106,7 @@ class Main extends PluginBase{
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args){
 		if($command=='task'){
 			$GTo=$sender->getGTo();
-			if($GTo>=8)return $sender->sendMessage('§l§a[LTcraft温馨提示]§a你已经全部毕业了！');
+			if($GTo>=8)return $sender->sendMessage('§l§a[提示]§a你已经全部毕业了！');
 			if($GTo<=0){
 				$sender->setGTo(1);
 				$GTo=1;
@@ -124,31 +124,32 @@ class Main extends PluginBase{
 			}
 			if(count($err)<=0){
 				$sender->setGTo($GTo+1);
-				$sender->sendMessage('§l§a[LTcraft温馨提示]§a恭喜你,你满足F'.$GTo.'毕业要求 成功毕业！');
-				$this->getServer()->BroadCastMessage('§l§a[LTcraft全服公告]§a恭喜'.$sender->getName().'完成F'.$GTo.'毕业要求 成功毕业！');
+				$sender->newProgress('Done Level '.$GTo, '', 'challenge');
+				$sender->sendMessage('§l§a[提示]§a恭喜你,你满足F'.$GTo.'毕业要求 成功毕业！');
+//				$this->getServer()->BroadCastMessage('§l§a[LTcraft全服公告]§a恭喜'.$sender->getName().'完成F'.$GTo.'毕业要求 成功毕业！');
 				if($GTo==1){
 					$sender->getTask()->setTask(9);
 				}
 				switch($GTo){
 					case 1:
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§a恭喜你解锁了菜单新功能:§c材料兑换中心§a不用点击NPC打开了,可以直接打开所有副本的兑换菜单！');
+						$sender->sendMessage('§l§a[提示]§a恭喜你解锁了菜单新功能:§c材料兑换中心§a不用点击NPC打开了,可以直接打开所有副本的兑换菜单！');
 					break;
 					case 2:
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§a恭喜你解锁了菜单新功能:§c吞垃圾菜单§a当你有垃圾的时候可以在这里丢弃~');
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§a恭喜你解锁了菜单新功能:§c交易所§a你可以购买或者出售一些材料~');
+						$sender->sendMessage('§l§a[提示]§a恭喜你解锁了菜单新功能:§c吞垃圾菜单§a当你有垃圾的时候可以在这里丢弃~');
+						$sender->sendMessage('§l§a[提示]§a恭喜你解锁了菜单新功能:§c交易所§a你可以购买或者出售一些材料~');
 					break;
 					case 3:
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§a恭喜你解锁了菜单新功能:§c快捷末影箱§a您可以直接在背包打开末影箱了！');
+						$sender->sendMessage('§l§a[提示]§a恭喜你解锁了菜单新功能:§c快捷末影箱§a您可以直接在背包打开末影箱了！');
 					break;
 					case 4:
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§a恭喜你解锁了菜单新功能:§c菜单随身箱子§a如果你是VIP你可以使用这个菜单！');
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§a恭喜你解锁了菜单新功能:§c装备操作菜单§a当你镶嵌材料的时候，可以在这个菜单完成镶嵌操作！');
+						$sender->sendMessage('§l§a[提示]§a恭喜你解锁了菜单新功能:§c菜单随身箱子§a如果你是VIP你可以使用这个菜单！');
+						$sender->sendMessage('§l§a[提示]§a恭喜你解锁了菜单新功能:§c装备操作菜单§a当你镶嵌材料的时候，可以在这个菜单完成镶嵌操作！');
 					break;
 					case 5:
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§a恭喜你解锁了菜单新功能:§c饰品菜单§c当你有饰品的时候可以使用这个菜单！');
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§a恭喜你解锁了菜单新功能:§c武器熔炼坛§c暂时用不到');
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§a恭喜你解锁了菜单新功能:§c盔甲熔炼坛§c暂时用不到');
-						$sender->sendMessage('§l§a[LTcraft温馨提示]§a恭喜你解锁了菜单新功能:§c碎片熔炼坛§c暂时用不到');
+						$sender->sendMessage('§l§a[提示]§a恭喜你解锁了菜单新功能:§c饰品菜单§c当你有饰品的时候可以使用这个菜单！');
+						$sender->sendMessage('§l§a[提示]§a恭喜你解锁了菜单新功能:§c武器熔炼坛§c暂时用不到');
+						$sender->sendMessage('§l§a[提示]§a恭喜你解锁了菜单新功能:§c盔甲熔炼坛§c暂时用不到');
+						$sender->sendMessage('§l§a[提示]§a恭喜你解锁了菜单新功能:§c碎片熔炼坛§c暂时用不到');
 					break;
 				}
 				$sender->getTask()->action('毕业', ++$GTo);
@@ -227,13 +228,13 @@ class Main extends PluginBase{
 				foreach($err as $info){
 					$sender->sendMessage('§l§d'.$info);
 				}
-				$sender->sendMessage(('§l§a[LTcraft温馨提示]§c完成F'.$GTo.'毕业要求 你需要集齐一下物品:§d'.$needMess));
+				$sender->sendMessage(('§l§a[提示]§c完成F'.$GTo.'毕业要求 你需要集齐一下物品:§d'.$needMess));
 				$sender->sendMessage('§l§e[注意]§d请保证自己有权使用以上武器或盔甲，手拿着物品看下面提示即可~');
 			}
 			return;
 		}
 		$name=strtolower($sender->getName());
-		if(!isset($args[0]))return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法/grade me');
+		if(!isset($args[0]))return $sender->sendMessage('§l§a[提示]§c用法/grade me');
 		switch($args[0]){
 		case 'GT':
 			if($sender->getMainTask()<14){
@@ -250,22 +251,22 @@ class Main extends PluginBase{
 				}else{
 					$sender->getTask()->setTask(14);
 				}
-				$sender->sendMessage('§l§a[LTcraft温馨提示]§a已校准主线任务!');
+				$sender->sendMessage('§l§a[提示]§a已校准主线任务!');
 			}else{
-				$sender->sendMessage('§l§a[LTcraft温馨提示]§a无需校准!');
+				$sender->sendMessage('§l§a[提示]§a无需校准!');
 			}
 		break;
 		case '赐予魔法棍':
-			if($sender instanceof Player)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c这个命令只有控制台可以使用！');
-			if(!isset($args[1]))return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法:/grade 赐予魔法棍 ID');
+			if($sender instanceof Player)return $sender->sendMessage('§l§a[提示]§c这个命令只有控制台可以使用！');
+			if(!isset($args[1]))return $sender->sendMessage('§l§a[提示]§c用法:/grade 赐予魔法棍 ID');
 			$target=$this->server->getPlayer($args[1]);
-			if(!$target)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c目标不在线！');
+			if(!$target)return $sender->sendMessage('§l§a[提示]§c目标不在线！');
 			if($target->getAStatusIsDone('获得魔法棍'))return;
 			$item=LTItem::getInstance()->createMaterial('魔法棍');
 			if($target->getInventory()->canAddItem($item)){
 				$target->getInventory()->addItem($item);
 				$target->addAStatus('获得魔法棍');
-				$target->sendMessage('§l§a[LTcraft温馨提示]§l§a恭喜你获得魔法棍,已放入背包!');
+				$target->sendMessage('§l§a[提示]§l§a恭喜你获得魔法棍,已放入背包!');
 			}
 		break;
 		case 'me':
@@ -281,57 +282,57 @@ class Main extends PluginBase{
 			
 		break;
 		case '选择职业':
-			if(!isset($args[1]))return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法:/grade 选择职业 [刺客 或 战士 或 法师 或 牧师]');
+			if(!isset($args[1]))return $sender->sendMessage('§l§a[提示]§c用法:/grade 选择职业 [刺客 或 战士 或 法师 或 牧师]');
 			if($sender->getRole()!=='未选择'){
 				if(in_array($args[1], ['刺客', '战士', '法师', '牧师'])){
-					if(!Open::getNumber($sender, ['材料', '职业水晶', 3]))return $sender->sendMessage('§l§a[LTcraft温馨提示]§c更换失败，你需要职业水晶3个！');
+					if(!Open::getNumber($sender, ['材料', '职业水晶', 3]))return $sender->sendMessage('§l§a[提示]§c更换失败，你需要职业水晶3个！');
 					Open::removeItem($sender, ['材料', '职业水晶', 3]);
 				}
 			}
 			switch($args[1]){
 				case '刺客':
-					if($sender->getRole()=='刺客')return $sender->sendMessage('§l§a[LTcraft温馨提示]§c你当前已是这个职业!');
+					if($sender->getRole()=='刺客')return $sender->sendMessage('§l§a[提示]§c你当前已是这个职业!');
 					if($sender->getRole()=='战士'){
 						$sender->setMaxHealth($sender->getMaxHealth()-(int)$sender->getGrade());
 						$sender->setHealth($sender->getHealth());
 					}
 					$sender->setRole('刺客');
-					$sender->sendMessage('§l§a[LTcraft温馨提示]§a成功选择刺客为你的职业');
+					$sender->sendMessage('§l§a[提示]§a成功选择刺客为你的职业');
 				break;
 				case '战士':
-					if($sender->getRole()=='战士')return $sender->sendMessage('§l§a[LTcraft温馨提示]§c你当前已是这个职业!');
+					if($sender->getRole()=='战士')return $sender->sendMessage('§l§a[提示]§c你当前已是这个职业!');
 					$sender->setRole('战士');
 					$sender->setMaxHealth($sender->getMaxHealth()+(int)$sender->getGrade()/2);
 					$sender->setHealth($sender->getHealth());
-					$sender->sendMessage('§l§a[LTcraft温馨提示]§a成功选择战士为你的职业');
+					$sender->sendMessage('§l§a[提示]§a成功选择战士为你的职业');
 				break;
 				case '法师':
-					if($sender->getRole()=='法师')return $sender->sendMessage('§l§a[LTcraft温馨提示]§c你当前已是这个职业!');
+					if($sender->getRole()=='法师')return $sender->sendMessage('§l§a[提示]§c你当前已是这个职业!');
 					if($sender->getRole()=='战士'){
 						$sender->setMaxHealth($sender->getMaxHealth()-(int)$sender->getGrade()/2);
 						$sender->setHealth($sender->getHealth());
 					}
 					$sender->setRole('法师');
-					$sender->sendMessage('§l§a[LTcraft温馨提示]§a成功选择法师为你的职业');
+					$sender->sendMessage('§l§a[提示]§a成功选择法师为你的职业');
 				break;
 				case '牧师':
-					if($sender->getRole()=='牧师')return $sender->sendMessage('§l§a[LTcraft温馨提示]§c你当前已是这个职业!');
+					if($sender->getRole()=='牧师')return $sender->sendMessage('§l§a[提示]§c你当前已是这个职业!');
 					if($sender->getRole()=='战士'){
 						$sender->setMaxHealth($sender->getMaxHealth()-(int)$sender->getGrade()/2);
 						$sender->setHealth($sender->getHealth());
 					}
 					$sender->setRole('牧师');
-					$sender->sendMessage('§l§a[LTcraft温馨提示]§a成功选择医疗为你的职业');
+					$sender->sendMessage('§l§a[提示]§a成功选择医疗为你的职业');
 				break;
 				default:
-					return $sender->sendMessage('§l§a[LTcraft温馨提示]§c职业有 [刺客 或 战士 或 法师 或 牧师]');
+					return $sender->sendMessage('§l§a[提示]§c职业有 [刺客 或 战士 或 法师 或 牧师]');
 			}
 		break;
 		case 'setTask':
 		case 'setGTo':
 		case 'setAH':
-			if($sender instanceof Player AND $sender->getName()!='Angel_XX')return $sender->sendMessage('§l§a[LTcraft温馨提示]§c你没有这个权限！');
-			if(!isset($args[2]))return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法:/grade '.$args[0].' 名字 值');
+			if($sender instanceof Player AND $sender->getName()!='Angel_XX')return $sender->sendMessage('§l§a[提示]§c你没有这个权限！');
+			if(!isset($args[2]))return $sender->sendMessage('§l§a[提示]§c用法:/grade '.$args[0].' 名字 值');
 			$player=$this->getServer()->getPlayer($args[1]);
 			if($player){
 				switch($args[0]){
@@ -348,18 +349,18 @@ class Main extends PluginBase{
 						$player->setMaxHealth($player->getYMaxHealth()+$player->getAdditionalHealth()-$yh);
 					break;
 				}
-				$sender->sendMessage('§l§a[LTcraft温馨提示]§a设置成功！');
-			}else return $sender->sendMessage('§l§a[LTcraft温馨提示]§c目标不在线！');
+				$sender->sendMessage('§l§a[提示]§a设置成功！');
+			}else return $sender->sendMessage('§l§a[提示]§c目标不在线！');
 		break;
 		case 'getAH':
-			if($sender instanceof Player AND $sender->getName()!='Angel_XX')return $sender->sendMessage('§l§a[LTcraft温馨提示]§c你没有这个权限！');
-			if(!isset($args[1]))return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法:/grade getAH 名字');
+			if($sender instanceof Player AND $sender->getName()!='Angel_XX')return $sender->sendMessage('§l§a[提示]§c你没有这个权限！');
+			if(!isset($args[1]))return $sender->sendMessage('§l§a[提示]§c用法:/grade getAH 名字');
 			$player=$this->getServer()->getPlayer($args[1]);
-			if(!$player)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c目标不在线！');
-			return $sender->sendMessage(('§l§a[LTcraft温馨提示]§a目标附加生命值为：'.$player->getAdditionalHealth()));
+			if(!$player)return $sender->sendMessage('§l§a[提示]§c目标不在线！');
+			return $sender->sendMessage(('§l§a[提示]§a目标附加生命值为：'.$player->getAdditionalHealth()));
 		break;
 		case 'set':
-			if($sender instanceof Player AND $sender->getName()!='Angel_XX')return $sender->sendMessage('§l§a[LTcraft温馨提示]§c你没有这个权限！');
+			if($sender instanceof Player AND $sender->getName()!='Angel_XX')return $sender->sendMessage('§l§a[提示]§c你没有这个权限！');
 			if(isset($args[2])){
 				$player=$this->getServer()->getPlayer($args[1]);
 				if($player){
@@ -377,9 +378,9 @@ class Main extends PluginBase{
 					$player->setExp(0);
 					$player->getAPI()->update(API::POWER);
 					Popup::getInstance()->updateNameTag($player);
-					$sender->sendMessage('§l§a[LTcraft温馨提示]§a成功设置玩家'.$args[1].'的等级为:'.(int)$args[2]);
-				}else return $sender->sendMessage('§l§a[LTcraft温馨提示]§c目标不在线！');
-			}else return $sender->sendMessage('§l§a[LTcraft温馨提示]§c用法:/grade set 名字 等级');
+					$sender->sendMessage('§l§a[提示]§a成功设置玩家'.$args[1].'的等级为:'.(int)$args[2]);
+				}else return $sender->sendMessage('§l§a[提示]§c目标不在线！');
+			}else return $sender->sendMessage('§l§a[提示]§c用法:/grade set 名字 等级');
 			break;
 		}
 	}

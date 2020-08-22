@@ -61,7 +61,7 @@ class ClaimSubCommand extends SubCommand
 			if($sender->getAStatusIsDone('购买地皮')==false){
 				$sender->addAStatus('购买地皮');
                 $sender->newProgress('LTCraft不动资产', '获得一块地皮');
-				$sender->sendMessage('§l§a[LTcraft温馨提示]§a恭喜你解锁了菜单新功能:§c我的地皮§a你现在可以在菜单中快捷回到地皮了！');
+				$sender->sendMessage('§l§a[提示]§a恭喜你解锁了菜单新功能:§c我的地皮§a你现在可以在菜单中快捷回到地皮了！');
 			}
         } else {
             $sender->sendMessage(TextFormat::RED . $this->translateString("error"));

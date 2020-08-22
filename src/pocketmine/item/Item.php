@@ -393,9 +393,23 @@ class Item implements ItemIds, \JsonSerializable {
      */
 	public static function getItemString(Item $item, $s=':'){
 		if($item instanceof LTItem){
-			return $item->getTypeName().':'.$item->getLTName().$s.$item->getCount();
+			return $item->getTypeName().$s.$item->getLTName().$s.$item->getCount();
 		}else{
-			return $item->getID().':'.$item->getDamage().$s.$item->getCount();
+			return $item->getID().$s.$item->getDamage().$s.$item->getCount();
+		}
+	}
+
+    /**
+     * @param array $item
+     * @param string $s
+     * @return string
+     */
+	public static function getItemName($item, $s=':'){
+		if(in_array($item[0], ['近战', '远程', '通用', '盔甲', '饰品', '材料', '魔法'])){
+			return $item[0].$s.$item[1].'×'.$item[1];
+		}else{
+		    $i = Item::get($item[0], $item[1]);
+			return $i->getName().'×'.$i->getCount();
 		}
 	}
 

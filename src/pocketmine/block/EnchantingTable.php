@@ -144,13 +144,13 @@ class EnchantingTable extends Transparent {
 	public function onActivate(Item $item, Player $player = null){
 		if(!isset($player->lastClicken) or $player->lastClicken!==$this){
 			if(!$item->isTool() and !$item->isArmor() and !($item instanceof \pocketmine\item\FishingRod))return true;
-			$player->sendMessage('§l§a[LTCraft温馨提示]§e再次点击即可随机附魔手持,价格10000');
+			$player->sendMessage('§l§a[提示]§e再次点击即可随机附魔手持,价格10000');
 			$player->lastClicken=$this;
 			return true;
 		}
 		unset($player->lastClicken);
-			if(!$item->isTool() and !$item->isArmor() and !($item instanceof \pocketmine\item\FishingRod))return $player->sendMessage('§l§a[LTCraft温馨提示]§c手持不支持附魔!');
-			if(EconomyAPI::getInstance()->myMoney($player)<=10000)return $player->sendMessage('§l§a[LTcraft温馨提示]§c你没有足够的钱来附魔!');
+			if(!$item->isTool() and !$item->isArmor() and !($item instanceof \pocketmine\item\FishingRod))return $player->sendMessage('§l§a[提示]§c手持不支持附魔!');
+			if(EconomyAPI::getInstance()->myMoney($player)<=10000)return $player->sendMessage('§l§a[提示]§c你没有足够的钱来附魔!');
 			restart:
 			switch(true){
 				case $item->isPickaxe()://稿子

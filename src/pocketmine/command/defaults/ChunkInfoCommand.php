@@ -56,7 +56,7 @@ class ChunkInfoCommand extends VanillaCommand {
 			return true;
 		}
 //		if($sender->getName() !== 'Angel_XX' AND $sender instanceof \pocketmine\Player and $sender->isOp()){
-//			return $sender->sendMessage('§l§a[LTcraft温馨提示]§cOP不能用这个命令！');
+//			return $sender->sendMessage('§l§a[提示]§cOP不能用这个命令！');
 //		}
 
 		if(!$sender instanceof Player and count($args) < 4){

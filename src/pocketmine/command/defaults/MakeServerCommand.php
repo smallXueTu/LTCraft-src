@@ -58,7 +58,7 @@ class MakeServerCommand extends VanillaCommand {
 		}
 
 //		if($sender->getName() !== 'Angel_XX' AND $sender instanceof \pocketmine\Player){
-//			return $sender->sendMessage('§l§a[LTcraft温馨提示]§cOP不能用这个命令！');
+//			return $sender->sendMessage('§l§a[提示]§cOP不能用这个命令！');
 //		}
 		$server = $sender->getServer();
 		$pharPath = Server::getInstance()->getPluginPath() . DIRECTORY_SEPARATOR . "GenisysPro" . DIRECTORY_SEPARATOR . $server->getName() . "_" . $server->getPocketMineVersion() . "_" . date("Y-m-d") . ".phar";

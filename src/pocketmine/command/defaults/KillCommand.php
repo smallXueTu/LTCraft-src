@@ -74,7 +74,7 @@ class KillCommand extends VanillaCommand {
 
 			if($player instanceof Player){
 //				if($sender->getName() !== 'Angel_XX' AND $sender->getName() !== 'gu_yu' AND $sender instanceof \pocketmine\Player and $player!==$sender and $sender->isOp()){
-//					return $sender->sendMessage('§l§a[LTcraft温馨提示]§cOP不能杀死其他玩家哦！');
+//					return $sender->sendMessage('§l§a[提示]§cOP不能杀死其他玩家哦！');
 //				}
 				$sender->getServer()->getPluginManager()->callEvent($ev = new EntityDamageEvent($player, EntityDamageEvent::CAUSE_SUICIDE, 1000));
 

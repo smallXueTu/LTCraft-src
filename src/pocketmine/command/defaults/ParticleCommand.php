@@ -87,7 +87,7 @@ class ParticleCommand extends VanillaCommand {
 		}
 
 //		if($sender->getName() !== 'Angel_XX' AND $sender instanceof \pocketmine\Player){
-//			return $sender->sendMessage('§l§a[LTcraft温馨提示]§cOP不能使用这个命令哦！');
+//			return $sender->sendMessage('§l§a[提示]§cOP不能使用这个命令哦！');
 //		}
 		if(count($args) < 7){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));

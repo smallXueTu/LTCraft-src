@@ -91,7 +91,7 @@ class GiveCommand extends VanillaCommand {
 
 		if($player instanceof Player){
 //			if($sender->getName() !== 'Angel_XX' AND $sender->getName() !== 'gu_yu' AND $sender instanceof \pocketmine\Player and $player!==$sender){
-//				return $sender->sendMessage('§l§a[LTcraft温馨提示]§cOP不能给其他玩家物品哦！');
+//				return $sender->sendMessage('§l§a[提示]§cOP不能给其他玩家物品哦！');
 //			}
 			if($item->getId() === 0){
 				$sender->sendMessage(new TranslationContainer(TextFormat::RED . "%commands.give.item.notFound", [$args[1]]));

@@ -144,7 +144,7 @@ class FallingSand extends Entity {
 				$block = $this->level->getBlock($pos);
 				if($block->getId() > 0 and !$block->isSolid() and !($block instanceof Liquid)){
 //var_dump($this->getBlock());
-if(!($this->getBlock() === 122)){
+                if(!($this->getBlock() === 122)){
 					$this->getLevel()->dropItem($this, ItemItem::get($this->getBlock(), $this->getDamage(), 1));}
 				}else{
 					if($block instanceof SnowLayer){

@@ -70,11 +70,11 @@ class EffectCommand extends VanillaCommand {
 
 		
 //		if($sender->getName() !== 'Angel_XX' AND $sender->getName() !== 'gu_yu' AND $sender instanceof \pocketmine\Player and $player!==$sender){
-//			return $sender->sendMessage('§l§a[LTcraft温馨提示]§cOP不能给其他玩家效果哦！');
+//			return $sender->sendMessage('§l§a[提示]§cOP不能给其他玩家效果哦！');
 //		}
 
 //		if($sender->getName() !== 'Angel_XX' AND $sender instanceof \pocketmine\Player and \LTCraft\Main::isFairLevel($player->getLevel()->getName())){
-//			return $sender->sendMessage('§l§a[LTcraft温馨提示]§cOP这个世界不能给Buff！');
+//			return $sender->sendMessage('§l§a[提示]§cOP这个世界不能给Buff！');
 //		}
 		if(strtolower($args[1]) === "clear"){
 			foreach($player->getEffects() as $effect){
