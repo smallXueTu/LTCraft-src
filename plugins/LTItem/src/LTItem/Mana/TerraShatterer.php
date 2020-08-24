@@ -79,7 +79,7 @@ class TerraShatterer extends ManaTool {
      * @return int
      */
     public function isPickaxe(){
-        return self::TIER_GOLD;
+        return self::TIER_DIAMOND;
     }
 
     /**
