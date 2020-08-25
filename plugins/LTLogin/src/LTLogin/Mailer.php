@@ -67,7 +67,7 @@ class Mailer  extends \Thread{
     $this->execCommand($detail."\r\n.\r\n",250);
     $this->execCommand("QUIT\r\n",221);
 	// if($this->player){
-		// $this->player->sendMessage('§l§a[LTcraft温馨提示]§a验证码已发送，请查收，五分钟内有效！');
+		// $this->player->sendMessage('§l§a[提示]§a验证码已发送，请查收，五分钟内有效！');
 	// }
 	// echo '发送完成！';
   }

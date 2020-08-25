@@ -511,9 +511,9 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
      * @param $value
      */
     public function setAllowFlight($value, $force = false){
-        if($value!==false and in_array($this->level->getName(), ['pvp', 'boss', 'pve']) and $force===false and $this->username!=='Angel_XX')
+        if($value!==false and in_array($this->level->getName(), ['pvp', 'boss', 'pve']) and $force===false and !$this->isOp())
             $value = false;
-        elseif(($value!==true and ($this->level->getName()==='zc' or $this->username==='Angel_XX') and $force===false) or \LTCraft\Main::getInstance()->getMode()==1)
+        elseif(($value!==true and ($this->level->getName()==='zc' or $this->isOp()) and $force===false) or \LTCraft\Main::getInstance()->getMode()==1)
             $value = true;
         $this->allowFlight = (bool) $value;
         $this->sendSettings();
@@ -801,6 +801,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
         foreach($this->server->getCommandMap()->getCommands() as $command){
             if(($cmdData = $command->generateCustomCommandData($this)) !== null){
                 ++$count;
+                $data->{$command->getName()} = new \stdClass();
+                $data->{$command->getName()}->versions = [];
                 $data->{$command->getName()}->versions[0] = $cmdData;
             }
         }
@@ -1522,7 +1524,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
         if($gm < 0 or $gm > 3 or $this->gamemode === $gm or $gm === 2 or ($this->isDie!==false and !$force)){
             return false;
         }
-        if($gm == 1 and $this->username!=='Angel_XX')return;
+        if($gm == 1 and !$this->isOp())return false;
         /* 现在不必要
 		$this->server->getPluginManager()->callEvent($ev = new PlayerGameModeChangeEvent($this, $gm));
 		if($ev->isCancelled()){
@@ -3920,9 +3922,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
         $motion = $this->getDirectionVector()->multiply(0.4);
         $entity=$this->level->dropItem($this->add(0, 1.3, 0), $item, $motion, 40);
 
-        if($this->isOp() and $this->username!=='Angel_XX'){
-            $entity->isOpItem=true;
-        }
         $entity->setDropPlayer($this->username);
         $this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_ACTION, false);
     }
@@ -4834,7 +4833,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
             $this->sendMessage('§l§a[提示]§c这个世界不能传送!');
             return false;
         }
-        if($pos instanceof Position and $pos->getLevel()->getName()==='login' and $this->getName()!=='Angel_XX'){
+        if($pos instanceof Position and $pos->getLevel()->getName()==='login' and !$this->isOp()){
             $this->sendMessage('§l§a[提示]§c这个世界不能通往');
             return false;
         }

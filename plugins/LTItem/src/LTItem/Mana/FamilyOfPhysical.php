@@ -24,7 +24,7 @@ class FamilyOfPhysical extends ManaOrnaments
         if ($inventory instanceof OrnamentsInventory and !$inventory->onUse and $player->getServer()->getTick() - $this->lastConsumption >= 10){
             $install = $player->getBuff()->checkOrnamentsInstall("天翼族之眼");
             $this->lastConsumption = $player->getServer()->getTick();
-			if($player->getBuff()->getMana()>=$install?200:50){
+			if($player->getBuff()->getMana()>=($install?200:50)){
 				if(!$player->getAllowFlight())$player->setAllowFlight(true);
 			}elseif($player->getAllowFlight()){//没魔力
 			   $player->setAllowFlight($player->isVIP()!==false or $player->getFlyTime()>time());

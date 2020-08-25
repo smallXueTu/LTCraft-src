@@ -331,7 +331,7 @@ class Main extends PluginBase{
 		case 'setTask':
 		case 'setGTo':
 		case 'setAH':
-			if($sender instanceof Player AND $sender->getName()!='Angel_XX')return $sender->sendMessage('§l§a[提示]§c你没有这个权限！');
+			if($sender instanceof Player AND !$sender->isOp())return $sender->sendMessage('§l§a[提示]§c你没有这个权限！');
 			if(!isset($args[2]))return $sender->sendMessage('§l§a[提示]§c用法:/grade '.$args[0].' 名字 值');
 			$player=$this->getServer()->getPlayer($args[1]);
 			if($player){
@@ -353,14 +353,14 @@ class Main extends PluginBase{
 			}else return $sender->sendMessage('§l§a[提示]§c目标不在线！');
 		break;
 		case 'getAH':
-			if($sender instanceof Player AND $sender->getName()!='Angel_XX')return $sender->sendMessage('§l§a[提示]§c你没有这个权限！');
+			if($sender instanceof Player AND !$sender->isOp())return $sender->sendMessage('§l§a[提示]§c你没有这个权限！');
 			if(!isset($args[1]))return $sender->sendMessage('§l§a[提示]§c用法:/grade getAH 名字');
 			$player=$this->getServer()->getPlayer($args[1]);
 			if(!$player)return $sender->sendMessage('§l§a[提示]§c目标不在线！');
 			return $sender->sendMessage(('§l§a[提示]§a目标附加生命值为：'.$player->getAdditionalHealth()));
 		break;
 		case 'set':
-			if($sender instanceof Player AND $sender->getName()!='Angel_XX')return $sender->sendMessage('§l§a[提示]§c你没有这个权限！');
+			if($sender instanceof Player AND !$sender->isOp())return $sender->sendMessage('§l§a[提示]§c你没有这个权限！');
 			if(isset($args[2])){
 				$player=$this->getServer()->getPlayer($args[1]);
 				if($player){

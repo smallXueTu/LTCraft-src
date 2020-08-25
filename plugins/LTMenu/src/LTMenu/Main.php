@@ -139,7 +139,7 @@ class Main extends PluginBase{
 	}
 	public function openMenu(Player $player,$name){
 		if($player->getGamemode()!=0)return false;
-		if (isset($this->opens[$player->getName()]))return false;
+//		if (isset($this->opens[$player->getName()]))return false;
 		$block=$player->getLevel()->getBlock($player);
 		if(!($block instanceof Air)){
 			$block=$player->getLevel()->getBlock(new Vector3($player->x,$player->y+1,$player->z));
