@@ -154,39 +154,39 @@ abstract class DataPacket extends BinaryStream {
 		$this->putUnsignedVarInt(count($metadata));
 		foreach($metadata as $key => $d){
 			$this->putUnsignedVarInt($key); //data key
-			$this->putUnsignedVarInt($d[0]); //data type
-			switch($d[0]){
+			$this->putUnsignedVarInt(@$d[0]); //data type
+			switch(@$d[0]){
 				case Entity::DATA_TYPE_BYTE:
-					$this->putByte($d[1]);
+					$this->putByte(@$d[1]);
 					break;
 				case Entity::DATA_TYPE_SHORT:
-					$this->putLShort($d[1]); //SIGNED short!
+					$this->putLShort(@$d[1]); //SIGNED short!
 					break;
 				case Entity::DATA_TYPE_INT:
-					$this->putVarInt($d[1]);
+					$this->putVarInt(@$d[1]);
 					break;
 				case Entity::DATA_TYPE_FLOAT:
-					$this->putLFloat($d[1]);
+					$this->putLFloat(@$d[1]);
 					break;
 				case Entity::DATA_TYPE_STRING:
-					$this->putString($d[1]);
+					$this->putString(@$d[1]);
 					break;
 				case Entity::DATA_TYPE_SLOT:
 					//TODO: change this implementation (use objects)
-					$this->putSlot(Item::get($d[1][0], $d[1][2], $d[1][1])); //ID, damage, count
+					$this->putSlot(Item::get(@$d[1][0], @$d[1][2], @$d[1][1])); //ID, damage, count
 					break;
 				case Entity::DATA_TYPE_POS:
 					//TODO: change this implementation (use objects)
-					$this->putVarInt($d[1][0]); //x
-					$this->putVarInt($d[1][1]); //y (SIGNED)
-					$this->putVarInt($d[1][2]); //z
+					$this->putVarInt(@$d[1][0]); //x
+					$this->putVarInt(@$d[1][1]); //y (SIGNED)
+					$this->putVarInt(@$d[1][2]); //z
 					break;
 				case Entity::DATA_TYPE_LONG:
-					$this->putVarInt($d[1]); //TODO: varint64 support
+					$this->putVarInt(@$d[1]); //TODO: varint64 support
 					break;
 				case Entity::DATA_TYPE_VECTOR3F:
 					//TODO: change this implementation (use objects)
-					$this->putVector3f($d[1][0], $d[1][1], $d[1][2]); //x, y, z
+					$this->putVector3f(@$d[1][0], @$d[1][1], @$d[1][2]); //x, y, z
 			}
 		}
 	}

@@ -129,7 +129,7 @@ class Cauldron extends Transparent{
 	 */
 	public function onBreak(Item $item){
         if ($item instanceof Mana){
-            $this->getLevel()->setBlock($this, new Air(), false, true);
+            $this->getLevel()->setBlock($this, new Air(), false, false);
         }else{
             $this->getLevel()->setBlock($this, new Air(), true, true);
         }

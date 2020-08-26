@@ -1098,7 +1098,7 @@ class Item implements ItemIds, \JsonSerializable {
 	/**
 	 * @return bool
 	 */
-	final public function canBePlaced() : bool{
+	public function canBePlaced() : bool{
 		return $this->block !== null and $this->block->canBePlaced();
 	}
 

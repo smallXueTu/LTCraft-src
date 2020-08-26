@@ -15,6 +15,7 @@ use pocketmine\block\Lava;
 use pocketmine\block\StoneBricks;
 use pocketmine\entity\Entity;
 use pocketmine\entity\Item as ItemEntity;
+use pocketmine\entity\Slime;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\inventory\BaseInventory;
 use pocketmine\inventory\InventoryHolder;
@@ -42,7 +43,7 @@ use pocketmine\Player;
  * 多方块结构实体
  * Class Fusion
  * @package LTEntity\entity\Process
- * 闲着没事写这个干嘛，我是抖M吗
+ * 闲着没事写这个干嘛
  */
 class Fusion extends Entity implements InventoryHolder
 {
@@ -163,6 +164,10 @@ class Fusion extends Entity implements InventoryHolder
      */
     private $forcedCooling = false;
     /**
+     * @var bool 冷却液加速
+     */
+    private $coolant = false;
+    /**
      * @var bool 没玩家
      */
     private $noPlayer = false;
@@ -193,6 +198,11 @@ class Fusion extends Entity implements InventoryHolder
                 new DoubleTag('', $position->x + 0.5),
                 new DoubleTag('', $position->y + 0.5),
                 new DoubleTag('', $position->z + 0.5)
+            ]);
+            $nbt->Motion = new ListTag('Motion', [
+                new DoubleTag('', 0),
+                new DoubleTag('', 0),
+                new DoubleTag('', 0)
             ]);
             $nbt->Rotation = new ListTag('Rotation', [
                 new FloatTag('', 0),
@@ -253,6 +263,7 @@ class Fusion extends Entity implements InventoryHolder
     public function __construct(Level $level, CompoundTag $nbt)
     {
         parent::__construct($level, $nbt);
+        unset($this->dataProperties[7], $this->dataProperties[43]);
         $this->setNameTagVisible(true);
         $this->setNameTagAlwaysVisible(true);
         $this->setDataFlag(Entity::DATA_FLAGS, Entity::DATA_FLAG_IMMOBILE, true);
@@ -315,7 +326,7 @@ class Fusion extends Entity implements InventoryHolder
         /** @var Block $furnace $furnace */
         foreach ($this->furnaces as $furnace){
             if ($furnace->getId()!==Item::FURNACE)
-                $this->getLevel()->setBlock($furnace, Block::get(Item::FURNACE, $furnace->getDamage()), true);//熄灭熔炉
+                if ($this->breakd==true)$this->getLevel()->setBlock($furnace, Block::get(Item::FURNACE, $furnace->getDamage()), true);//熄灭熔炉
         }
         /** @var FloatItem $entity */
         foreach ($this->itemEntities as $entity){
@@ -418,6 +429,7 @@ class Fusion extends Entity implements InventoryHolder
         }else{
             return $this->tip;
         }
+        $text .="§c注意！需要的锻造材料存在多余将会失败！";
         return $text;
     }
 
@@ -551,12 +563,24 @@ class Fusion extends Entity implements InventoryHolder
             }
         }
         if ($this->isForcedCooling()){
-            if ($this->age % 4){
-                $this->temperature -= 1;
+            if ($this->age % 10){
+                if ($this->coolant){
+                    $this->temperature -= 10;
+                }else{
+                    /** @var \pocketmine\tile\Chest $tile */
+                    $tile = $this->getLevel()->getTile($this->getChest());
+                    if(Open::removeItem(null, ['材料', '熔炼冷却液',1], $tile->getInventory())){
+                        $this->temperature -= 10;
+                        $this->coolant = true;
+                    }else{
+                        $this->temperature -= 1;
+                    }
+                }
                 $this->updateFloatText();
             }
             if ($this->temperature <= 20){
                 $this->forcedCooling = false;
+                $this->coolant = false;
                 $this->tip = "等待熔炼完成。";
                 foreach ($this->furnaces as $furnace)
                     $this->getLevel()->setBlock($furnace, Block::get(Item::BURNING_FURNACE, $furnace->getDamage()), true);//点燃熔炉
@@ -575,6 +599,11 @@ class Fusion extends Entity implements InventoryHolder
         switch ($this->process) {
             case 0:
                 if ($this->age % 20 != 0)break;
+                if ($this->age > 20*60){
+                    $this->breakd = true;
+                    $this->setNameTag("§l§c超时，十秒取消熔炼！");
+                    return true;
+                }
                 /** @var \pocketmine\tile\Chest $tile */
                 $tile = $this->getLevel()->getTile($this->getChest());
                 if(Open::CheackItems($this->getPlayer(), self::$formulas[$this->drawingName][$this->process], $tile->getInventory())){
@@ -588,6 +617,14 @@ class Fusion extends Entity implements InventoryHolder
             break;
             case 1:
                 if ($this->age % 20 != 0)break;
+                if ($this->age > 20*180){
+                    /** @var \pocketmine\tile\Chest $tile */
+                    $tile = $this->getLevel()->getTile($this->getChest());
+                    $tile->getInventory()->setContents($this->getInventory()->getContents());
+                    $this->breakd = true;
+                    $this->setNameTag("§l§c超时，十秒取消熔炼！");
+                    return true;
+                }
                 if(Open::CheackItems($this->getPlayer(), self::$formulas[$this->drawingName][$this->process], $this->getInventory())){
                     $contents = $this->getInventory()->getContents();
                     if (!Open::removeItems($this->getPlayer(), self::$formulas[$this->drawingName][$this->process], $this->getInventory())){
@@ -613,26 +650,6 @@ class Fusion extends Entity implements InventoryHolder
                         $this->getLevel()->setBlock($furnace, Block::get(Item::BURNING_FURNACE, $furnace->getDamage()), true);//点燃熔炉
                 }
                 $this->startTick++;
-                /*
-                if ($this->startTick < 10){
-                    $nbt = new CompoundTag;
-                    $nbt->Pos = new ListTag("Pos", [
-                        new DoubleTag("", $this->getChest()->x+0.5),
-                        new DoubleTag("", $this->getChest()->y+0.5),
-                        new DoubleTag("", $this->getChest()->z+0.5)
-                    ]);
-                    $nbt->Rotation = new ListTag('Rotation', [
-                        new FloatTag('', 0),
-                        new FloatTag('', 0)
-                    ]);
-                    foreach ($this->furnaces as $furnace){
-                        $entity = new ManaFloating($this->getLevel(), $nbt);
-                        $entity->setTarget($furnace->add(0.5, 0.5, 0.5));
-                        $entity->pid = 24;
-                        $entity->setStarting($this);//粒子效果
-                    }
-                }
-                */
                 $this->temperature += mt_rand(0, 100) / 5;
 //                $this->temperature += 80;
                 if ($this->temperature > 1000){
@@ -795,7 +812,7 @@ class Fusion extends Entity implements InventoryHolder
         if(!isset($this->hasSpawned[$player->getLoaderId()]) and isset($player->usedChunks[Level::chunkHash($this->chunk->getX(), $this->chunk->getZ())])){
             $pk = new \pocketmine\network\protocol\AddEntityPacket();
             $pk->eid = $this->getId();
-            $pk->type = ItemEntity::NETWORK_ID;;
+            $pk->type = Slime::NETWORK_ID;;
             $pk->x = $this->x;
             $pk->y = $this->y + 1;
             $pk->z = $this->z;
@@ -923,11 +940,14 @@ class Fusion extends Entity implements InventoryHolder
 
     /**
      * 保存熔炼坛实体在地图
-     * u1s1这个是我最不想写的
+     * 这个是我最不想写的
      */
     public function saveNBT()
     {
         if ($this->breakd){
+            return;
+        }
+        if ($this->process==0) {
             return;
         }
         parent::saveNBT();

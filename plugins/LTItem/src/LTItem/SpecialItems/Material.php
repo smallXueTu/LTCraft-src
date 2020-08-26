@@ -2,6 +2,7 @@
 namespace LTItem\SpecialItems;
 
 use LTItem\SpecialItems\Material\BraveManWeaponGiftBag;
+use LTItem\SpecialItems\Material\Coolant;
 use LTItem\SpecialItems\Material\Drawings;
 use LTItem\SpecialItems\Material\MysteriousPetPieces;
 use LTItem\SpecialItems\Material\SeniorWeaponGiftBag;
@@ -56,6 +57,7 @@ class Material extends Item implements LTItem{
         self::$materials['史诗护膝图纸'] = Drawings::class;
         self::$materials['史诗头盔图纸'] = Drawings::class;
         self::$materials['史诗胸甲图纸'] = Drawings::class;
+        self::$materials['熔炼冷却液'] = Coolant::class;
     }
     /**
      * Material constructor.

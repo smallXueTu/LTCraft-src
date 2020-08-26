@@ -449,7 +449,7 @@ class Block extends Position implements BlockIds, Metadatable{
 	 */
 	public function onBreak(Item $item){
 	    if ($item instanceof Mana){
-            return $this->getLevel()->setBlock($this, new Air(), false, true);
+            return $this->getLevel()->setBlock($this, new Air(), false, false);
         }else{
             return $this->getLevel()->setBlock($this, new Air(), true, true);
         }

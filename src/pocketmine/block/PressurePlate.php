@@ -148,7 +148,7 @@ class PressurePlate extends RedstoneSource {
 		}
 		$this->canActivate = false;
         if ($item instanceof Mana){
-            $this->getLevel()->setBlock($this, new Air(), false, true);
+            $this->getLevel()->setBlock($this, new Air(), false, false);
         }else{
             $this->getLevel()->setBlock($this, new Air(), true, true);
         }
