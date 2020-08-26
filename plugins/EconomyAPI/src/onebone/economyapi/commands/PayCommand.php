@@ -39,7 +39,7 @@ class PayCommand extends EconomyAPICommand{
 			return true;
 		}
 //        if($sender->getName() !== 'Angel_XX' AND $sender instanceof \pocketmine\Player and $sender->isOp()){
-//			return $sender->sendMessage('§l§a[LTcraft温馨提示]§cOP不能用这个命令！');
+//			return $sender->sendMessage('§l§a[提示]§cOP不能用这个命令！');
 //		}
 		$amount = (int)$amount;
 		$server = Server::getInstance();
@@ -52,29 +52,29 @@ class PayCommand extends EconomyAPICommand{
 		$name=$player instanceof Player?$player->getName():$player;
 		$result = $plugin->reduceMoney($sender, $amount, '支付给'.$name);
 		if($result === 1){
-			$sender->sendMessage('§l§a[LTcraft温馨提示]§c请输入正整数 !');
+			$sender->sendMessage('§l§a[提示]§c请输入正整数 !');
 			return;
 		}elseif($result === 2){
-			$sender->sendMessage('§l§a[LTcraft温馨提示]§c错误了 报告给管理员 错误码 2 !');
+			$sender->sendMessage('§l§a[提示]§c错误了 报告给管理员 错误码 2 !');
 			return;
 		}elseif($result === 3){
-			$sender->sendMessage('§l§a[LTcraft温馨提示]§c你没有怎么多钱！ !');
+			$sender->sendMessage('§l§a[提示]§c你没有怎么多钱！ !');
 			return;
 		}
 		$result=$plugin->addMoney($player, $amount, '玩家'.$sender->getName().'支付');
 		if($result !== true){
 			if($result === 1){
-				$sender->sendMessage('§l§a[LTcraft温馨提示]§c请输入正整数 !');
+				$sender->sendMessage('§l§a[提示]§c请输入正整数 !');
 				$plugin->addMoney($sender, $amount, '支付给'.$name.'失败回滚');
 				return;
 			}elseif($result === 2){
-				$sender->sendMessage('§l§a[LTcraft温馨提示]§c服务器不存在这个玩家 !');
+				$sender->sendMessage('§l§a[提示]§c服务器不存在这个玩家 !');
 				$plugin->addMoney($sender, $amount, '支付给'.$name.'失败回滚');
 				return;
 			}
 			return true;
 		}
-		$sender->sendMessage('§l§a[LTcraft温馨提示]§a支付了'.$amount.'橙币给'.$player);
-		if($p instanceof Player)$p->sendMessage('§l§a[LTcraft温馨提示]§a'.$sender->getName().'给您支付了'.$amount.'橙币');
+		$sender->sendMessage('§l§a[提示]§a支付了'.$amount.'橙币给'.$player);
+		if($p instanceof Player)$p->sendMessage('§l§a[提示]§a'.$sender->getName().'给您支付了'.$amount.'橙币');
 	}
 }

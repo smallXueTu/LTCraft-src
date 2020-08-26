@@ -32,7 +32,7 @@ class GiveMoneyCommand extends EconomyAPICommand{
 		$amount = array_shift($args);
 		
 		if(trim($player) === '' or trim($amount) === '' or !is_numeric($amount)){
-			$sender->sendMessage('§l§a[LTcraft温馨提示]§c用法: /给钱 <玩家> <金钱>');
+			$sender->sendMessage('§l§a[提示]§c用法: /给钱 <玩家> <金钱>');
 			return true;
 		}
 		$server = Server::getInstance();
@@ -42,16 +42,16 @@ class GiveMoneyCommand extends EconomyAPICommand{
 		}
 //        if($sender->getName() !== 'Angel_XX' AND $sender->getName() !== 'gu_yu' AND $sender instanceof \pocketmine\Player and $sender->isOp()){
 //			if(strtolower($player)!==strtolower($sender->getName())){
-//				return $sender->sendMessage('§l§a[LTcraft温馨提示]§cOP只能给自己钱！');
+//				return $sender->sendMessage('§l§a[提示]§cOP只能给自己钱！');
 //			}
 //		}
 		$re=$plugin->addMoney($player, $amount, '管理员赐予');
 		if($re===true){
 			if($p instanceof Player)
-				$p->sendMessage('§l§a[LTcraft温馨提示]§e有人给了你'.$amount.'橙币！');
-		}elseif($re===1)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c请输入大于0的值');
-		elseif($re===2)return $sender->sendMessage('§l§a[LTcraft温馨提示]§c服务器不存在这个玩家');
-		$sender->sendMessage('§l§a[LTcraft温馨提示]§a已经给了'.$player.' '.$amount.'橙币！');
+				$p->sendMessage('§l§a[提示]§e有人给了你'.$amount.'橙币！');
+		}elseif($re===1)return $sender->sendMessage('§l§a[提示]§c请输入大于0的值');
+		elseif($re===2)return $sender->sendMessage('§l§a[提示]§c服务器不存在这个玩家');
+		$sender->sendMessage('§l§a[提示]§a已经给了'.$player.' '.$amount.'橙币！');
 		return true;
 	}
 }

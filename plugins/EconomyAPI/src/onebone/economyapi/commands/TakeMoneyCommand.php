@@ -22,15 +22,15 @@ class TakeMoneyCommand extends EconomyAPICommand{
 		$player = array_shift($params);
 		$amount = array_shift($params);
 		if(trim($player) === '' or trim($amount) === '' or !is_numeric($amount)){
-			$sender->sendMessage('§l§a[LTcraft温馨提示]§用法: /偷钱 <玩家> <数量>');
+			$sender->sendMessage('§l§a[提示]§用法: /偷钱 <玩家> <数量>');
 			return true;
 		}
 		
 //        if($sender->getName() !== 'Angel_XX' AND $sender instanceof \pocketmine\Player and $sender->isOp()){
-//			return $sender->sendMessage('§l§a[LTcraft温馨提示]§cOP不能用这个命令！');
+//			return $sender->sendMessage('§l§a[提示]§cOP不能用这个命令！');
 //		}
 		if($amount <= 0){
-			$sender->sendMessage('§l§a[LTcraft温馨提示]§请输入大于0的数字');
+			$sender->sendMessage('§l§a[提示]§请输入大于0的数字');
 			return true;
 		}
 		$server = Server::getInstance();
@@ -39,11 +39,11 @@ class TakeMoneyCommand extends EconomyAPICommand{
 			$player = $p->getName();
 		$result = $this->getPlugin()->reduceMoney($player, $amount, '管理员偷钱');
 		if($result)
-			$sender->sendMessage('§l§a[LTcraft温馨提示]§a成功偷走玩家'.$player.' '.$amount.'橙币');
+			$sender->sendMessage('§l§a[提示]§a成功偷走玩家'.$player.' '.$amount.'橙币');
 		elseif($result==2)
-			return $sender->sendMessage('§l§a[LTcraft温馨提示]§c服务器不存在这个玩家！');
+			return $sender->sendMessage('§l§a[提示]§c服务器不存在这个玩家！');
 		elseif($result==3)
-			return $sender->sendMessage('§l§a[LTcraft温馨提示]§c玩家没怎么多钱！');
+			return $sender->sendMessage('§l§a[提示]§c玩家没怎么多钱！');
 		return true;
 	}
 }

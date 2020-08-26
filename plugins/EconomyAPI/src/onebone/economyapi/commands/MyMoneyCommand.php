@@ -26,11 +26,11 @@ class MyMoneyCommand extends EconomyAPICommand{
 		}
 		
 		if(!$sender instanceof Player){
-			$sender->sendMessage('§l§a[LTcraft温馨提示]§c请在游戏里运行该命令');
+			$sender->sendMessage('§l§a[提示]§c请在游戏里运行该命令');
 			return true;
 		}
 		$username = $sender->getName();
 		$result = $this->getPlugin()->myMoney($username);
-		$sender->sendMessage('§l§a[LTcraft温馨提示]§a你有'.$result.'橙币');
+		$sender->sendMessage('§l§a[提示]§a你有'.$result.'橙币');
 	}
 }

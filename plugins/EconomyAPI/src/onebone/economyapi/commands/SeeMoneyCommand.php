@@ -29,7 +29,7 @@ class SeeMoneyCommand extends EconomyAPICommand{
 		
 		$player = array_shift($args);
 		if(trim($player) === ''){
-			$sender->sendMessage('§l§a[LTcraft温馨提示]§c用法: /查询 <玩家>');
+			$sender->sendMessage('§l§a[提示]§c用法: /查询 <玩家>');
 			return true;
 		}
 		
@@ -42,10 +42,10 @@ class SeeMoneyCommand extends EconomyAPICommand{
 		// END //
 		$result = $this->getPlugin()->myMoney($player);
 		if($result === false){
-			$sender->sendMessage('§l§a[LTcraft温馨提示]§c服务器不存在这个玩家！');
+			$sender->sendMessage('§l§a[提示]§c服务器不存在这个玩家！');
 			return true;
 		}else{
-			$sender->sendMessage('§l§a[LTcraft温馨提示]§a'.$player.'一共有'.$result.'橙币');
+			$sender->sendMessage('§l§a[提示]§a'.$player.'一共有'.$result.'橙币');
 			return true;
 		}
 	}
