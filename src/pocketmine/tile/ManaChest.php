@@ -151,6 +151,7 @@ class ManaChest extends Chest
     public function conversionMana(array $manaItem): bool {
         $contents = $this->getInventory()->getContents();
         foreach ($contents as $index => $item){
+            if($item instanceof Bucket)continue;
             if (($mana = ManaSystem::getItemMana($item, $this))>0) {
                 $this->sleep = $mana;
 				if($item instanceof Bucket){
