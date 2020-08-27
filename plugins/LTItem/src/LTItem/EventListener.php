@@ -43,9 +43,9 @@ use LTEntity\entity\BaseEntity;
 use LTGrade\FloatingText;
 class EventListener implements Listener
 {
-	private $cooling = array();
-	private $lastShow = array();
-	public $skillCooling = array();
+    private array $cooling = array();
+    private array $lastShow = array();
+    public array $skillCooling = array();
 	public static $instance=null;
 	public static function getInstance(){
 		return self::$instance;
@@ -208,26 +208,28 @@ class EventListener implements Listener
 						new FloatTag("", $player->pitch),
 					]),
 				]);
-				switch($Hand->getLTName()){
-					case '重击水晶球'://projectile hit player add damage effect
-						$entity = Entity::createEntity("EnderPearl", $player->getLevel(), $nbt, $player);
-						$entity->setMotion($entity->getMotion()->multiply(1.5));
-						$entity->skill=['Injured', ceil($player->getGrade()/15)];
-						$entity->spawnToAll();
-						$Hand->setCount($Hand->getCount()-1);
-						$player->getInventory()->setItemInHand($Hand);
-						$this->cooling[$player->getName()] = $this->server->getTick()+20;
-					break;
-					case '虚弱水晶球':
-						$entity = Entity::createEntity("EnderPearl", $player->getLevel(), $nbt, $player);
-						$entity->setMotion($entity->getMotion()->multiply(1.5));
-						$entity->skill=['weak', ceil($player->getGrade()/15)];
-						$entity->spawnToAll();
-						$Hand->setCount($Hand->getCount()-1);
-						$player->getInventory()->setItemInHand($Hand);
-						$this->cooling[$player->getName()] = $this->server->getTick()+20;
-					break;
+                /*
+                switch($Hand->getLTName()){
+                    case '重击水晶球'://projectile hit player add damage effect
+                        $entity = Entity::createEntity("EnderPearl", $player->getLevel(), $nbt, $player);
+                        $entity->setMotion($entity->getMotion()->multiply(1.5));
+                        $entity->skill=['Injured', ceil($player->getGrade()/15)];
+                        $entity->spawnToAll();
+                        $Hand->setCount($Hand->getCount()-1);
+                        $player->getInventory()->setItemInHand($Hand);
+                        $this->cooling[$player->getName()] = $this->server->getTick()+20;
+                    break;
+                    case '虚弱水晶球':
+                        $entity = Entity::createEntity("EnderPearl", $player->getLevel(), $nbt, $player);
+                        $entity->setMotion($entity->getMotion()->multiply(1.5));
+                        $entity->skill=['weak', ceil($player->getGrade()/15)];
+                        $entity->spawnToAll();
+                        $Hand->setCount($Hand->getCount()-1);
+                        $player->getInventory()->setItemInHand($Hand);
+                        $this->cooling[$player->getName()] = $this->server->getTick()+20;
+                    break;
 				}
+                */
 				$event->setCancelled(true);
 			}
 			return;
