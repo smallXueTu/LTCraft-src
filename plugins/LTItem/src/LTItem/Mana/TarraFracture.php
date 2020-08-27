@@ -87,7 +87,7 @@ class TarraFracture extends ManaTool {
             $count = 0;
             $this->cutDownTree($player, $block, $count, []);
 
-            $mana = $count*8;
+            $mana = $count*4;
             if ($player->getBuff()->getMana() < $mana){//Mana不足
                 if ($player->getBuff()->getMana()>0){
                     $player->getBuff()->consumptionMana($player->getBuff()->getMana());

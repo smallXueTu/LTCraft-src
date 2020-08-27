@@ -114,7 +114,7 @@ class TerraShatterer extends ManaTool {
      * @param Player $player
      */
     public function removeBlockWithDrops(array $blocks, Player $player){
-        $mana = count($blocks)*20;
+        $mana = count($blocks)*8;
         if ($player->getBuff()->getMana() < $mana){//Mana不足
             if ($player->getBuff()->getMana()>0){
                 $player->getBuff()->consumptionMana($player->getBuff()->getMana());
