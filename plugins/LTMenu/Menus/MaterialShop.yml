@@ -116,12 +116,12 @@ items:
           - 1
         nametag: |-
           §a骑士徽章
-          §e§l>>需要骑士碎片×8
+          §e§l>>需要骑士碎片×4
         commands: ~
         teleport: ~
         price: 0
         give_item: 材料:骑士徽章:1
-        cost_item: 材料:骑士碎片:8
+        cost_item: 材料:骑士碎片:4
         multilevel: false
       - item:
           - 267
@@ -210,12 +210,12 @@ items:
           - 1
         nametag: |-
           §a沙漠珍珠
-          §e§l>>需要需要沙之星×6
+          §e§l>>需要需要沙之星×4
         commands: ~
         teleport: ~
         price: 0
         give_item: 材料:沙晶珍珠:1
-        cost_item: 材料:沙之星:6
+        cost_item: 材料:沙之星:4
         multilevel: false
       - item:
           - 283
@@ -386,7 +386,7 @@ items:
         nametag: |-
           §a熔炼铁锭
           §e§l>>需要火焰粉×1
-          §e§l>>需要铁锭×1(F2 骑士傀儡掉落)
+          §e§l>>需要铁锭×1
         commands: ~
         teleport: ~
         price: 0
