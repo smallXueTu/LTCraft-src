@@ -71,7 +71,7 @@ class LapisOre extends Solid {
 			}else{
 				$fortunel = $item->getEnchantmentLevel(Enchantment::TYPE_MINING_FORTUNE);
 				$fortunel = $fortunel > 10 ? 10 : $fortunel;
-				$times = [1, 1, 2, 3, 4];
+                $times = [1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 				$time = $times[mt_rand(0, $fortunel + 1)];
 				return [
 					[Item::DYE, 4, mt_rand(4, 8) * $time],

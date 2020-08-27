@@ -3,8 +3,10 @@ namespace LTEntity\entity\Process;
 
 
 use LTEntity\Main;
+use LTItem\SpecialItems\Material;
 use LTItem\SpecialItems\Material\Drawings;
 use LTMenu\Open;
+use pocketmine\block\Air;
 use pocketmine\block\Anvil;
 use pocketmine\block\Block;
 use pocketmine\block\BurningFurnace;
@@ -61,6 +63,9 @@ class Fusion extends Entity implements InventoryHolder
             ],
             [
                 ['材料', '武器熔炼石', 30]
+            ],
+            [
+                ['材料', '初级燃料', 10]
             ]
         ],
         '史诗战靴图纸' => [
@@ -72,6 +77,9 @@ class Fusion extends Entity implements InventoryHolder
             ],
             [
                 ['材料', '盔甲熔炼石', 30]
+            ],
+            [
+                ['材料', '中级燃料', 10]
             ]
         ],
         '史诗护膝图纸' => [
@@ -84,6 +92,9 @@ class Fusion extends Entity implements InventoryHolder
             ],
             [
                 ['材料', '盔甲熔炼石', 30]
+            ],
+            [
+                ['材料', '中级燃料', 10]
             ]
         ],
         '史诗胸甲图纸' => [
@@ -97,6 +108,9 @@ class Fusion extends Entity implements InventoryHolder
             ],
             [
                 ['材料', '盔甲熔炼石', 30]
+            ],
+            [
+                ['材料', '中级燃料', 10]
             ]
         ],
         '史诗头盔图纸' => [
@@ -108,6 +122,9 @@ class Fusion extends Entity implements InventoryHolder
             ],
             [
                 ['材料', '盔甲熔炼石', 30]
+            ],
+            [
+                ['材料', '中级燃料', 10]
             ]
         ],
         '史诗武器图纸' => [
@@ -119,6 +136,9 @@ class Fusion extends Entity implements InventoryHolder
             ],
             [
                 ['材料', '武器熔炼石', 60]
+            ],
+            [
+                ['材料', '中级燃料', 10]
             ]
         ],
     ];
@@ -413,10 +433,12 @@ class Fusion extends Entity implements InventoryHolder
             $text = '请将以下需要的材料放置到上方箱子中：'."\n";
         }elseif($this->process == 1){
             $text = '请将以下需要的材料丢弃到下方岩浆中：'."\n";
+        }elseif($this->process == 2){
+            $text = '请在三个熔炉分别放置：'."\n";
         }else{
             $text = '';
         }
-        if (isset(self::$formulas[$this->drawingName][$this->process])){
+        if ($this->process==0){
             /** @var \pocketmine\tile\Chest $tile */
             $tile = $this->getLevel()->getTile($this->getChest());
             foreach (self::$formulas[$this->drawingName][$this->process] as $index => $formula){
@@ -425,6 +447,10 @@ class Fusion extends Entity implements InventoryHolder
                 }else{
                     $text .= '§c'.$formula[0].'类型的'.$formula[1].'×'.$formula[2]."\n";
                 }
+            }
+        }elseif($this->process == 1 or $this->process == 2){
+            foreach (self::$formulas[$this->drawingName][$this->process] as $index => $formula){
+                $text .= '§c'.$formula[0].'类型的'.$formula[1].'×'.$formula[2]."\n";
             }
         }else{
             return $this->tip;
@@ -533,7 +559,7 @@ class Fusion extends Entity implements InventoryHolder
             }
             /** @var \pocketmine\tile\ItemFrame $tile */
             $tile = $this->getLevel()->getTile($this->getItemFramePosition());
-            if ((!($tile->getItem() instanceof Drawings) or $tile->getItem()->getLTName()!==$this->getDrawings()->getLTName()) and $this->process<3){
+            if ((!($tile->getItem() instanceof Drawings) or $tile->getItem()->getLTName()!==$this->getDrawings()->getLTName()) and $this->process<4){
                 $this->breakd = true;
                 $this->setNameTag("§l§c错误404，找不到图纸，十秒后坠毁！");
                 return true;
@@ -550,10 +576,10 @@ class Fusion extends Entity implements InventoryHolder
                 }
             }
         }
-        if ($this->process != 2){
+        if ($this->process != 3){
             if ($this->getPlayer() == null){
                 if ($this->tip !== '熔炼已完成，等待玩家验收。')$this->tip = "错误404，找不到玩家对象。";
-                if ($this->process == 3 and $this->noPlayer == false){
+                if ($this->process == 4 and $this->noPlayer == false){
                     /** @var FloatItem $entity */
                     foreach ($this->itemEntities as $entity)
                         $entity->setSpeed(0);
@@ -588,7 +614,7 @@ class Fusion extends Entity implements InventoryHolder
             $this->age++;
             return true;
         }
-        if ($this->process == 2){
+        if ($this->process == 3){
             if ($this->startTick > 8 and ($this->startTick-1 % 10 == 0 or $this->startTick % 10 == 0 or $this->startTick+1 % 10 == 0)){
                 foreach ($this->furnaces as $furnace){
                     $this->spawnParticle($furnace->add(0.5, 0.8, 0.5), 8, 6);
@@ -642,6 +668,51 @@ class Fusion extends Entity implements InventoryHolder
                 $this->updateFloatText();
             break;
             case 2:
+                if ($this->age % 20 != 0)break;
+                if ($this->age > 20*360){
+                    /** @var \pocketmine\tile\Chest $tile */
+                    $tile = $this->getLevel()->getTile($this->getChest());
+                    $tile->getInventory()->setContents($this->getInventory()->getContents());
+                    $this->breakd = true;
+                    $this->setNameTag("§l§c超时，十秒取消熔炼！");
+                    return true;
+                }
+                $satisfy = true;
+                foreach ($this->furnaces as $furnace){
+                    /** @var  $tile \pocketmine\tile\Furnace */
+                    $tile = $this->getLevel()->getTile($furnace);
+                    $fuel = $tile->getInventory()->getFuel();
+                    if ($fuel->getId()!=Item::AIR){
+                        if($fuel instanceof Material){
+                            if(!\LTItem\Main::getInstance()->isEquals($fuel, self::$formulas[$this->drawingName][$this->process][0])){
+                                $satisfy = false;
+                            }
+                            if ($fuel->getCount() < self::$formulas[$this->drawingName][$this->process][0][2]){
+                                $satisfy = false;
+                            }
+                        }else{
+                            $satisfy = false;
+                        }
+                    }else{
+                        $satisfy = false;
+                    }
+                }
+                if ($satisfy){
+                    foreach ($this->furnaces as $furnace) {
+                        /** @var  $tile \pocketmine\tile\Furnace */
+                        $tile = $this->getLevel()->getTile($furnace);
+                        $fuel = $tile->getInventory()->getFuel();
+                        /** @var int $count */
+                        $count = self::$formulas[$this->drawingName][$this->process][0][2];
+                        $fuel->setCount($fuel->getCount() - $count);
+                        if ($fuel->getCount() <=0 )$fuel = Item::get(0);
+                        $tile->getInventory()->setFuel($fuel);
+                    }
+                    $this->process++;
+                }
+                $this->updateFloatText();
+            break;
+            case 3:
                 if ($this->age % 20 != 0)break;
                 if ($this->startTick == 0){
                     $this->tip = "等待熔炼完成。";
@@ -1043,12 +1114,12 @@ class Fusion extends Entity implements InventoryHolder
             $this->noPlayer = (bool)$this->namedtag['noPlayer'];//没玩家
             $this->spawnItemEntity();
             /** @var FloatItem $entity */
-            if ($this->process > 1){
+            if ($this->process > 2){
                 if ($this->startTick > self::$time){
                     foreach ($this->itemEntities as $entity){
                         $entity->setSpeed(2);
                     }
-                }elseif($this->process > 2 and $this->startTick >= 80){
+                }elseif($this->process > 3 and $this->startTick >= 80){
                     foreach ($this->itemEntities as $entity){
                         $entity->setSpeed(4);
                     }

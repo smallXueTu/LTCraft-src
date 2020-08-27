@@ -77,7 +77,7 @@ class Glowstone extends Transparent implements SolidLight {
 		}else{
 			$fortuneL = $item->getEnchantmentLevel(Enchantment::TYPE_MINING_FORTUNE);
 			$fortuneL = $fortuneL > 10 ? 10 : $fortuneL;
-			$times = [1, 1, 2, 3, 4];
+            $times = [1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 			$time = $times[mt_rand(0, $fortuneL + 1)];
 			$num = mt_rand(2, 4) * $time;
 			$num = $num > 4 ? 4 : $num;
