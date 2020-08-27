@@ -128,10 +128,12 @@ class Drawings extends \LTItem\SpecialItems\Material
                 }
                 return $armor;
             break;
+            case '觉醒石模板':
+                return LTItem::getInstance()->createMaterial('觉醒石');
+            break;
             default:
                 return Item::get(0);
             break;
         }
-        return Item::get(0);
     }
 }

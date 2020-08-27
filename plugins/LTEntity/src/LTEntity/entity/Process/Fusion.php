@@ -141,65 +141,85 @@ class Fusion extends Entity implements InventoryHolder
                 ['材料', '中级燃料', 10]
             ]
         ],
+        '觉醒石模板' => [
+            [
+                ['材料', '觉醒石碎片', 20],
+                ['材料', '熔炼残渣', 3]
+            ],
+            [
+                ['材料', '残渣熔炼石', 10]
+            ],
+            [
+                ['材料', '残渣燃料', 10]
+            ]
+        ],
     ];
-    public static $time = 60 * 15;
+    public static array $times = [
+        '觉醒石模板' => 60 * 3,
+        '史诗武器图纸' => 60 * 15,
+        '史诗头盔图纸' => 60 * 15,
+        '史诗胸甲图纸' => 60 * 15,
+        '史诗护膝图纸' => 60 * 15,
+        '史诗战靴图纸' => 60 * 15,
+        '终极武器图纸' => 60 * 8,
+    ];
     /** @var int $process 进度 */
-    public $process = 0;
+    public int $process = 0;
     /** @var float $temperature 温度 */
-    public $temperature = 20.00;
+    public float $temperature = 20.00;
     /** @var int $stable 稳定性 */
-    public $stable = 1;
+    public int $stable = 1;
     /** @var string 图纸名字 */
-    public $drawingName;
+    public string $drawingName;
     /** @var Drawings 图纸 */
-    public $drawings;
+    public Drawings $drawings;
     /** @var string 提示 */
-    public $tip;
+    public string $tip;
     /** @var Chest $chest 箱子坐标 */
-    public $chest;
+    public Chest $chest;
     /** @var Position $center 玻璃坐标 */
-    public $center;
+    public Position $center;
     /** @var ItemFrame $itemFramePosition 物品展示框 */
-    public $itemFramePosition;
+    public ItemFrame $itemFramePosition;
     /** @var Player $player 玩家 */
-    public $player = null;
+    public ?Player $player = null;
     /** @var boolean $breakd 多方块结构是否被破坏 */
-    public $breakd = false;
+    public bool $breakd = false;
     /** @var int $breakTick 被破坏后实体存活十秒 */
-    public $breakTick = 0;
+    public int $breakTick = 0;
     /** @var int $startTick 开始Tick */
-    public $startTick = 0;
+    public int $startTick = 0;
     /** @var BaseInventory $inventory 这个实体的背包 */
-    public $inventory;
+    public BaseInventory $inventory;
     /** @var array $anvils 三个铁砧 */
-    public $anvils = [];
+    public array $anvils = [];
     /** @var array $furnaces 三个熔炉 */
-    public $furnaces = [];
+    public array $furnaces = [];
     /** @var array $itemEntities 物品实体 */
-    public $itemEntities = [];
+    public array $itemEntities = [];
     /** @var bool 失败 如果失败了到最后无论如何都无法产出结果 */
-    private $failure = false;
+    private bool $failure = false;
     /**
      * @var bool 强制冷却
      */
-    private $forcedCooling = false;
+    private bool $forcedCooling = false;
     /**
      * @var bool 冷却液加速
      */
-    private $coolant = false;
+    private bool $coolant = false;
     /**
      * @var bool 没玩家
      */
-    private $noPlayer = false;
+    private bool $noPlayer = false;
     /**
      * @var int 粒子进度
      */
-    private $progress = 0;
-    private $particleHigh = 0;
+    private int $progress = 0;
+    private int $particleHigh = 0;
     /**
      * @var string
      */
-    public $playerName;
+    public string $playerName;
 
     /**
      * 尝试创建这个实体
@@ -564,6 +584,15 @@ class Fusion extends Entity implements InventoryHolder
                 $this->setNameTag("§l§c错误404，找不到图纸，十秒后坠毁！");
                 return true;
             }
+            foreach ($this->furnaces as $furnace){
+                /** @var \pocketmine\tile\Furnace $tile */
+                $tile = $this->getLevel()->getTile($furnace);
+                if ($tile==null or $tile->getType()!=="熔炼熔炉"){
+                    $this->breakd = true;
+                    $this->setNameTag("§l§c检查三个熔炉为熔炼熔炉，十秒后坠毁！");
+                    return true;
+                }
+            }
             foreach ($this->getLevel()->getPlayers() as $player){
                 if ($this->distance($player) < 3){
                     if ($this->getTemperature() > 80 and $this->getTemperature() < 300){
@@ -709,13 +738,13 @@ class Fusion extends Entity implements InventoryHolder
                         $tile->getInventory()->setFuel($fuel);
                     }
                     $this->process++;
+                    $this->tip = "等待熔炼完成。";
                 }
                 $this->updateFloatText();
             break;
             case 3:
                 if ($this->age % 20 != 0)break;
                 if ($this->startTick == 0){
-                    $this->tip = "等待熔炼完成。";
                    $this->spawnItemEntity();
                     foreach ($this->furnaces as $furnace)
                         $this->getLevel()->setBlock($furnace, Block::get(Item::BURNING_FURNACE, $furnace->getDamage()), true);//点燃熔炉
@@ -734,7 +763,7 @@ class Fusion extends Entity implements InventoryHolder
                         $this->getLevel()->addSound(new AnvilUseSound($anvil));//铁砧声音
                     }
                 }
-                if ($this->startTick > self::$time){
+                if ($this->startTick > self::$times[$this->drawingName]){
                     /** @var \pocketmine\tile\ItemFrame $tile */
                     $tile = $this->getLevel()->getTile($this->getItemFramePosition());
                     $tile->setItem(Item::get(0));
@@ -757,7 +786,7 @@ class Fusion extends Entity implements InventoryHolder
                 }
                 $this->updateFloatText();
             break;
-            case 3:
+            case 4:
                 if ($this->noPlayer){
                     /** @var FloatItem $entity */
                     foreach ($this->itemEntities as $entity)
@@ -1058,7 +1087,7 @@ class Fusion extends Entity implements InventoryHolder
         }
         $this->namedtag->failure = new ShortTag('failure', $this->failure);//是否失败
         $this->namedtag->forcedCooling = new ShortTag('forcedCooling', $this->forcedCooling);//强制冷却
-        $this->namedtag->noPlayer = new ShortTag('noPlayer', $this->noPlayer);//强制冷却
+        $this->namedtag->noPlayer = new ShortTag('noPlayer', $this->noPlayer);//没玩家
     }
 
     /**
@@ -1115,7 +1144,7 @@ class Fusion extends Entity implements InventoryHolder
             $this->spawnItemEntity();
             /** @var FloatItem $entity */
             if ($this->process > 2){
-                if ($this->startTick > self::$time){
+                if ($this->startTick > self::$times[$this->drawingName]){
                     foreach ($this->itemEntities as $entity){
                         $entity->setSpeed(2);
                     }

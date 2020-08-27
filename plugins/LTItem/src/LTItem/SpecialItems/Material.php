@@ -4,8 +4,12 @@ namespace LTItem\SpecialItems;
 use LTItem\SpecialItems\Material\BraveManWeaponGiftBag;
 use LTItem\SpecialItems\Material\Coolant;
 use LTItem\SpecialItems\Material\Drawings;
+use LTItem\SpecialItems\Material\EmptyRewardBox;
 use LTItem\SpecialItems\Material\MysteriousPetPieces;
+use LTItem\SpecialItems\Material\RewardBoxGene;
 use LTItem\SpecialItems\Material\SeniorWeaponGiftBag;
+use LTItem\SpecialItems\Material\SmeltingFurnace;
+use LTItem\SpecialItems\Material\SmeltingStone;
 use LTItem\SpecialItems\Material\TerraSteelIngot;
 use LTItem\SpecialItems\Material\MysteriousArmorGiftBag;
 use LTItem\SpecialItems\Material\WakeUpStone;
@@ -57,7 +61,12 @@ class Material extends Item implements LTItem{
         self::$materials['史诗护膝图纸'] = Drawings::class;
         self::$materials['史诗头盔图纸'] = Drawings::class;
         self::$materials['史诗胸甲图纸'] = Drawings::class;
+        self::$materials['觉醒石模板'] = Drawings::class;
         self::$materials['熔炼冷却液'] = Coolant::class;
+        self::$materials['熔炼原石'] = SmeltingStone::class;
+        self::$materials['熔炼熔炉'] = SmeltingFurnace::class;
+        self::$materials['空奖励箱'] = EmptyRewardBox::class;
+        self::$materials['奖励箱-基因'] = RewardBoxGene::class;
     }
     /**
      * Material constructor.

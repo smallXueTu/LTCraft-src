@@ -785,7 +785,34 @@ items:
     price: 0
     give_item: ~
     cost_item: ~
-    multilevel: false
+    multilevel:
+      - item:
+          - 4
+          - 0
+          - 1
+        nametag: |-
+          §a熔炼原石
+          §e§l>>需要原石×1
+          §e§l>>需要熔炼之心×1
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 材料:熔炼原石:1
+        cost_item: 4:0:1&材料:熔炼之心:1
+        multilevel: false
+      - item:
+          - 61
+          - 0
+          - 1
+        nametag: |-
+          §a熔炼熔炉
+          §e§l>>需要熔炼原石×8
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 材料:熔炼熔炉:1
+        cost_item: 材料:熔炼原石:8
+        multilevel: false
   - item:
       - 397
       - 2

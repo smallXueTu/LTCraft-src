@@ -365,26 +365,7 @@ class Main extends PluginBase{
 			"Name" => new StringTag("Name", $conf['材料名字'])
 			])
 		]);
-		switch($name){
-			case '空奖励箱':
-				$nbt['BlockEntityTag'] = new CompoundTag("BlockEntityTag", [
-						'Name'=>new StringTag('Name', ''),
-						'Type'=>new StringTag('Type', $name),
-					]);
-			break;
-			case '奖励箱-基因':
-				$nbt['BlockEntityTag'] = new CompoundTag("BlockEntityTag", [
-						'Name'=>new StringTag('Name', ''),
-						'Type'=>new StringTag('Type', $name),
-						'NeedTime'=>new StringTag('NeedTime', 14400),
-					]);
-			break;
-			default:
-			break;
-		}
-		$item=Material::getMaterial($name, $conf, 1, $nbt);
-		// var_dump($item);
-		return $item;
+        return Material::getMaterial($name, $conf, 1, $nbt);
 	}
 
     /**

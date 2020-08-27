@@ -387,7 +387,7 @@ class Main extends PluginBase implements Listener{
 			$i=0;
 			foreach($keep as $name=>$count){
 				if($i<4){
-					self::sendItem($name, ['材料', '觉醒石', 4-$i]);
+					self::sendItem($name, ['材料', '盔甲精髓', 4-$i]);
 					self::sendItem($name, ['材料', '武器精髓', 4-$i]);
 				}
 				self::sendItem($name, ['材料', '皮肤碎片', 11-$i]);
@@ -737,8 +737,8 @@ class Main extends PluginBase implements Listener{
 //			$player->sendCenterTip('§l§c管理员禁止使用这个东西！！');
 //			$event->setCancelled();
 //		}
-		elseif($evItem->getID()=='351' and ($player->isOp() or $player->getGamemode()!=0))
-			$event->setCancelled();
+//		elseif($evItem->getID()=='351' and ($player->isOp() or $player->getGamemode()!=0))
+//			$event->setCancelled();
 	}
 	public function onPlayerQuit(PlayerQuitEvent $ev){
 		$player=$ev->getPlayer();
