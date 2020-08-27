@@ -25,7 +25,7 @@ PVP:
   穿甲: 0
   重伤: 0
 手持提示: §d冰雪手斧 PVE武器 攻击力:@ed 吸血值:@ex% §d[高级]
-全员可用: true
+全员可用: false
 类型: pve
 分解可获得: false
 最大星级: false

@@ -30,7 +30,7 @@ PVP:
   穿甲: 0
   重伤: 0
 手持提示: §d§l神秘之剑:§c伤害PVE:@ed§a吸血:@ex% §d[仙器]
-全员可用: true
+全员可用: false
 类型: pve
 分解可获得: false
 最大星级: false

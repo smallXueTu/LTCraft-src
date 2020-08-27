@@ -26,7 +26,7 @@ PVP:
   重伤: 0
 手持提示: |-
   水晶之痕 PVE武器 @ed伤害 @ex%吸血 §d[高级]
-全员可用: true
+全员可用: false
 类型: pve
 分解可获得: false
 最大星级: false
