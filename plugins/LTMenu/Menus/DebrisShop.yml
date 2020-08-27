@@ -215,7 +215,7 @@ items:
     commands: ~
     teleport: ~
     price: 0
-    give_item: 近战:死亡黑狼图腾:1
+    give_item: 近战:盘古斧:1
     cost_item: 材料:史诗武器碎片:8
     multilevel: false
 name: DebrisShop
