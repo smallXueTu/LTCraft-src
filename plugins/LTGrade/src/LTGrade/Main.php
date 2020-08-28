@@ -1,6 +1,7 @@
 <?php
 namespace LTGrade;
 
+use pocketmine\item\Item;
 use pocketmine\plugin\PluginBase;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -205,74 +206,7 @@ class Main extends PluginBase{
 			}else{
 				$needMess='§e';
 				foreach($needItem as $item){
-					if($item[0]=='更多要求'){
-						switch($item[1]){
-							case '近战':
-							case '通用':
-							case '远程':
-								if($item[2]=='*'){//名字
-									if($item[3]=='*'){//类型
-										if($item[4]=='*'){//等级大于等于
-											$needMess.=PHP_EOL . $item[1].'类型武器×'.$item[5];
-										}else{
-											$needMess.=PHP_EOL . $item[1].'类型武器等级大于等于'.$item[4].'×'.$item[5];
-										}
-									}else{
-										if($item[4]=='*'){//等级大于等于
-											$needMess.=PHP_EOL . $item[1].'类型和'.$item[3].'品质武器×'.$item[5];
-										}else{
-											$needMess.=PHP_EOL . $item[1].'类型和'.$item[3].'品质武器等级大于等于'.$item[4].'×'.$item[5];
-										}
-									}
-								}else{
-									if($item[3]=='*'){//类型
-										if($item[4]=='*'){//等级大于等于
-											$needMess.=PHP_EOL . $item[1].'类型'.$item[2].'武器×'.$item[5];
-										}else{
-											$needMess.=PHP_EOL . $item[1].'类型'.$item[2].'的等级大于等于'.$item[4].'×'.$item[5];
-										}
-									}else{
-										if($item[4]=='*'){//等级大于等于
-											$needMess.=PHP_EOL . $item[1].'类型和'.$item[3].'品质武器×'.$item[5].'§d';
-										}else{
-											$needMess.=PHP_EOL . $item[1].'类型和'.$item[3].'品质武器和等级大于等于'.$item[4].'×'.$item[5];
-										}
-									}
-								}
-							break;
-							case '盔甲':
-								if($item[2]=='*'){//名字
-									if($item[3]=='*'){//类型
-										if($item[4]=='*'){//等级大于等于
-											$needMess.=PHP_EOL . $item[1].'类型盔甲×'.$item[5];
-										}else{
-											$needMess.=PHP_EOL . $item[1].'类型盔甲等级大于等于'.$item[4].'×'.$item[5];
-										}
-									}else{
-										if($item[4]=='*'){//等级大于等于
-											$needMess.=PHP_EOL . $item[1].'类型和'.$item[3].'品质盔甲×'.$item[5];
-										}else{
-											$needMess.=PHP_EOL . $item[1].'类型和'.$item[3].'品质盔甲等级大于等于'.$item[4].'×'.$item[5];
-										}
-									}
-								}else{
-									if($item[3]=='*'){//类型
-										if($item[4]=='*'){//等级大于等于
-											$needMess.=PHP_EOL . $item[1].'类型'.$item[2].'盔甲×'.$item[5];
-										}else{
-											$needMess.=PHP_EOL . $item[1].'类型'.$item[2].'的等级大于等于'.$item[4].'×'.$item[5];
-										}
-									}else{
-										if($item[4]=='*'){//等级大于等于
-											$needMess.=PHP_EOL . $item[1].'类型和'.$item[3].'品质盔甲×'.$item[5];
-										}else{
-											$needMess.=PHP_EOL . $item[1].'类型和'.$item[3].'品质盔甲和等级大于等于'.$item[4].'×'.$item[5];
-										}
-									}
-								}
-							break;
-						}
-					}else $needMess.=PHP_EOL . $item[0].'类型'.$item[1].'×'.$item[2];
+                    $needMess = PHP_EOL . Item::getItemInfo($item);
 				}
 				foreach($err as $info){
 					$sender->sendMessage('§l§d'.$info);

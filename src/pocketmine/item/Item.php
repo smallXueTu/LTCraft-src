@@ -414,6 +414,90 @@ class Item implements ItemIds, \JsonSerializable {
 	}
 
     /**
+     * @param array $item
+     * @return string
+     */
+	public static function getItemInfo($item){
+		if(in_array($item[0], ['近战', '远程', '通用', '盔甲', '饰品', '材料', '魔法', '更多要求'])){
+            $mess = '';
+            if ($item[0]='更多要求'){
+                switch($item[1]){
+                    case '近战':
+                    case '通用':
+                    case '远程':
+                        if($item[2]=='*'){//名字
+                            if($item[3]=='*'){//类型
+                                if($item[4]=='*'){//等级大于等于
+                                    $mess.= $item[1].'类型武器×'.$item[5];
+                                }else{
+                                    $mess.= $item[1].'类型武器等级大于等于'.$item[4].'×'.$item[5];
+                                }
+                            }else{
+                                if($item[4]=='*'){//等级大于等于
+                                    $mess.= $item[1].'类型和'.$item[3].'品质武器×'.$item[5];
+                                }else{
+                                    $mess.= $item[1].'类型和'.$item[3].'品质武器等级大于等于'.$item[4].'×'.$item[5];
+                                }
+                            }
+                        }else{
+                            if($item[3]=='*'){//类型
+                                if($item[4]=='*'){//等级大于等于
+                                    $mess.= $item[1].'类型'.$item[2].'武器×'.$item[5];
+                                }else{
+                                    $mess.= $item[1].'类型'.$item[2].'的等级大于等于'.$item[4].'×'.$item[5];
+                                }
+                            }else{
+                                if($item[4]=='*'){//等级大于等于
+                                    $mess.= $item[1].'类型和'.$item[3].'品质武器×'.$item[5].'§d';
+                                }else{
+                                    $mess.= $item[1].'类型和'.$item[3].'品质武器和等级大于等于'.$item[4].'×'.$item[5];
+                                }
+                            }
+                        }
+                        break;
+                    case '盔甲':
+                        if($item[2]=='*'){//名字
+                            if($item[3]=='*'){//类型
+                                if($item[4]=='*'){//等级大于等于
+                                    $mess.= $item[1].'类型盔甲×'.$item[5];
+                                }else{
+                                    $mess.= $item[1].'类型盔甲等级大于等于'.$item[4].'×'.$item[5];
+                                }
+                            }else{
+                                if($item[4]=='*'){//等级大于等于
+                                    $mess.= $item[1].'类型和'.$item[3].'品质盔甲×'.$item[5];
+                                }else{
+                                    $mess.=PHP_EOL . $item[1].'类型和'.$item[3].'品质盔甲等级大于等于'.$item[4].'×'.$item[5];
+                                }
+                            }
+                        }else{
+                            if($item[3]=='*'){//类型
+                                if($item[4]=='*'){//等级大于等于
+                                    $mess.= $item[1].'类型'.$item[2].'盔甲×'.$item[5];
+                                }else{
+                                    $mess.= $item[1].'类型'.$item[2].'的等级大于等于'.$item[4].'×'.$item[5];
+                                }
+                            }else{
+                                if($item[4]=='*'){//等级大于等于
+                                    $mess.= $item[1].'类型和'.$item[3].'品质盔甲×'.$item[5];
+                                }else{
+                                    $mess.= $item[1].'类型和'.$item[3].'品质盔甲和等级大于等于'.$item[4].'×'.$item[5];
+                                }
+                            }
+                        }
+                        break;
+                }
+                return $mess;
+            }else{
+                return $item[0].'类型'.$item[1].'×'.$item[1];
+            }
+		}else{
+		    $i = Item::get($item[0], $item[1]);
+			return $i->getName().'×'.$i->getCount();
+		}
+	}
+
+    /**
      * @param int $id
      * @param int $meta
      * @param int $count

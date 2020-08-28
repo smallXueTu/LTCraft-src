@@ -133,6 +133,7 @@ class Fusion extends Entity implements InventoryHolder
                 ['近战', '碧玉刃', 1],
                 ['近战', '天魔化血神刀', 1],
                 ['近战', '符文之刃', 1],
+                ['更多要求', '近战', '*', '终极', 25, 1],
             ],
             [
                 ['材料', '武器熔炼石', 60]
@@ -463,14 +464,14 @@ class Fusion extends Entity implements InventoryHolder
             $tile = $this->getLevel()->getTile($this->getChest());
             foreach (self::$formulas[$this->drawingName][$this->process] as $index => $formula){
                 if (Open::getNumber($this->getPlayer(), $formula, $tile->getInventory())){
-                    $text .= '§e'.$formula[0].'类型的'.$formula[1].'×'.$formula[2]."\n";
+                    $text .= '§e'.Item::getItemInfo($formula)."\n";
                 }else{
-                    $text .= '§c'.$formula[0].'类型的'.$formula[1].'×'.$formula[2]."\n";
+                    $text .= '§c'.Item::getItemInfo($formula)."\n";
                 }
             }
         }elseif($this->process == 1 or $this->process == 2){
             foreach (self::$formulas[$this->drawingName][$this->process] as $index => $formula){
-                $text .= '§c'.$formula[0].'类型的'.$formula[1].'×'.$formula[2]."\n";
+                $text .= '§c'.Item::getItemInfo($formula)."\n";
             }
         }else{
             return $this->tip;
