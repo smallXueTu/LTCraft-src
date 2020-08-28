@@ -30,7 +30,7 @@ class SeniorWeaponGiftBag extends Material
             switch(true){
                 case $rand>=90:
                     $item=Main::getInstance()->createMaterial('中级武器经验水晶');
-                    $item->setCount(20);
+                    $item->setCount(5);
                     break;
                 case $rand>=70:
                     $item=Main::getInstance()->createWeapon('近战', '末影屠龙刀', $player);

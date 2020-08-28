@@ -239,6 +239,15 @@ class InlayInventory extends OperationInventory{
 									$item->setNamedTag($nbt);
 									$item->initW($item->getConfig());
 								break;
+								case '群回范围附加石':
+									if($nbt['attribute'][16]>=7)continue 2;
+                                    $count=$nbt['attribute'][16];
+                                    $nbt['attribute'][16]=new StringTag('',$nbt['attribute'][16]+1*$i->getCount());
+                                    if($nbt['attribute'][16]>10)$nbt['attribute'][16]=new StringTag('',7);
+                                    $count=$nbt['attribute'][16]-$count;
+                                    $item->setNamedTag($nbt);
+                                    $item->initW($item->getConfig());
+								break;
 								case '高级武器经验水晶':
 									$exp=6;
 								case '中级武器经验水晶':
@@ -284,6 +293,9 @@ class InlayInventory extends OperationInventory{
 										if(!mt_rand(0,9))$nbt['attribute'][11]=new StringTag('',$nbt['attribute'][11]+1);
 										$count++;
 									}
+                                    // $name=$item->getCustomName();
+                                    // $level=str_repeat('§a★',$nbt['attribute'][7]).str_repeat('§f★',$item->getMaxX()-$nbt['attribute'][7]);
+                                    // $item->setCustomName(preg_replace('#(§a★)+(§f★)+#', $level, $name));
 									$item->setNamedTag($nbt);
 								break;
 								case '血之晶':
@@ -326,16 +338,6 @@ class InlayInventory extends OperationInventory{
 											$count=$i->getCount()-$count;
 										}else $count=$i->getCount();
 									}
-								break;
-								case '盔甲精髓':
-									if($nbt['attribute'][7]>=$item->getMaxX())continue 2;
-									for($c=1;$c<=$i->getCount() and $nbt['attribute'][7]<$item->getMaxX();$c++){
-										if(!mt_rand(0,9))$nbt['attribute'][7]=new StringTag('',$nbt['attribute'][7]+1);
-										$count++;
-									}
-									// $name=$item->getCustomName();
-									// $level=str_repeat('§a★',$nbt['attribute'][7]).str_repeat('§f★',$item->getMaxX()-$nbt['attribute'][7]);
-									// $item->setCustomName(preg_replace('#(§a★)+(§f★)+#', $level, $name));
 								break;
 							}
                             $i->setCount($i->getCount()-$count);

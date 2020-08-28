@@ -414,11 +414,12 @@ class Item implements ItemIds, \JsonSerializable {
 	}
 
     /**
-     * @param int    $id
-     * @param int    $meta
-     * @param int    $count
+     * @param int $id
+     * @param int $meta
+     * @param int $count
      * @param string $tags
      *
+     * @param bool $weaponInit
      * @return Item
      */
 	public static function get(int $id, int $meta = 0, int $count = 1, string $tags = "", $weaponInit = true) : Item{

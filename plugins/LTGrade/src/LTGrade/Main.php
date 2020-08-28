@@ -256,19 +256,6 @@ class Main extends PluginBase{
 				$sender->sendMessage('§l§a[提示]§a无需校准!');
 			}
 		break;
-		case '赐予魔法棍':
-			if($sender instanceof Player)return $sender->sendMessage('§l§a[提示]§c这个命令只有控制台可以使用！');
-			if(!isset($args[1]))return $sender->sendMessage('§l§a[提示]§c用法:/grade 赐予魔法棍 ID');
-			$target=$this->server->getPlayer($args[1]);
-			if(!$target)return $sender->sendMessage('§l§a[提示]§c目标不在线！');
-			if($target->getAStatusIsDone('获得魔法棍'))return;
-			$item=LTItem::getInstance()->createMaterial('魔法棍');
-			if($target->getInventory()->canAddItem($item)){
-				$target->getInventory()->addItem($item);
-				$target->addAStatus('获得魔法棍');
-				$target->sendMessage('§l§a[提示]§l§a恭喜你获得魔法棍,已放入背包!');
-			}
-		break;
 		case 'me':
 			$sender->sendMessage('§a♚我的信息♚');
 			$sender->sendMessage('§c当前等级:'.$sender->getGrade());

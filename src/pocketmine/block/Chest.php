@@ -253,8 +253,8 @@ class Chest extends Transparent {
 										if($isluckyItem)$rand+=100;
 										switch(true){
 											case $rand>=450:
-												$item=LTItem::getInstance()->createMaterial('中级盔甲经验水晶');
-												$item->setCount(30);
+												$item=LTItem::getInstance()->createMaterial('初级盔甲经验水晶');
+												$item->setCount(20);
 												if($item instanceof Item)$chest->getInventory()->addItem($item);
 											break;
 											case $rand>=400:
@@ -285,7 +285,7 @@ class Chest extends Transparent {
 										$rand=mt_rand(0, 500);
 										if($isluckyItem)$rand+=100;
 										$Aitem=LTItem::getInstance()->createMaterial('初级武器经验水晶');
-										$Aitem->setCount(5);
+										$Aitem->setCount(20);
 										switch(true){
 											case $rand>=400:
 												$item=LTItem::getInstance()->createMaterial('史诗武器图纸碎片');

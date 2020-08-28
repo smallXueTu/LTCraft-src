@@ -33,7 +33,7 @@ class BraveManWeaponGiftBag extends Material
             switch (true) {
                 case $rand >= 90:
                     $item = Main::getInstance()->createMaterial('高级武器经验水晶');
-                    $item->setCount(20);
+                    $item->setCount(5);
                     break;
                 case $rand >= 70:
                     $item = Main::getInstance()->createWeapon('近战', '远古战刃', $player);

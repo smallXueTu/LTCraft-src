@@ -495,7 +495,8 @@ class Main extends PluginBase implements Listener{
 								$entity->setFlying(false);
 							}
 						break;
-						case 't2':
+                        case 't5':
+                        case 't2':
 							if($entity->getMaxDamage()<1000){
 								$entity->sendMessage('§l§a[提示]§c你的伤害不足与进入这个世界！');
 								$event->setCancelled(true);
@@ -519,15 +520,7 @@ class Main extends PluginBase implements Listener{
 								$entity->setFlying(false);
 							}
 						break;
-						case 't5':
-							if($entity->getMaxDamage()<1500){
-								$entity->sendMessage('§l§a[提示]§c你的伤害不足与进入这个世界！');
-								$event->setCancelled(true);
-							}else{
-								$entity->setFlying(false);
-							}
-						break;
-						case 't6':
+                        case 't6':
 							if($entity->getMaxDamage()<2000){
 								$entity->sendMessage('§l§a[提示]§c你的伤害不足与进入这个世界！');
 								$event->setCancelled(true);

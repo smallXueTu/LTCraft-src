@@ -184,6 +184,7 @@ class Weapon extends Item implements LTItem {
      */
 	public function initW($conf = null){
 		try{
+		    var_dump($this->getLTName());
 			if($conf==null)$conf=$this->conf;
 			$this->Wlevel=$conf['等级'];
 			$this->type=$conf['类型'];
@@ -290,7 +291,6 @@ class Weapon extends Item implements LTItem {
 				$this->PVEdamage+=$nbt['attribute'][3];
 				$this->PVEVampire+=$nbt['attribute'][4];
 				$this->groupOfBack+=$nbt['attribute'][12];
-				$this->groupOfBackSize+=$nbt['attribute'][16];
 				$this->PVEArmour+=$nbt['attribute'][17];
 				$this->addPVEDamgerEffects($nbt['attribute'][14]);
 				if($nbt['attribute'][5]>0){
@@ -310,7 +310,8 @@ class Weapon extends Item implements LTItem {
 				$this->addPVPEntityEffects($nbt['attribute'][15]);
 				$this->addPVPDamgerEffects($nbt['attribute'][14]);
 				$this->RealDamage+=$nbt['attribute'][8];
-			}
+            }
+            $this->groupOfBackSize+=$nbt['attribute'][16];
 			$this->SkillCD-=$nbt['attribute'][10];
 			if($this->getAwakening()>1){
 				if($this->type==='pve'){

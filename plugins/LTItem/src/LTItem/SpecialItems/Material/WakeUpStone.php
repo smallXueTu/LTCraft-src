@@ -22,7 +22,6 @@ class WakeUpStone extends Material
      */
     public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz)
     {
-        // var_dump("a");
         if($level->getName()=='pve' and $target->getX()==-287 and $target->getY()==102 and $target->getZ()==455) {
             if($player->getGeNeAwakening()>=3){
                 $player->sendMessage('§l§c你的职业基因已经觉醒三层了！');
