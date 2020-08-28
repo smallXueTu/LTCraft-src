@@ -238,7 +238,7 @@ class DataBase extends \Thread{
 			self::$connection->exec('SET NAMES UTF8');
 			return true;
 		}else{
-			$this->BroadCastMessage('§a数据库连接失败！关闭服务器！');
+			$this->server->BroadCastMessage('§a数据库连接失败！关闭服务器！');
 			$this->server->shutdown();
 			return false;
 		}

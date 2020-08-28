@@ -13,10 +13,12 @@ use LTItem\Main as LTItem;
 use LTGrade\Main as LTGrade;
 use LTEntity\Main as LTEntity;
 class PlayerTask{
-	public $player=null;
+    /** @var Player */
+    public ?Player $player = null;
 	public $task=0;
 	public $DailyTask=[];
-	public $plugin;
+	/** @var Main */
+    public ?Main $plugin;
 	public static $MainTask=null;
 	public static $AllTask=null;
 	// public static $Announcement=null;
@@ -103,6 +105,14 @@ class PlayerTask{
 			\LTCraft\Main::sendItem($this->player->getName(), $item);
 			$this->player->sendMessage('§l§a恭喜你完成了一个任务 奖励'.$item[0].'类型'.$item[1].'×'.$item[2].'已发送至你的邮箱！');
 		}
+        if ($this->getDoneCount() == 1){
+            if ($this->plugin->getTaskDoneCount($this->player)>=2){
+                $item=['材料', '灵魂圣布', 1];
+                \LTCraft\Main::sendItem($this->player->getName(), $item);
+                $this->player->sendMessage('§l§a你连续三天完成两个任务，获得'.$item[0].'类型'.$item[1].'×'.$item[2].'已发送至你的邮箱！');
+            }
+            $this->plugin->taskDoneCounter($this->player);
+        }
 	}
 	public function checkDailyTaskComplete(){
 		foreach($this->DailyTask as $id=>$info){
@@ -110,6 +120,15 @@ class PlayerTask{
 		}
 		return true;
 	}
+	public function getDoneCount(){
+        $count = 0;
+        foreach($this->DailyTask as $id=>$Tinfo) {
+            if ($Tinfo[0] >= $Tinfo[1]) {
+                $count++;
+            }
+        }
+        return $count;
+    }
 	public function updateDailyTask(){
 		$info='§6每日任务:';
 		foreach($this->DailyTask as $id=>$Tinfo){
@@ -131,6 +150,7 @@ class PlayerTask{
 		}else{
 			$this->message='§6主线任务:\n'.self::$MainTask[$this->task];
 		}
+		$this->player->setMainTask($this->task);
 		if($this->player->getAPI() instanceof API)$this->player->getAPI()->update(API::TASK);
 	}
 	public function updateTaskMessage(){

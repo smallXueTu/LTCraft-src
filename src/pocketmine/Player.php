@@ -332,7 +332,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
     /** @var API */
     public $API = null;
     /** @var PlayerTask */
-    public $Task = null;
+    public ?PlayerTask $Task = null;
     /** @var Buff */
     public $Buff = null;
     public $NPCs = [];
@@ -377,6 +377,10 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
     public function setTask(\LTGrade\PlayerTask $Task){
         $this->Task=$Task;
     }
+
+    /**
+     * @return PlayerTask
+     */
     public function getTask(){
         return $this->Task;
     }

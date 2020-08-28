@@ -184,7 +184,6 @@ class Weapon extends Item implements LTItem {
      */
 	public function initW($conf = null){
 		try{
-		    var_dump($this->getLTName());
 			if($conf==null)$conf=$this->conf;
 			$this->Wlevel=$conf['等级'];
 			$this->type=$conf['类型'];

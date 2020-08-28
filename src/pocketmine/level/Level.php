@@ -1964,6 +1964,7 @@ class Level implements ChunkManager, Metadatable
                         }
                         return true;
                     }
+                    var_dump($item);
                     if ($item->canBeActivated() and $item->onActivate($this, $player, $block, $target, $face, $fx, $fy, $fz)) {
                         if ($item->getCount() <= 0) {
                             $item = Item::get(Item::AIR, 0, 0);

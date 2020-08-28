@@ -100,6 +100,7 @@ class Main extends PluginBase implements Listener{
         $LTCraft->playerConfig->save(false);
 		$LTGrade = \LTGrade\Main::getInstance();
 		$LTGrade->PlayerTaskConf->save(false);
+		$LTGrade->conf->save(false);
 		/** @var \LTMenu\Main $LTMenu */
 		$LTMenu = \LTMenu\Main::getInstance();
 		$LTMenu->getExchange()->save(false);
@@ -1672,9 +1673,9 @@ class Main extends PluginBase implements Listener{
 						unset($this->status[$Yname]);
 						return $player->sendMessage("§l§a[提示]§a为了准确性请确认目标玩家在线!");
 					}
-					if($hand instanceof Weapon){
-						if(Open::getNumber($player, ['材料','武器解绑水晶',1])){
-							Open::removeItem($player, ['材料','武器解绑水晶',1]);
+					if($hand instanceof Weapon or $hand instanceof Armor){
+						if(Open::getNumber($player, ['材料','灵魂圣布',1])){
+							Open::removeItem($player, ['材料','灵魂圣布',1]);
 							if($hand->getWlevel()=='定制'){
 								unset($this->status[$Yname]);
 								return $player->sendMessage("§l§a[提示]§a定制武器不可以解绑哦~");
@@ -1684,15 +1685,6 @@ class Main extends PluginBase implements Listener{
 							$player->sendMessage("§l§a[提示]§a更换绑定成功~");
 						}else{
 							$player->sendMessage("§l§a[提示]§c你背包里没有武器解绑水晶哦~");
-						}
-					}elseif($hand instanceof Armor){
-						if(Open::getNumber($player, ['材料','盔甲解绑水晶',1])){
-							Open::removeItem($player, ['材料','盔甲解绑水晶',1]);
-							$hand=$hand->setBinding($ms);
-							$player->getInventory()->setItemInHand($hand);
-							$player->sendMessage("§l§a[提示]§a更换绑定成功~");
-						}else{
-							$player->sendMessage("§l§a[提示]§c你背包里没有盔甲解绑水晶哦~");
 						}
 					}else{
 						$player->sendMessage("§l§a[提示]§c更换绑定仅限武器和盔甲哦~");

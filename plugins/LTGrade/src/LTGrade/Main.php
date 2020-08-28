@@ -27,7 +27,11 @@ use pocketmine\nbt\tag\LongTag;
 use pocketmine\nbt\tag\ShortTag;
 use pocketmine\nbt\tag\StringTag;
 class Main extends PluginBase{
-	public static $instance=null;
+    public static ?Main $instance = null;
+
+    /**
+     * @return Main
+     */
 	public static function getInstance(){
 		return self::$instance;
 	}
@@ -36,10 +40,13 @@ class Main extends PluginBase{
 	public static $PlayerTask=[];
 	public static $Number=0;
 	public static $dir;
-	public $conf;
-	public $PlayerTaskConf;
+	/** @var Config */
+    public Config $conf;
+    /** @var Config */
+    public Config $PlayerTaskConf;
 	public function onDisable(){
 		$this->PlayerTaskConf->save(false);
+		$this->conf->save(false);
 	}
 	public function onEnable(){
 		PlayerTask::init();
@@ -92,6 +99,47 @@ class Main extends PluginBase{
 		// self::$Number++;
 		// foreach(self::$entity as $entity)$entity->upDateTitleAndPercentage();
 	// }
+    /**
+     * 获取任务连续完成天数
+     * @param Player $player
+     * @return int
+     */
+    public function getTaskDoneCount(Player $player){
+	    $name = strtolower($player->getName());
+	    $arr = $this->conf->get("任务完成天数");
+	    $yesterday = date("Y-m-d", strtotime("-1 day"));
+        $beforeYesterday = date("Y-m-d", strtotime("-2 day"));
+	    if (isset($arr[$name])){
+	        if (in_array($yesterday, $arr[$name])){
+	            if (in_array($beforeYesterday, $arr[$name])){
+                    $arr[$name] = [$beforeYesterday, $yesterday];
+                    $this->conf->set("任务完成天数", $arr);
+                    return 2;
+                }else{
+                    $arr[$name] = [$yesterday];
+                    $this->conf->set("任务完成天数", $arr);
+                    return 1;
+                }
+            }else{
+                $arr[$name] = [];
+                $this->conf->set("任务完成天数", $arr);
+                return 0;
+            }
+        }else{
+	        return 0;
+        }
+    }
+
+    /**
+     * 玩家完成任务计数器
+     * @param Player $player
+     */
+    public function taskDoneCounter(Player $player){
+        $name = strtolower($player->getName());
+        $arr = $this->conf->get("任务完成天数");
+        $arr[$name][] = date("Y-m-d");
+        $this->conf->set("任务完成天数", $arr);
+    }
 	public function updateTaskConfig(){
 		$this->PlayerTaskConf->save(false);
 		copy($this->PlayerTaskConf->getFile(), $this->getDataFolder().'DailyTask/'.date('Y-m-d', time()-43200).'.yml');
@@ -104,6 +152,7 @@ class Main extends PluginBase{
 		}
 	}
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args){
+        /** @var Player $sender */
 		if($command=='task'){
 			$GTo=$sender->getGTo();
 			if($GTo>=8)return $sender->sendMessage('§l§a[提示]§a你已经全部毕业了！');
