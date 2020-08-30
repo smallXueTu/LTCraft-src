@@ -161,7 +161,7 @@ namespace pocketmine {
 	// ini_set("display_startup_errors", 'Off');
 	ini_set("display_startup_errors", 'On');
 	ini_set("default_charset", "utf-8");
-
+	// echo 'qwq';
 	ini_set("memory_limit", -1);
 	define('pocketmine\START_TIME', microtime(true));
 

@@ -472,7 +472,7 @@ class Main extends PluginBase implements Listener
             $dropItem = explode(':', $drop);
             if(!isset($dropItem[3]))continue;
             if(mt_rand(0, 10000) > $dropItem[3]*100*($player->getBuff()->getLucky()/100+1)){//$drop
-				$player->sendMessage('§l§c抱歉，你这次击杀未获得战利品：§e'.Item::getItemName($drop));
+				$player->sendMessage('§l§c抱歉，你这次击杀未获得战利品：§e'.Item::getItemName($dropItem));
 				continue;
 			}
             if(in_array($dropItem[0], ['材料', '近战', '远程', '通用', '盔甲'])) {

@@ -406,7 +406,7 @@ class Item implements ItemIds, \JsonSerializable {
      */
 	public static function getItemName($item, $s=':'){
 		if(in_array($item[0], ['近战', '远程', '通用', '盔甲', '饰品', '材料', '魔法'])){
-			return $item[0].$s.$item[1].'×'.$item[1];
+			return $item[0].$s.$item[1].'×'.$item[2];
 		}else{
 		    $i = Item::get($item[0], $item[1]);
 			return $i->getName().'×'.$i->getCount();

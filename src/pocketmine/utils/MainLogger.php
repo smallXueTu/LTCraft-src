@@ -369,6 +369,7 @@ class MainLogger extends \AttachableThreadedLogger {
 	}
 	
 	public function run(){
+		return;
 		$this->shutdown = false;
 		while($this->shutdown === false){
 			$this->synchronized(function(){
