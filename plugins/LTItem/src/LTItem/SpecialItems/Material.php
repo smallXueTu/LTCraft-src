@@ -5,6 +5,7 @@ use LTItem\SpecialItems\Material\BraveManWeaponGiftBag;
 use LTItem\SpecialItems\Material\Coolant;
 use LTItem\SpecialItems\Material\Drawings;
 use LTItem\SpecialItems\Material\EmptyRewardBox;
+use LTItem\SpecialItems\Material\MagicStick;
 use LTItem\SpecialItems\Material\MysteriousPetPieces;
 use LTItem\SpecialItems\Material\RewardBoxGene;
 use LTItem\SpecialItems\Material\SeniorWeaponGiftBag;
@@ -67,6 +68,7 @@ class Material extends Item implements LTItem{
         self::$materials['熔炼熔炉'] = SmeltingFurnace::class;
         self::$materials['空奖励箱'] = EmptyRewardBox::class;
         self::$materials['奖励箱-基因'] = RewardBoxGene::class;
+        self::$materials['魔法棍'] = MagicStick::class;
     }
     /**
      * Material constructor.
@@ -87,7 +89,7 @@ class Material extends Item implements LTItem{
 	public function getLTName(){
 		return $this->MaterialName;
 	}
-	public function getHandMessage(Player $player){
+	public function getHandMessage(Player $player) : string {
 		return $this->handMessage;
 	}
 

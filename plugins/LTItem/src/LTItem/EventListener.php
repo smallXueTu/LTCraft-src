@@ -41,13 +41,15 @@ use pocketmine\entity\Attribute;
 use LTLogin\Events;
 use LTEntity\entity\BaseEntity;
 use LTGrade\FloatingText;
+use pocketmine\Server;
+
 class EventListener implements Listener
 {
-    private array $cooling = array();
-    private array $lastShow = array();
-    public array $skillCooling = array();
-	public static $instance=null;
-	public static function getInstance(){
+    public static ?EventListener $instance = null;
+    private Main $plugin;
+    private Server $server;
+
+    public static function getInstance(){
 		return self::$instance;
 	}
 	public function __construct($plugin, $server)
@@ -67,17 +69,12 @@ class EventListener implements Listener
 	}
 	public function onJoinEvent(PlayerJoinEvent $event)
 	{
-		$name = $event->getPlayer()->getName();
 		$event->getPlayer()->getBuff()->runEffect();
 		$event->getPlayer()->getBuff()->updateBuff();
-		$xname=strtolower($name);
-		// $this->server->dataBase->pushService('0'.chr(7).chr(strlen($xname)).$xname."SELECT * FROM wed.items WHERE username='{$xname}'");
-		$this->skillCooling[$name]=[];
-		$this->cooling[$name] = $this->server->getTick();
+        Cooling::onPlayerJoin($event->getPlayer());
 	}
 	public function playerQuit(PlayerQuitEvent $event){
-		$name = $event->getPlayer()->getName();
-		unset(Commands::getInstance()->cd[strtolower($name)], $this->skillCooling[$name], $this->cooling[$name]);
+        Cooling::onPlayerQuit($event->getPlayer());
 	}
 	public function onArmorChangeEvent(EntityArmorChangeEvent $event)
 	{
@@ -163,14 +160,14 @@ class EventListener implements Listener
 		if($Hand instanceof Weapon){
 			switch($Hand->getSkillName()){
 				case '致盲':
-					if(!isset($this->skillCooling[$player->getName()][$Hand->getLTName()]) or $this->skillCooling[$player->getName()][$Hand->getLTName()]<time()){
+					if(!isset(Cooling::$weapon[$player->getName()][$Hand->getLTName()]) or Cooling::$weapon[$player->getName()][$Hand->getLTName()]<time()){
 						foreach($player->level->getEntities() as $entity){
 							if($entity instanceof BaseEntity and $player->distance($entity)<=3){
 								$entity->setBlindnessArmor($Hand->SkillCTime());
 							}
 						}
 						$player->sendMessage('§a释放技能成功~');
-						$this->skillCooling[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD()-30;
+                        Cooling::$weapon[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD()-30;
 					}
 				break;
 			}
@@ -189,7 +186,7 @@ class EventListener implements Listener
 		if($event->getPacket() instanceof UseItemPacket and $event->getPacket()->face === -1) {
 			$player = $event->getPlayer();
 			if(!isset(Events::$status[strtolower($player->getName())]) or Events::$status[strtolower($player->getName())]!==true)return;
-			if($this->cooling[$player->getName()] >= $this->server->getTick())return;
+			if(Cooling::$launch[$player->getName()] >= $this->server->getTick())return;
 			$Hand = $player->getItemInHand();
 			if($Hand instanceof Material){
 				$nbt = new CompoundTag("", [
@@ -217,7 +214,7 @@ class EventListener implements Listener
                         $entity->spawnToAll();
                         $Hand->setCount($Hand->getCount()-1);
                         $player->getInventory()->setItemInHand($Hand);
-                        $this->cooling[$player->getName()] = $this->server->getTick()+20;
+                        Cooling::$launch[$player->getName()] = $this->server->getTick()+20;
                     break;
                     case '虚弱水晶球':
                         $entity = Entity::createEntity("EnderPearl", $player->getLevel(), $nbt, $player);
@@ -226,7 +223,7 @@ class EventListener implements Listener
                         $entity->spawnToAll();
                         $Hand->setCount($Hand->getCount()-1);
                         $player->getInventory()->setItemInHand($Hand);
-                        $this->cooling[$player->getName()] = $this->server->getTick()+20;
+                        Cooling::$launch[$player->getName()] = $this->server->getTick()+20;
                     break;
 				}
                 */
@@ -237,12 +234,12 @@ class EventListener implements Listener
 			if($event->getPacket()->action!==1 and $event->getPacket()->action!==18)return;
 			$player = $event->getPlayer();
 			if(!isset(Events::$status[strtolower($player->getName())]) or Events::$status[strtolower($player->getName())]!==true)return;
-			if($this->cooling[$player->getName()] >= $this->server->getTick())return;
+			if(Cooling::$launch[$player->getName()] >= $this->server->getTick())return;
 			$Hand = $player->getItemInHand();
 			if($Hand instanceof Weapon and $Hand->canUse($player)){
 				switch($Hand->getSkillName()){
 					case '凝冻雪球':
-						if(isset($this->skillCooling[$player->getName()][$Hand->getLTName()]) and $this->skillCooling[$player->getName()][$Hand->getLTName()]>time())return;
+						if(isset(Cooling::$weapon[$player->getName()][$Hand->getLTName()]) and Cooling::$weapon[$player->getName()][$Hand->getLTName()]>time())return;
 						if (!$player->getBuff()->consumptionMana(1000)){
 						    $player->sendMessage('§cMana不足！');
 							return;
@@ -267,10 +264,10 @@ class EventListener implements Listener
 						$entity = Entity::createEntity("Snowball", $player->getLevel(), $nbt, $player);
 						$entity->setMotion($entity->getMotion()->multiply(1.5));
 						$entity->skill=['Freeze',1+ 0.25*$Hand->SkillCTime()];
-						$this->skillCooling[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD();
+						Cooling::$weapon[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD();
 					break;
 					case '时空穿梭':
-						if(isset($this->skillCooling[$player->getName()][$Hand->getLTName()]) and $this->skillCooling[$player->getName()][$Hand->getLTName()]>time())return;
+						if(isset(Cooling::$weapon[$player->getName()][$Hand->getLTName()]) and Cooling::$weapon[$player->getName()][$Hand->getLTName()]>time())return;
 						if($event->getPacket()->action===18)return;
 						if($player->getFood()<=0){
 							$player->sendMessage('§a饥饿度不足！！');
@@ -289,13 +286,13 @@ class EventListener implements Listener
 						$pk->motionY = $dy;
 						$pk->motionZ = $dz;
 						$player->dataPacket($pk);
-						$this->skillCooling[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD();
+						Cooling::$weapon[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD();
 						$player->setFood($player->getFood()-1);
 						$player->sendMessage('§e释放技能成功！');
-						// $this->skillCooling[$player->getName()][$Hand->getLTName()] = time()+1;
+						// Cooling::$weapon[$player->getName()][$Hand->getLTName()] = time()+1;
 					break;
 					case '风暴之力':
-						if(isset($this->skillCooling[$player->getName()][$Hand->getLTName()]) and $this->skillCooling[$player->getName()][$Hand->getLTName()]>time())return;
+						if(isset(Cooling::$weapon[$player->getName()][$Hand->getLTName()]) and Cooling::$weapon[$player->getName()][$Hand->getLTName()]>time())return;
 						if($event->getPacket()->action===18)return;
                         if (!$player->getBuff()->consumptionMana(1000)){
                             $player->sendMessage('§cMana不足！');
@@ -320,10 +317,10 @@ class EventListener implements Listener
 						$entity = Entity::createEntity("EnderPearl", $player->getLevel(), $nbt, $player);
 						$entity->setMotion($entity->getMotion()->multiply(1.5));
 						$entity->skill=['Vertigo',1+ 0.25*$Hand->SkillCTime()];
-						$this->skillCooling[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD();
+						Cooling::$weapon[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD();
 					break;
 					case '猪年神器':
-						if(isset($this->skillCooling[$player->getName()][$Hand->getLTName()]) and $this->skillCooling[$player->getName()][$Hand->getLTName()]>time())return;
+						if(isset(Cooling::$weapon[$player->getName()][$Hand->getLTName()]) and Cooling::$weapon[$player->getName()][$Hand->getLTName()]>time())return;
 						if($event->getPacket()->action===1)return;
 						$model = $Hand->getNamedTag()['model']??0;
 						if(++$model>3)$model=0;
@@ -345,7 +342,7 @@ class EventListener implements Listener
 								$player->sendMessage('§e切换形态为:§2重伤');
 							break;
 						}
-						$this->skillCooling[$player->getName()][$Hand->getLTName()]=time()+1;
+						Cooling::$weapon[$player->getName()][$Hand->getLTName()]=time()+1;
 					break;
 				}
 				if($event->getPacket()->action===18 or $Hand->getWeaponType()=='近战')return;
@@ -426,7 +423,7 @@ class EventListener implements Listener
 				$entity->spawnToAll();
 				$entity->setDamage($Hand->getPVPDamage());
 				$entity->setCalculate(false);
-				$this->cooling[$player->getName()] = $this->server->getTick()+$Hand->getSpeed();
+				Cooling::$launch[$player->getName()] = $this->server->getTick()+$Hand->getSpeed();
 			}
 		}
 	}

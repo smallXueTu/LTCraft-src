@@ -202,6 +202,10 @@ class Buff{
 		foreach($this->damagerEffects as $effect)$damager->addEffect(clone $effect);
 		foreach($this->damageEffects as $effect)$entity->addEffect(clone $effect);
 	}
+
+    /**
+     * 给玩家附加药水效果
+     */
 	public function runEffect(){
 		foreach($this->effects as $effect){
 			$this->player->addEffect(clone $effect);

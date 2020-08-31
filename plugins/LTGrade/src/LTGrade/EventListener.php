@@ -1,6 +1,7 @@
 <?php
 namespace LTGrade;
 
+use LTItem\Cooling;
 use pocketmine\event\Listener;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\BlockPlaceEvent;
@@ -33,8 +34,7 @@ use LTItem\SpecialItems\Material;
 
 class EventListener implements Listener
 {
-	public static $instance=null;
-	public static $cooling=[];
+    public static ?EventListener $instance = null;
 
 	public static $eventID=0;
 	public $events=[];
@@ -66,7 +66,7 @@ class EventListener implements Listener
 		$player=$event->getPlayer();
 		$item=$player->getItemInHand();
 		if($player->getItemInHand() instanceof Material and $player->getItemInHand()->getLTName()=='魔法棍' and $player->level->getName()!=='zc'){
-			if(isset(self::$cooling[$player->getName()]) and self::$cooling[$player->getName()]>time())return;
+			if(isset(Cooling::$material[$player->getName()][$player->getItemInHand()->getLTName()]) and Cooling::$material[$player->getName()][$player->getItemInHand()->getLTName()]>time())return;
 			$grade=$player->getGrade();
 			switch($player->getRole()){
 				case '战士':
@@ -139,7 +139,7 @@ class EventListener implements Listener
 					$player->sendMessage('§l§a释放技能成功,恢复'.$grade .'生命值！');
 				break;
 			}
-			self::$cooling[$player->getName()]=time()+(200-((int)$grade/2));
+            Cooling::$material[$player->getName()][$player->getItemInHand()->getLTName()]=time()+(200-((int)$grade/2));
 		}
 	}
 	public function onPlaceEvent(BlockPlaceEvent $event) //放置
@@ -160,14 +160,15 @@ class EventListener implements Listener
 	{
 		$entity=$event->getEntity();
 		if($event instanceof EntityDamageByEntityEvent and $entity instanceof Player and ($damager=$event->getDamager()) instanceof Player and $damager->getItemInHand() instanceof Material and $damager->getItemInHand()->getLTName()=='魔法棍' and $damager->getRole()==='医疗'){
-			if(isset(self::$cooling[$damager->getName()]) and self::$cooling[$damager->getName()]>microtime(true)){
+		    /** @var Player $damager */
+			if(isset(Cooling::$material[$damager->getName()][$damager->getItemInHand()->getLTName()]) and Cooling::$material[$damager->getName()][$damager->getItemInHand()->getLTName()]>microtime(true)){
 				$damager->sendTitle('§c技能冷却中...');
 				return $event->setCancelled();
 			}
 			$entity->heal($damager->getGrade()*2,new EntityRegainHealthEvent($entity, $damager->getGrade()*2, EntityRegainHealthEvent::CAUSE_MAGIC));
 			$entity->sendTitle('§a玩家'.$damager->getName(),'§d为你医疗了'.$damager->getGrade()*2 .'生命值!');
 			$damager->sendTitle('§a成功医疗目标');
-			self::$cooling[$damager->getName()]=microtime(true)+(300-$damager->getGrade());
+            Cooling::$material[$damager->getName()][$damager->getItemInHand()->getLTName()]=microtime(true)+(300-$damager->getGrade());
 			return $event->setCancelled();
 		}
 		if($event->isCancelled())return;

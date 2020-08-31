@@ -23,5 +23,5 @@ interface LTItem{
      * @param Player $player
      * @return mixed
      */
-    public function getHandMessage(Player $player);
+    public function getHandMessage(Player $player) : string;
 }

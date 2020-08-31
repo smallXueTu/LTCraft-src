@@ -124,7 +124,7 @@ class BaseMana extends Item implements LTItem,Mana
      * @param Player $player
      * @return mixed|string
      */
-    public function getHandMessage(Player $player)
+    public function getHandMessage(Player $player):string
     {
         return ManaSystem::replace($this->handMessage, $this);
     }

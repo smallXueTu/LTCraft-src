@@ -13,7 +13,7 @@ use pocketmine\Player;
 
 class ManaWand extends BaseMana
 {
-    public function getHandMessage(Player $player)
+    public function getHandMessage(Player $player):string
     {
         $addVector3 = new Vector3(-sin($player->yaw / 180 * M_PI) * cos($player->pitch / 180 * M_PI), -sin($player->pitch / 180 * M_PI), cos($player->yaw / 180 * M_PI) * cos($player->pitch / 180 * M_PI));
         $vector3 = $player->asVector3()->add(0, $player->getEyeHeight(), 0);

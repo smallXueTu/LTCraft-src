@@ -537,23 +537,14 @@ class Main extends PluginBase{
 					case '风暴之力':
 					case '致盲':
 					case '时空穿梭':
-						if(isset($this->EventListener->skillCooling[$player->getName()][$hand->getLTName()]) and $this->EventListener->skillCooling[$player->getName()][$hand->getLTName()]>time())
-							$mess=$hand->getHandMessage($player)."\n".'§c技能剩余时间:'.ceil($this->EventListener->skillCooling[$player->getName()][$hand->getLTName()]-time()).'秒';
+						if(isset(Cooling::$weapon[$player->getName()][$hand->getLTName()]) and Cooling::$weapon[$player->getName()][$hand->getLTName()]>time())
+							$mess=$hand->getHandMessage($player)."\n".'§c技能剩余时间:'.ceil(Cooling::$weapon[$player->getName()][$hand->getLTName()]-time()).'秒';
 						else
 							$mess=$hand->getHandMessage($player)."\n".'§d长按可释放技能';
 						return $mess;
 					break;
 				}
 				return $hand->getHandMessage($player);
-			}elseif($hand instanceof Material){
-				switch($hand->getLTName()){
-					case '魔法棍':
-						if(isset(LTGradeEventListener::$cooling[$player->getName()]) and LTGradeEventListener::$cooling[$player->getName()]>time())
-							$mess=$hand->getHandMessage($player)."\n".'§c技能剩余时间:'.ceil(LTGradeEventListener::$cooling[$player->getName()]-time()).'秒';
-						else
-							$mess=$hand->getHandMessage($player)."\n".'§d点击地面可释放技能';
-					break;
-				}
 			}
 			return $hand->getHandMessage($player);
 		}

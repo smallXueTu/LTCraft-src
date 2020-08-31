@@ -595,7 +595,7 @@ class Weapon extends Item implements LTItem {
 			return $this->getAwakening();
 		}
 	}
-	public function getHandMessage(Player $player){
+	public function getHandMessage(Player $player): string {
 		if($this->canUse($player, false)){
 			if($player->getGTo()<6 and !in_array($this->getWlevel(), ['入门', '普通', '中级', '中级+', '高级', '定制', '仙器', '传说', '稀有'])){
 				return '你目前不能驾驭这把武器！';

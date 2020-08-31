@@ -196,7 +196,7 @@ class Armor extends Item implements LTItem{
 	public function getEffects(){
 		return $this->effect;
 	}
-	public function getHandMessage(Player $player){
+	public function getHandMessage(Player $player):string {
 		if($this->canUse($player)){
 			return strtr($this->handMessage,['@h'=>$this->getArmorV(),'%'=>'%%%%','@x'=>$this->getHealth(),'@f'=>$this->getThorns(),'@s'=>$this->getMiss(),'@j'=>$this->getTough(),'@sp'=>$this->getSpeed(),'@k'=>$this->getControlReduce()]);
 		}else return '你不是这个盔甲的拥有者！';

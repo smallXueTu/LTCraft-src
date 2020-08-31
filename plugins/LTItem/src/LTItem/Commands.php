@@ -28,8 +28,8 @@ class Commands
 	public function getWeaponCallback($name, $weaponData){
 		$player=$this->server->getPlayerExact($name);
 		if(!$player)return false;
-		if(!isset($this->cd[$name])){
-			$this->cd[$name]=time();
+		if(!isset(Cooling::$query[$name])){
+			Cooling::$query[$name]=time();
 			$count=0;
 			foreach($weaponData as $data){
 				if(in_array($data[0], ['近战', '远程', '通用', '盔甲', '材料', '饰品', '宠物'])){
@@ -188,11 +188,11 @@ class Commands
 				$this->plugin->config->save();
 			return;
 			case 'get':
-				if(!isset($this->cd[strtolower($sender->getName())]) or $this->cd[strtolower($sender->getName())]<time()){
+				if(!isset(Cooling::$query[strtolower($sender->getName())]) or Cooling::$query[strtolower($sender->getName())]<time()){
 					$sender->sendMessage('§e正在查询');
 					$name=strtolower($sender->getName());
 					$this->server->dataBase->pushService('0'.chr(7).chr(strlen($name)).$name."SELECT * FROM wed.items WHERE username='{$name}'");
-					$this->cd[strtolower($sender->getName())]=time()+3;
+                    Cooling::$query[strtolower($sender->getName())]=time()+3;
 				}else $sender->sendMessage('§a请等待！');
 			return;
 			case 'buff':

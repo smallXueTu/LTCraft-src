@@ -135,7 +135,7 @@ class ManaFood extends Item implements LTItem,Mana
 
     }
 
-    public function getHandMessage(Player $player)
+    public function getHandMessage(Player $player):string
     {
         return ManaSystem::replace($this->handMessage, $this);
     }

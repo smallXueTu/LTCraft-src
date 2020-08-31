@@ -520,17 +520,6 @@ items:
     give_item: ~
     cost_item: ~
     multilevel: false
-  - item:
-    - 368
-    - 0
-    - 1
-    nametag: 末影珍珠 最终Boss召唤的傀儡掉落
-    commands: []
-    teleport: ~
-    price: ~
-    give_item: ~
-    cost_item: ~
-    multilevel: false
 - item:
   - 366
   - 0
@@ -840,14 +829,14 @@ items:
     cost_item: ~
     multilevel: false
   - item:
-      - 268
+      - 368
       - 0
       - 64
     nametag: 末影珍珠
     commands: []
     teleport: ~
     price: 1000
-    give_item: 268:0:64
+    give_item: 368:0:64
     cost_item: ~
     multilevel: false
   - item:
