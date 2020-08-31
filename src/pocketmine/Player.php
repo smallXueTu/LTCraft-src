@@ -4560,7 +4560,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
                 unset($this->lastPosition);
             }
             $this->kill();
-            if($this->getGrade()>30 and (int)EconomyAPI::getInstance()->MyMoney($this->username)*0.0001>=1)EconomyAPI::getInstance()->reduceMoney($this, (int)EconomyAPI::getInstance()->MyMoney($this->username)*0.0001, '复活');
             if($this->freezeTime>0)
                 $this->freezeTime=0;
             $this->setDataFlag(self::DATA_FLAGS,self::DATA_FLAG_IMMOBILE, false);
