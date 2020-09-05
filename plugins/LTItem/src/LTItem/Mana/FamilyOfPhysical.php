@@ -21,13 +21,11 @@ class FamilyOfPhysical extends ManaOrnaments
      */
     public function onTick(Player $player, int $index, BaseInventory $inventory): bool
     {
-        if ($inventory instanceof OrnamentsInventory and !$inventory->onUse and $player->getServer()->getTick() - $this->lastConsumption >= 10){
+        if ($player->isVIP()===false and $player->getFlyTime()<time() and $inventory instanceof OrnamentsInventory and !$inventory->onUse and $player->getServer()->getTick() - $this->lastConsumption >= 10){
             $install = $player->getBuff()->checkOrnamentsInstall("天翼族之眼");
             $this->lastConsumption = $player->getServer()->getTick();
 			if($player->getBuff()->getMana()>=($install?80:50)){
 				if(!$player->getAllowFlight())$player->setAllowFlight(true);
-			}elseif($player->getAllowFlight()){//没魔力
-			   $player->setAllowFlight($player->isVIP()!==false or $player->getFlyTime()>time());
 			}
             if ($player->isFlying() and $player->getLevel()->getName()!=='zc' and $player->isSurvival()){
                 if(!$player->getBuff()->consumptionMana($install?80:50)){
