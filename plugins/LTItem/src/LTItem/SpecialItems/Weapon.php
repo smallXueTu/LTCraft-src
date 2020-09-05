@@ -369,13 +369,23 @@ class Weapon extends Item implements LTItem {
 	public function getWlevel(){
 		return $this->Wlevel;
 	}
+
+    /**
+     * 获取技能名字
+     * @return string
+     */
 	public function getSkillName(){
 		return $this->SkillName;
 	}
 	public function getSkillTime(){
 		return $this->SkillTime;
 	}
-	public function setSkillTime($time){//冷却时间
+
+    /**
+     * 冷却时间
+     * @param $time
+     */
+	public function setSkillTime($time){
 		$this->SkillTime = $time;
 	}
 	public function Skill($base = 0){//TODO Fix

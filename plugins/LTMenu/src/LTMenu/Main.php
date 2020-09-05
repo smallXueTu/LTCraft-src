@@ -24,7 +24,7 @@ class Main extends PluginBase{
 	public $opens=[];
 	public $openEnderChests=[];
 	private $menus=[];
-	/** @var Config */
+	/** @var Exchange */
 	private $Exchange;
 	public static $eventListener=null;
 	public static $instance=null;
@@ -37,11 +37,11 @@ class Main extends PluginBase{
 	}
 	public function onDisable(){
 		// $this->Data->save(false);
-		$this->Exchange->save(false);
+		$this->Exchange->save();
 	}
 
     /**
-     * @return Config
+     * @return Exchange
      */
 	public function getExchange(){
 		return $this->Exchange;

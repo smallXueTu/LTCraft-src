@@ -1619,7 +1619,8 @@ class Main extends PluginBase implements Listener{
 				case 'shelves':
 					if($player->isOp() or $player->getGamemode()==1)return $player->sendMessage("§l§a[提示]§cOP或创造不能上架！");
 					$hand=$player->getInventory()->getItemInHand();
-					if($hand instanceof \LTItem\LTItem and !($hand instanceof \LTItem\Mana\Mana)){
+					if($hand instanceof Material or $hand instanceof BaseOrnaments){
+					    /*
 						if($hand instanceof Weapon){
 							if(!$hand->canUse($player))return $player->sendMessage("§l§a[提示]§c这个物品不是你的！");
 							if($hand->getAttribute('全员可用', true)==false){
@@ -1640,6 +1641,7 @@ class Main extends PluginBase implements Listener{
 								}
 							}
 						}
+					    */
 						if($hand instanceof Material and $hand->getLTName()==='§a点击地面打开菜单')return $player->sendMessage("§l§a[提示]§c这个材料禁止上架！~");
 						$Exchange=LTMenu::getInstance()->getExchange();
 						if(($re=$Exchange->addGood($hand, $player, $ms))===true){
@@ -1649,7 +1651,7 @@ class Main extends PluginBase implements Listener{
 							$player->sendMessage("§l§a[提示]§c上架失败".$re);
 						}
 					}else{
-						return $player->sendMessage("§l§a[提示]§c你只能出售类型:[近战 远程 通用 材料 盔甲 饰品]!");
+						return $player->sendMessage("§l§a[提示]§c你只能出售类型:[材料 饰品]!");
 					}
 					unset($this->status[$Yname]);
 				break;

@@ -224,6 +224,32 @@ class Furnace extends Spawnable implements InventoryHolder, Container, Nameable 
 		}
 	}
 
+    /**
+     * 获取消耗 熔炼熔炉会更快
+     * @return int
+     */
+	private function getConsumption(){
+	    switch ($this->getType()){
+            case "熔炼熔炉":
+                return 3;
+            default:
+                return 1;
+        }
+    }
+
+    /**
+     * 获取每次的进度
+     * @return int
+     */
+	private function getTheyCount(){
+	    switch ($this->getType()){
+            case "熔炼熔炉":
+                return 2;
+            default:
+                return 1;
+        }
+    }
+
 	/**
 	 * @return bool
 	 */
@@ -247,11 +273,11 @@ class Furnace extends Spawnable implements InventoryHolder, Container, Nameable 
 		}
 
 		if($this->namedtag["BurnTime"] > 0){
-			$this->namedtag->BurnTime = new ShortTag("BurnTime", $this->namedtag["BurnTime"] - 1);
+			$this->namedtag->BurnTime = new ShortTag("BurnTime", $this->namedtag["BurnTime"] - $this->getConsumption());
 			$this->namedtag->BurnTicks = new ShortTag("BurnTicks", ceil(($this->namedtag["BurnTime"] / $this->namedtag["MaxTime"] * 200)));
 
 			if($smelt instanceof FurnaceRecipe and $canSmelt){
-				$this->namedtag->CookTime = new ShortTag("CookTime", $this->namedtag["CookTime"] + 1);
+				$this->namedtag->CookTime = new ShortTag("CookTime", $this->namedtag["CookTime"] + $this->getTheyCount());
 				if($this->namedtag["CookTime"] >= 200){ //10 seconds
 					$product = Item::get($smelt->getResult()->getId(), $smelt->getResult()->getDamage(), $product->getCount() + 1);
 

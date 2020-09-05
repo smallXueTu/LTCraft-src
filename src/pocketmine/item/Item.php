@@ -420,7 +420,7 @@ class Item implements ItemIds, \JsonSerializable {
     public static function getItemInfo($item){
         if(in_array($item[0], ['近战', '远程', '通用', '盔甲', '饰品', '材料', '魔法', '更多要求'])){
             $mess = '';
-            if ($item[0]='更多要求'){
+            if ($item[0]=='更多要求'){
                 switch($item[1]){
                     case '近战':
                     case '通用':

@@ -25,7 +25,12 @@ class Armor extends Item implements LTItem{
 	private $binding = '*';
     private array $conf;
 	public $colorInfo = [0, 0];
-	public function __construct(array $conf, int $count, CompoundTag $nbt, $init=true){
+    /**
+     * @var mixed
+     */
+    private $Wlevel;
+
+    public function __construct(array $conf, int $count, CompoundTag $nbt, $init=true){
 		$idInfo=explode(':',$conf['ID']);
 		parent::__construct($idInfo[0], $idInfo[1]??0, $count);
 		$this->setCompoundTag($nbt);
@@ -75,6 +80,7 @@ class Armor extends Item implements LTItem{
 			$this->speed = 1+$conf['速度']+$nbt['armor'][6];
 			$this->health = $conf['附加血量']+$nbt['armor'][2];
 			$this->tough = $conf['坚韧'];
+			$this->Wlevel = $conf['等级']??false;
 			$this->controlReduce = $conf['控制减少']+$nbt['armor'][7];
 			if($conf['颜色']!=false){
 				$nbt['customColor'] = new IntTag("customColor", Color::getDyeColor($conf["颜色"])->getColorCode());
@@ -85,6 +91,13 @@ class Armor extends Item implements LTItem{
 		}
 	}
 
+    /**
+     * @return mixed
+     */
+    public function getWlevel()
+    {
+        return $this->Wlevel;
+    }
     /**
      * @param null $conf
      * @return array|bool|mixed
