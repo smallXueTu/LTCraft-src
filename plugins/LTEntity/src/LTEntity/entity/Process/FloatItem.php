@@ -11,13 +11,13 @@ use pocketmine\nbt\tag\CompoundTag;
 class FloatItem extends \pocketmine\entity\Item
 {
     /** @var Position */
-    public $center = null;
+    public ?Position $center = null;
     /** @var int */
-    public $progress = 0;
+    public int $progress = 0;
     /** @var int */
-    public $speed = 1;
+    public int $speed = 1;
     /** @var Fusion */
-    public $fusion = null;
+    public ?Fusion $fusion = null;
     public function __construct(Level $level, CompoundTag $nbt)
     {
         parent::__construct($level, $nbt);
