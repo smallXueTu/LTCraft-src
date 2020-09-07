@@ -30,6 +30,13 @@ abstract class WalkingMonster extends WalkingEntity
     protected $ids = 0;
 
     public abstract function attackEntity(Entity $player);
+
+    /**
+     * 好乱啊  我想重写 但意义不大..
+     * TODO: rewrite ti
+     * @param $currentTick
+     * @return bool
+     */
     public function onUpdate($currentTick)
     {
         

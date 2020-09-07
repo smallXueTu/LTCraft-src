@@ -15,7 +15,8 @@ use LTItem\Main as LTMain;
 use LTItem\LTItem;
 
 class Commands extends PluginBase implements CommandExecutor{
-	 private $plugin;
+    /** @var Main $plugin */
+    private Main $plugin;
 	public function __construct(Main $plugin){
 		$this->plugin = $plugin;
 	}
@@ -24,6 +25,7 @@ class Commands extends PluginBase implements CommandExecutor{
 //		if($sender->getName()!=='Angel_XX' AND $sender instanceof Player)return $sender->sendMessage("§c你没这个权限！");
 		switch($args[0]){
 		case 'add':
+		    /** @var Player $sender */
 			if(!isset($args[2])) return $sender->sendMessage("用法 /ma add <刷怪点名字> <类型>");
 			if(!isset(DataList::$ModName[$args[2]])) return $sender->sendMessage("§c不支持此类型的生物,查看列表请输入 §e/ma type");
 			$level = $sender->level;
@@ -33,7 +35,7 @@ class Commands extends PluginBase implements CommandExecutor{
 				$provider->saveLevelData();
 			}
 			if(!isset($this->plugin->enConfig[$args[1]])){
-				$this->plugin->enConfig[$args[1]] = [
+				$this->plugin->EnConfig[$args[1]] = [
 					"刷怪点" => $args[1],
 					"类型" => $args[2],
 					"名字" => $args[2],

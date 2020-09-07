@@ -10,8 +10,8 @@ use pocketmine\Player;
 
 class FamilyOfPhysical extends ManaOrnaments
 {
-    public $lastConsumption = 0;
-    public $energy = 60;
+    public int $lastConsumption = 0;
+    public int $energy = 30;
 
     /**
      * @param Player $player

@@ -119,7 +119,8 @@ class Main extends PluginBase implements Listener
     public $errorCount = [];
     public $gaia = [];
     public $fusion = [];
-    public $EnConfig;
+    /** @var array */
+    public array $EnConfig;
     /** @var Config */
     public $WeeksExp;
     private static $instance;
@@ -225,7 +226,7 @@ class Main extends PluginBase implements Listener
         @mkdir($this->getDataFolder());
         @mkdir($this->getDataFolder().'/skins');
         @mkdir($this->getDataFolder().'/skins/cache');
-        $this->Config = new Config($this->getDataFolder().'Config.yml', Config::YAML, []);
+        $Config = new Config($this->getDataFolder().'Config.yml', Config::YAML, []);
         $this->WeeksExp = new Config($this->getDataFolder().'WeeksExp.yml', Config::YAML, []);
         $this->RPGSpawn = new Config($this->getDataFolder().'RPGSpawn.yml', Config::YAML, []);
         $this->EnConfig = $this->RPGSpawn->getAll();
