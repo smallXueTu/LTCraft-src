@@ -124,11 +124,13 @@ class EventListener implements Listener
 						$player->getLevel()->spawnLightning($entity,$grade/2,$player);
 					}
 					if(!$player->getAllowFlight()){
-						$this->plugin->getServer()->getScheduler()->scheduleDelayedTask(new CallbackTask(function($player){
+						$this->plugin->getServer()->getScheduler()->scheduleDelayedTask(new CallbackTask(function(Player $player){
 							$player->setAllowFlight(false, true);
 							$player->setFlying(false);
+                            $player->forceFlying = false;
 						},[$player]), 100);
 						$player->setAllowFlight(true, true);
+						$player->forceFlying = true;
 						$player->setFlying(true);
 						$player->sendMessage('§l§a释放技能成功,获得飞行5秒');
 					}else

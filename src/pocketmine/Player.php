@@ -215,6 +215,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
     public $teleportTask = false;
     public $spawned = false;
     public $loggedIn = false;
+    /** @var bool $forceFlying 强制飞行 */
+    public bool $forceFlying = false;
     public $gamemode;
     public $moveCheck = false;
     public $lastBreak;
@@ -515,6 +517,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
     /**
      * @param $value
+     * @param bool $force
      */
     public function setAllowFlight($value, $force = false){
         if($value!==false and in_array($this->level->getName(), ['pvp', 'boss', 'pve']) and $force===false and !$this->isOp())
