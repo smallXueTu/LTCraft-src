@@ -694,6 +694,7 @@ class Main extends PluginBase implements Listener{
 			}
 		}
 	}
+	/*
     public function onPlayerAnimation(PlayerAnimationEvent $event){
         $player=$event->getPlayer();
         $hand = $player->getItemInHand();
@@ -701,29 +702,32 @@ class Main extends PluginBase implements Listener{
             $this->moveAction[$this->server->getTick()][] = 'action:'.$event->getAnimationType();
         }
     }
+	*/
 	public function onMove(PlayerMoveEvent $event){
 		$player=$event->getPlayer();
 		if(isset($this->playerConfig->get('爱心粒子',[])[strtolower($player->getName())]) and !$player->isSpectator()){
             $player->getLevel()->addParticle(new HeartParticle($player));
         }
-		$hand = $player->getItemInHand();
-		if ($hand->getId()==290){
-            $this->moveAction[$this->server->getTick()][] = 'move:'.$player->getX().":".$player->getY().":".$player->getZ().":".$player->getYaw().":".$player->getPitch();
+        /*
+            $hand = $player->getItemInHand();
+            if ($hand->getId()==290){
+                $this->moveAction[$this->server->getTick()][] = 'move:'.$player->getX().":".$player->getY().":".$player->getZ().":".$player->getYaw().":".$player->getPitch();
+            }
+	    */
+            // if($player->getLevel()->getName()==='zc' and (int)$player->getX()==776 and (int)$player->getY()==5 and ((int)$player->getZ()==15 or (int)$player->getZ()==16) and (!isset($this->lastTimet[$player->getName()]) or $this->lastTimet[$player->getName()]+3<time())){
+                // $motion = new Vector3(5, 1.8, 0);
+                // $player->setMotion($motion);
+                // $this->lastTimet[$name]=time();
+            // }
         }
-		// if($player->getLevel()->getName()==='zc' and (int)$player->getX()==776 and (int)$player->getY()==5 and ((int)$player->getZ()==15 or (int)$player->getZ()==16) and (!isset($this->lastTimet[$player->getName()]) or $this->lastTimet[$player->getName()]+3<time())){
-			// $motion = new Vector3(5, 1.8, 0);
-			// $player->setMotion($motion);
-			// $this->lastTimet[$name]=time();
-		// }
-	}
-	public function playerBlockTouch(PlayerInteractEvent $event){
-		$player=$event->getPlayer();
-		/*
-        if (!isset($player->aa))$player->aa = 40;
-        else $player->aa++;
-        if (in_array($player->aa, [4, 39, 12, 18, 44]))$player->aa++;
-        $player->sendMessage($player->aa."a");
-		*/
+        public function playerBlockTouch(PlayerInteractEvent $event){
+            $player=$event->getPlayer();
+            /*
+            if (!isset($player->aa))$player->aa = 40;
+            else $player->aa++;
+            if (in_array($player->aa, [4, 39, 12, 18, 44]))$player->aa++;
+            $player->sendMessage($player->aa."a");
+            */
 		$block=$event->getBlock();
 		$name=$player->getName();
 		if(isset($player->lastClicken) and $player->lastClicken===null){
