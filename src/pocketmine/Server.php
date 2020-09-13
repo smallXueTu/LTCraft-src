@@ -128,8 +128,12 @@ class Server{
 
 	/** @var \Threaded */
 	private static $sleeper = null;
+    /**
+     * @var bool|mixed
+     */
+    public static $isTest;
 
-	/** @var BanList */
+    /** @var BanList */
 	private $banByName = null;
 
 	/** @var BanList */
@@ -1552,9 +1556,9 @@ class Server{
 	}
 
 	/**
-	 * @return Server
+	 * @return ?Server
 	 */
-	public static function getInstance() : Server{
+	public static function getInstance() : ?Server{
 		return self::$instance;
 	}
 
@@ -1701,6 +1705,7 @@ class Server{
                 'server',
                 $this->ltcraft->getNested('database.localhost')
             );
+			self::$isTest = $this->ltcraft->get('test');
 
 			$this->logger->info('§e加载配置文件...');
 			if(!file_exists($this->dataPath . "pocketmine.yml")){

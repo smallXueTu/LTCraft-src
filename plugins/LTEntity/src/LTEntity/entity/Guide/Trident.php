@@ -155,6 +155,11 @@ class Trident extends Creature
     public function onUpdate($tick)
     {
         $this->age++;
+        if ($this->status != self::LEISURE){
+            if ($this->player->closed){
+                $this->end();
+            }
+        }
         switch ($this->status){
             case self::PREPARE:
                 switch ($this->progressTick){
@@ -502,6 +507,7 @@ class Trident extends Creature
         $this->anvilIndex = 0;
         $this->player = null;
         $tile = $this->level->getTile(new Vector3(-1257, 2, -632));
+        $this->teleport(new Vector3(-1256.837, 9.0625, -612.4217));
         if ($tile instanceof ItemFrame){
             $tile->setItem(Item::get(0));
         }
@@ -518,6 +524,7 @@ class Trident extends Creature
         $yaw = $this->yaw;
         $this->level->addEntityMovement($this->chunk->getX(), $this->chunk->getZ(), $this->id, $this->x, $this->y + 1.62, $this->z, $yaw, $this->pitch, $yaw);
     }
+
     /**
      * 检查看的目标
      */
@@ -541,6 +548,7 @@ class Trident extends Creature
             $this->baseTarget = $this->add(mt_rand(0, 1) ? $x : -$x, 0, mt_rand(0, 1) ? $z : -$z);
         }
     }
+
     /**
      * 更新看的目标
      */

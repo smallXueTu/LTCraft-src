@@ -369,10 +369,9 @@ class MainLogger extends \AttachableThreadedLogger {
 	}
 	
 	public function run(){
-	    while (true){
-	        sleep(1);
-            if(class_exists("Server") and Server::getInstance()!==null and Server::getInstance()->ltcraft->get('test'))return;
-        }
+        sleep(3);
+        include 'src/pocketmine/Server.php';
+        if(Server::$isTest)return;
 		$this->shutdown = false;
 		while($this->shutdown === false){
 			$this->synchronized(function(){
