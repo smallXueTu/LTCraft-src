@@ -73,9 +73,9 @@ class Commands extends PluginBase implements CommandExecutor{
 					"悬浮介绍"=>false,
 				];
 				if($args[2] == "npc"){
-					$this->plugin->enConfig[$args[1]]["皮肤"] = "默认";
-					$this->plugin->enConfig[$args[1]]["皮肤ID"] = "Standard_Custom";
-					$this->plugin->enConfig[$args[1]]["披风"] = false;
+					$this->plugin->EnConfig[$args[1]]["皮肤"] = "默认";
+					$this->plugin->EnConfig[$args[1]]["皮肤ID"] = "Standard_Custom";
+					$this->plugin->EnConfig[$args[1]]["披风"] = false;
 				}
 				$sender->sendMessage("§b刷怪点§e{$args[1]}§b创建成功.");
 			}else

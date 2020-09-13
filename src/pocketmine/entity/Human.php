@@ -372,16 +372,33 @@ class Human extends Creature implements ProjectileSource, InventoryHolder {
     public function setMaxDamage($MaxDamage){
         $this->MaxDamage = $MaxDamage;
     }
+
+    /**
+     * @return int
+     */
     public function getGrade(){
         return $this->Grade;
     }
+
+    /**
+     * @param $Grade
+     */
     public function setGrade($Grade){
         $this->Grade = $Grade;
         $this->setXpLevel($Grade);
     }
+
+    /**
+     * @return bool
+     */
     public function isVIP(){
         return $this->isVIP;
     }
+
+    /**
+     * 这个应该加到Player类..
+     * @param int $v
+     */
     public function setVIP($v){
         $this->isVIP=$v;
         if($this->getBuff() instanceof \LTItem\Buff){

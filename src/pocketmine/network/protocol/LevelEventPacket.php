@@ -55,7 +55,7 @@ class LevelEventPacket extends DataPacket {
 	const EVENT_SOUND_ITEMFRAME_REMOVE_ITEM = 1043;//移除
 	const EVENT_SOUND_ITEMFRAME_ROTATE_ITEM = 1044;//旋转
 	const EVENT_SOUND_CAMERA = 1050;//相机
-	const EVENT_SOUND_ORB = 1051;//球？
+	const EVENT_SOUND_ORB = 1051;//经验球
 	const EVENT_PARTICLE_SHOOT = 2000;//粒子抢？
 	const EVENT_PARTICLE_DESTROY = 2001;//破坏粒子
 	const EVENT_PARTICLE_SPLASH = 2002; //带有粒子的喷溅药水声This is actually the splash potion sound with particles

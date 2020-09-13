@@ -21,6 +21,7 @@
 
 namespace pocketmine\entity;
 
+use LTEntity\entity\Guide\Trident;
 use pocketmine\block\Liquid;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\item\Item as ItemItem;
@@ -114,38 +115,32 @@ class Lightning extends Animal {
 
 	public function spawnToAll(){
 		parent::spawnToAll();
-			if($this->target!==null){
-				$damage = $this->damage!==0?$this->damage : mt_rand(8, 20);
-				$ev = new EntityDamageByEntityEvent($this, $this->target, EntityDamageByEntityEvent::CAUSE_LIGHTNING, $damage);
-				if($this->target->attack($ev->getFinalDamage(), $ev) === true){
-					$ev->useArmors();
-				}
-				return;
-			}
-			$fire = ItemItem::get(ItemItem::FIRE)->getBlock();
-			$oldBlock = $this->getLevel()->getBlock($this);
-			if($oldBlock instanceof Liquid){
+        if($this->target!==null){
+            $damage = $this->damage!==0?$this->damage : mt_rand(8, 20);
+            if ($this->owner instanceof Trident){
+                $ev = new EntityDamageByEntityEvent($this, $this->target, EntityDamageByEntityEvent::CAUSE_LIGHTNING, $damage, 0, true);
+            }else{
+                $ev = new EntityDamageByEntityEvent($this, $this->target, EntityDamageByEntityEvent::CAUSE_LIGHTNING, $damage);
+            }
+            if($this->target->attack($ev->getFinalDamage(), $ev) === true){
+                $ev->useArmors();
+            }
+            return;
+        }else{
+            foreach($this->level->getNearbyEntities($this->boundingBox->grow(4, 3, 4), $this) as $entity){
+                if($entity instanceof Player){
+                    $damage = $this->damage==0?mt_rand(8, 20):$this->damage;
+                    $ev = new EntityDamageByEntityEvent($this, $entity, EntityDamageByEntityEvent::CAUSE_LIGHTNING, $damage, 0);
+                    if($entity->attack($ev->getFinalDamage(), $ev) === true){
+                        $ev->useArmors();
+                    }
+                    $entity->setOnFire(mt_rand(3, 8));
+                }
 
-			}elseif($oldBlock->isSolid()){
-				$v3 = new Vector3($this->x, $this->y + 1, $this->z);
-			}else{
-				$v3 = new Vector3($this->x, $this->y, $this->z);
-			}
-			
-			foreach($this->level->getNearbyEntities($this->boundingBox->grow(4, 3, 4), $this) as $entity){
-				if($entity instanceof Player){
-					$damage = $this->damage==0?mt_rand(8, 20):$this->damage;
-					$ev = new EntityDamageByEntityEvent($this, $entity, EntityDamageByEntityEvent::CAUSE_LIGHTNING, $damage, 0);
-					if($entity->attack($ev->getFinalDamage(), $ev) === true){
-						$ev->useArmors();
-					}
-					$entity->setOnFire(mt_rand(3, 8));
-				}
-
-				if($entity instanceof Creeper){
-					$entity->setPowered(true, $this);
-				}
-			}
-		// }
+                if($entity instanceof Creeper){
+                    $entity->setPowered(true, $this);
+                }
+            }
+        }
 	}
 }

@@ -3,6 +3,7 @@ namespace LTEntity;
 
 use LTEntity\entity\Gaia\GaiaCrystal;
 use LTEntity\entity\Gaia\GaiaGuardians;
+use LTEntity\entity\Guide\Trident;
 use LTEntity\entity\Process\Fusion;
 use pocketmine\event\block\ItemFrameDropItemEvent;
 use pocketmine\event\player\PlayerMoveEvent;
@@ -218,6 +219,7 @@ class Main extends PluginBase implements Listener
             GaiaGuardians::class,
             GaiaCrystal::class,
             Fusion::class,
+            Trident::class,
             ANPC::class
 		];
         foreach($classes as $name)

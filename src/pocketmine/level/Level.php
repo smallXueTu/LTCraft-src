@@ -1276,12 +1276,11 @@ class Level implements ChunkManager, Metadatable
 
     /**
      * 获取两个坐标中间的所有块
-     * @param Position $startPos
-     * @param Position $endPos
+     * @param Vector3 $startPos
+     * @param Vector3 $endPos
      * @return array
      */
-    public function getAllInBox(Position $startPos, Position $endPos) : array {
-        if ($startPos->getLevel()!==$endPos->getLevel())return [];
+    public function getAllInBox(Vector3 $startPos, Vector3 $endPos) : array {
         $mixX = min($startPos->getX(), $endPos->getX());
         $mixY = min($startPos->getY(), $endPos->getY());
         $mixZ = min($startPos->getZ(), $endPos->getZ());
@@ -1289,9 +1288,9 @@ class Level implements ChunkManager, Metadatable
         $maxY = max($startPos->getY(), $endPos->getY());
         $maxZ = max($startPos->getZ(), $endPos->getZ());
         $blocks = [];
-        for ($x = $mixX; $x<$maxX; $x++){
-            for ($y = $mixY; $y<$maxY; $y++){
-                for ($z = $mixZ; $z<$maxZ; $z++){
+        for ($x = $mixX; $x<=$maxX; $x++){
+            for ($y = $mixY; $y<=$maxY; $y++){
+                for ($z = $mixZ; $z<=$maxZ; $z++){
                     $blocks[] = $this->getBlock(new Vector3($x, $y, $z));
                 }
             }
@@ -2669,7 +2668,9 @@ class Level implements ChunkManager, Metadatable
         $lightning = new Lightning($this, $nbt);
 		if ($owner!=null)$lightning->setOwner($owner);
 		$lightning->setDamage($damage);
-		if($owner and ($pos instanceof \pocketmine\entity\Creature))$lightning->setTarget($pos);
+		if($owner and ($pos instanceof \pocketmine\entity\Creature)){
+		    $lightning->setTarget($pos);
+        }
         $lightning->spawnToAll();
 		$this->broadcastLevelSoundEvent($pos, LevelSoundEventPacket::SOUND_THUNDER, 93, -1);
 		$this->broadcastLevelSoundEvent($pos, LevelSoundEventPacket::SOUND_EXPLODE, 93, -1);

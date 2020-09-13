@@ -108,6 +108,7 @@ class PlayerTask{
         if ($this->getDoneCount() == 1){
             if ($this->plugin->getTaskDoneCount($this->player)>=2){
                 $item=['材料', '灵魂圣布', 1];
+                $this->plugin->reset($this->player);
                 \LTCraft\Main::sendItem($this->player->getName(), $item);
                 $this->player->sendMessage('§l§a你连续三天完成两个任务，获得'.$item[0].'类型'.$item[1].'×'.$item[2].'已发送至你的邮箱！');
             }

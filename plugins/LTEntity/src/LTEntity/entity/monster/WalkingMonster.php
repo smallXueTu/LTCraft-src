@@ -80,6 +80,18 @@ abstract class WalkingMonster extends WalkingEntity
 					$this->nextSkillTime = mt_rand(20, 30);
 				}
 			break;
+            case '守护者-卡拉森':
+                if ($this->age % 5 == 0){//0.5s
+                    foreach ($this->level->getPlayers() as $player){
+                        if ($player->distance($this) < 8 and !$player->getAStatusIsDone("史诗")){
+                            $deltaX = $this->x - $player->x;
+                            $deltaZ = $this->z - $player->z;
+                            $player->knockBack($this, 0, $deltaX, $deltaZ, 5);
+                            $player->sendMessage("§c很显然，你不够资格。");
+                        }
+                    }
+                }
+            break;
 			case '生化统治者':
 			if(!($this->baseTarget instanceof Player) or $this->restTime>0)break;
             if(!isset($this->lastReleaseSkill))$this->lastReleaseSkill = time();

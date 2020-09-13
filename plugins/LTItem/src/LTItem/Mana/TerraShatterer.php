@@ -149,6 +149,7 @@ class TerraShatterer extends ManaTool {
      */
     public function entityUseOn(Block $block, Entity $player)
     {
+        /** @var $player Player */
         if ($this->onBreaking or $player->isSneaking())return true;
         if ($block instanceof Solid){
             $increase = false;

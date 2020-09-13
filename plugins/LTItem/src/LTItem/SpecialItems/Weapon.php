@@ -6,6 +6,7 @@ use LTItem\SpecialItems\Weapon\NeilBathDrinkBloodFlow;
 use pocketmine\item\Item;
 use pocketmine\entity\Entity;
 use pocketmine\entity\Effect;
+use pocketmine\nbt\tag\ListTag;
 use pocketmine\Player;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\StringTag;
@@ -323,10 +324,20 @@ class Weapon extends Item implements LTItem {
 			Server::getInstance()->getLogger()->warning($this->getWeaponType().':'.$this->getLTName().'配置文件出错 '.$e->getMessage().' 在'.$e->getFile().'第'.$e->getLine().'行');
 		}
 	}
+
+    /**
+     * @return int 获取觉醒层数
+     */
 	public function getAwakening(){
 		$nbt=$this->getNamedTag();
 		return $nbt['attribute'][21]??0;
 	}
+
+    /**
+     * 设置绑定
+     * @param $name
+     * @return $this
+     */
 	public function setBinding($name){
 		$nbt=$this->getNamedTag();
 		$nbt['attribute'][0]=new StringTag('',$name);
@@ -377,6 +388,18 @@ class Weapon extends Item implements LTItem {
 	public function getSkillName(){
 		return $this->SkillName;
 	}
+
+    /**
+     * 附魔渲染外表
+     * @return $this
+     */
+	public function enchantment(){
+	    $nbt = $this->getNamedTag();
+	    $nbt->
+        ench = new ListTag('ench', []);
+	    $this->setNamedTag($nbt);
+        return $this;
+    }
 	public function getSkillTime(){
 		return $this->SkillTime;
 	}

@@ -24,6 +24,7 @@
 
 namespace pocketmine;
 
+use LTCraft\Main;
 use LTGrade\API;
 use LTGrade\PlayerTask;
 use LTItem\Buff;
@@ -2960,7 +2961,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
                 if($this->spawned === false or (!$this->isAlive() and $packet->action !== PlayerActionPacket::ACTION_SPAWN_SAME_DIMENSION and $packet->action !== PlayerActionPacket::ACTION_SPAWN_OVERWORLD and $packet->action !== PlayerActionPacket::ACTION_SPAWN_NETHER)){
                     break;
                 }
-
                 $pos = new Vector3($packet->x, $packet->y, $packet->z);
 
                 switch($packet->action){

@@ -1,23 +1,67 @@
 <?php
 namespace LTCraft;
 
+use LTEntity\entity\Guide\Trident;
 use LTItem\Mana\Mana;
+use pocketmine\event\server\DataPacketSendEvent;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\event\server\QueryRegenerateEvent;
 use pocketmine\entity\{Entity, Item as eItem, Effect, Creature, DroppedItem, Human, Painting};
 use pocketmine\event\Listener;
-use pocketmine\nbt\tag\{ByteTag, CompoundTag, FloatTag, StringTag};
+use pocketmine\nbt\tag\{ByteTag, CompoundTag, DoubleTag, FloatTag, ListTag, StringTag};
 use pocketmine\plugin\PluginBase;
 use pocketmine\scheduler\CallbackTask;
-use pocketmine\event\player\{PlayerInteractEvent, PlayerCommandPreprocessEvent, PlayerDeathEvent, PlayerJoinEvent, PlayerPreLoginEvent, PlayerQuitEvent, PlayerDropItemEvent, PlayerChatEvent, PlayerMoveEvent, PlayerItemHeldEvent};
+use pocketmine\event\player\{PlayerAnimationEvent,
+    PlayerInteractEvent,
+    PlayerCommandPreprocessEvent,
+    PlayerDeathEvent,
+    PlayerJoinEvent,
+    PlayerPreLoginEvent,
+    PlayerQuitEvent,
+    PlayerDropItemEvent,
+    PlayerChatEvent,
+    PlayerMoveEvent,
+    PlayerItemHeldEvent};
 use pocketmine\event\entity\{EntityLevelChangeEvent, EntityInventoryChangeEvent, EntityDamageEvent, EntityDamageByEntityEvent, EntityTeleportEvent, ExplosionPrimeEvent};
 use pocketmine\block\{Stair, Portal, EndGateway, EndPortal};
 use pocketmine\math\Vector3;
 use pocketmine\level\{Position, Level};
 use pocketmine\item\Item;
 use pocketmine\item\enchantment\Enchantment;
-use pocketmine\network\protocol\{InteractPacket,ContainerSetSlotPacket, AddEntityPacket, RemoveEntityPacket};
+use pocketmine\network\protocol\{AdventureSettingsPacket,
+    AvailableCommandsPacket,
+    BatchPacket,
+    ChunkRadiusUpdatedPacket,
+    ClientToServerHandshakePacket,
+    ContainerClosePacket,
+    ContainerOpenPacket,
+    CraftingDataPacket,
+    CraftingEventPacket,
+    FullChunkDataPacket,
+    HurtArmorPacket,
+    InteractPacket,
+    ContainerSetSlotPacket,
+    AddEntityPacket,
+    LevelEventPacket,
+    PlayerListPacket,
+    RemoveEntityPacket,
+    RequestChunkRadiusPacket,
+    ResourcePackChunkDataPacket,
+    ResourcePackChunkRequestPacket,
+    ResourcePackClientResponsePacket,
+    ResourcePackDataInfoPacket,
+    ResourcePacksInfoPacket,
+    ResourcePackStackPacket,
+    ServerToClientHandshakePacket,
+    SetCommandsEnabledPacket,
+    SetDifficultyPacket,
+    SetTimePacket,
+    SetTitlePacket,
+    ShowCreditsPacket,
+    StartGamePacket,
+    TextPacket,
+    TransferPacket};
 use pocketmine\command\{Command, CommandSender};
 use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\utils\Config;
@@ -76,6 +120,14 @@ class Main extends PluginBase implements Listener{
      * @var Config
      */
     private $playerConfig;
+    /**
+     * @var Config
+     */
+    private Config $Data;
+    /**
+     * @var array
+     */
+    public array $moveAction;
 
     /**
      * @return Main
@@ -83,10 +135,20 @@ class Main extends PluginBase implements Listener{
 	public static function getInstance(){
 		return self::$instance;
 	}
+
+    /**
+     * @return array
+     */
+    public function getMoveAction(): array
+    {
+        return $this->moveAction;
+    }
 	public function onDisable(){
 		// $this->Data->save(false);
 		if(isset($this->Head))$this->Head->save(false);
 		$this->config->save(false);
+        $m = new Config($this->getDataFolder()."moveAction.yml",Config::YAML,$this->moveAction);
+        $m->save(false);
 		$this->playerConfig->save(false);
 		// if(count($this->TutorialRecordA)>0){
 			// $this->TutorialRecord->setAll($this->TutorialRecordA);
@@ -127,11 +189,10 @@ class Main extends PluginBase implements Listener{
 			}
 		}
 		//$this->getServer()->getScheduler()->scheduleDelayedRepeatingTask(new CallbackTask([$this,"cleanTime"],[20]),32000,32000);
-		$this->ops=new Config($this->getDataFolder().'Ops.yml',Config::YAML,array());
-		$this->Data=new Config($this->getDataFolder()."Data.yml",Config::YAML,array());
+//		$this->Data=new Config($this->getDataFolder()."Data.yml",Config::YAML,array());
 		$this->Head=new Config($this->getDataFolder()."Head.yml",Config::YAML,array());
-		$this->TutorialRecord = new Config($this->getDataFolder()."TutorialRecord.yml",Config::YAML,array());
-		Tutorial::init($this->TutorialRecord);
+		$TutorialRecord = new Config($this->getDataFolder()."TutorialRecord.yml",Config::YAML,array());
+		Tutorial::init($TutorialRecord);
 //		$this->r=new Config($this->getDataFolder()."R.yml",Config::YAML,array());
 		$this->config=new Config($this->getDataFolder()."Config.yml",Config::YAML,array(
 			'自动重启'=>false,
@@ -155,11 +216,67 @@ class Main extends PluginBase implements Listener{
 		$this->TutorialRecordA = [];
 		// $this->getServer()->getScheduler()->scheduleDelayedRepeatingTask(new CallbackTask([$this,"record"],[]),1,1);
 		$this->getServer()->getScheduler()->scheduleDelayedRepeatingTask(new CallbackTask([$this,"updateTutorial"],[]),1,1);
+
+		$moveActionC = new Config($this->getDataFolder()."moveAction.yml",Config::YAML,[]);
+		$this->moveAction = $moveActionC->getAll();
+        $this->getServer()->getScheduler()->scheduleDelayedTask(new CallbackTask([$this,"spawn"],[]),20);
 	}
+	public function spawn(){
+        $nbt = new CompoundTag;
+        $nbt->Pos = new ListTag('Pos', [
+            new DoubleTag('', -1256.837),
+            new DoubleTag('', 9.0625),
+            new DoubleTag('', -612.4217)
+        ]);
+        $nbt->Rotation = new ListTag('Rotation', [
+            new FloatTag('', 0),
+            new FloatTag('', 0)
+        ]);
+        new Trident($this->getServer()->getLevelByName("f9"), $nbt);
+    }
 	public function getMode(){
 		return $this->config->get("模式", 0);
 	}
-
+	/*
+    public function onDataPacketSend(DataPacketSendEvent $event){
+	    $player = $event->getPlayer();
+	    if($player->getName()!='Angel_XR')return;
+	    $pk = $event->getPacket();
+        if (
+            !($pk instanceof AdventureSettingsPacket) and
+            !($pk instanceof AvailableCommandsPacket) and
+            !($pk instanceof BatchPacket) and
+            !($pk instanceof ChunkRadiusUpdatedPacket) and
+            !($pk instanceof ClientToServerHandshakePacket) and
+            !($pk instanceof ContainerClosePacket) and
+            !($pk instanceof ContainerOpenPacket) and
+            !($pk instanceof CraftingDataPacket) and
+            !($pk instanceof CraftingEventPacket) and
+            !($pk instanceof FullChunkDataPacket) and
+            !($pk instanceof HurtArmorPacket) and
+            !($pk instanceof LevelEventPacket) and
+            !($pk instanceof PlayerListPacket) and
+            !($pk instanceof RequestChunkRadiusPacket) and
+            !($pk instanceof ResourcePackChunkDataPacket) and
+            !($pk instanceof ResourcePackChunkRequestPacket) and
+            !($pk instanceof ResourcePackClientResponsePacket) and
+            !($pk instanceof ResourcePackDataInfoPacket) and
+            !($pk instanceof ResourcePacksInfoPacket) and
+            !($pk instanceof ResourcePackStackPacket) and
+            !($pk instanceof ServerToClientHandshakePacket) and
+            !($pk instanceof SetCommandsEnabledPacket) and
+            !($pk instanceof SetDifficultyPacket) and
+            !($pk instanceof SetTimePacket) and
+            !($pk instanceof SetTitlePacket) and
+            !($pk instanceof ShowCreditsPacket) and
+            !($pk instanceof StartGamePacket) and
+            !($pk instanceof TextPacket) and
+            !($pk instanceof TransferPacket)
+        ){
+            var_dump(get_class($pk).' '.$pk->buffer);
+        }
+    }
+	*/
     /**
      * @param $playerName
      * @return int
@@ -577,12 +694,22 @@ class Main extends PluginBase implements Listener{
 			}
 		}
 	}
-
+    public function onPlayerAnimation(PlayerAnimationEvent $event){
+        $player=$event->getPlayer();
+        $hand = $player->getItemInHand();
+        if ($hand->getId()==290){
+            $this->moveAction[$this->server->getTick()][] = 'action:'.$event->getAnimationType();
+        }
+    }
 	public function onMove(PlayerMoveEvent $event){
 		$player=$event->getPlayer();
-		$name=$player->getName();
-		if(isset($this->playerConfig->get('爱心粒子',[])[strtolower($player->getName())]) and !$player->isSpectator())
-			$player->getLevel()->addParticle(new HeartParticle($player));
+		if(isset($this->playerConfig->get('爱心粒子',[])[strtolower($player->getName())]) and !$player->isSpectator()){
+            $player->getLevel()->addParticle(new HeartParticle($player));
+        }
+		$hand = $player->getItemInHand();
+		if ($hand->getId()==290){
+            $this->moveAction[$this->server->getTick()][] = 'move:'.$player->getX().":".$player->getY().":".$player->getZ().":".$player->getYaw().":".$player->getPitch();
+        }
 		// if($player->getLevel()->getName()==='zc' and (int)$player->getX()==776 and (int)$player->getY()==5 and ((int)$player->getZ()==15 or (int)$player->getZ()==16) and (!isset($this->lastTimet[$player->getName()]) or $this->lastTimet[$player->getName()]+3<time())){
 			// $motion = new Vector3(5, 1.8, 0);
 			// $player->setMotion($motion);
@@ -1261,11 +1388,11 @@ class Main extends PluginBase implements Listener{
 							foreach($level->getEntities() as $e){
 								if($e instanceof Pets)$e->close();
 							}
-						}	
+						}
 					}else{
 						foreach($this->getServer()->getOnlinePlayers() as $p){
 							if(!$p->canFly)$p->setAllowFlight(false, true);
-						}	
+						}
 					}
 					$this->config->save();
 					$sender->sendMessage(('§l§a[提示]§a成功更改模式!'));

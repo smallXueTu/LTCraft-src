@@ -132,6 +132,17 @@ class Main extends PluginBase{
     }
 
     /**
+     * 重置任务
+     * @param Player $player
+     */
+    public function reset(Player $player){
+        $name = strtolower($player->getName());
+        $arr = $this->conf->get("任务完成天数");
+        $arr[$name] = [];
+        $this->conf->set("任务完成天数", $arr);
+    }
+
+    /**
      * 玩家完成任务计数器
      * @param Player $player
      */

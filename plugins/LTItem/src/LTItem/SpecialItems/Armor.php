@@ -133,7 +133,7 @@ class Armor extends Item implements LTItem{
 		return $this->getNamedTag()['armor'][9];
 	}
 	public function setLevel($level){
-		if($level>$this->getLevel())self::upGrade($this->getLTName(), $level);
+		if($level>$this->getLevel())self::upGrade($this, $level);
 		$this->getNamedTag()['armor'][9] = new StringTag('',$level);
 	}
 
