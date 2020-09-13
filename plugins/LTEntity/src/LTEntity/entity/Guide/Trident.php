@@ -126,8 +126,8 @@ class Trident extends Creature
             /** @var Player $damager */
             $damager = $source->getDamager();
             if ($this->player == null){
-                if(Open::getNumber($damager, ['材料', '波塞冬钢铁', 168]) or true){
-                    if(Open::getNumber($damager, ['材料', '失落之魂', 88]) or true){
+                if(Open::getNumber($damager, ['材料', '波塞冬钢铁', 168])){
+                    if(Open::getNumber($damager, ['材料', '失落之魂', 88])){
                         if ($this->lastClickPlayer!=$damager->getName()){
                             $this->lastClickPlayer = $damager->getName();
                             $damager->sendMessage(self::$prefix."看来你要准备锻造失落的三叉戟了，请做好一下准备：");
@@ -402,6 +402,9 @@ class Trident extends Creature
                     }
                     $this->progressTick++;
                     if ($this->progressTick == 20){
+                        if ($this->player->getGamemode() == 1){
+                            $this->player->setGamemode(0);
+                        }
                         foreach ($this->player->getInventory()->getArmorContents() as $i => $item){
                             if ($item instanceof Armor){
                                 $this->player->getInventory()->setItem($this->player->getInventory()->getSize()+$i, Item::get(0));
@@ -440,8 +443,9 @@ class Trident extends Creature
                             $entity->setTarget(new Position(-1256 - 0.5, 2 + 0.5, -631 - 0.9, $this->level));
                             $entity->spawnToAll();
                         }
-                        if ($this->progressTick > 120){
+                        if ($this->progressTick > 20*25+20){
                             $this->player->setGrade($this->player->getGrade() - 50);
+                            $this->player->recalculateHealthAndArmorV();
                             $tile = $this->level->getTile(new Vector3(-1257, 2, -632));
                             if ($tile instanceof ItemFrame){
                                 /** @var Weapon $item */
@@ -458,12 +462,23 @@ class Trident extends Creature
                 }else{
                     if ($this->statusProgress == 1){
                         $this->statusProgress = 0;
-                        $this->progressTick = 0;
                         $this->player->sendMessage(self::$prefix."你脱离了指定位置，挑战和经验吸收将重新开始。");
+                        if ($this->progressTick >= 30){
+                            $this->player->setGrade($this->player->getGrade() - floor(($this->progressTick - 20) / 10));
+                            $this->player->recalculateHealthAndArmorV();
+                        }
+                        $this->progressTick = 0;
                     }
                 }
             break;
             case self::BACK:
+                if ($this->progressTick < 20*5){
+                    $this->progressTick++;
+                    if ($this->age % 20 == 0){
+                        $this->updateTarget();
+                    }
+                    break;
+                }
                 if (isset($this->route[$this->progress])){
                     foreach ($this->route[$this->progress] as $pos){
                         $ss = explode(':', $pos);
@@ -471,13 +486,13 @@ class Trident extends Creature
                             case 'move':
                                 $v3 = new \pocketmine\math\Vector3($ss[1], $ss[2], $ss[3]);
                                 $this->setPositionAndRotation($v3, $ss[4], $ss[5]);
-                                break;
+                            break;
                             case 'action':
                                 $pk = new AnimatePacket();
                                 $pk->eid = $this->getId();
                                 $pk->action = $ss[1];
                                 $this->server->broadcastPacket($this->getViewers(), $pk);
-                                break;
+                            break;
                         }
                     }
                 }
@@ -487,13 +502,17 @@ class Trident extends Creature
                 }
             break;
             default:
-                if ($this->age % 2 == 0){
+                if ($this->age % 10 == 0){
                     $this->updateTarget();
                 }
         }
         $this->updateMovement();
         return true;
     }
+
+    /**
+     * 完成后调用
+     */
     public function end(){
         $this->status = self::LEISURE;
         $this->progressTick = 0;

@@ -406,6 +406,10 @@ class Human extends Creature implements ProjectileSource, InventoryHolder {
         }
         $this->checkFly();
     }
+
+    /**
+     * @return int|null
+     */
     public function getAdditionalHealth(){
         return $this->namedtag['AdditionalHealth'];
     }

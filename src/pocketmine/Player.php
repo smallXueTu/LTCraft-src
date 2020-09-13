@@ -30,6 +30,7 @@ use LTGrade\PlayerTask;
 use LTItem\Buff;
 use LTItem\Mana\Mana;
 use LTItem\Mana\ManaFood;
+use LTItem\SpecialItems\Armor;
 use pocketmine\event\block\ItemFrameDropItemEvent;
 use pocketmine\event\entity\EntityTeleportEvent;
 use pocketmine\inventory\BaseInventory;
@@ -2527,6 +2528,39 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
         $this->forceMovement = $this->teleportPosition = $this->getPosition();
     }
 
+    /**
+     * 重新计算护甲值和生命值
+     */
+    public function recalculateHealthAndArmorV(){
+        $this->recalculateHealth();
+        $this->recalculateArmorV();
+    }
+    /**
+     * 重新计算生命值
+     */
+    public function recalculateHealth(){
+        $max=20+$this->getGrade()*2;
+        if($this->getRole()=='战士')$max+=(int)($this->getGrade()/2);
+        $max+=$this->getAdditionalHealth();
+        $this->setMaxHealth($max);
+        $this->setHealth((($this->getHealth()>$max)?$max:$this->getHealth()));
+    }
+
+    /**
+     * 重新计算护甲值
+     */
+    public function recalculateArmorV(){
+        $armors = $this->inventory->getArmorContents();
+        $armorV = 0;
+        foreach ($armors as $armor){
+            if ($armor instanceof Armor){
+                $armorV += $armor->getArmorV();
+            }
+        }
+        $armorV += (int)$this->getGrade()/2;
+        $this->armorV = $armorV;
+        $this->getAPI()->update(API::ARMOR);
+    }
     /**
      * @return mixed
      */

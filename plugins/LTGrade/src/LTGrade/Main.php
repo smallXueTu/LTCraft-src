@@ -346,18 +346,9 @@ class Main extends PluginBase{
 				$player=$this->getServer()->getPlayer($args[1]);
 				if($player){
 					$player->getLevel()->addSound(new EndermanTeleportSound($player));
-					if($player->getRole()==='战士')
-						$player->setMaxHealth((int)$args[2]*2.5+($player->getYMaxHealth()-((int)$player->getGrade()*2.5)));
-					else
-						$player->setMaxHealth($args[2]*2+($player->getYMaxHealth()-($player->getGrade())));
-					if($player->getHealth()>$player->getMaxHealth())$player->setHealth($player->getMaxHealth());
-					else $player->setHealth($player->getHealth());
-					
-					$player->addArmorV(((int)$args[2]/2)-((int)$player->getGrade()/2));
-
+					$player->recalculateHealthAndArmorV();
 					$player->setGrade($args[2]);
 					$player->setExp(0);
-					$player->getAPI()->update(API::POWER);
 					Popup::getInstance()->updateNameTag($player);
 					$sender->sendMessage('§l§a[提示]§a成功设置玩家'.$args[1].'的等级为:'.(int)$args[2]);
 				}else return $sender->sendMessage('§l§a[提示]§c目标不在线！');

@@ -834,7 +834,8 @@ class Item implements ItemIds, \JsonSerializable {
             if($entry["id"] === $id){
                 $e = Enchantment::getEnchantment($entry["id"]);
                 $e->setLevel($entry["lvl"]);
-                return $e->getLevel();
+                $E_level = $e->getLevel() > Enchantment::getEnchantMaxLevel($id) ? Enchantment::getEnchantMaxLevel($id) : $e->getLevel();
+                return $E_level;
             }
         }
 
