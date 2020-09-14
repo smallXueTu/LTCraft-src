@@ -38,12 +38,12 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife
 
     public function getGlory(): int
     {
-        return $this->getNamedTag()[25];
+        return $this->getNamedTag()['attribute'][25];
     }
 
     public function getKills(): int
     {
-        return $this->getNamedTag()[26];
+        return $this->getNamedTag()['attribute'][26];
     }
 
     public function addKills(int $number)
