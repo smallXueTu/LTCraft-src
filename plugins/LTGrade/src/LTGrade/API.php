@@ -205,7 +205,13 @@ class API{
 			break;
 		}
 	}
-	public function upDateTitleAndPercentage($Count, $Time){
+
+    /**
+     * 更新标题和进度
+     * @param $Count
+     * @param $Time
+     */
+	public function upDateTitleAndPercentage($Time){
 		if($this->removed)return;
 		if($this->ShowStatus)$this->setPercentage($this->player->getHealth()/$this->player->getMaxHealth()*100);
 		$title='§l'.PHP_EOL .PHP_EOL;
@@ -220,6 +226,10 @@ class API{
 		foreach($this->attributes as $attribute){
 			$title.=PHP_EOL .self::$tab. $attribute;
 		}
+		$name = strtolower($this->player->getName());
+		if(\LTEntity\Main::getInstance()->distorted[$name] > 0){
+            $title.=PHP_EOL .self::$tab. '§3扭曲值：'.\LTEntity\Main::getInstance()->distorted[$name];
+        }
 		$this->setTitle($title);
 	}
 

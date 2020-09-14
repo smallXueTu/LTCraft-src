@@ -264,7 +264,7 @@ class Main extends PluginBase{
 		default:
 			return false;
 		}
-		$item=new Weapon($conf, 1, new CompoundTag('',[
+		$item=Weapon::getWeapon($name, $conf, 1, new CompoundTag('',[
 			'Unbreakable'=>new ByteTag('Unbreakable',1),
 			'attribute'=>new ListTag('attribute',[
 				new StringTag('',$conf['全员可用']==true?'*':$player),//0 绑定

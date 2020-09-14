@@ -3,18 +3,18 @@
 武器ID: "262:13"
 粒子: false
 PVE:
-  攻击力: 0
-  吸血: 0
-  群回: 0
+  攻击力: 2300
+  吸血: 0.01
+  群回: 30
   燃烧: 0
   药水(Damager): false
   雷击: false
   穿甲: false
 PVP:
-  攻击力: 0
-  真实伤害: 0
-  穿甲: 0
-  吸血: 0
+  攻击力: 150
+  真实伤害: 30
+  穿甲: 20
+  吸血: 0.1
   燃烧: 0
   药水(Damager): false
   药水(Entity): false
@@ -23,10 +23,10 @@ PVP:
   重伤: 0
   雷击: 0
   冰冻: false
-  击杀提示: false
-手持提示: false
+  击杀提示: §b{entity}试图抵抗海神的力量，最终倒在了{damager}手持的失落三叉戟手下。
+手持提示: 失落的三叉戟 PVE:@ed 吸血@ex 群回@eq §d[神话]
 最大星级: false
-等级: false
+等级: 神话
 全员可用: false
 分解可获得: false
 可以叠加: false

@@ -123,8 +123,14 @@ class Main extends PluginBase implements Listener
     /** @var array */
     public array $EnConfig;
     /** @var Config */
-    public $WeeksExp;
-    private static $instance;
+    public Config $WeeksExp;
+    /** @var Main */
+    private static ?Main $instance = null;
+    private int $tick = 0;
+    /**
+     * @var array 扭曲值
+     */
+    public array $distorted = [];
 
     /**
      * @return Main
@@ -274,8 +280,15 @@ class Main extends PluginBase implements Listener
     }
     public function onRefresh()
     {
+        $this->tick++;
         if(count($this->getServer()->getOnlinePlayers()) == 0)return;
-		
+        if ($this->tick % 6 == 0){
+            foreach ($this->distorted as $name => $value){
+                $player = $this->server->getPlayerExact($name);
+                if ($player->getLevel()->getName() == 'f9')continue;
+                $this->distorted[$name]--;
+            }
+        }
         $level = $this->getServer()->getLevelByName('f6');
 		if($level){
 			foreach($level->getPlayers() as $player){
@@ -294,7 +307,7 @@ class Main extends PluginBase implements Listener
                     $nbt->Speed = new DoubleTag('Speed', 1.8);
                     for($i = 0; $i < 3; $i++) {
                         $pk = Entity::createEntity('ASilverfish', $level, $nbt);
-                        /** @var BaseEntity EnConfig */
+                        /** @var BaseEntity $pk */
                         $pk->enConfig = $data;
                         $pk->spawnToAll();
                         $pk->initThis();
@@ -304,6 +317,39 @@ class Main extends PluginBase implements Listener
 				}
 			}
 		}
+        $level = $this->getServer()->getLevelByName('f9');
+		if ($level){
+		    foreach ($this->distorted as $name => $value){
+		        $player = $this->server->getPlayerExact($name);
+		        if ($value >= 100){
+		            if (!mt_rand(0, 299)){
+                        $data=$this->EnConfig['失落领主傀儡'];
+                        $nbt = new CompoundTag;
+                        $nbt->Pos = new ListTag('Pos', [
+                            new DoubleTag('', $player->x+mt_rand(-3, 3)),
+                            new DoubleTag('', $player->y + 1.8),
+                            new DoubleTag('', $player->z+mt_rand(-3, 3))
+                        ]);
+                        $nbt->Rotation = new ListTag('Rotation', [
+                            new FloatTag('', 0),
+                            new FloatTag('', 0)
+                        ]);
+                        $nbt->Speed = new DoubleTag('Speed', 1.8);
+                        $skin=$this->getSkin($data['皮肤']);
+                        $nbt->Skin = new CompoundTag('Skin', ['Data' => new StringTag('Data', $skin), 'Name' => new StringTag('Name', $data['皮肤ID'])]);
+                       /** @var BaseEntity $pk */
+                        $pk = Entity::createEntity('ANPC', $level, $nbt);
+                        $pk->enConfig = $data;
+                        $pk->spawnToAll();
+                        $pk->initThis();
+                        $pk->setTarget($player);
+                        $number = mt_rand(10, 30);
+                        $this->distorted[$name] -= $number;
+                        $player->sendMessage('§e你失去了'.$number.'点扭曲值！');
+                    }
+                }
+            }
+        }
         foreach($this->EnConfig as $vid => $data) {
             if(strpos($vid, '傀儡') !== false)continue;
             $l = $this->getServer()->getLevelByName($data['世界']);
@@ -470,6 +516,10 @@ class Main extends PluginBase implements Listener
         $player->newProgress('怪物猎人');
         if ($entity->getNormalName()=='玄之凋零'){
             $player->newProgress('见鬼去吧', '反弹抛射物打死一只怪物！', 'challenge');
+        }elseif ($entity->getNormalName()=='失落领主'){
+            $number = mt_rand(10,30);
+            $this->distorted[strtolower($player->getName())] += $number;
+            $player->sendMessage('§e你击杀了失落领主获得了'.$number.'点扭曲值！');
         }
         foreach($entity->enConfig['掉落'] as $drop) {
             $dropItem = explode(':', $drop);
@@ -665,10 +715,11 @@ class Main extends PluginBase implements Listener
 		if($this->WeeksExp->get($name)===false){
 			$this->WeeksExp->set($name, 0);
 		}
+		$this->distorted[$name] = 0;
     }
     public function onQuitEvent(PlayerQuitEvent $e){
     	$name=$e->getPlayer()->getName();
-		unset($this->killCount[$name], $this->errorCount[$name]);
+		unset($this->killCount[$name], $this->errorCount[$name], $this->distorted[strtolower($name)]);
     }
     public function onRegainHealthEvent(EntityRegainHealthEvent $e){
         if ($e->getEntity() instanceof Player){
@@ -686,7 +737,6 @@ class Main extends PluginBase implements Listener
         }
     }
     public function onMoveEvent(PlayerMoveEvent $e){
-	    /** @var Player $player */
 	    $player = $e->getPlayer();
 	    $gaia = null;
         foreach ($this->gaia as $entity){

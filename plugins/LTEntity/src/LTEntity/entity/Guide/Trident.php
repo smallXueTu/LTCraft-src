@@ -128,6 +128,8 @@ class Trident extends Creature
             if ($this->player == null){
                 if(Open::getNumber($damager, ['材料', '波塞冬钢铁', 168])){
                     if(Open::getNumber($damager, ['材料', '失落之魂', 88])){
+                        Open::removeItem($damager, ['材料', '波塞冬钢铁', 168]);
+                        Open::removeItem($damager, ['材料', '失落之魂', 88]);
                         if ($this->lastClickPlayer!=$damager->getName()){
                             $this->lastClickPlayer = $damager->getName();
                             $damager->sendMessage(self::$prefix."看来你要准备锻造失落的三叉戟了，请做好一下准备：");

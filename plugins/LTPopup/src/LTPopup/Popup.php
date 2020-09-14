@@ -34,7 +34,9 @@ use LTEntity\Main as LTEntity;
 class Popup extends PluginBase implements Listener{
 	private $SayManager=array();
 	public $restart=false;
-	public function restart($send){
+    private $cfg;
+
+    public function restart($send){
 		if($this->restart!==false){
 			if($send==0){
 				foreach($this->getServer()->getOnlinePlayers() as $player){
@@ -98,7 +100,7 @@ class Popup extends PluginBase implements Listener{
 					$player->sendPopup('§l§a新手教程将会在'.$player->startTutorialTime .'秒后开始'.PHP_EOL .'§l§c看完新手教程将会获得新手奖励！');
 					continue;
 				}
-				if($player->getAPI()!==null)$player->getAPI()->upDateTitleAndPercentage($p, $time);
+				if($player->getAPI()!==null)$player->getAPI()->upDateTitleAndPercentage($time);
 				$name = $player->getName();
 				// if(isset(LTCraft::getInstance()->onlineTime[$name]) and (time() - LTCraft::getInstance()->onlineTime[$name])>600){
 					// LTCraft::getInstance()->giveR($player);
@@ -140,15 +142,15 @@ class Popup extends PluginBase implements Listener{
 				$sx=floor($player->getX());
 				$sz=floor($player->getZ());
 				if($player->freezeTime>0 or $player->vertigoTime>0){
-					$additional='';
-					if($player->freezeTime>0){
-						$ftime=ceil($player->freezeTime/20);
-						$additional='§d冰冻剩余时间:§3'.$ftime;
-					}
-					if($player->vertigoTime>0){
-						$ftime=ceil($player->vertigoTime/20);
-						$additional.='§3眩晕剩余时间:§3'.$ftime;
-					}
+                    $additional='';
+                    if($player->freezeTime>0){
+                        $ftime=ceil($player->freezeTime/20);
+                        $additional='§d冰冻剩余时间:§3'.$ftime;
+                    }
+                    if($player->vertigoTime>0){
+                        $ftime=ceil($player->vertigoTime/20);
+                        $additional.='§3眩晕剩余时间:§3'.$ftime;
+                    }
 				}elseif(($tip=LTItem::getInstance()->getTip($player))!=false){
 					$additional='§e手持:'.$tip;
 				}else

@@ -29,7 +29,7 @@ use pocketmine\plugin\Plugin;
 abstract class PluginTask extends Task {
 
 	/** @var Plugin */
-	protected $owner;
+    protected Plugin $owner;
 
 	/**
 	 * @param Plugin $owner

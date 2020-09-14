@@ -3,6 +3,7 @@ namespace LTItem\SpecialItems;
 
 use LTItem\LTItem;
 use LTItem\SpecialItems\Weapon\NeilBathDrinkBloodFlow;
+use LTItem\SpecialItems\Weapon\Trident;
 use pocketmine\item\Item;
 use pocketmine\entity\Entity;
 use pocketmine\entity\Effect;
@@ -22,7 +23,7 @@ class Weapon extends Item implements LTItem {
 	private $PVPdamage = 0;
 	private $PVEdamage = 0;
 	private $type;
-	private $conf;
+    protected array $conf;
 	private $WeaponName;
 	private $WeaponType;
 	private $PVPDamgerEffects = [];
@@ -86,6 +87,7 @@ class Weapon extends Item implements LTItem {
     public static function initWeapons()
     {
         self::$weapons['尼尔巴斯的饮血镰'] = NeilBathDrinkBloodFlow::class;
+        self::$weapons['失落的三叉戟'] = trident::class;
     }
 
     public static function upGrade(Weapon $weapon, $level, $init=true){
