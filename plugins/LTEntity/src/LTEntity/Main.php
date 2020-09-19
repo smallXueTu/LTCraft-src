@@ -322,7 +322,7 @@ class Main extends PluginBase implements Listener
 		    foreach ($this->distorted as $name => $value){
 		        $player = $this->server->getPlayerExact($name);
 		        if ($value >= 100){
-		            if (!mt_rand(0, 299)){
+		            if (!mt_rand(0, 349 - ((int)$value / 2))){
                         $data=$this->EnConfig['失落领主傀儡'];
                         $nbt = new CompoundTag;
                         $nbt->Pos = new ListTag('Pos', [
