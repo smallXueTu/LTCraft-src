@@ -189,12 +189,12 @@ class LTMultiWorld extends PluginBase implements Listener
 				        $l = $args[0];
 				        if ($this->getServer()->isLevelLoaded($l)){
 							if($sender->teleport($this->getServer()->getLevelByName($l)->getSafeSpawn()))
-								$sender->sendMessage('§l§a[提示]§a你被传送到了世界'.$l);
+								$sender->sendMessage('§l§aLTCraft>>§a正在将你传送至世界'.$l);
 				        }else{
-				            $sender->sendMessage('§l§a[提示]§c这个世界没有被加载!');
+				            $sender->sendMessage('§l§a[提示]§c这个世界以关闭');
 				        }
 				    }else{
-				        $sender->sendMessage('§l§a[提示]§c请输入一个地图名');
+				        $sender->sendMessage('§l§aLTCraft>>§c用法：/w [世界名]');
 				    }
 			    }else{
 				    $sender->sendMessage('§l§a[提示]§c你不是一个玩家');
