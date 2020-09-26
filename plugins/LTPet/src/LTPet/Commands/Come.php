@@ -15,9 +15,9 @@ class Come{
 		}
 		$name=Main::getCleanName($args[0]);
 		if($player->getPet($name)===false){
-			$player->sendMessage('§l§a[LT宠物系统]§c这个宠物不存在，输入§d/宠物 列表§c查看你的全部宠物！');
+			$player->sendMessage('§l§a[LT宠物系统]§c这个宠物不存在，输入§d/pet 列表§c查看你的全部宠物！');
 		}elseif($player->getPet($name)['hunger']<=0){
-			$player->sendMessage('§l§a[LT宠物系统]§c这个宠物已经死亡了，输入§d/宠物 复活 '.$name.'§c来复活这个宠物！');
+			$player->sendMessage('§l§a[LT宠物系统]§c这个宠物已经死亡了，输入§d/pet 复活 '.$name.'§c来复活这个宠物！');
 		}elseif(\LTCraft\Main::getInstance()->getMode()==1){
 			$player->sendMessage('§l§a[LT宠物系统]§c当前不可以召唤宠物！');
 		}elseif(in_array($player->level->getName(), ['boss', 'pvp'])){
