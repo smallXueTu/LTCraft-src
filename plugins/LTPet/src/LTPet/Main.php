@@ -60,7 +60,7 @@ class Main extends PluginBase{
 		if($player instanceof Player){
 			$player->setPet(self::getCleanName($name),$conf);
             $player->newProgress('永恒的伙伴');
-			$player->sendMessage('§l§a[LT宠物系统]§a有人给了你一个宠物，输入§d/宠物 列表§a查看吧');
+			$player->sendMessage('§l§aLTPet>>§a有人给了你一个宠物，输入§d/pet list§a查看吧');
 			Pet::Come($player,$conf);
 		}
 	}
@@ -68,6 +68,6 @@ class Main extends PluginBase{
 		if(isset($args[0])){
 			if($args[0]!=='管理' and !($sender instanceof Player))return $sender->sendMessage('§d请在游戏里执行！');
 			$this->Commands->onCommand($sender,$cmd,$label,$args);
-		}else $sender->sendMessage('§l§a[LT宠物系统]§e输入§d/宠物 帮助§e查看帮助§r');
+		}else $sender->sendMessage('§l§aLTPet>>§e输入§d/pet help§e查看帮助§r');
 	}
 }
