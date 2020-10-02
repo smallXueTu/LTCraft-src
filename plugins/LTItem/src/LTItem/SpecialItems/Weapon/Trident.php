@@ -25,7 +25,7 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife
         $this->updateName();
     }
     public function updateName(){
-        $this->setCustomName($this->conf['武器名'].PHP_EOL.'§c荣耀值:'.$this->getGlory().PHP_EOL.'杀敌数:'.$this->getKills());
+        $this->setCustomName($this->conf['武器名'].PHP_EOL.'§c荣耀值:'.$this->getGlory().PHP_EOL.'杀敌数:'.$this->getKills(), true);
     }
     public function addGlory(int $number)
     {

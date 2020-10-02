@@ -249,6 +249,13 @@ class Main extends PluginBase{
 			return ['魔法', $nbt['mana'][1]];
 		}else return false;
 	}
+
+    /**
+     * @param $type
+     * @param $name
+     * @param string $player
+     * @return bool|Weapon
+     */
 	public function createWeapon($type,$name,$player=''){
 		if($player instanceof Player)$player=strtolower($player->getName());
 		switch($type){

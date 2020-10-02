@@ -515,7 +515,7 @@ class Item implements ItemIds, \JsonSerializable {
                         case '近战':
                         case '远程':
                         case '通用':
-                            return Weapon::getWeapon($data[0], $conf, $count, $tags, $weaponInit);
+                            return Weapon::getWeapon($data[1], $conf, $count, $tags, $weaponInit);
                             break;
                         case '盔甲':
                             return new Armor($conf, $count, $tags, $weaponInit);
@@ -1542,7 +1542,7 @@ class Item implements ItemIds, \JsonSerializable {
                     case '近战':
                     case '远程':
                     case '通用':
-                        return Weapon::getWeapon($data[0], $conf, $tag->Count->getValue(), $tag->tag);
+                        return Weapon::getWeapon($data[1], $conf, $tag->Count->getValue(), $tag->tag);
                         break;
                     case '盔甲':
                         return new Armor($conf, $tag->Count->getValue(), $tag->tag);
