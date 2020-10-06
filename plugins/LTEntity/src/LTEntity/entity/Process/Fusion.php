@@ -175,7 +175,7 @@ class Fusion extends Entity implements InventoryHolder
     /** @var Drawings 图纸 */
     public Drawings $drawings;
     /** @var string 提示 */
-    public string $tip;
+    public string $tip = '';
     /** @var Chest $chest 箱子坐标 */
     public Chest $chest;
     /** @var Position $center 玻璃坐标 */

@@ -47,6 +47,7 @@ class Main extends PluginBase implements Listener{
 			case '修改性别':
 //				if($sender->getName()!=='Angel_XX' AND $sender instanceof Player)return $sender->sendMessage(self::HEAD.'c你没有这个权限！');
 				if(count($args)<3)return $sender->sendMessage(self::HEAD.'c用法/结婚 修改性别 玩家 性别!');
+                if(!$sender->isOp())return $sender->sendMessage(self::HEAD.'c权限不足。');
 				if(($target=$this->getServer()->getPlayer($args[1]))!==null){
 					$target->setGender($args[2]);
 					LTPopup::getInstance()->updateNameTag($target);
