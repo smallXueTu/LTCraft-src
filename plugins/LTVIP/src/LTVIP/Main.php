@@ -92,6 +92,7 @@ class Main extends PluginBase implements Listener
 			case 'add':
 //				if($sender->getName() !== 'Angel_XX' AND $sender instanceof Player)return $sender->sendMessage(self::HEAD.'c没有这个权限噢！');
 				if(count($args) < 4)return $sender->sendMessage(self::HEAD.'c用法/vip add 等级 玩家 时间(天)');
+                if(!$sender->isOp())return $sender->sendMessage(self::HEAD.'c权限不足。');
 				if($args[1] == '1' or $args[1] == '2' or $args[1] == '3') {
 					$target=$this->server->getPlayer($args[2]);
 					if(!$target)return $sender->sendMessage(self::HEAD.'c该玩家不在线');
@@ -105,6 +106,7 @@ class Main extends PluginBase implements Listener
 			case 'del':
 //				if($sender->getName() !== 'Angel_XX' AND $sender instanceof Player)return $sender->sendMessage(self::HEAD.'c没有这个权限噢！');
 				if(count($args) < 2)return $sender->sendMessage(self::HEAD.'c用法/vip del 玩家');
+                if(!$sender->isOp())return $sender->sendMessage(self::HEAD.'c权限不足。');
 				$player=$this->server->getPlayer($args[1]);
 				if(!$player){
                     $name=strtolower($args[1]);
@@ -123,6 +125,7 @@ class Main extends PluginBase implements Listener
 			case 'addtime':
 //				if($sender->getName() !== 'Angel_XX' AND $sender instanceof Player)return $sender->sendMessage(self::HEAD.'c没有这个权限噢！');
 				if(count($args) < 3)return $sender->sendMessage(self::HEAD.'c用法/vip addtime 玩家 天数');
+                if(!$sender->isOp())return $sender->sendMessage(self::HEAD.'c权限不足。');
 				$player=$this->server->getPlayer($args[1]);
 				if(!$player)return $sender->sendMessage(self::HEAD.'c该玩家不在线');
 				$vip = $player->isVIP();
@@ -151,6 +154,7 @@ class Main extends PluginBase implements Listener
 			case 'deltime':
 //				if($sender->getName() !== 'Angel_XX' AND $sender instanceof Player)return $sender->sendMessage(self::HEAD.'c没有这个权限噢！');
 				if(count($args) < 3)return $sender->sendMessage(self::HEAD.'c用法/vip deltime 玩家 天数');
+                if(!$sender->isOp())return $sender->sendMessage(self::HEAD.'c权限不足。');
 				$player=$this->server->getPlayer($args[1]);
 				if(!$player)return $sender->sendMessage(self::HEAD.'c该玩家不在线');
 				$vip = $player->isVIP();
