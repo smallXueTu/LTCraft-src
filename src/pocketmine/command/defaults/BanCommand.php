@@ -57,6 +57,7 @@ class BanCommand extends VanillaCommand {
 //		if($sender->getName() !== 'Angel_XX' AND $sender->getName() !== 'gu_yu' AND $sender instanceof \pocketmine\Player){
 //			return $sender->sendMessage('§l§a[提示]§cOP不能用这个命令！');
 //		}
+		  if(!$sender->isOp())return $sender->sendMessage('c[提示]你的权限不足以使用/ban指令！');
 
 		if(count($args) === 0){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
