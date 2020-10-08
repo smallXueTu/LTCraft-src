@@ -166,7 +166,7 @@ class Popup extends PluginBase implements Listener{
 		$name=$sender->getName();
 		switch(strtolower($cmd->getName())){
 		case '重启':
-				if(!$sender->isOp())return $sender->sendMessage(self::HEAD.'c[提示]你没有权限进行重启');
+				if(!$sender->isOp())return $sender->sendMessage('c[提示]你没有权限进行重启');
 //			if($sender->getName()==='Angel_XX' or !($sender instanceof Player)){
 				$this->restart=$args[0]??10;
 				$sender->sendMessage('§a重启倒计时中');
@@ -175,7 +175,7 @@ class Popup extends PluginBase implements Listener{
 //			}
 		break;
 		case '取消重启':
-				if(!$sender->isOp())return $sender->sendMessage(self::HEAD.'c[提示]你没有权限取消这次重启');
+				if(!$sender->isOp())return $sender->sendMessage('c[提示]你没有权限取消这次重启');
 //			if($sender->getName()==='Angel_XX' or !($sender instanceof Player)){
 				$this->restart=false;
 				$sender->sendMessage('§a已取消重启');
@@ -184,7 +184,7 @@ class Popup extends PluginBase implements Listener{
 //			}
 		break;
 		case '禁言':
-				if(!$sender->isOp())return $sender->sendMessage(self::HEAD.'c[提示]你没有权限禁言玩家');
+				if(!$sender->isOp())return $sender->sendMessage('c[提示]你没有权限禁言玩家');
 			if(count($args)<2)return $sender->sendMessage('§a[LTcraft温馨提示]§c用法/禁言 玩家 秒');
 			$player=$this->getServer()->getPlayer($args[0]);
 			if(!$player)return $sender->sendMessage('§l§a[提示]§c目标不在线');
@@ -239,6 +239,7 @@ class Popup extends PluginBase implements Listener{
 				break;
 				case '设置称号':
 //					if($sender->getName()!=='Angel_XX' and $sender instanceof Player)return;
+					  if(!$sender->isOp())return $sender->sendMessage('c[提示]你不可以设置称号');
 					if(count($args)<3)return $sender->sendMessage('§a[LTcraft温馨提示]§c用法:/ui设置 设置称号 玩家ID 格式');
 					if($args[2]==1 or $args[2]==3 or $args[2]==2 or $args[2]==0){
 						$m=$this->cfg->get('聊天格式');
@@ -325,7 +326,7 @@ class Popup extends PluginBase implements Listener{
 		if($player->getLevel()->getName()==='pvp')
 			$player->setNameTag('§dLV:'.$lv.'★§a'.$name.'♛'.$sex.PHP_EOL .'§3人头数量:'.LTCraft::getInstance()->getHeadCount($name));
 		else
-			$player->setNameTag('§dLV:'.$lv.'★§a'.$name.'♛'.$sex);
+			$player->setNameTag('§dLV:'.$lv.'★§a'.$name.'♛'.$sex [$this->getPrefix]);
 	}
 	public function onPlayerChat(PlayerChatEvent $ev){
 		$player=$ev->getPlayer();
