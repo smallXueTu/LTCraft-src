@@ -40,12 +40,12 @@ class Popup extends PluginBase implements Listener{
 		if($this->restart!==false){
 			if($send==0){
 				foreach($this->getServer()->getOnlinePlayers() as $player){
-					$player->sendPopup('§l§aL§dT§4c§et§ba§6f§9t§b温§8馨§5提§3示§e重§a启§c中...');
+					$player->sendPopup('§aLTCraft服务器：你以退出服务器');
 				}
 				$this->getServer()->shutdown();
 			}else{
 				foreach($this->getServer()->getOnlinePlayers() as $player)
-					$player->sendPopup('§l§aL§dT§4c§et§ba§6f§9t§b温§8馨§5提§3示§e服§a务§c器§7'.$send.'秒§d重§s启！');
+					$player->sendPopup('§eLTCraft服务器将于$send秒后重启，请各位玩家做好准备');
 			}
 		}
 	}
@@ -166,22 +166,25 @@ class Popup extends PluginBase implements Listener{
 		$name=$sender->getName();
 		switch(strtolower($cmd->getName())){
 		case '重启':
+				if(!$sender->isOp())return $sender->sendMessage(self::HEAD.'c[提示]你没有权限进行重启');
 //			if($sender->getName()==='Angel_XX' or !($sender instanceof Player)){
 				$this->restart=$args[0]??10;
 				$sender->sendMessage('§a重启倒计时中');
-				$this->getServer()->BroadCastMessage(('§l§a[LTcraft全服公告]§dLTCraft将会在'. ($args[0]??10) .'秒后进行重启，请大家做好准备'));
+				$this->getServer()->BroadCastMessage(('§l§a[LTcraft全服提示]§dLTCraft服务器将会在'. ($args[0]??10) .'秒后进行重启，请大家做好准备'));
 				return;
 //			}
 		break;
 		case '取消重启':
+				if(!$sender->isOp())return $sender->sendMessage(self::HEAD.'c[提示]你没有权限取消这次重启');
 //			if($sender->getName()==='Angel_XX' or !($sender instanceof Player)){
 				$this->restart=false;
 				$sender->sendMessage('§a已取消重启');
-				$this->getServer()->BroadCastMessage('§l§a[LTcraft全服公告]§d重启已取消');
+				$this->getServer()->BroadCastMessage('§l§a[LTcraft全服提示]§d重启已取消');
 				return;
 //			}
 		break;
 		case '禁言':
+				if(!$sender->isOp())return $sender->sendMessage(self::HEAD.'c[提示]你没有权限禁言玩家');
 			if(count($args)<2)return $sender->sendMessage('§a[LTcraft温馨提示]§c用法/禁言 玩家 秒');
 			$player=$this->getServer()->getPlayer($args[0]);
 			if(!$player)return $sender->sendMessage('§l§a[提示]§c目标不在线');
@@ -279,7 +282,11 @@ class Popup extends PluginBase implements Listener{
 					$sender->sendMessage('§a[LTcraft温馨提示]§a设置成功');
 				break;
 				default:
-					return $sender->sendMessage('§a[LTcraft温馨示]§c用法:/ui设置 String');
+					return $sender->sendMessage('§a-----玩家ui设置-----');
+					return $sender->sendMessage('§a/ui设置 设置称号 玩家ID 格式');
+					return $sender->sendMessage('/ui设置 变换头衔 玩家ID');
+					return $sender->sendMessage('/ui设置 头衔设置 玩家ID 头衔');
+					return $sender->sendMessage('/ui设置 血量格式切换');
 				break;
 			}
 		}
