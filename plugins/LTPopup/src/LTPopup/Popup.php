@@ -40,7 +40,7 @@ class Popup extends PluginBase implements Listener{
 		if($this->restart!==false){
 			if($send==0){
 				foreach($this->getServer()->getOnlinePlayers() as $player){
-					$player->sendPopup('§aLTCraft服务器：你以退出服务器');
+					$player->sendPopup('§aLTCraft服务器：服务器重启中...');
 				}
 				$this->getServer()->shutdown();
 			}else{
