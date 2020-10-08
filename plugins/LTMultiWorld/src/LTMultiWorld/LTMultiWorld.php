@@ -60,6 +60,7 @@ class LTMultiWorld extends PluginBase implements Listener
 					switch($args[0])
 					{
 						case "unload":
+							if(!$sender->isOp())return $sender->sendMessage(self::HEAD.'c[提示]你没有卸载世界的权限！');
 							if(isset($args[1]))
 							{
 								$l = $args[1];
@@ -87,6 +88,7 @@ class LTMultiWorld extends PluginBase implements Listener
 							}
 							return true;
 						case "load":
+							if(!$sender->isOp())return $sender->sendMessage(self::HEAD.'c[提示]你没有加载世界的权限！');
 							if(isset($args[1]))
 							{
 								$level = $this->getServer()->getDefaultLevel();
@@ -124,6 +126,7 @@ class LTMultiWorld extends PluginBase implements Listener
 							}
 							return true;
 						case "delmap":
+							if(!$sender->isOp())return $sender->sendMessage(self::HEAD.'c[提示]你没有删除地图的权限');
 							if(isset($args[1]))
 							{
 								$map=$args[1];
@@ -161,6 +164,7 @@ class LTMultiWorld extends PluginBase implements Listener
 								return true;
 							}
 						case "fixname":
+						if(!$sender->isOp())return $sender->sendMessage("§c[提示]你没有修复地图的权限");
 							if(!isset($args[1]))return $sender->sendMessage("§c[LTMultiWorld] 用法: /setworld fixname 地图名");
 							$l=$this->getServer()->getLevelByName($args[1]);
 							if($l instanceof Level){
@@ -177,7 +181,7 @@ class LTMultiWorld extends PluginBase implements Listener
 				}
      		case "lw":
 				$levels = $this->getServer()->getLevels();
-				$sender->sendMessage("§6==== 地图列表 ====");
+				$sender->sendMessage("§6==== LTCraft服务器 地图列表 ====");
 				foreach ($levels as $level){
 					$sender->sendMessage('§b世界:'.$level->getName().'§a在线人数：'.count($level->getPlayers()));
 				}
@@ -185,22 +189,23 @@ class LTMultiWorld extends PluginBase implements Listener
 			case "w":
 			    if ($sender instanceof Player){
 				    if(isset($args[0])){
-						if($args[0]==='login' AND !$sender->isOp())return  $sender->sendMessage('§c你不能进入这个世界！');
+						if($args[0]==='login' AND !$sender->isOp())return  $sender->sendMessage('§c[登陆世界]你不能进入这个世界！');
 				        $l = $args[0];
 				        if ($this->getServer()->isLevelLoaded($l)){
 							if($sender->teleport($this->getServer()->getLevelByName($l)->getSafeSpawn()))
-								$sender->sendMessage('§l§a[提示]§a你被传送到了世界'.$l);
+								$sender->sendMessage('§l§a[提示]§a成功将你传送至'.$l);
 				        }else{
 				            $sender->sendMessage('§l§a[提示]§c这个世界没有被加载!');
 				        }
 				    }else{
-				        $sender->sendMessage('§l§a[提示]§c请输入一个地图名');
+				        $sender->sendMessage('§l§a[提示]§c用法：/w [地图名]');
 				    }
 			    }else{
 				    $sender->sendMessage('§l§a[提示]§c你不是一个玩家');
 				}
 				return true;
 			case "makemap":
+			if(!$sender->isOp())return $sender->sendMessage("§c[提示]你没有生成地图的权限！");
 //				if($sender->getName() !== 'Angel_XX' AND $sender instanceof Player){
 //					return $sender->sendMessage('§l§a[提示]§c你没有权限执行这个命令！');
 //				}
@@ -376,7 +381,7 @@ class LTMultiWorld extends PluginBase implements Listener
 		$level = $player->getLevel()->getName();
 		if(!in_array($level,['zy','land','dp','ender','nether','jm','create']) and !$player->isOp())
 		{
-			if(!($event instanceof PlayerInteractEvent))$player->sendCenterTip('§c这个世界被保护了！');
+			if(!($event instanceof PlayerInteractEvent))$player->sendCenterTip('§c根据服务器规定，本世界禁止破坏！');
 			$event->setCancelled(true);
 		}
 	}
@@ -397,7 +402,7 @@ class LTMultiWorld extends PluginBase implements Listener
 				return;
 			}*/
 			if($level==='zc'){
-				$damager->sendCenterTip("§c主城不能PVP！");
+				$damager->sendCenterTip("§c禁止在主城区域PVP");
 				return $eventp->setCancelled(true);
 			}elseif($level==='pvp'){
 				if($entity->y>44 or $damager->y>44){
@@ -407,7 +412,7 @@ class LTMultiWorld extends PluginBase implements Listener
 				return;
   			}
 			if($damager->getGTo()<6){//如果没完成主线
-				$damager->sendCenterTip("§c你需要完成主线才可以PVP！");
+				$damager->sendCenterTip("§c请完成主线任务！");
 				return $eventp->setCancelled(true);
 			}
 			if(LTCraft::getInstance()->getMode()==1){//禁止PVP模式
