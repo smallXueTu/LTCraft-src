@@ -2361,7 +2361,9 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
             return;
         }elseif($this->server->getNameBans()->isBanned(strtolower($this->getName())) or $this->server->getIPBans()->isBanned($this->getAddress()) or $this->server->getCIDBans()->isBanned($this->randomClientId)){
-            $this->close($this->getLeaveMessage(), TextFormat::RED . '你被禁止！', true, true);
+            $this->close($this->getLeaveMessage(), TextFormat::RED . 'LTCraft: 你已被服务器断开连接', true, true);
+            $this->close($this->getLeaveMessage(), TextFormat::RED . '我们检测到您有违规行为，出于对服务器安全的考虑，已将您永久禁封', true, true);
+            $this->close($this->getLeaveMessage(), TextFormat::RED . '详情请加QQ群：862859409 您也可以加服主QQ:2665337794', true, true);
 
             return;
         }
