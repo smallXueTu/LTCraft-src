@@ -49,11 +49,13 @@ class EventListener implements Listener
 	}
 	public function onDeathEvent(PlayerDeathEvent $event)
 	{
+	    /*
 		$player=$event->getPlayer();
 		$cause=$player->getLastDamageCause();
 		if($cause instanceof EntityDamageByEntityEvent and $cause->getDamager() instanceof Player){
 			$cause->getDamager()->addExp($player->getGrade());
 		}
+	    */
 	}
 	public function onQuitEvent(PlayerQuitEvent $event)
 	{
