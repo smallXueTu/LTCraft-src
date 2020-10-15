@@ -2074,7 +2074,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
     /**
      * tick背包物品 唉
      */
-    public  function tickInventory(){
+    public function tickInventory(){
         foreach ($this->inventory->getContents() as $index => $item){
             if ($item instanceof Mana){
                 /** @var Mana $item */

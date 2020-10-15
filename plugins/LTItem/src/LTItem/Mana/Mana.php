@@ -43,6 +43,7 @@ interface Mana
     public function consumptionMana(int $mana):bool ;
 
     /**
+     * tick 当次物品在背包内会每tick调用一次
      * @param Player $player
      * @param int $index
      * @param BaseInventory $inventory
