@@ -532,7 +532,7 @@ class Item implements ItemIds, \JsonSerializable {
                     }
                 }
             }
-            $class = self::$list[$id];
+            $class = @self::$list[$id];
             if($class === null){
                 return new Item(0);
             }elseif($id < 256){

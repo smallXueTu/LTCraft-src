@@ -87,6 +87,14 @@ class InlayInventory extends OperationInventory{
 										$count=1;
 									}
 								break;
+								case '耀魂宝珠':
+								    if ($item instanceof Weapon\DrawingKnife){
+								        /** @var $item Weapon\DrawingKnife */
+                                        $item->addGlory($i->getCount());
+                                        $count = $i->getCount();
+                                        $item->initW();
+                                    }
+								break;
 								case '初级嗜血之书':
 									if($item->getAttribute('附加吸血最大值')==false)continue 2;
 									for($c=1;$c<$i->getCount() and $nbt['attribute'][4]<$item->getAttribute('附加吸血最大值');$c++){
