@@ -11,9 +11,10 @@ interface Mana
 {
     /**
      * @param Player $player
+     * @param bool $playerCheck
      * @return bool
      */
-    public function canUse(Player $player) : bool;
+    public function canUse(Player $player, $playerCheck = true) : bool;
 
     /**
      * @return string

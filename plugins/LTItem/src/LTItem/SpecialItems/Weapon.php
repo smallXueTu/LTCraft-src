@@ -20,8 +20,8 @@ use pocketmine\event\entity\EntityRegainHealthEvent;
 
 class Weapon extends Item implements LTItem {
 	private $plugin = null;
-	private $PVPdamage = 0;
-	private $PVEdamage = 0;
+    protected int $PVPdamage = 0;
+    protected int $PVEdamage = 0;
 	private $type;
     protected array $conf;
 	private $WeaponName;
@@ -33,11 +33,11 @@ class Weapon extends Item implements LTItem {
 	private $PVEFire = 0;
 	private $Injury = 0;
 	private $PVPArmour = 0;
-	private $PVEArmour = 0;
+	protected $PVEArmour = 0;
 	private $PVPLightning;
 	private $PVELightning;
-	private $PVPVampire;
-	private $PVEVampire;
+    protected $PVPVampire;
+	protected $PVEVampire;
 	private $groupOfBack;
 	private $knockBack;
 	private $blowFly;
@@ -756,8 +756,14 @@ class Weapon extends Item implements LTItem {
 	public function getFreeze(){
 		return $this->freeze;
 	}
-	public function canUse(Player $player, $a = true){
-		if($a and $player->getGTo()<6 and !in_array($this->getWlevel(), ['入门', '普通', '中级', '中级', '高级', '定制', '仙器', '传说'])){
+
+    /**
+     * @param Player $player
+     * @param bool $playerCheck 玩家验证
+     * @return bool
+     */
+	public function canUse(Player $player, $playerCheck = true){
+		if($playerCheck and $player->getGTo()<6 and !in_array($this->getWlevel(), ['入门', '普通', '中级', '中级', '高级', '定制', '仙器', '传说'])){
 			return false;
 		}
 		if($this->binding==='*' or $this->binding===strtolower($player->getName()))return true;

@@ -131,9 +131,10 @@ class BaseMana extends Item implements LTItem,Mana
 
     /**
      * @param Player $player
+     * @param bool $playerCheck
      * @return bool
      */
-    public function canUse(Player $player): bool
+    public function canUse(Player $player, $playerCheck = true): bool
     {
         if($this->binding==='*' or $this->binding===strtolower($player->getName()))return true;
         return false;

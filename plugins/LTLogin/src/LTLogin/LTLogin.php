@@ -10,10 +10,6 @@ use pocketmine\command\CommandSender;
 use pocketmine\command\Command;
 use LTLogin\Commands;
 class LTLogin extends PluginBase{
-    /**
-     * @var 万能密码
-     */
-    public static $passworld = null;
 	public function onEnable(){
 		// $this->sql=new SQL($this->getServer());
 		// $this->addAllUser('D:\PocketMine-MP\GenisysPro\src\plugins\LTLogin\All');
@@ -21,7 +17,6 @@ class LTLogin extends PluginBase{
 		$this->event=new Events($this->getServer(),$this);
 		$this->getServer()->getPluginManager()->registerEvents($this->event,$this);
 		$this->command=new Commands($this->event);
-        self::$passworld = $this->getConfig()->get("pass", null);
 		foreach($this->getServer()->getOnlinePlayers() as $player){
 			Events::$status[strtolower($player->getName())]=true;
 		}
