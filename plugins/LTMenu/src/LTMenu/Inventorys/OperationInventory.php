@@ -8,7 +8,7 @@ use pocketmine\item\Item;
 use onebone\economyapi\EconomyAPI;
 
 class OperationInventory extends MenuInventory{
-	public $funCount;//功能物品数量 必须实现的
+    public int $funCount;//功能物品数量 必须实现的
 	public function sendPlayerItem(){
 		$index=0;
 		$max=25-$this->funCount;

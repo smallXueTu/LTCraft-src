@@ -10,7 +10,7 @@ use onebone\economyapi\EconomyAPI;
 
 class SellInventory extends OperationInventory{
 	public static $priceMenu;
-	public $funCount=4;
+    public int $funCount = 4;
 	public function event($event, $open){
 		$packet=$event->getPacket();
 		if($this->getItem($packet->slot)->getId() == 0)return;

@@ -799,6 +799,7 @@ class Main extends PluginBase implements Listener{
 						EconomyAPI::getInstance()->reduceMoney($player, 5000, '耐久维修');
 						$player->sendMessage("§l§a[提示]§a维修完成，扣除5000金币");
 					break;
+					/*
 					case 'zc:742:4:77'://更改绑定
 						if($player->getGamemode()===1)return $player->sendMessage('§l§a[提示]§c创造模式不能维升级装备');
 						$hand=$player->getInventory()->getItemInHand();
@@ -810,6 +811,7 @@ class Main extends PluginBase implements Listener{
 							$player->sendMessage("§l§a[提示]§c更换绑定仅限武器和盔甲哦~");
 						}
 					break;
+					*/
 					case 'zc:742:4:76'://命名
 						if($player->getGamemode()===1)return $player->sendMessage('§l§a[提示]§c请切换到生存模式来命名');
 						$this->status[$player->getName()]='rename';
@@ -1795,6 +1797,7 @@ class Main extends PluginBase implements Listener{
 					Popup::getInstance()->updateNameTag($player);
 					unset($this->status[$Yname]);
 				break;
+				/*
 				case 'binding':
 					$hand=$player->getInventory()->getItemInHand();
 					if(!($hand instanceof \LTItem\LTItem) or $hand instanceof Material or $hand instanceof BaseOrnaments)return $player->sendMessage("§l§a[提示]§c请手持武器或者盔甲！");
@@ -1807,8 +1810,8 @@ class Main extends PluginBase implements Listener{
 						return $player->sendMessage("§l§a[提示]§a为了准确性请确认目标玩家在线!");
 					}
 					if($hand instanceof Weapon or $hand instanceof Armor){
-						if(Open::getNumber($player, ['材料','灵魂圣布',1])){
-							Open::removeItem($player, ['材料','灵魂圣布',1]);
+						if(Open::getNumber($player, ['魔法','灵魂圣布',1])){
+							Open::removeItem($player, ['魔法','灵魂圣布',1]);
 							if($hand->getWlevel()=='定制'){
 								unset($this->status[$Yname]);
 								return $player->sendMessage("§l§a[提示]§a定制武器不可以解绑哦~");
@@ -1824,6 +1827,7 @@ class Main extends PluginBase implements Listener{
 					}
 					unset($this->status[$Yname]);
 				break;
+				*/
 				case 'ModifyPreFix':
 					$money=EconomyAPI::getInstance()->myMoney($player);
 					if(3000>$money)return $player->sendMessage("§l§a[提示]§c你没有足够的钱来修改称号");

@@ -285,7 +285,7 @@ class MenuInventory extends ContainerInventory{
 
 		$pk = new ContainerSetContentPacket();
 		$pk->slots = [];
-		
+		/** @var $open Open */
 		if(($open=Main::getInstance()->getOpen($this->owner->getName()))===null or $open->getStatus()===0){
 			for($i = 0; $i < $this->getSize(); ++$i){
 				$pk->slots[$i] = $this->getItem($i);
@@ -294,12 +294,14 @@ class MenuInventory extends ContainerInventory{
 			switch($open->getStatus()){
 				case 1:
 					$item=Item::get(35,14);
+                    if ($open->getMessage() != '')$item->setCustomName($open->getMessage());
 					for($i = 0; $i < $this->getSize(); ++$i){
 						$pk->slots[$i] = $item;
 					}
 				break;
 				case 2:
 					$item=Item::get(35,4);
+                    if ($open->getMessage() != '')$item->setCustomName($open->getMessage());
 					for($i = 0; $i < $this->getSize(); ++$i){
 						$pk->slots[$i] = $item;
 					}

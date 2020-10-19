@@ -1,5 +1,6 @@
 <?php
 namespace LTItem;
+use LTItem\Mana\Mana;
 use pocketmine\Player;
 use pocketmine\entity\Effect;
 use pocketmine\command\Command;
@@ -32,7 +33,7 @@ class Commands
 			Cooling::$query[$name]=time();
 			$count=0;
 			foreach($weaponData as $data){
-				if(in_array($data[0], ['近战', '远程', '通用', '盔甲', '材料', '饰品', '宠物'])){
+				if(in_array($data[0], ['近战', '远程', '通用', '盔甲', '材料', '饰品', '宠物', '魔法'])){
 					$count++;
 				}elseif($data[0]=='留言'){
 					$player->sendMessage($data[1], true);
@@ -71,6 +72,21 @@ class Commands
 				case '盔甲':
 					$armor=$this->plugin->createArmor($data[1], $player);
 					if($armor instanceof Armor){
+						while($data[2]-- >0){
+							if(!$player->getInventory()->canAddItem($armor)){
+								$player->getInventory()->setContents($contents);
+								$player->sendMessage('§c无法将'.$data[0].':'.$data[1].'×'.$data[2].'发送到你背包 请检查背包空间！');
+								return;
+							}else $player->getInventory()->addItem($armor);
+						}
+						$player->sendMessage('§a已将'.$data[0].':'.$data[1].'×'.$data[2].'发送到你背包！');
+					}else{
+						$player->sendMessage('§a'.$data[0].':'.$data[1].'仿佛不存在 请联系服主！');
+					}
+				break;
+				case '魔法':
+					$armor=$this->plugin->createMana($data[1], $player);
+					if($armor instanceof Mana){
 						while($data[2]-- >0){
 							if(!$player->getInventory()->canAddItem($armor)){
 								$player->getInventory()->setContents($contents);

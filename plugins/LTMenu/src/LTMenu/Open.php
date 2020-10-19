@@ -16,10 +16,12 @@ use pocketmine\entity\Human;
 
 class Open extends Position{
 	private $player;
+	/** @var $inventory MenuInventory */
 	private $inventory;
 	private $multiLevels=[];
 	private $multiMenus=[];
 	private $menu;
+	private string $message = '';
 	/** @var Position $position */
 	private $position;
 	private $disable = false;
@@ -65,16 +67,12 @@ class Open extends Position{
 		switch($conditions[0]){
 			case 'GTo':
 				return $player->getGTo()>=$conditions[1];
-			break;
 			case 'plot':
 				return $player->getAStatusIsDone('购买地皮');
-			break;
 			case 'home':
 				return $player->getAStatusIsDone('设置家');
-			break;
 			default:
 				return true;
-			break;
 		}
 	}
 	public function setDie(){
@@ -186,10 +184,23 @@ class Open extends Position{
 	}
 	public function recovery(){
 		$this->status=0;
+		$this->message = '';
 		$this->setEnable();
 		$this->inventory->sendContents($this->player);
 	}
-	public function error(){
+
+    /**
+     * @return string
+     */
+    public function getMessage(): string
+    {
+        return $this->message;
+    }
+    /**
+     * @param string $message 提示信息
+     */
+	public function error($message = '错误'){
+	    $this->message = $message;
 		$this->setDisable();
 		$this->status=1;
 		$this->inventory->sendContents($this->player);
@@ -202,7 +213,12 @@ class Open extends Position{
 	public function getStatus(){
 		return $this->status;
 	}
-	public function invError(){
+
+    /**
+     * @param string $message 提示信息
+     */
+	public function invError($message = '背包已满'){
+        $this->message = $message;
 		$this->setDisable();
 		$this->status=2;
 		$this->inventory->sendContents($this->player);

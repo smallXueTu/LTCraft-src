@@ -1,6 +1,9 @@
 <?php
 namespace LTMenu\Inventorys;
 
+use LTItem\Mana\Mana;
+use LTItem\SpecialItems\BaseOrnaments;
+use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\IntTag;
@@ -17,7 +20,13 @@ use LTItem\SpecialItems\Armor;
 use LTItem\SpecialItems\Material;
 
 class InlayInventory extends OperationInventory{
-	public $funCount=3;
+    public int $funCount = 3;
+
+    /**
+     * @param $event DataPacketReceiveEvent
+     * @param $open Open
+     * @return void
+     */
 	public function event($event, $open){
 		$packet=$event->getPacket();
 		if($this->getItem($packet->slot)->getId() == 0)return;
@@ -67,7 +76,7 @@ class InlayInventory extends OperationInventory{
 							$i=$this->getItem($index++);
 							$count=0;
 							if($i->getId()===0)continue;
-							if(!($i instanceof Material))continue;
+							if(!($i instanceof Material) and !($i instanceof Mana))continue;
 							switch($i->getLTName()){
 								case '基因精髓-法师':
 									if(in_array($item->getWlevel(), ['终极', '史诗', '定制', '仙器']) and ($item->getGene()===false or $item->getGene()==='法师') and $item->getGeneLevel()<3){
@@ -93,6 +102,28 @@ class InlayInventory extends OperationInventory{
                                         $item->addGlory($i->getCount());
                                         $count = $i->getCount();
                                         $item->initW();
+                                    }
+								break;
+								case '灵魂圣布':
+								    if ($i instanceof Mana){
+								        if ($i->getMana()>=$i->getMaxMana()){
+                                            if($item instanceof Weapon or $item instanceof Armor){
+                                                if(!$item->canUse($event->getPlayer()) and !$event->getPlayer()->isOp()){
+                                                    $open->error('仅支持武器和盔甲。');
+                                                }else{
+                                                    if($item->getWlevel()=='定制'){
+                                                        $open->error('定制不能更换绑定。');
+                                                    }else{
+                                                        $count = 1;
+                                                        $item=$item->setBinding($i->getOwner());
+                                                    }
+                                                }
+                                            }else{
+                                                $open->error('仅支持武器和盔甲。');
+                                            }
+                                        }else{
+                                            $open->error('灵魂圣布未激活。');
+                                        }
                                     }
 								break;
 								case '初级嗜血之书':

@@ -18,9 +18,9 @@ use pocketmine\Player;
 
 class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
 {
-    const MAX_MANA = 10000;
+    const MAX_MANA = 1000000;
     public int $Mana = 0;
-    private int $lastDamage;
+    private int $lastDamage = 0;
 
     public function __construct(array $conf, int $count, CompoundTag $nbt, $init = true)
     {
