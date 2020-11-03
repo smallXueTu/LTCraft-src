@@ -319,10 +319,11 @@ class Buff{
 
     /**
      * @param $name
+     * @param $type string 类型
      * @return bool|int
      */
-	public function checkOrnamentsInstall($name) {
-        return $this->player->getOrnamentsInventory()->containsLTItem(['魔法', $name]);
+	public function checkOrnamentsInstall($name, string  $type = '魔法') {
+        return $this->player->getOrnamentsInventory()->containsLTItem([$type, $name])!==false;
     }
 	public function getMiss(){
 		return $this->miss;

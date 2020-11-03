@@ -31,6 +31,10 @@ class Cooling implements Listener
      * @var array 发射冷却时间
      */
     public static array $launch = [];
+    /**
+     * @var array 图拉的意志
+     */
+    public static array $willOfTula = [];
 
     public static function onPlayerQuit(Player $player){
         $player = $player->getName();
@@ -39,6 +43,7 @@ class Cooling implements Listener
             self::$weapon[$player],
             self::$material[$player],
             self::$launch[$player],
+            self::$willOfTula[$player],
         );
     }
     public static function onPlayerJoin(Player $player){
@@ -46,5 +51,6 @@ class Cooling implements Listener
         self::$weapon[$player] = [];
         self::$material[$player] = [];
         self::$launch[$player] = 0;
+        self::$willOfTula[$player] = 0;
     }
 }

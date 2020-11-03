@@ -1108,12 +1108,12 @@ abstract class Entity extends Location implements Metadatable {
 		if($this instanceof \LTEntity\entity\BaseEntity and !$this->Skill($source))return false;
 		$this->setLastDamageCause($source);
 		$this->lastAttackTime=$this->server->getTick();
-		if($this instanceof Human){
+		if($this instanceof Human){//搞不懂这段代码为什么要这样写
 			$damage = round($source->getFinalDamage());
 			if($this->getAbsorption() > 0){
 				$absorption = $this->getAbsorption() - $damage;
 				$this->setAbsorption($absorption <= 0 ? 0 : $absorption);
-				$this->setHealth($this->getHealth() + $absorption);
+				if ($absorption < 0)$this->setHealth($this->getHealth() + $absorption);
 			}else{
 				$this->setHealth($this->getHealth() - $damage);
 			}

@@ -3,9 +3,25 @@
 
 namespace LTItem\SpecialItems\Weapon;
 
-
+/**
+ * 类似于拔刀剑的武器接口
+ * Interface DrawingKnife
+ * @package LTItem\SpecialItems\Weapon
+ */
 interface DrawingKnife
 {
+    /**
+     * 设置耐久值
+     * @param $durable int
+     * @return DrawingKnife
+     */
+    public function setDurable(int $durable): DrawingKnife;
+
+    /**
+     * 获取耐久值
+     * @return int
+     */
+    public function getDurable() : int;
     /**
      * 增加荣耀值
      * @param int $number

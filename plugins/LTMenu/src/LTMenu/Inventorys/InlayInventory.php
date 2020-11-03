@@ -79,19 +79,19 @@ class InlayInventory extends OperationInventory{
 							if(!($i instanceof Material) and !($i instanceof Mana))continue;
 							switch($i->getLTName()){
 								case '基因精髓-法师':
-									if(in_array($item->getWlevel(), ['终极', '史诗', '定制', '仙器']) and ($item->getGene()===false or $item->getGene()==='法师') and $item->getGeneLevel()<3){
+									if(in_array($item->getWlevel(), ['终极', '史诗', '定制', '仙器', '神话']) and ($item->getGene()===false or $item->getGene()==='法师') and $item->getGeneLevel()<3){
 										$item=$item->setGene('法师');
 										$count=1;
 									}
 								break;
 								case '基因精髓-刺客':
-									if(in_array($item->getWlevel(), ['终极', '史诗', '定制', '仙器']) and ($item->getGene()===false or $item->getGene()==='刺客') and $item->getGeneLevel()<3){
+									if(in_array($item->getWlevel(), ['终极', '史诗', '定制', '仙器', '神话']) and ($item->getGene()===false or $item->getGene()==='刺客') and $item->getGeneLevel()<3){
 										$item=$item->setGene('刺客');
 										$count=1;
 									}
 								break;
 								case '基因精髓-牧师':
-									if(in_array($item->getWlevel(), ['终极', '史诗', '定制', '仙器']) and ($item->getGene()===false or $item->getGene()==='牧师') and $item->getGeneLevel()<3){
+									if(in_array($item->getWlevel(), ['终极', '史诗', '定制', '仙器', '神话']) and ($item->getGene()===false or $item->getGene()==='牧师') and $item->getGeneLevel()<3){
 										$item=$item->setGene('牧师');
 										$count=1;
 									}
@@ -101,6 +101,17 @@ class InlayInventory extends OperationInventory{
 								        /** @var $item Weapon\DrawingKnife */
                                         $item->addGlory($i->getCount());
                                         $count = $i->getCount();
+                                        $item->initW();
+                                    }
+								break;
+								case '卡拉森的意志':
+								case '加斯的意志':
+								case '亚瑟的意志':
+								case '图拉的意志':
+								    if ($item instanceof Weapon\Trident and $item->getWillCount() <= 1){
+								        /** @var $item Weapon\Trident */
+                                        $item->addWill($i->getLTName());
+                                        $count = 1;
                                         $item->initW();
                                     }
 								break;

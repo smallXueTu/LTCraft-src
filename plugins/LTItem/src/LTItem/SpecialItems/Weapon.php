@@ -546,6 +546,16 @@ class Weapon extends Item implements LTItem {
 			}
 		}
 	}
+
+    /**
+     * 处理医疗
+     * @param Player $damager 攻击者 一定是玩家
+     * @param Entity $entity 被攻击者
+     * @param $damage int 伤害
+     * @param int $PAdd 附加伤害
+     * @param int $addVampire 附加吸血
+     * @param int $addGroupOfBack 附加群回量
+     */
 	public function vampire(Player $damager, Entity $entity, $damage, $PAdd = 0, $addVampire = 0, $addGroupOfBack = 0){
 		/*
 		$PAdd 应该是附加百分比
@@ -656,6 +666,11 @@ class Weapon extends Item implements LTItem {
 	public function getBoom(){
 		return $this->Boom;
 	}
+
+    /**
+     * 获取重伤时间
+     * @return int 时间 秒
+     */
 	public function getInjury(){
 		return $this->Injury;
 	}

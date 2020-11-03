@@ -140,8 +140,13 @@ class Config {
 						break;
 					case Config::YAML:
 						$content = self::fixYAMLIndexes($content);
+						/*
+						if (strpos($content, "命运之")){
+						    var_dump($content);
+                        }
+						*/
 						$this->config = yaml_parse($content);
-						if($this->config===false){
+						if($this->config===false or !is_array($this->config)){
 							Server::getInstance()->getLogger()->warning($this->file .'损坏！');
 						}
 						break;

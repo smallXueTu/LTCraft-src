@@ -19,7 +19,9 @@ use pocketmine\Player;
 class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
 {
     const MAX_MANA = 1000000;
+    const MAX_DURABLE = 100;
     public int $Mana = 0;
+    private int $durable = 100;
     private int $lastDamage = 0;
 
     public function __construct(array $conf, int $count, CompoundTag $nbt, $init = true)
@@ -29,12 +31,43 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
         if(!isset($nbt['attribute'][27])){
             $nbt['attribute'][25]=new StringTag('',$nbt['attribute'][25]??0);//25 荣耀值
             $nbt['attribute'][26]=new StringTag('',$nbt['attribute'][26]??0);//26 杀敌数
-            $nbt['attribute'][27]=new StringTag('',$nbt['attribute'][27]??0);//26 对于 Trident来说 27就是Mana
+            $nbt['attribute'][27]=new StringTag('',$nbt['attribute'][27]??0);//27 对于 Trident来说 27就是Mana
+            $nbt['attribute'][28]=new StringTag('',$nbt['attribute'][28]??0);//28 耐久
+            $nbt['attribute'][29]=new StringTag('',$nbt['attribute'][29]??'');//29 意志
             $this->setNamedTag($nbt);
         }
         $this->Mana = $nbt['attribute'][27];
+        $this->durable = 3;
         $this->updateName();
     }
+
+    /**
+     * 获取耐久值
+     * @return int
+     */
+    public function getDurable(): int
+    {
+        return $this->durable;
+    }
+
+    /**
+     * 设置耐久度
+     * @param int $durable
+     * @return DrawingKnife
+     */
+    public function setDurable(int $durable): DrawingKnife
+    {
+        $nbt = $this->getNamedTag();
+        $nbt['attribute'][28]=new StringTag('',$nbt['attribute'][28] + $durable);//25 荣耀值
+        $this->setNamedTag($nbt);
+        $this->updateName();
+        return $this;
+    }
+
+    /**
+     * 初始化
+     * @param null $conf
+     */
     public function initW($conf = null)
     {
         parent::initW($conf);
@@ -89,9 +122,52 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
      * 更新名字
      */
     public function updateName(){
-        $this->setCustomName($this->conf['武器名'].PHP_EOL.'§c荣耀值:'.$this->getGlory().PHP_EOL.'杀敌数:'.$this->getKills().PHP_EOL.'§eMana:'.$this->getMana(), true);
+        $this->setCustomName($this->conf['武器名'].PHP_EOL.'§c荣耀值:'.$this->getGlory().PHP_EOL.'杀敌数:'.$this->getKills().PHP_EOL.'§eMana:'.$this->getMana().PHP_EOL.$this->getWill().PHP_EOL.$this->getWill(2), true);
     }
 
+    /**
+     * 获取第 $number 个槽的意志
+     *
+     * @param int $number 只有 1和 2 0为’‘（空只付出）
+     * @return string
+     * TODO: 改善它
+     */
+    public function getWill(int $number = 1){
+        $nbt = $this->getNamedTag();
+        $arr = explode(':', $nbt['attribute'][29]);
+        return $arr[$number]??'无意志';
+    }
+    /**
+     * 增加意志
+     * @param string $name
+     * @return $this|mixed
+     */
+    public function addWill(string $name){
+        $nbt = $this->getNamedTag();
+        $nbt['attribute'][29]=new StringTag('',$nbt['attribute'][29] .':'. $name);//26 意志
+        $this->setNamedTag($nbt);
+        $this->updateName();
+        return $this;
+    }
+
+    /**
+     * 获取此武器装了几个意志
+     * @return int
+     */
+    public function getWillCount(){
+        $nbt = $this->getNamedTag();
+        return count(explode(':', $nbt['attribute'][29]));
+    }
+
+    /**
+     * 检查此武器是否包含一个意志
+     * @param string $name
+     * @return bool
+     */
+    public function containWill(string $name){
+        $nbt = $this->getNamedTag();
+        return strpos($nbt['attribute'][29], $name)!=false;
+    }
     /**
      * 增加荣耀值
      * @param int $number
@@ -150,6 +226,10 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
         return $this->Mana;
     }
 
+    /**
+     * @param int $mana
+     * @return mixed|void
+     */
     public function addMana(int $mana)
     {
         $this->Mana += $mana;
@@ -159,6 +239,10 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
         $this->saveMana();
     }
 
+    /**
+     * @param int $mana
+     * @return bool
+     */
     public function consumptionMana(int $mana): bool
     {
         if ($this->Mana < $mana)return false;

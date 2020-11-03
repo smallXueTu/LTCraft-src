@@ -232,6 +232,28 @@ class EventListener implements Listener
 							$addGroupOfBack = (int)$weapon=getGroupsOfBack()/(4-$weapon->getGeneLevel());
 						}
 					}
+					if($weapon instanceof Weapon\Trident){
+					    /** @var Weapon\Trident $weapon */
+					    if ($weapon->containWill('亚瑟的意志')){
+					        $health = $damager->getHealth();
+					        $maxHealth = $damager->getMaxHealth();
+					        $add = 1 - $health / $maxHealth;
+                            $event->setRateDamage($add, EntityDamageEvent::MODIFIER_GAIN);
+                        }
+					    if ($weapon->containWill('加斯的意志')){
+					        if (!isset($damager->counter['加斯的意志']))
+					            $damager->counter['加斯的意志'] = 1;
+					        else
+                                $damager->counter['加斯的意志']++;
+					        if ($damager->counter['加斯的意志'] == 10){
+                                $ab = floor($damager->getMaxHealth() / 4) - 1;
+                                if ($ab <= 0) $ab = 1;
+                                $damager->addEffect(Effect::getEffect(Effect::ABSORPTION)->setDuration(20*10)->setAmplifier($ab));
+                                $damager->addTitle('§l§d触发被动:','§l§a加斯的意志',50,100,50);
+                                $damager->counter['加斯的意志'] = 0;
+                            }
+                        }
+                    }
 					$weapon->vampire($damager, $entity, $event->getFinalDamage(), 0, $damager->getBuff()->getVampire($entity), $damager->getBuff()->getGroupOfBack()+($addGroupOfBack??0));//吸血
 				}
 			}

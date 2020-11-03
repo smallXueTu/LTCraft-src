@@ -7,6 +7,8 @@ use pocketmine\event\entity\EntityCombustEvent;
 use pocketmine\event\entity\EntityCombustByEntityEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\entity\Entity;
+use pocketmine\event\entity\EntityDeathEvent;
+use pocketmine\event\entity\EntityRegainHealthEvent;
 use pocketmine\level\Explosion;
 use pocketmine\network\protocol\PlayerActionPacket;
 use pocketmine\network\protocol\SetEntityMotionPacket;
@@ -58,6 +60,25 @@ class EventListener implements Listener
 		$this->plugin = $plugin;
 		$this->server = $server;
 	}
+
+    /**
+     * 实体医疗事件
+     * @param EntityRegainHealthEvent $event
+     */
+    public function onRegainHealth(EntityRegainHealthEvent $event){
+        /** @var Player $player */
+        $player = $event->getEntity();
+        if ($player instanceof Player){//如果是玩家
+            $hand = $player->getItemInHand();
+            if ($hand instanceof Weapon\Trident){
+                /** @var Weapon\Trident $hand */
+                if ($hand->containWill('卡拉森的意志')){//如果玩家佩戴亚瑟的意志 取消所有治疗效果
+                    $player->setHealth($player->getHealth());
+                    $event->setCancelled(true);
+                }
+            }
+        }
+    }
 	public function onLevelChange(EntityLevelChangeEvent $event)
 	{
 		$p = $event->getEntity();
@@ -427,20 +448,49 @@ class EventListener implements Listener
 			}
 		}
 	}
-	public function onDeathEvent(PlayerDeathEvent $event)
+	public function onDeathEvent(EntityDeathEvent $event)
 	{
 		$entity = $event->getEntity();
 		$cause = $entity->getLastDamageCause();
 		if($cause === null)return;
-		if($cause instanceof EntityDamageByEntityEvent) {
-			$damager = $cause->getDamager();
-			if($damager instanceof Player) {
-				$hand = $damager->getItemInHand();
-				if($hand instanceof Weapon and $hand->canUse($damager) and ($mess=$hand->getKillMessage($damager, $entity))!==false){
-					$event->setDeathMessage($mess);
-				}
-			}
-		}
+        if($cause instanceof EntityDamageByEntityEvent) {
+            if($entity instanceof Player){
+                $damager = $cause->getDamager();
+                if($damager instanceof Player) {
+                    $hand = $damager->getItemInHand();
+                    if($hand instanceof Weapon and $hand->canUse($damager) and ($mess=$hand->getKillMessage($damager, $entity))!==false){
+                        $event->setDeathMessage($mess);
+                    }
+               }
+            }else{
+                if ($entity instanceof BaseEntity){
+                    /** @var Player $damager */
+                    $damager = $cause->getDamager();
+                    if($damager instanceof Player){
+                        $hand = $damager->getItemInHand();
+                        if ($hand instanceof Weapon\DrawingKnife){
+                            if ($hand->getDurable() > 0) {
+                                $hand->addKills(1);
+                                $hand->addGlory(mt_rand(5, 10));
+                                $hand->setDurable($hand->getDurable() - 1);
+                                if($hand->getDurable() == 0){
+                                    $item = Main::getInstance()->createMaterial('耀魂碎片');
+                                    $count = 3 + ((int)$hand->getGlory() / 100);
+                                    $item->setCount($count);
+                                    /** @var \pocketmine\entity\Item $en */
+                                    $en = $entity->getLevel()->dropItem($entity, $item);
+                                    $en->setOwner($damager->getName());
+                                    $hand->setDurable(-3);
+                                }
+                                $damager->getInventory()->setItemInHand($hand);
+                            }else{
+                                $damager->sendMessage('§c你的'.$hand->getLTName().'无耐久了，无法获得荣耀值和击杀数。');
+                            }
+                        }
+                    }
+                }
+            }
+        }
 	}
 	public static function canCalculate($cause){
 		return !in_array($cause, [EntityDamageEvent::CAUSE_ENTITY_EXPLOSION, EntityDamageEvent::CAUSE_THORNS, EntityDamageEvent::CAUSE_SECONDS_KILL]);

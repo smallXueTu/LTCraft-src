@@ -777,6 +777,30 @@ items:
         multilevel: false
   - item:
       - 397
+      - 4
+      - 1
+    nametag: F9兑换菜单
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: ~
+    cost_item: ~
+    multilevel:
+      - item:
+          - 384
+          - 0
+          - 64
+        nametag: |-
+          §a亚特兰蒂斯的奖励
+          §e§l>>需要奖励袋碎片×64
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 材料:亚特兰蒂斯的奖励:1
+        cost_item: 材料:奖励袋碎片:64
+        multilevel: false
+  - item:
+      - 397
       - 2
       - 1
     nametag: T1兑换菜单
@@ -957,47 +981,17 @@ items:
         cost_item: 材料:服务器吉祥物:5
         multilevel: false
       - item:
-          - 339
-          - 0
+          - 383
+          - 34
           - 1
         nametag: |-
-          §a史诗武器图纸
-          §e§l>>需要:史诗武器图纸碎片×5(神秘武器奖励开启)
-          §d§l>>可用来合成史诗武器
+          §a耀魂宝珠
+          §e§l>>需要耀魂碎片×4
+          §e§l>>需要耀魂铁锭×1
         commands: ~
         teleport: ~
         price: 0
-        give_item: 材料:史诗武器图纸:1
-        cost_item: 材料:史诗武器图纸碎片:5
-        multilevel: false
-      - item:
-          - 337
-          - 0
-          - 1
-        nametag: |-
-          §a觉醒石
-          §e§l>>需要:熔炼残渣×10(合成高级武器失败品)
-          §e§l>>需要:觉醒石碎片×20
-          §d§l>>可用觉醒武器
-        commands: ~
-        teleport: ~
-        price: 0
-        give_item: 材料:觉醒石:1
-        cost_item: 材料:觉醒石碎片:20&材料:熔炼残渣:10
-        multilevel: false
-      - item:
-          - 340
-          - 0
-          - 1
-        nametag: |-
-          §a碎片熔炼坛 1天使用权
-          §e§l>>需要:碎片熔炼坛碎片×30
-          §d§l>>可使用武器碎片来合成指定武器
-        commands:
-          - '%serveradmin addm %p DebrisShop 1'
-        teleport: ~
-        price: 0
-        give_item: ~
-        cost_item: 材料:碎片熔炼坛碎片:30
+        give_item: 材料:耀魂宝珠:1
+        cost_item: 材料:耀魂碎片:4&材料:耀魂铁锭:1
         multilevel: false
 ...

@@ -28,9 +28,11 @@ use LTCraft\Main;
 use LTGrade\API;
 use LTGrade\PlayerTask;
 use LTItem\Buff;
+use LTItem\Cooling;
 use LTItem\Mana\Mana;
 use LTItem\Mana\ManaFood;
 use LTItem\SpecialItems\Armor;
+use LTItem\SpecialItems\Weapon\Trident;
 use pocketmine\event\block\ItemFrameDropItemEvent;
 use pocketmine\event\entity\EntityTeleportEvent;
 use pocketmine\inventory\BaseInventory;
@@ -223,6 +225,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
     public $updateTeleport = true;
     public $lastDie=null;
     public $lastClicken=null;
+    public array $counter = [];
     /*啪啪事件*/
     public $PleasureEvent=null;
     public $isVIP=false;
@@ -4281,6 +4284,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
             $this->Task = null;
             $this->Buff = null;
             $this->WaitingSendEntity = [];
+            $this->counter = [];
             $this->WaitingSendFloatingText = [];
             $this->FloatingTexts = [];
             $this->NPCs = [];
@@ -4591,6 +4595,18 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
         if($this->getGamemode()===3 or $this->closed or (($this->level->getName()==='zc' or $this->level->getName()==='create') and $this->getHealth()>$amount))return;
         if($amount<=0){
             if (!$this->isA())return;
+            $hand = $this->getItemInHand();
+            if ($hand instanceof Trident and $hand->containWill('图拉的意志') and Cooling::$willOfTula[$this->getName()] < time()){
+                Cooling::$willOfTula[$this->getName()] = time() + 10;
+                /**
+                 * 先计算出玩家 50%最大生命值
+                 */
+                $ab = floor(floor($this->getMaxHealth() * 0.5) / 4) - 1;
+                if ($ab <= 0) $ab = 1;
+                $this->addEffect(Effect::getEffect(Effect::ABSORPTION)->setDuration(20*10)->setAmplifier($ab));
+                $this->addTitle('§l§d触发被动:','§l§a图拉的意志',50,100,50);
+                return;
+            }
             if(isset($this->tickAttackTask)){
                 $this->server->getScheduler()->cancelTask($this->tickAttackTask->getTaskId());
                 unset($this->tickAttackTask);

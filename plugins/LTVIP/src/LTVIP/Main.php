@@ -423,10 +423,17 @@ class Main extends PluginBase implements Listener
             }
         }
     }
-	public static function on($ride, $player){
+
+    /**
+     * @param $ride Player 被骑乘玩家
+     * @param $player Player 骑乘的玩家
+     * @return bool|void
+     */
+	public static function on(Player $ride, Player $player){
 		$vip = $player->isVIP();
 		if($ride instanceof Player and $player->getLinkedEntity()===null) {
 			if(isset($player->getItemInHand()->getNamedTag()['attribute'][2]))return;
+			if ($player->getRideEntity()===$ride)return;//阻止相互骑乘
 			if($vip === false or $vip < 2)return $player->sendCenterTip('§l§e只有VIP2或以上才能骑乘其他玩家！');
 			if(\LTCraft\Main::getInstance()->getMode()==1){//禁止骑乘
 				return $player->sendCenterTip("§c现在不能骑乘玩家！");
