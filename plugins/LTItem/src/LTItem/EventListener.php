@@ -72,7 +72,7 @@ class EventListener implements Listener
             $hand = $player->getItemInHand();
             if ($hand instanceof Weapon\Trident){
                 /** @var Weapon\Trident $hand */
-                if ($hand->containWill('卡拉森的意志')){//如果玩家佩戴亚瑟的意志 取消所有治疗效果
+                if ($hand->containWill('卡拉森的意志')){//如果玩家卡拉森的意志 取消所有治疗效果
                     $player->setHealth($player->getHealth());
                     $event->setCancelled(true);
                 }
