@@ -58,7 +58,7 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
     public function setDurable(int $durable): DrawingKnife
     {
         $nbt = $this->getNamedTag();
-        $nbt['attribute'][28]=new StringTag('',$nbt['attribute'][28] + $durable);//25 荣耀值
+        $nbt['attribute'][28]=new StringTag('',$nbt['attribute'][28] + $durable);//28 荣耀值
         $this->setNamedTag($nbt);
         $this->updateName();
         return $this;
@@ -128,7 +128,7 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
     /**
      * 获取第 $number 个槽的意志
      *
-     * @param int $number 只有 1和 2 0为’‘（空只付出）
+     * @param int $number 只有 1和 2 0为’‘（空字符串）
      * @return string
      * TODO: 改善它
      */
