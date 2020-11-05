@@ -19,9 +19,7 @@ use pocketmine\Player;
 class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
 {
     const MAX_MANA = 1000000;
-    const MAX_DURABLE = 100;
     public int $Mana = 0;
-    private int $durable = 100;
     private int $lastDamage = 0;
 
     public function __construct(array $conf, int $count, CompoundTag $nbt, $init = true)
@@ -34,10 +32,10 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
             $nbt['attribute'][27]=new StringTag('',$nbt['attribute'][27]??0);//27 对于 Trident来说 27就是Mana
             $nbt['attribute'][28]=new StringTag('',$nbt['attribute'][28]??0);//28 耐久
             $nbt['attribute'][29]=new StringTag('',$nbt['attribute'][29]??'');//29 意志
+            $nbt['attribute'][30]=new StringTag('',$nbt['attribute'][30]??0);//30 锻造数
             $this->setNamedTag($nbt);
         }
         $this->Mana = $nbt['attribute'][27];
-        $this->durable = 3;
         $this->updateName();
     }
 
@@ -47,7 +45,8 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
      */
     public function getDurable(): int
     {
-        return $this->durable;
+        $nbt = $this->getNamedTag();
+        return $nbt['attribute'][28];
     }
 
     /**
@@ -57,8 +56,9 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
      */
     public function setDurable(int $durable): DrawingKnife
     {
+        if ($durable > DrawingKnife::MAX_DURABLE) $durable = DrawingKnife::MAX_DURABLE;
         $nbt = $this->getNamedTag();
-        $nbt['attribute'][28]=new StringTag('',$nbt['attribute'][28] + $durable);//28 荣耀值
+        $nbt['attribute'][28]=new StringTag('',$durable);//28 耐久
         $this->setNamedTag($nbt);
         $this->updateName();
         return $this;
@@ -76,8 +76,8 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
         $addPVEVampire = 0;//附加PVE吸血
         $addPVPVampire = 0;//附加PVP吸血
         $addPVPArmour = 0;//附加PVP穿甲
-        if ($this->getGlory() > 0){
-            for ($i = 1; $i <= $this->getGlory(); $i++){
+        if ($this->getForging() > 0){
+            for ($i = 1; $i <= $this->getForging(); $i++){
                 switch (true){
                     case $i <= 10:
                         $addPVEDamage += 10;
@@ -122,7 +122,7 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
      * 更新名字
      */
     public function updateName(){
-        $this->setCustomName($this->conf['武器名'].PHP_EOL.'§c荣耀值:'.$this->getGlory().PHP_EOL.'杀敌数:'.$this->getKills().PHP_EOL.'§eMana:'.$this->getMana().PHP_EOL.$this->getWill().PHP_EOL.$this->getWill(2), true);
+        $this->setCustomName($this->conf['武器名'].PHP_EOL.'§c荣耀值:'.$this->getGlory().PHP_EOL.'锻造值:'.$this->getForging().PHP_EOL.'杀敌数:'.$this->getKills().PHP_EOL.'耐久度:'.$this->getDurable().PHP_EOL.'§eMana:'.$this->getMana().PHP_EOL.'§a'.$this->getWill().PHP_EOL.$this->getWill(2), true);
     }
 
     /**
@@ -137,6 +137,7 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
         $arr = explode(':', $nbt['attribute'][29]);
         return $arr[$number]??'无意志';
     }
+
     /**
      * 增加意志
      * @param string $name
@@ -168,6 +169,7 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
         $nbt = $this->getNamedTag();
         return strpos($nbt['attribute'][29], $name)!=false;
     }
+
     /**
      * 增加荣耀值
      * @param int $number
@@ -185,6 +187,25 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
     public function getGlory(): int
     {
         return (int)$this->getNamedTag()['attribute'][25];
+    }
+
+    /**
+     * 增加荣耀值
+     * @param int $number
+     * @return $this|mixed
+     */
+    public function addForging(int $number) :DrawingKnife
+    {
+        $nbt = $this->getNamedTag();
+        $nbt['attribute'][30]=new StringTag('',$nbt['attribute'][30] + $number);//30 锻造值
+        $this->setNamedTag($nbt);
+        $this->updateName();
+        return $this;
+    }
+
+    public function getForging(): int
+    {
+        return (int)$this->getNamedTag()['attribute'][30];
     }
 
     public function getKills(): int
@@ -255,7 +276,7 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
     {
         if (!$this->canUse($player) and $player->getServer()->getTick() - $this->lastDamage > 10){
             $this->lastDamage = $player->getServer()->getTick();
-            $player->attack(1, new EntityDamageEvent($player, EntityDamageEvent::CAUSE_PUNISHMENT, 1, true));
+            $player->attack($player->getMaxHealth() * 0.1, new EntityDamageEvent($player, EntityDamageEvent::CAUSE_PUNISHMENT, $player->getMaxHealth() * 0.1, true));
         }
         if ($player->getItemInHand()->equals($this)){
             $level = $player->getLevel();
@@ -271,5 +292,16 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
         $tag = $this->getNamedTag();
         $tag['attribute'][27] = new StringTag('', $this->Mana);
         $this->setNamedTag($tag);
+    }
+
+    /**
+     * @param Player $player
+     * @return string
+     */
+    public function getHandMessage(Player $player): string
+    {
+        if($this->canUse($player, false)){
+            return parent::getHandMessage($player).'§e耐久:'.$this->getDurable();
+        }else return '你不是这个武器的拥有者！';
     }
 }

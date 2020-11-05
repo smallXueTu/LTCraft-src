@@ -10,6 +10,7 @@ use pocketmine\entity\Entity;
 use pocketmine\event\entity\EntityDeathEvent;
 use pocketmine\event\entity\EntityRegainHealthEvent;
 use pocketmine\level\Explosion;
+use pocketmine\math\Vector3;
 use pocketmine\network\protocol\PlayerActionPacket;
 use pocketmine\network\protocol\SetEntityMotionPacket;
 use pocketmine\network\protocol\UseItemPacket;
@@ -478,7 +479,7 @@ class EventListener implements Listener
                                     $count = 3 + ((int)$hand->getGlory() / 100);
                                     $item->setCount($count);
                                     /** @var \pocketmine\entity\Item $en */
-                                    $en = $entity->getLevel()->dropItem($entity, $item);
+                                    $en = $entity->getLevel()->dropItem($entity, $item, new Vector3(0, 0, 0));
                                     $en->setOwner($damager->getName());
                                     $hand->setDurable(-3);
                                 }

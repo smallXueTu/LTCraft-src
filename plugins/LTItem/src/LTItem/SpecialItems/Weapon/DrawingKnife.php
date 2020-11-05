@@ -10,6 +10,19 @@ namespace LTItem\SpecialItems\Weapon;
  */
 interface DrawingKnife
 {
+    /** @var int 最大耐久 */
+    const MAX_DURABLE = 100;
+    /**
+     * 获取锻造值
+     * @return int
+     */
+    public function getForging(): int;
+    /**
+     * 增加锻造值
+     * @param int $number
+     * @return DrawingKnife
+     */
+    public function addForging(int $number): DrawingKnife;
     /**
      * 设置耐久值
      * @param $durable int
