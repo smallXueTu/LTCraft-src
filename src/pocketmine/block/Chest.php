@@ -362,6 +362,27 @@ class Chest extends Transparent {
 											break;
 										}
 									break;
+                                case '亚特兰蒂斯的奖励':
+                                    $rand=mt_rand(0, 3);
+                                    switch($rand){
+                                        case 0:
+                                            $item=LTItem::getInstance()->createOrnaments('加斯的意志');
+                                            if($item instanceof Item)$chest->getInventory()->addItem($item);
+                                            break;
+                                        case 1:
+                                            $item=LTItem::getInstance()->createOrnaments('图拉的意志');
+                                            if($item instanceof Item)$chest->getInventory()->addItem($item);
+                                            break;
+                                        case 2:
+                                            $item=LTItem::getInstance()->createOrnaments('卡拉森的意志');
+                                            if($item instanceof Item)$chest->getInventory()->addItem($item);
+                                            break;
+                                        case 3:
+                                            $item=LTItem::getInstance()->createOrnaments('亚瑟的意志');
+                                            if($item instanceof Item)$chest->getInventory()->addItem($item);
+                                            break;
+                                        }
+                                    break;
 									case '神秘饰品奖励':
 										$rand=mt_rand(0, 500);
 										if($isluckyItem)$rand+=$lucky+100;

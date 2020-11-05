@@ -156,7 +156,7 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
      */
     public function getWillCount(){
         $nbt = $this->getNamedTag();
-        return count(explode(':', $nbt['attribute'][29]));
+        return count(explode(':', $nbt['attribute'][29])) - 1;
     }
 
     /**
