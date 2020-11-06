@@ -4597,15 +4597,19 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
             if (!$this->isA())return;
             $hand = $this->getItemInHand();
             if ($hand instanceof Trident and $hand->containWill('图拉的意志') and Cooling::$willOfTula[$this->getName()] < time()){
-                Cooling::$willOfTula[$this->getName()] = time() + 10;
-                /**
-                 * 先计算出玩家 50%最大生命值
-                 */
-                $ab = floor(floor($this->getMaxHealth() * 0.5) / 4) - 1;
-                if ($ab <= 0) $ab = 1;
-                $this->addEffect(Effect::getEffect(Effect::ABSORPTION)->setDuration(20*10)->setAmplifier($ab));
-                $this->addTitle('§l§d触发被动:','§l§a图拉的意志',50,100,50);
-                return;
+                if ($this->getBuff()->consumptionMana(1000)){
+                    Cooling::$willOfTula[$this->getName()] = time() + 10;
+                    /**
+                     * 先计算出玩家 50%最大生命值
+                     */
+                    $ab = floor(floor($this->getMaxHealth() * 0.5) / 4) - 1;
+                    if ($ab <= 0) $ab = 1;
+                    $this->addEffect(Effect::getEffect(Effect::ABSORPTION)->setDuration(20*10)->setAmplifier($ab));
+                    $this->addTitle('§l§d触发被动:','§l§a图拉的意志',50,100,50);
+                    return;
+                }else {
+                    $this->sendMessage('§cMana不足1000，无法释放被动技能。');
+                }
             }
             if(isset($this->tickAttackTask)){
                 $this->server->getScheduler()->cancelTask($this->tickAttackTask->getTaskId());

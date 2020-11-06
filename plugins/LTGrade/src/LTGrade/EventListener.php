@@ -246,11 +246,16 @@ class EventListener implements Listener
 					        else
                                 $damager->counter['加斯的意志']++;
 					        if ($damager->counter['加斯的意志'] == 10){
-                                $ab = floor($damager->getMaxHealth() / 4) - 1;
-                                if ($ab <= 0) $ab = 1;
-                                $damager->addEffect(Effect::getEffect(Effect::ABSORPTION)->setDuration(20*10)->setAmplifier($ab));
-                                $damager->addTitle('§l§d触发被动:','§l§a加斯的意志',50,100,50);
-                                $damager->counter['加斯的意志'] = 0;
+					            if ($damager->getBuff()->consumptionMana(300)){
+
+                                    $ab = floor($damager->getMaxHealth() / 4) - 1;
+                                    if ($ab <= 0) $ab = 1;
+                                    $damager->addEffect(Effect::getEffect(Effect::ABSORPTION)->setDuration(20*10)->setAmplifier($ab));
+                                    $damager->addTitle('§l§d触发被动:','§l§a加斯的意志',50,100,50);
+                                    $damager->counter['加斯的意志'] = 0;
+                                }else {
+                                    $this->sendMessage('§cMana不足300，无法释放被动技能。');
+                                }
                             }
                         }
                     }

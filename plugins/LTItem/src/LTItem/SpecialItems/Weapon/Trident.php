@@ -4,7 +4,6 @@ namespace LTItem\SpecialItems\Weapon;
 use LTItem\Mana\Mana;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\inventory\BaseInventory;
-use pocketmine\level\particle\Particle;
 use pocketmine\level\particle\PortalParticle;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\StringTag;
@@ -26,7 +25,7 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
     {
         parent::__construct($conf, $count, $nbt, $init);
         $nbt = $this->getNamedTag();
-        if(!isset($nbt['attribute'][27])){
+        if(!isset($nbt['attribute'][30])){
             $nbt['attribute'][25]=new StringTag('',$nbt['attribute'][25]??0);//25 荣耀值
             $nbt['attribute'][26]=new StringTag('',$nbt['attribute'][26]??0);//26 杀敌数
             $nbt['attribute'][27]=new StringTag('',$nbt['attribute'][27]??0);//27 对于 Trident来说 27就是Mana
