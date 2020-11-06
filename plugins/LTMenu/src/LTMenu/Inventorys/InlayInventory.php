@@ -96,7 +96,7 @@ class InlayInventory extends OperationInventory{
 										$count=1;
 									}
 								break;
-								case '耀魂宝珠':
+								case '§e耀魂宝珠':
 								    if ($item instanceof Weapon\DrawingKnife){
 								        /** @var $item Weapon\DrawingKnife */
                                         $item->addForging($i->getCount());
@@ -105,7 +105,7 @@ class InlayInventory extends OperationInventory{
                                     }
 								break;
 								case '耀魂碎片':
-								    if ($item instanceof Weapon\DrawingKnife and $item->getDurable() < 0){
+								    if ($item instanceof Weapon\DrawingKnife and $item->getDurable() < 0 and $item->canUse($event->getPlayer())){
 								        /** @var $item Weapon\DrawingKnife */
                                         if ($item->getDurable() == -1)
                                             $item->setDurable(Weapon\DrawingKnife::MAX_DURABLE);

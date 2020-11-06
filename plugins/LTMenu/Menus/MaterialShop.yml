@@ -991,7 +991,7 @@ items:
         commands: ~
         teleport: ~
         price: 0
-        give_item: 材料:耀魂宝珠:1
+        give_item: 材料:§e耀魂宝珠:1
         cost_item: 材料:耀魂碎片:4&材料:耀魂铁锭:1
         multilevel: false
 ...

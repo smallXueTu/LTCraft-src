@@ -325,6 +325,16 @@ class Buff{
 	public function checkOrnamentsInstall($name, string  $type = '魔法') {
         return $this->player->getOrnamentsInventory()->containsLTItem([$type, $name])!==false;
     }
+
+    /**
+     * 获取一个饰品的格子
+     * @param $name
+     * @param $type string 类型
+     * @return bool|int
+     */
+	public function getOrnamentsInstallIndex($name, string  $type = '魔法') {
+        return $this->player->getOrnamentsInventory()->containsLTItem([$type, $name]);
+    }
 	public function getMiss(){
 		return $this->miss;
 	}

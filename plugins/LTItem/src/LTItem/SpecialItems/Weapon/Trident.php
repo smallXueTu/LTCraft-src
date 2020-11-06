@@ -29,7 +29,7 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
             $nbt['attribute'][25]=new StringTag('',$nbt['attribute'][25]??0);//25 荣耀值
             $nbt['attribute'][26]=new StringTag('',$nbt['attribute'][26]??0);//26 杀敌数
             $nbt['attribute'][27]=new StringTag('',$nbt['attribute'][27]??0);//27 对于 Trident来说 27就是Mana
-            $nbt['attribute'][28]=new StringTag('',$nbt['attribute'][28]??0);//28 耐久
+            $nbt['attribute'][28]=new StringTag('',$nbt['attribute'][28]??100);//28 耐久
             $nbt['attribute'][29]=new StringTag('',$nbt['attribute'][29]??'');//29 意志
             $nbt['attribute'][30]=new StringTag('',$nbt['attribute'][30]??0);//30 锻造数
             $this->setNamedTag($nbt);
@@ -45,7 +45,7 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
     public function getDurable(): int
     {
         $nbt = $this->getNamedTag();
-        return $nbt['attribute'][28];
+        return (int)$nbt['attribute'][28];
     }
 
     /**

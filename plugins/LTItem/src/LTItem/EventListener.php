@@ -477,6 +477,7 @@ class EventListener implements Listener
                                 if($hand->getDurable() == 0){
                                     $item = Main::getInstance()->createMaterial('耀魂碎片');
                                     $count = 3 + ((int)$hand->getGlory() / 100);
+                                    if($count > 64) $count = 64;
                                     $item->setCount($count);
                                     /** @var \pocketmine\entity\Item $en */
                                     $en = $entity->getLevel()->dropItem($entity, $item, new Vector3(0, 0, 0));
