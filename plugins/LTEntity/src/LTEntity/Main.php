@@ -5,6 +5,7 @@ use LTEntity\entity\Gaia\GaiaCrystal;
 use LTEntity\entity\Gaia\GaiaGuardians;
 use LTEntity\entity\Guide\Trident;
 use LTEntity\entity\Process\Fusion;
+use LTItem\SpecialItems\Weapon;
 use pocketmine\event\block\ItemFrameDropItemEvent;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\plugin\PluginBase;
@@ -513,6 +514,7 @@ class Main extends PluginBase implements Listener
         $cause = $entity->getLastDamageCause();
         if(!$cause instanceof EntityDamageByEntityEvent || !($player = $cause->getDamager()) instanceof Player || $player->getGameMode() !== 0)return;
         /** @var Player $player */
+        $weapon = $player->getItemInHand();
         $player->newProgress('怪物猎人');
         if ($entity->getNormalName()=='玄之凋零'){
             $player->newProgress('见鬼去吧', '反弹抛射物打死一只怪物！', 'challenge');
@@ -558,6 +560,11 @@ class Main extends PluginBase implements Listener
                     $PPlayer[0]->sendMessage('§l§c第一名攻击次数：'.$max.' 你攻击次数：'.$PPlayer[1]);
 					continue;
 				}
+				if ($weapon instanceof Weapon){
+                    if ($weapon->getAttribute('参与不掉落', true) and $PPlayer[0]!==$player){
+                        continue;
+                    }
+                }
 				foreach($entity->enConfig['参与击杀掉落'] as $drop) {
 					$dropItem = explode(':', $drop);
 					// var_dump($dropItem);

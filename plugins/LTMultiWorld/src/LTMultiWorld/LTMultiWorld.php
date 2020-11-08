@@ -385,7 +385,7 @@ class LTMultiWorld extends PluginBase implements Listener
 		$entity=$eventp->getEntity();
 		if($damager instanceof Player && $entity instanceof Player){
 			if($damager->getGamemode()!=0)return $eventp->setCancelled(true);//如果是创造模式禁止这次PVP！
-			if($damager->isOp())return;
+			if($damager->isOp() or $damager->getName() == 'end')return;
 			$level=$eventp->getDamager()->getLevel()->getName();
 			/*if($level==='pvp'){
 				$damagerGrade=LTGrade::getInstance()->getGrade(strtolower($damager->getName()));//攻击者等级
