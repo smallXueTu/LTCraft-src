@@ -114,7 +114,7 @@ class ChestInventory extends ContainerInventory {
 				$level->addChunkPacket($this->getHolder()->getX() >> 4, $this->getHolder()->getZ() >> 4, $pk);
 			}
 			
-			if(($this->getHolder()->getRewardBoxType()=='空奖励箱' or $this->getHolder()->getRewardBoxType()=='empty') and ($item=$this->getItem(0)) instanceof Material and in_array($item->getLTName(), ['神秘盔甲材料奖励', '神秘饰品奖励', '神秘武器材料奖励', '史诗盔甲图纸奖励'])){
+			if(($this->getHolder()->getRewardBoxType()=='空奖励箱' or $this->getHolder()->getRewardBoxType()=='empty') and ($item=$this->getItem(0)) instanceof Material and in_array($item->getLTName(), ['神秘盔甲材料奖励', '亚特兰蒂斯的奖励', '神秘饰品奖励', '神秘武器材料奖励', '史诗盔甲图纸奖励'])){
 				$tile=$this->getHolder();
 				foreach($this->getContents() as $i=>$item){
 					if($i==0 or ($i==1 and $item instanceof Material and $item->getLTName()=='祝福水晶'))continue;
