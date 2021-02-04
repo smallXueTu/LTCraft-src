@@ -202,6 +202,10 @@ class Chest extends Transparent {
                 return true;
             }
 
+
+            if($player->isCreative() and $player->getServer()->limitedCreative){
+                return true;
+            }
             $t = $this->getLevel()->getTile($this);
             $chest = null;
             if($t instanceof TileChest){
