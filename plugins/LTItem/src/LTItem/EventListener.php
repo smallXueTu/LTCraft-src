@@ -449,6 +449,14 @@ class EventListener implements Listener
 			}
 		}
 	}
+
+    /**
+     * 修复击杀提示消失
+     * @param PlayerDeathEvent $event
+     */
+	public function onPlayerDeathEvent(PlayerDeathEvent $event){
+        $this->onDeathEvent($event);
+    }
 	public function onDeathEvent(EntityDeathEvent $event)
 	{
 		$entity = $event->getEntity();
