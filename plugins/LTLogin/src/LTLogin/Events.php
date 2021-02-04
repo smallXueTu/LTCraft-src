@@ -290,8 +290,11 @@ class Events implements Listener{
 		$password=='01234567' or 
 		$password=='012345678' or 
 		$password=='1234560' or 
-		$password=='1234567890'){
-			return '密码太简单了，不建议这样做！';
+		$password=='1234567890' or
+		$password=='222222' or
+		$password=='abcdefg' or
+		$password=='qwerty'){
+			return '[提示]密码太简单了，不建议这样做！';
 		}
 		return true;
 	}
@@ -300,14 +303,15 @@ class Events implements Listener{
 		$name=strtolower($player->getName());
 		$password=$event->getMessage();
 		if(!isset(self::$status[$name]))self::$status[$name]='login';
-		if($password==='用户协议'){
-			$player->sendMessage("§l§e用户协议\n§d以下协议简称《本协议》服务器简称《LTCraft》由您与LTCraft共同缔结\n本协议至关重要,本协议保留随时修改服务条款的权利,用户在游戏此服务器时\n有必要对最新的服务条款进行仔细阅读和重新确认\n当发生有关争议时,以最新的服务条款为准.协议更新时间:2018-02-14\n未满18周岁用户请在法定监护人的陪同下阅读本协议\n§a【用户行为规范】\n游戏账号使用权仅属于初始注册人。未经LTCraft许可，您不得赠与、借用、租用、转让或售卖游戏账号码或\n者以其他方式许可非初始注册人使用游戏账号.\n否者则受到应有的惩罚\n如果您当前使用的账号并不是您初始注册的,\n但您却知悉该账号当前的密码,您不得用该号码登录或进行任何操作,\n并请您在第一时间通知LTCraft或者该号码的初始注册人.§3\n【责任承担】\n 您理解并同意,作为账号的初始注册人和游戏人,您应承担该账号项下所有活动产生的全部责任.\n因LTCraft原因导致您的账号被盗,LTCraft将依法承担相应责任.非因LTCraft原因导致的.LTCraft不承担任何责任.\n您不得有偿或无偿转让账号.以免产生纠纷.您应当自行承担由此产生的任何责任.同时LTCraft保留追究上述行为人责任的权利.\n§6【游戏问题】\n如果您的行为导致您的财产或者领地出现不适您应该负者全部刑事责任.\n您在LTCraft充值的任何物品不可退款退货\n游戏账号最终归LTCraft所管\n§5其他:\n如因系统维护或升级的需要而需暂停网络服务、服务功能的调整请安心等待服务器恢复\n由于以下情况造成的任何形式的损失本LTCraft不负任何责任\n由于不可抗力的因素(即不能预见、不能避免并不能克服的客观情况，\n包括自然灾害，如台风、如地震、洪水、冰雹、政府行为、如征收、征用、社会异常事件，\n如罢工、骚乱丶经济危机等)造成的任何形式的损失\n游戏账号进行二次销售等行为造成的任何形式的损失\n§4注册代表你已同意本协议\n§eLTCraft版权所有",true);
+		if($password==='用户协议' or
+		  $password==='User agreement'){
+			$player->sendMessage("§l§e------LTCraft用户协议------\n§d以下协议简称《本协议》服务器简称《LTCraft》由您与LTCraft共同缔结\n本协议至关重要,本协议保留随时修改服务条款的权利,用户在游戏此服务器时\n有必要对最新的服务条款进行仔细阅读和重新确认\n当发生有关争议时,以最新的服务条款为准.协议更新时间:2020-11-14\n未满18周岁用户请在法定监护人的陪同下阅读本协议\n§a【用户行为规范】\n游戏账号使用权仅属于初始注册人。未经LTCraft许可，您不得赠与、借用、租用、转让或售卖游戏账号码或\n者以其他方式许可非初始注册人使用游戏账号.\n否者则受到应有的惩罚\n如果您当前使用的账号并不是您初始注册的,\n但您却知悉该账号当前的密码,您不得用该号码登录或进行任何操作,\n并请您在第一时间通知LTCraft或者该号码的初始注册人. \n未经许可登陆他人账号或将账号出租，服务器会将借号者和被借号者一同永久禁封！希望玩家自觉遵守！§3\n【责任承担】\n 您理解并同意,作为账号的初始注册人和游戏人,您应承担该账号项下所有活动产生的全部责任.\n因LTCraft原因导致您的账号被盗,LTCraft将依法承担相应责任.非因LTCraft原因导致的.LTCraft不承担任何责任.\n您不得有偿或无偿转让账号.以免产生纠纷.您应当自行承担由此产生的任何责任.同时LTCraft保留追究上述行为人责任的权利.\n§6【游戏问题】\n如果您的行为导致您的财产或者领地出现不适您应该负者全部刑事责任.\n您在LTCraft充值的任何物品不可退款退货\n游戏账号最终归LTCraft所管\n§5其他:\n如因系统维护或升级的需要而需暂停网络服务、服务功能的调整请安心等待服务器恢复\n由于以下情况造成的任何形式的损失本LTCraft不负任何责任\n由于不可抗力的因素(即不能预见、不能避免并不能克服的客观情况，\n包括自然灾害，如台风、如地震、洪水、冰雹、政府行为、如征收、征用、社会异常事件，\n如罢工、骚乱丶经济危机等)造成的任何形式的损失\n游戏账号进行二次销售等行为造成的任何形式的损失\n§4注册代表你已同意本协议\n§eLTCraft版权所有",true);
 			$event->setCancelled(true);
 			return;
 		}
 		if(self::$status[$name]===true){
 			if($event->getMessage()==$this->datas[$name]['password']){
-				$player->sendMessage('§l§a你差点泄露密码！',true);
+				$player->sendMessage('§l§a[提示]禁止发送你的密码至服务器',true);
 				$event->setCancelled(true);
 			}
 			return;
@@ -393,6 +397,7 @@ class Events implements Listener{
 					$player->sendMessage('§l§a----------------------------------',true);
 					$player->sendMessage('§l§a[提示]§a登录成功，欢迎回来！');
 					$player->addTitle('§l§a登录成功','§l§e祝你游戏愉快',20,20,5);
+					$player->sendMessage('------------服务器公告------------');
 					if($this->datas[$name]['email']==NULL)$player->sendMessage('§l§a[提示]§e推荐您绑定邮箱，用于找回密码，输入§d/login emali 邮箱地址§e来绑定');
 					if($this->datas[$name]['qq']==NULL)$player->sendMessage('§l§a[提示]§e你还没绑定QQ，输入§d/login qq QQ号§e来绑定');
 					$os=$player->getDeviceOS()==1?'Android':'IOS';
