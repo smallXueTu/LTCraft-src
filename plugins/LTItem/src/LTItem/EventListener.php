@@ -494,19 +494,9 @@ class EventListener implements Listener
             }
         }
 	}
-
-    /**
-     * @param $cause
-     * @return bool
-     */
 	public static function canCalculate($cause){
 		return !in_array($cause, [EntityDamageEvent::CAUSE_ENTITY_EXPLOSION, EntityDamageEvent::CAUSE_THORNS, EntityDamageEvent::CAUSE_SECONDS_KILL]);
 	}
-
-    /**
-     * @param EntityDamageEvent $event
-     * @return mixed|void
-     */
 	public function onEntityDEvent(EntityDamageEvent $event)
 	{
 		if($event->isCancelled())return;

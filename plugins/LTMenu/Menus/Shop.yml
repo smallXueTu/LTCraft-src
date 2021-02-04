@@ -754,12 +754,12 @@ items:
   - item:
     - 352
     - 0
-    - 1
-    nametag: 骨头 副本1愤怒的狼狗几率掉落
+    - 64
+    nametag: 骨头
     commands: []
     teleport: ~
-    price: 0
-    give_item: ~
+    price: 10000
+    give_item: 352:0:64
     cost_item: ~
     multilevel: false
   - item:

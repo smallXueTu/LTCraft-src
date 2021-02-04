@@ -11,18 +11,18 @@ PVE:
   药水(Damager): false
   雷击: false
 PVP:
-  攻击力: 80
+  攻击力: 0
   吸血: 0
   真实伤害: 0
   燃烧: 0
   药水(Damager): false
   药水(Entity): false
-  击飞: 50
+  击飞: 80
   穿甲: 0
-  击退: 50
+  击退: 80
   雷击: false
   冰冻: false
-  击杀提示: false
+  击杀提示: §l§e{damager}§e被§d击退斧§c打死§a也是§b够§e菜§l§e!
 手持提示: false
 最大星级: false
 等级: 定制

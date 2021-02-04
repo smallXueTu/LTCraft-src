@@ -38,30 +38,38 @@
   light_: "1"
   tat: "3"
   nan_yu: "3"
-  xiaoxiaoya: "2"
   bjjjjjj: "2"
-  xiaochai: "3"
   jrh2636: "1"
   m_li: "2"
   gunmetalprawn41: "2"
-  end: "3"
   meng_shang: "1"
   huaji_bai2: "3"
   anjian: "1"
   xijiji: "3"
-  ljw12root: "3"
   xiao_ci: "1"
-  autumn_: "1"
-  wapl: "2"
   xiaoyu233: "1"
-  xiaose_: "1"
+  wapl: "1"
+  ljw12root: "3"
+  yangmao: "1"
+  treasure: "1"
+  shi_yisheng: "1"
+  xiaoxiaoya: "2"
+  lanyi: "1"
+  feifei: "1"
+  xiaochai: "3"
+  wdcv: "2"
+  wildestbook2811: "1"
+  _x_: "2"
+  sxhq: "1"
+  xiaose_: "3"
 变换头衔:
   angel_xr: true
   nan_yu: true
   angel_xx: true
-  end: true
   huaji_bai2: true
   ljw12root: true
+  treasure: true
+  end: true
   xiaose_: true
 头衔:
   snkkka: §l§a小§d狐§e丸§3♡
@@ -76,7 +84,6 @@
   tat: §l§e人民币战士
   kys: §l§b一§e梦§a入§d浮§c沉
   xhaichai: §1一§2梦§3入§浮§4沉
-  xiaochai: §a你§b有§c什§d么§e可§f豪§6横§1的
   huaji_bai2: §l§e请叫我§d肝帝
   babyby: §l§c及时行§a樂
   ljw12root: §6草§8你§4妈 §9你§7妈§5逼 §3干§6你§8娘
@@ -87,18 +94,21 @@
   hichocolaten: §l§e无情的呆呆神
   dpp: §4저§2승§6시§1대
   angel_xr: 你妈逼
-  xijiji: LV520:※沙雕旧梦♚女
+  xijiji: 老古董
   gunmetalprawn41: §6老阴阳人了
-  xiaoxiaoya: "§c\n      ❤ ❤      ❤ ❤    \n    ❤       ❤       ❤\n    ❤                ❤\n
-    \     ❤            ❤\n        ❤        ❤\n           ❤  ❤\n             ❤"
   m_li: "§c\n      ❤ ❤      ❤ ❤    \n    ❤       ❤       ❤\n    ❤                ❤\n
     \     ❤            ❤\n        ❤        ❤\n           ❤  ❤\n             ❤"
   end: "§c\n      ❤ ❤      ❤ ❤    \n    ❤       ❤       ❤\n    ❤                ❤\n
     \     ❤            ❤\n        ❤        ❤\n           ❤  ❤\n             ❤"
   angel_xx: "§c\n      ❤ ❤      ❤ ❤    \n    ❤       ❤       ❤\n    ❤                ❤\n
     \     ❤            ❤\n        ❤        ❤\n           ❤  ❤\n             ❤"
-  _x_: §c§l§o丹凝居人
-  autumn_: §o§l§e土§b块
   wapl: 萌姐姐丫
+  xiaochai: §1
+  _x_: §o§l§c哥哥
+  xiaoxiaoya: |-
+    §4敲§5腻§6嘛
+    §1敲§e腻§2嘛
+    §a敲§d腻§c嘛
+    §6敲§3腻§e嘛
 聊天同步: false
 ...

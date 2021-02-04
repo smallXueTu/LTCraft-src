@@ -1,5 +1,10 @@
 ---
-爱心粒子: []
+爱心粒子:
+  xiaochai: true
+  wapl: true
+  treasure: true
+  end: true
+  xiaose_: true
 受伤爆炸: []
 击杀特效: []
 视野范围:

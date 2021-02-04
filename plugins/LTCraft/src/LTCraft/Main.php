@@ -24,7 +24,16 @@ use pocketmine\event\player\{PlayerAnimationEvent,
     PlayerMoveEvent,
     PlayerItemHeldEvent};
 use pocketmine\event\entity\{EntityLevelChangeEvent, EntityInventoryChangeEvent, EntityDamageEvent, EntityDamageByEntityEvent, EntityTeleportEvent, ExplosionPrimeEvent};
-use pocketmine\block\{Stair, Portal, EndGateway, EndPortal};
+use pocketmine\block\{ManaCache,
+    ManaDiamondBlock,
+    ManaSteelBlock,
+    ManaTransformation,
+    Stair,
+    Portal,
+    EndGateway,
+    EndPortal,
+    TaraCondensationPlate,
+    WhiteDaisies};
 use pocketmine\math\Vector3;
 use pocketmine\level\{Position, Level};
 use pocketmine\item\Item;
@@ -558,9 +567,9 @@ class Main extends PluginBase implements Listener{
 					return;
 				// }elseif($toName==='create' AND $grade<30){
 				}elseif($toName==='create'){
-					$event->setCancelled(true);
-					// $entity->sendMessage('§l§a[提示]§c你需要等级大于等于30才可以通往这个世界！');
-					$entity->sendMessage('§l§a[提示]§c暂不开放！');
+//					$event->setCancelled(true);
+					 $entity->sendMessage('§l§a[提示]§c你需要等级大于等于30才可以通往这个世界！');
+//					$entity->sendMessage('§l§a[提示]§c暂不开放！');
 					return;
 				}elseif($toName==='s2' AND $entity->getGTo()<6){
 					$event->setCancelled(true);
@@ -829,7 +838,7 @@ class Main extends PluginBase implements Listener{
 					case 'zc:741:4:71'://修改称号商店
 						if($player->getPrefix()=='无称号')
 							return $player->sendMessage("§l§a[提示]§c请先购买称号");
-						$c=Popup::getInstance()->cfg->get('聊天格式');
+						//$c=Popup::getInstance()->cfg->get('聊天格式');
 						$player->sendMessage("§l§a[提示]§e请输入新称号：");
 						$player->sendMessage("§l§a[提示]§e在0-30字符，中文占3个字符 输入exit退出");
 						$this->status[$name]='ModifyPreFix';
@@ -954,6 +963,17 @@ class Main extends PluginBase implements Listener{
 				$event->setCancelled();
 				return;
 			}
+			if (
+			    $block instanceof ManaSteelBlock ||
+			    $block instanceof ManaDiamondBlock ||
+			    $block instanceof ManaTransformation ||
+			    $block instanceof ManaCache ||
+			    $block instanceof TaraCondensationPlate ||
+			    $block instanceof WhiteDaisies
+            ){//创造模式不可放置mana物品
+                $event->setCancelled();
+                return;
+            }
 			//添加这个坐标的方块为不可掉落方块
             $block->getLevel()->getChunk($block->getX() >> 4,  $block->getZ() >> 4)->getSubChunk($block->getY() >> 4)->setBlockDrop($block->getX() & 0x0f, $block->getY() & Level::Y_MASK, $block->getZ() & 0x0f, false);
 		}

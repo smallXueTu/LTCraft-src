@@ -2,8 +2,8 @@
 main: LTMultiWorld\LTMultiWorld
 version: 1.0.8
 depend: ["MyPlot"]
-api:
- - 1.0.0
+api: 
+- 1.0.0
 author: Whale
 load: POSTWORLD
 commands:
@@ -24,9 +24,10 @@ permissions:
   default: op
   description: SWorld permission
   children:
-   World.load:
-    default: op
-    description: load a world
-   World.unload:
-    default: op
-    description: unload a world
+     World.load:
+      default: op
+      description: load a world
+     World.unload:
+      default: op
+      description: unload a world
+    
