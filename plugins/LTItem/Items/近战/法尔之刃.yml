@@ -1,0 +1,35 @@
+---
+武器名: 法尔之刃
+武器ID: "276"
+粒子: false
+PVE:
+  攻击力: 2000
+  吸血: 0.01
+  群回: 20
+  燃烧: 0
+  药水(Damager): false
+  雷击: false
+  穿甲: false
+PVP:
+  攻击力: 120
+  真实伤害: 20
+  穿甲: 10
+  吸血: 0.1
+  燃烧: 0
+  药水(Damager): false
+  药水(Entity): false
+  击飞: 0
+  击退: 0
+  重伤: 0
+  雷击: 0
+  冰冻: false
+  击杀提示: §b{entity}试图抵抗法尔之神的力量，最终倒在了{damager}手持的法尔刀刃下。
+手持提示: 法尔之刃 PVE:@ed 吸血@ex 群回@eq §d[传说]
+最大星级: false
+等级: false
+全员可用: false
+分解可获得: false
+可以叠加: false
+介绍: 可附加技能石：时空撕裂
+类型: false
+...
