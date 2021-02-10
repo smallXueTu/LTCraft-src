@@ -1,5 +1,7 @@
 <?php
 namespace LTItem;
+use LTEntity\entity\Boss\SkillsEntity\Sakura;
+use LTEntity\entity\Boss\SkillsEntity\SpaceTear;
 use LTItem\Mana\Mana;
 use pocketmine\block\Air;
 use pocketmine\entity\Creature;
@@ -192,7 +194,39 @@ class EventListener implements Listener
 						$player->sendMessage('§a释放技能成功~');
                         Cooling::$weapon[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD()-30;
 					}
-				break;
+                    break;
+                    case '樱花的誓约':
+                        if(!isset(Cooling::$weapon[$player->getName()][$Hand->getLTName()]) or Cooling::$weapon[$player->getName()][$Hand->getLTName()]<time()){
+                            $nbt = new CompoundTag;
+                            $nbt->Pos = new ListTag("Pos", [
+                                new DoubleTag("",  $player->x+0.5),
+                                new DoubleTag("",  $player->y+0.5),
+                                new DoubleTag("",  $player->z+0.5)
+                            ]);
+                            $nbt->Rotation = new ListTag('Rotation', [
+                                new FloatTag('', 0),
+                                new FloatTag('', 0)
+                            ]);
+                            new Sakura( $player->getLevel(), $nbt,  $player);
+                            Cooling::$weapon[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD();
+                        }
+                    break;
+                    case '时空撕裂':
+                        if(!isset(Cooling::$weapon[$player->getName()][$Hand->getLTName()]) or Cooling::$weapon[$player->getName()][$Hand->getLTName()]<time()){
+                            $nbt = new CompoundTag;
+                            $nbt->Pos = new ListTag("Pos", [
+                                new DoubleTag("",  $player->x+0.5),
+                                new DoubleTag("",  $player->y+0.5),
+                                new DoubleTag("",  $player->z+0.5)
+                            ]);
+                            $nbt->Rotation = new ListTag('Rotation', [
+                                new FloatTag('', 0),
+                                new FloatTag('', 0)
+                            ]);
+                            new SpaceTear($player->getLevel(), $nbt, $player);
+                            Cooling::$weapon[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD();
+                         }
+                    break;
 			}
 		}
 	}
@@ -496,6 +530,19 @@ class EventListener implements Listener
                                 $damager->getInventory()->setItemInHand($hand);
                             }else{
                                 $damager->sendMessage('§c你的'.$hand->getLTName().'无耐久了，无法获得荣耀值和击杀数。');
+                            }
+                        }
+                        if (\LTCraft\Main::getCNumber($damager->getName()) < 10){
+                            $probability = 1;
+                            $add = $entity->getMaxHealth() / 50000;
+                            if ($add > 29)$add = 29;
+                            if (mt_rand(1, 100) <= $probability + $add){
+                                $c = '§a'.'Craft'[mt_rand(0, 4)];
+                                $item = Main::getInstance()->createMaterial($c);
+                                $itemE = $entity->getLevel()->dropItem($entity, $item);
+                                $itemE->setOwner($damager);
+                                $damager->sendMessage('§c你击杀了'.$entity->getNormalName().'掉落了一个字符'.$c.'。');
+                                \LTCraft\Main::addCNumber($damager->getName());
                             }
                         }
                     }

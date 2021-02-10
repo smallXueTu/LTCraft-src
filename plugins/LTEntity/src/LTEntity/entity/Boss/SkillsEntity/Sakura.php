@@ -45,7 +45,7 @@ class Sakura extends Entity
                 $this->spawnStar($phase);
             }
         }
-        if ($this->age > 820){
+        if ($this->age > 820 or $this->owner->closed or $this->owner->distance($this) > 20){
             if ($this->owner instanceof Prisoners){
                 $this->owner->releaseSkillIng = false;
             }
@@ -110,6 +110,7 @@ class Sakura extends Entity
 //            var_dump($this->getBasePos()->add($endPosX, 0 ,$endPosZ));
             $line->setTarget($this->getBasePos()->add($endPosX, 0 ,$endPosZ));
             $line->setHitCallBack(function (Entity $entity){
+                if ($entity instanceof Player and $this->owner instanceof Player and $entity->getName()==$this->owner->getName())return;
                 $ev = new EntityDamageByEntityEvent($this, $entity, EntityDamageEvent::CAUSE_SAKURA, $entity->getMaxHealth() / 3, 0);
                 $entity->attack($entity->getMaxHealth() / 3, $ev);
             });
@@ -145,6 +146,14 @@ class Sakura extends Entity
     public function saveNBT()
     {
 
+    }
+
+    /**
+     * @return Entity|null
+     */
+    public function getOwner(): ?Entity
+    {
+        return $this->owner;
     }
     public function getDisplayName(){
         return $this->owner->getName();

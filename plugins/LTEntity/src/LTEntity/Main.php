@@ -8,6 +8,7 @@ use LTEntity\entity\Gaia\GaiaGuardians;
 use LTEntity\entity\Guide\Trident;
 use LTEntity\entity\Process\Fusion;
 use LTItem\SpecialItems\Weapon;
+use LTPet\Commands\RecomeAll;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
@@ -233,7 +234,9 @@ class Main extends PluginBase implements Listener
         $this->WeeksExp = new Config($this->getDataFolder().'WeeksExp.yml', Config::YAML, []);
         $this->RPGSpawn = new Config($this->getDataFolder().'RPGSpawn.yml', Config::YAML, []);
         $this->EnConfig = $this->RPGSpawn->getAll();
-        $this->getCommand('ma')->setExecutor(new Commands($this));
+        $cmd = new Commands($this);
+        $this->getCommand('ma')->setExecutor($cmd);
+        $this->getCommand('lf')->setExecutor($cmd);
         /*
             onRefresh 方法在LTPopuo中调用了
         */
@@ -379,10 +382,15 @@ class Main extends PluginBase implements Listener
                     }
                 }
                 $pDrops=substr($pDrops,0,strlen($pDrops)-1);
+                $probability = 1;
+                $add = $data['血量'] / 5000;
+                if ($add > 29)$add = 29;
+                $probability += $add;
                 if($data['显示'])$this->spawnTmp[$data['刷怪点']]['悬浮字'] = new FloatingText($pos,
                     '§a=============['.$data['刷怪点'].']============= '. PHP_EOL
                     .'§d名字:§3'.$data['名字'].'§d还有： @t '. PHP_EOL
-                    .'§6当前怪物数量：@c/'.$data['数量']
+                    .'§6当前怪物数量：@c/'.$data['数量'].PHP_EOL
+                    .'§c掉落Craft任意字符几率：'.$probability.'%'
                     . ($data['悬浮介绍']!=false?(PHP_EOL . '§3介绍:'.$data['悬浮介绍']):'')
                     . (count($data['掉落'])>0?(PHP_EOL .'§e击杀掉落:'.$drops):'')
                     . (count($data['参与击杀掉落'])>0?(PHP_EOL .'§a参与击杀掉落:'.$pDrops):'')
@@ -500,6 +508,28 @@ class Main extends PluginBase implements Listener
         }
         unset($ev, $entity);
     }
+
+    /**
+     * 获取今天击杀次数
+     * @param $name
+     * @param $player
+     * @return int
+     */
+    public static function getKillNumber($name, $player) : int {
+        $all = \LTCraft\Main::getInstance()->number->get($name.'击杀次数', []);
+        return $all[strtolower($player)]??0;
+    }
+
+    /**
+     * 获取上次击杀时间
+     * @param $name
+     * @param $player
+     * @return int
+     */
+    public static function getLastKillerTime($name, $player) : int {
+        $all = \LTCraft\Main::getInstance()->number->get($name.'上次击杀时间', []);
+        return $all[strtolower($player)]??0;
+    }
     public function onEntityDeath(EntityDeathEvent $ev)
     {
         $entity = $ev->getEntity();
@@ -516,6 +546,17 @@ class Main extends PluginBase implements Listener
             $number = mt_rand(10,30);
             $this->distorted[strtolower($player->getName())] += $number;
             $player->sendMessage('§e你击杀了失落领主获得了'.$number.'点扭曲值！');
+        }elseif($entity->getNormalName() == '囚禁者'){
+            $all = \LTCraft\Main::getInstance()->number->get('囚禁者击杀次数', []);
+            $all2 = \LTCraft\Main::getInstance()->number->get('囚禁者上次击杀时间', []);
+            if (isset($all[strtolower($player->getName())])){
+                $all[strtolower($player->getName())] = $all[strtolower($player->getName())]+1;
+            }else{
+                $all[strtolower($player->getName())] = 1;
+            }
+            $all2[strtolower($player->getName())] = time();
+            \LTCraft\Main::getInstance()->number->set('囚禁者击杀次数', $all);
+            \LTCraft\Main::getInstance()->number->set('囚禁者上次击杀时间', $all2);
         }
         foreach($entity->enConfig['掉落'] as $drop) {
             $dropItem = explode(':', $drop);
@@ -770,6 +811,12 @@ class Main extends PluginBase implements Listener
             }
         }
         if (isset($this->skills['Sakura']))foreach ($this->skills['Sakura'] as $entity){
+            /** @var $entity Sakura */
+            if ($entity->getOwner() instanceof Player){
+                /** @var Player $owner */
+                $owner = $entity->getOwner();
+                if ($owner->getName() == $player->getName())continue;
+            }
             /** @var Sakura $entity */
             if ($entity->getBasePos()->distance($e->getPlayer())<=15){
                 if ($e->getTo()->distance($entity->getBasePos())>12.5){

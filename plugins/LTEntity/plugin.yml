@@ -10,3 +10,12 @@ author: shenqitieba
 commands:
   ma:
     description: /ma help 帮助
+    permission: op
+  lf:
+    description: 查找
+    permission: all
+permissions:
+  all:
+    default: true
+  op:
+    default: op

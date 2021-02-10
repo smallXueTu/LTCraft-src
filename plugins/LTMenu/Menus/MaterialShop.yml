@@ -941,6 +941,79 @@ items:
         cost_item: 材料:掌控者的头颅:10&材料:主宰者之心:10&材料:灭魂者的灵魂:10&材料:地狱之火:10
         multilevel: false
   - item:
+      - 397
+      - 1
+      - 1
+    nametag: S2兑换菜单
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: ~
+    cost_item: ~
+    multilevel:
+      - item:
+          - 276
+          - 0
+          - 1
+        nametag: |-
+          §a法尔之刃
+          §d§l>>拥有它即可统治法尔
+          §d§l>>你需要集齐以下材料来兑换
+          §e§l>>法尔钻石×30
+          §e§l>>法尔知识精华×30
+          §e§l>>法尔之心×30
+          §e§l>>法尔之魂×10
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 近战:法尔之刃:1
+        cost_item: 材料:法尔钻石:30&材料:法尔知识精华:30&材料:法尔之心:30&材料:法尔之魂:30
+        multilevel: false
+      - item:
+          - 399
+          - 0
+          - 1
+        nametag: |-
+          §a字符L
+          §d§l>>你需要集齐以下材料来兑换
+          §e§l>>破碎的章节×30
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 材料:§aL:1
+        cost_item: 材料:破碎的章节:30
+        multilevel: false
+      - item:
+          - 351
+          - 8
+          - 1
+        nametag: |-
+          §a樱花的誓约技能石
+          §d§l>>你需要集齐以下材料来兑换
+          §e§l>>囚禁者技能石碎片×10
+          §d§l>>在武器操作菜单镶嵌给牛年神器或法尔之刃
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 材料:樱花的誓约技能石:1
+        cost_item: 材料:囚禁者技能石碎片:15
+        multilevel: false
+      - item:
+        - 351
+        - 8
+        - 1
+        nametag: |-
+          §a时空撕裂技能石
+          §d§l>>你需要集齐以下材料来兑换
+          §e§l>>囚禁者技能石碎片×10
+          §d§l>>在武器操作菜单镶嵌给牛年神器或法尔之刃
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 材料:时空撕裂技能石:1
+        cost_item: 材料:囚禁者技能石碎片:15
+        multilevel: false
+  - item:
       - 339
       - 0
       - 1
@@ -994,4 +1067,15 @@ items:
         give_item: 材料:§e耀魂宝珠:1
         cost_item: 材料:耀魂碎片:4&材料:耀魂铁锭:1
         multilevel: false
+  - item:
+      - 383
+      - 105
+      - 1
+    nametag: 新春红包
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:§a新春红包:1
+    cost_item: 材料:§aL:1&材料:§aT:1&材料:§aC:1&材料:§ar:1&材料:§aa:1&材料:§af:1&材料:§at:1
+    multilevel: false
 ...

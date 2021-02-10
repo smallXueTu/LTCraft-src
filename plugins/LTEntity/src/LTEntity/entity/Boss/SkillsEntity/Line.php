@@ -83,7 +83,7 @@ class Line extends Entity
         if ($this->age % 2 == 0){
             $this->checkPlayers();
         }
-        if ($this->target->distance($this) < 0.2 or $this->age > 300){
+        if ($this->target->distance($this) < 0.2 or $this->age > 300 or $this->owner->closed){
             $this->close();
             return false;
         }

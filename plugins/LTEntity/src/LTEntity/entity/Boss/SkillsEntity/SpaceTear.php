@@ -145,7 +145,7 @@ class SpaceTear extends Entity
                 }
             }
         }
-        if ($this->age > 20*20){
+        if ($this->age > 20*20 or $this->owner->closed){
             $this->close();
             return false;
         }

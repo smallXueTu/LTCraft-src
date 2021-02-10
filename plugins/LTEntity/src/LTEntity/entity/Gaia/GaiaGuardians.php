@@ -217,6 +217,7 @@ class GaiaGuardians extends Creature
                     $player->setLastDamageCause(new EntityDamageByEntityEvent($this, $player, EntityDamageEvent::CAUSE_DIDI, PHP_INT_MAX));
                     $player->setHealth(0);
                     $player->sendMessage('§c开Buff攻击盖亚！这是弟弟行为。');
+                    $player->sendMessage('输入/tw buff [关闭/打开]来控制');
                 }
                 foreach ($player->getInventory()->getContents() as $index => $item){//检查背包物品
                     if ($item instanceof Weapon or $item instanceof Armor or $item instanceof BaseOrnaments){

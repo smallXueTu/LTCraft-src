@@ -113,6 +113,8 @@ class PlayerTask{
                 $this->player->sendMessage('§l§a你连续三天完成两个任务，获得'.$item[0].'类型'.$item[1].'×'.$item[2].'已发送至你的邮箱！');
             }
             $this->plugin->taskDoneCounter($this->player);
+            \LTCraft\Main::sendItem($this->player->getName(), ['材料', '§aT', 2]);
+            $this->player->sendMessage('§l§a恭喜你今天完成了两个任务 活动奖励'.$item[0].'类型'.$item[1].'×'.$item[2].'已发送至你的邮箱！');
         }
 	}
 	public function checkDailyTaskComplete(){

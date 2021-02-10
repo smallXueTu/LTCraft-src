@@ -112,7 +112,7 @@ class Main extends PluginBase implements Listener{
 	public $Teleport=[];
 	private $give=array();
 	public $HeadRanking;
-	// public $onlineTime=[];
+	 public $onlineTime=[];
 	//private $locks=[];
 	private $sign=[];
 	public $status=[];
@@ -140,6 +140,14 @@ class Main extends PluginBase implements Listener{
      * @var array
      */
     public array $moveAction;
+    /**
+     * @var Config
+     */
+    public Config $number;
+    /**
+     * @var Config
+     */
+    public Config $r;
 
     /**
      * @return Main
@@ -159,6 +167,7 @@ class Main extends PluginBase implements Listener{
 		// $this->Data->save(false);
 		if(isset($this->Head))$this->Head->save(false);
 		$this->config->save(false);
+		$this->number->save(false);
         $m = new Config($this->getDataFolder()."moveAction.yml",Config::YAML,$this->moveAction);
         $m->save(false);
 		$this->playerConfig->save(false);
@@ -172,6 +181,7 @@ class Main extends PluginBase implements Listener{
 		if(isset($LTCraft->Head))$LTCraft->Head->save(false);
 		$LTCraft->config->save(false);
         $LTCraft->playerConfig->save(false);
+        $LTCraft->number->save(false);
 		$LTGrade = \LTGrade\Main::getInstance();
 		$LTGrade->PlayerTaskConf->save(false);
 		$LTGrade->conf->save(false);
@@ -181,6 +191,16 @@ class Main extends PluginBase implements Listener{
 		$LTEntity = \LTEntity\Main::getInstance();
 		if(isset($LTEntity->WeeksExp))$LTEntity->WeeksExp->save(false);
 	}
+    public static function getCNumber($player) : int {
+        $all = \LTCraft\Main::getInstance()->number->get('字符数量', []);
+        return $all[strtolower($player)]??0;
+    }
+    public static function addCNumber($player) {
+        $all = \LTCraft\Main::getInstance()->number->get('字符数量', []);
+        $c = $all[strtolower($player)]??0;
+        $all[strtolower($player)] = ++$c;
+        self::getInstance()->number->set('字符数量', $all);
+    }
 	public function onEnable(){
 		self::$instance=$this;
 		$this->getServer()->getPluginManager()->registerEvents($this,$this);
@@ -203,9 +223,10 @@ class Main extends PluginBase implements Listener{
 		//$this->getServer()->getScheduler()->scheduleDelayedRepeatingTask(new CallbackTask([$this,"cleanTime"],[20]),32000,32000);
 //		$this->Data=new Config($this->getDataFolder()."Data.yml",Config::YAML,array());
 		$this->Head=new Config($this->getDataFolder()."Head.yml",Config::YAML,array());
+		$this->number=new Config($this->getDataFolder()."number.yml",Config::YAML,array());
 		$TutorialRecord = new Config($this->getDataFolder()."TutorialRecord.yml",Config::YAML,array());
 		Tutorial::init($TutorialRecord);
-//		$this->r=new Config($this->getDataFolder()."R.yml",Config::YAML,array());
+		$this->r=new Config($this->getDataFolder()."R.yml",Config::YAML,array());
 		$this->config=new Config($this->getDataFolder()."Config.yml",Config::YAML,array(
 			'自动重启'=>false,
 			'模式'=>0,
@@ -378,8 +399,7 @@ class Main extends PluginBase implements Listener{
      */
 	public function giveR($player){
 		$name=strtolower($player->getName());
-		self::sendItem($name, ['材料', '新春红包', 1]);
-		self::sendItem($name, ['材料', '神秘字符', 10]);
+		self::sendItem($name, ['材料', '§a新春红包', 1]);
 		if(!$player->isVIP()){
 			$player->setVIP(1);
 			Server::getInstance()->dataBase->pushService('30'.$name.' 1 7');
@@ -884,7 +904,7 @@ class Main extends PluginBase implements Listener{
 		$this->endTutorial($player, 'quit');
 		$name=$player->getName();
 		unset($this->Teleport[$name],$this->sign[$name],$this->status[$name]);
-		// unset($this->onlineTime[$name]);
+		 unset($this->onlineTime[$name]);
 		if(!($player->getLevel() instanceof Level))return;
 		if($player->getLevel()->getName()==='create')$player->setGamemode(0,false,true);
 		if($this->autoRestart and count($this->getServer()->getOnlinePlayers())===1 and current($this->getServer()->getOnlinePlayers())===$player){
@@ -1391,9 +1411,10 @@ class Main extends PluginBase implements Listener{
 					$this->updateHeadCountConfig();
 					\LTGrade\Main::getInstance()->updateTaskConfig();
 					\LTEntity\Main::getInstance()->updateWeeksExpConfig();
-					// foreach($this->server->getOnlinePlayers() as $player){
-						// $this->onlineTime[$player->getName()] = time();
-					// }
+					$this->number->setAll([]);
+					 foreach($this->server->getOnlinePlayers() as $player){
+						 $this->onlineTime[$player->getName()] = time();
+					 }
 				break;
 				case 'addm'://增加菜单使用权
 					if(count($args)<3)return $sender->sendMessage('§l§a[提示]§c用法/admin addm id 菜单 天数');
@@ -1594,11 +1615,11 @@ class Main extends PluginBase implements Listener{
 		$player=$event->getPlayer();
 		$name=strtolower($player->getName());
 		unset($this->quit[$name]);
-		// if(time() > 1579860000 and time()<1579881599){
-			// if(!$this->r->exists($name) or !isset($this->r->get($name, [])[date("d")])){
-				// $this->onlineTime[$player->getName()]=time();
-			// }
-		// }
+		 if(time() > 1613037600 and time()<1613059199){
+			 if(!$this->r->exists($name) or !isset($this->r->get($name, [])[date("d")])){
+				 $this->onlineTime[$player->getName()]=time();
+			 }
+		 }
 		if(isset($this->give[$name])){
 			$inventory = $player->getInventory();
 			$inventory->addItem(LTItem::getInstance()->createMaterial('§a点击地面打开菜单'));
