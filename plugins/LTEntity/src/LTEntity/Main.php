@@ -1,45 +1,37 @@
 <?php
 namespace LTEntity;
 
+use LTEntity\entity\Boss\Prisoners;
+use LTEntity\entity\Boss\SkillsEntity\Sakura;
 use LTEntity\entity\Gaia\GaiaCrystal;
 use LTEntity\entity\Gaia\GaiaGuardians;
 use LTEntity\entity\Guide\Trident;
 use LTEntity\entity\Process\Fusion;
 use LTItem\SpecialItems\Weapon;
-use pocketmine\event\block\ItemFrameDropItemEvent;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
-use pocketmine\command\ {Command, CommandSender};
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\item\Item;
-use pocketmine\block\Block;
 use pocketmine\math\Vector3;
-use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
-use pocketmine\event\player\PlayerAnimationEvent;
-use pocketmine\scheduler\CallbackTask;
 use pocketmine\utils\Config;
 use pocketmine\entity\Entity;
 use pocketmine\entity\Effect;
 use pocketmine\entity\Item as entityItem;
 use pocketmine\level\Position;
 use pocketmine\level\Level;
-use pocketmine\event\entity\{EntityDamageByBlockEvent,
+use pocketmine\event\entity\{
     EntityDeathEvent,
     EntityDamageEvent,
     EntityDamageByEntityEvent,
     EntityCombustByEntityEvent,
     EntityRegainHealthEvent};
-use pocketmine\nbt\tag\ {ByteTag, CompoundTag, DoubleTag, FloatTag, ListTag, StringTag, IntTag};
-use pocketmine\item\enchantment\Enchantment;
+use pocketmine\nbt\tag\ {CompoundTag, DoubleTag, FloatTag, ListTag, StringTag};
 
-use LTEntity\DataList;
-use LTEntity\Commands;
 use LTEntity\entity\BaseEntity;
-use LTEntity\entity\FlyingEntity;
 use LTCraft\FloatingText;
 
 use LTEntity\entity\projectile\ {
@@ -120,6 +112,7 @@ class Main extends PluginBase implements Listener
     public $killCount = [];
     public $errorCount = [];
     public $gaia = [];
+    public $skills = [];
     public $fusion = [];
     /** @var array */
     public array $EnConfig;
@@ -227,6 +220,7 @@ class Main extends PluginBase implements Listener
             GaiaCrystal::class,
             Fusion::class,
             Trident::class,
+            Prisoners::class,
             ANPC::class
         ];
         foreach($classes as $name)
@@ -431,7 +425,7 @@ class Main extends PluginBase implements Listener
                             $nbt->Skin = new CompoundTag('Skin', ['Data' => new StringTag('Data', $skin), 'Name' => new StringTag('Name', $data['皮肤ID'])]);
                         }
                     }
-                    $pk = Entity::createEntity(DataList::$ModName[$data['类型']], $l, $nbt);
+                    $pk = Entity::createEntity(DataList::$ModName[$data['名字']]??DataList::$ModName[$data['类型']], $l, $nbt);
                     if(!($pk instanceof Entity)) {
                         $this->getLogger()->Warning($vid.'找不到实体！！');
                         continue;
@@ -446,12 +440,12 @@ class Main extends PluginBase implements Listener
             foreach($l->getEntities() as $entity) {
                 if($entity instanceof BaseEntity AND $entity->enConfig['刷怪点'] === $data['刷怪点']) {
                     if($no_player) {
-                        if(!$entity->onPlayer) {
+                        if(!$entity->onPlayer and $entity->enConfig['怪物模式'] !== 0) {
                             $entity->setOnPlayer(true);
-                            $particle = new SimpleFloatingText($entity->getPosition(), '§c范围内无玩家，回到出生坐标！');
+                           new SimpleFloatingText($entity->getPosition(), '§c范围内无玩家，回到出生坐标！');
                         }
                     }elseif($entity->distance($pos) >= $data['边界范围半径']) {
-                        $particle = new SimpleFloatingText($entity->getPosition(), '§b怪物超过范围，拉回怪物！');
+                        new SimpleFloatingText($entity->getPosition(), '§b怪物超过范围，拉回怪物！');
                         $entity->teleport($pos);
                     } else
                         $entity->setOnPlayer(false);
@@ -745,7 +739,6 @@ class Main extends PluginBase implements Listener
     }
     public function onMoveEvent(PlayerMoveEvent $e){
         $player = $e->getPlayer();
-        $gaia = null;
         foreach ($this->gaia as $entity){
             /** @var GaiaGuardians $entity */
             if ($entity->getBasePos()->distance($e->getPlayer())<=13){
@@ -763,6 +756,39 @@ class Main extends PluginBase implements Listener
                 }
                 return;
             }elseif ($entity->getBasePos()->distance($e->getPlayer())<=15){
+                $x=$entity->getBasePos()->x - $player->x;
+                $z=$entity->getBasePos()->z - $player->z;
+                $f = sqrt($x * $x + $z * $z);
+                $v3=new Vector3(0, 0.1, 0);
+                if($f > 0){
+                    $f = 1 / $f;
+                    $v3->x = $x * $f * 2;
+                    $v3->z = $z * $f * 2;
+                }
+                $player->setMotion($v3);
+                return;
+            }
+        }
+        if (isset($this->skills['Sakura']))foreach ($this->skills['Sakura'] as $entity){
+            /** @var Sakura $entity */
+            if ($entity->getBasePos()->distance($e->getPlayer())<=15){
+                if ($e->getTo()->distance($entity->getBasePos())>12.5){
+                    $x=$entity->getBasePos()->x - $player->x;
+                    $z=$entity->getBasePos()->z - $player->z;
+                    $f = sqrt($x * $x + $z * $z);
+                    $v3=new Vector3(0, 0.1, 0);
+                    if($f > 0){
+                        $f = 1 / $f;
+                        $v3->x = $x * $f * 1.5;
+                        $v3->z = $z * $f * 1.5;
+                    }
+                    $player->setMotion($v3);
+                }
+                if ($e->getTo()->distance($entity->getBasePos())<10 and $player->y - $entity->getBasePos()->getY() > 0.4){
+                    $player->setMotion(new Vector3(0,  0 - ($player->y - $entity->getBasePos()->getY()), 0));
+                }
+                return;
+            }elseif ($entity->getBasePos()->distance($e->getPlayer())<=22){
                 $x=$entity->getBasePos()->x - $player->x;
                 $z=$entity->getBasePos()->z - $player->z;
                 $f = sqrt($x * $x + $z * $z);

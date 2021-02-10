@@ -48,6 +48,7 @@ class DataList{
   '潜匿之贝' => 'AShulker',
   '唤魔者' => 'AEvoker',
   '末影龙' => 'AEnderDragon',
+  '囚禁者' => 'Prisoners',
   'npc' => 'ANPC'
  ];
  

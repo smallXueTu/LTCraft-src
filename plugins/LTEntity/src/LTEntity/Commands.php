@@ -2,6 +2,12 @@
 
 namespace LTEntity;
 
+use LTEntity\entity\Boss\SkillsEntity\Sakura;
+use LTEntity\entity\Boss\SkillsEntity\SpaceTear;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\DoubleTag;
+use pocketmine\nbt\tag\FloatTag;
+use pocketmine\nbt\tag\ListTag;
 use pocketmine\Player;
 use pocketmine\level\Level;
 use pocketmine\command\Command;
@@ -82,32 +88,34 @@ class Commands extends PluginBase implements CommandExecutor{
 			return $sender->sendMessage("§c刷怪点§e{$args[1]}§c已经存在,请勿设置两个相同名字的刷怪点.");
 		break;
 		case 'test':
-			foreach($this->plugin->EnConfig as $vid => $data) {
-				foreach($data['掉落']??[] as $dropInfo){
-					$dropItem = explode(':', $dropInfo);
-					if($dropItem[0]=='材料')
-						$item = LTMain::getInstance()->createMaterial($dropItem[1]);
-					elseif(in_array($dropItem[0], ['近战', '远程', '通用']))
-						$item = LTMain::getInstance()->createWeapon($dropItem[0], $dropItem[1]);
-					elseif($dropItem[0]=='盔甲')
-						$item = LTMain::getInstance()->createArmor($dropItem[1]);
-					if(!($item instanceof LTItem)){
-						echo $vid.'掉落'.$dropInfo.'不存在！'.PHP_EOL;
-					}
-				}
-				foreach($data['参与击杀掉落']??[] as $dropInfo){
-					$dropItem = explode(':', $dropInfo);
-					if($dropItem[0]=='材料')
-						$item = LTMain::getInstance()->createMaterial($dropItem[1]);
-					elseif(in_array($dropItem[0], ['近战', '远程', '通用']))
-						$item = LTMain::getInstance()->createWeapon($dropItem[0], $dropItem[1]);
-					elseif($dropItem[0]=='盔甲')
-						$item = LTMain::getInstance()->createArmor($dropItem[1]);
-					if(!($item instanceof LTItem)){
-						echo $vid.'参与击杀掉落'.$dropInfo.'不存在！'.PHP_EOL;
-					}
-				}
-			}
+            /** @var Player $sender */
+
+            $nbt = new CompoundTag;
+            $nbt->Pos = new ListTag("Pos", [
+                new DoubleTag("", $sender->x+0.5),
+                new DoubleTag("", $sender->y+0.5),
+                new DoubleTag("", $sender->z+0.5)
+            ]);
+            $nbt->Rotation = new ListTag('Rotation', [
+                new FloatTag('', 0),
+                new FloatTag('', 0)
+            ]);
+		    new Sakura($sender->getLevel(), $nbt, $sender);
+		break;
+		case 'test2':
+            /** @var Player $sender */
+
+            $nbt = new CompoundTag;
+            $nbt->Pos = new ListTag("Pos", [
+                new DoubleTag("", $sender->x+0.5),
+                new DoubleTag("", $sender->y+0.5),
+                new DoubleTag("", $sender->z+0.5)
+            ]);
+            $nbt->Rotation = new ListTag('Rotation', [
+                new FloatTag('', 0),
+                new FloatTag('', 0)
+            ]);
+		    new SpaceTear($sender->getLevel(), $nbt, $sender);
 		break;
 		case 'del':
 			if(!isset($args[1])) return $sender->sendMessage("§c请指定需要被删除的刷怪点名字.");

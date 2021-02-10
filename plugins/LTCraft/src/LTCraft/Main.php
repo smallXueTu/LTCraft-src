@@ -24,7 +24,8 @@ use pocketmine\event\player\{PlayerAnimationEvent,
     PlayerMoveEvent,
     PlayerItemHeldEvent};
 use pocketmine\event\entity\{EntityLevelChangeEvent, EntityInventoryChangeEvent, EntityDamageEvent, EntityDamageByEntityEvent, EntityTeleportEvent, ExplosionPrimeEvent};
-use pocketmine\block\{ManaCache,
+use pocketmine\block\{Block,
+    ManaCache,
     ManaDiamondBlock,
     ManaSteelBlock,
     ManaTransformation,
@@ -33,7 +34,8 @@ use pocketmine\block\{ManaCache,
     EndGateway,
     EndPortal,
     TaraCondensationPlate,
-    WhiteDaisies};
+    WhiteDaisies,
+    Workbench};
 use pocketmine\math\Vector3;
 use pocketmine\level\{Position, Level};
 use pocketmine\item\Item;
@@ -70,7 +72,8 @@ use pocketmine\network\protocol\{AdventureSettingsPacket,
     ShowCreditsPacket,
     StartGamePacket,
     TextPacket,
-    TransferPacket};
+    TransferPacket,
+    UpdateBlockPacket};
 use pocketmine\command\{Command, CommandSender};
 use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\utils\Config;

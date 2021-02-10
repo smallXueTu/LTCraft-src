@@ -2,6 +2,7 @@
 namespace LTItem;
 use LTItem\Mana\Mana;
 use pocketmine\block\Air;
+use pocketmine\entity\Creature;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\entity\EntityCombustEvent;
 use pocketmine\event\entity\EntityCombustByEntityEvent;
@@ -511,7 +512,7 @@ class EventListener implements Listener
 		$entity = $event->getEntity();
 		if($event instanceof EntityDamageByEntityEvent and self::canCalculate($event->getCause())) {
 			$damager = $event->getDamager();
-			if(($entity instanceof Player and $damager instanceof Player and $entity->getBuff()->miss()) or $damager->getBlindness()) {
+			if(($entity instanceof Player and $damager instanceof Player and $entity->getBuff()->miss()) or ($damager instanceof Creature and $damager->getBlindness())) {
 				new FloatingText($entity, '§c未命中~', 0.8);
                 $entity->newProgress('抱歉，今天不行。', '躲避一次攻击。');
 				return $event->setCancelled(true);

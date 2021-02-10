@@ -26,7 +26,7 @@ use pocketmine\nbt\tag\ {ByteTag, ShortTag, CompoundTag, DoubleTag, FloatTag, Li
 
 abstract class WalkingMonster extends WalkingEntity
 {
-    protected $attackDelay = 0;
+    public $attackDelay = 0;
     protected $ids = 0;
 
     public abstract function attackEntity(Entity $player);

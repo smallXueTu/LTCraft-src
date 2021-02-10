@@ -96,9 +96,6 @@ class AFalseArrow extends ProjectileEntity
         }
 
         $tickDiff = $currentTick - $this->lastUpdate;
-        if($tickDiff <= 0 and !$this->justCreated) {
-            $hasUpdate=true;
-        }
         $this->lastUpdate = $currentTick;
 
         $hasUpdate = $this->entityBaseTick($tickDiff);
@@ -114,11 +111,11 @@ class AFalseArrow extends ProjectileEntity
             $nearEntity = null;
 
             foreach($list as $entity) {
-                if($entity === $this->shootingEntity) { //蜱活了下来。
+                if($entity === $this->shootingEntity) { //是发射的实体就进入下次循环
                     continue;
                 }
 
-                $axisalignedbb = $entity->boundingBox->grow(0.3, 0.3, 0.3);
+                $axisalignedbb = $entity->boundingBox->grow(0.3, 0.3, 0.3);//碰撞盒
                 $ob = $axisalignedbb->calculateIntercept($this, $moveVector);
 
                 if($ob === null) {
@@ -143,7 +140,7 @@ class AFalseArrow extends ProjectileEntity
                     $motion = sqrt($this->motionX ** 2 + $this->motionY ** 2 + $this->motionZ ** 2);
                     $damage = ceil($motion * $this->damage);
 
-                    if($this instanceof Arrow and $this->isCritical()) {
+                    if($this instanceof AFalseArrow and $this->isCritical()) {
                         $damage += mt_rand(0, (int)($damage / 2) + 1);
                     }
                       $results = $this->attackOccurred($movingObjectPosition->entityHit, $damage);
