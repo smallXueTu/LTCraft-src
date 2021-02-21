@@ -313,7 +313,6 @@ class Events implements Listener{
 			if($event->getMessage()==$this->datas[$name]['password']){
 				$player->sendMessage('§l§a你差点泄露密码！',true);
 		}		$event->setCancelled(true);
-   }
 			}
 			return;
 		}
