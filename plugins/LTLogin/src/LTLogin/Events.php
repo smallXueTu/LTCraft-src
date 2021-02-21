@@ -298,7 +298,6 @@ class Events implements Listener{
 			return '密码太简单了，不建议这样做！';
 		}
 		return true;
-  }
 	}
 	public function onPlayerInput(PlayerCommandPreprocessEvent $event){
 		$player=$event->getPlayer();
@@ -313,7 +312,8 @@ class Events implements Listener{
 		if(self::$status[$name]===true){
 			if($event->getMessage()==$this->datas[$name]['password']){
 				$player->sendMessage('§l§a你差点泄露密码！',true);
-				$event->setCancelled(true);
+		}		$event->setCancelled(true);
+   }
 			}
 			return;
 		}
