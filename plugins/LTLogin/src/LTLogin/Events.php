@@ -298,6 +298,7 @@ class Events implements Listener{
 			return '密码太简单了，不建议这样做！';
 		}
 		return true;
+  }
 	}
 	public function onPlayerInput(PlayerCommandPreprocessEvent $event){
 		$player=$event->getPlayer();
