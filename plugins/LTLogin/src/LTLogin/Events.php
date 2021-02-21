@@ -65,6 +65,7 @@ class Events implements Listener{
 			}else{
 				self::$status[$name]='register';
 				$player->getServer()->getScheduler()->scheduleDelayedTask(new CallbackTask([$this,"send"],['register',$player]), 20);
+                                $player->sendMeddage('§l§e---------------LTCraft---------------');
 				$player->sendMessage('§l§a[提示]§e感谢你在千万服务器选择了§aL§eT§3C§5r§8a§7f§4t',true);
 				$player->sendMessage('§l§a[提示]§e注册代表你已同意LTCraft用户协议,输入§d"用户协议"§e查看协议,你可以不游玩和不同意此协议',true);
 				$player->sendMessage('§l§a[提示]§e为了更好的游戏，请直接输入密码发送来注册你的账号！',true);
@@ -290,7 +291,10 @@ class Events implements Listener{
 		$password=='01234567' or 
 		$password=='012345678' or 
 		$password=='1234560' or 
-		$password=='1234567890'){
+		$password=='1234567890' or
+                $password=='9876543210' or
+                $password=='0987654321' or
+                $password=='qwert'){
 			return '密码太简单了，不建议这样做！';
 		}
 		return true;
