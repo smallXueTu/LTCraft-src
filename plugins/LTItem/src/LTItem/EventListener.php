@@ -197,6 +197,10 @@ class EventListener implements Listener
                     break;
                     case '樱花的誓约':
                         if(!isset(Cooling::$weapon[$player->getName()][$Hand->getLTName()]) or Cooling::$weapon[$player->getName()][$Hand->getLTName()]<time()){
+                            if (!$player->getBuff()->consumptionMana(500)){
+                                $player->sendMessage('§cMana不足！');
+                                return;
+                            }
                             $nbt = new CompoundTag;
                             $nbt->Pos = new ListTag("Pos", [
                                 new DoubleTag("",  $player->x+0.5),
@@ -213,6 +217,10 @@ class EventListener implements Listener
                     break;
                     case '时空撕裂':
                         if(!isset(Cooling::$weapon[$player->getName()][$Hand->getLTName()]) or Cooling::$weapon[$player->getName()][$Hand->getLTName()]<time()){
+                            if (!$player->getBuff()->consumptionMana(500)){
+                                $player->sendMessage('§cMana不足！');
+                                return;
+                            }
                             $nbt = new CompoundTag;
                             $nbt->Pos = new ListTag("Pos", [
                                 new DoubleTag("",  $player->x+0.5),

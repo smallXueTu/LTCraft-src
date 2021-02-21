@@ -99,6 +99,7 @@ class Sakura extends Entity
                 new DoubleTag("",  $this->getBasePos()->z+$startPosZ)
             ]);
             $line = new Line($this->getLevel(), $nbt);
+            $line->setOwner($this->owner);
             $line->pid = 16;
 //            echo '角度:'.$ii.'指向:';
 //            $ii = ($ii + ($i+3) % 5 * 360 / 5) % 360;
