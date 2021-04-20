@@ -447,7 +447,7 @@ class Level implements ChunkManager, Metadatable
 //			$this->weather->setWeather(1);
 //		}
 		elseif($name==='s2'){
-			$this->weather->setWeather(1);
+			$this->weather->setWeather(0);
 		}
     }
 

@@ -9,6 +9,7 @@ use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\entity\Entity;
 use pocketmine\event\entity\EntityDeathEvent;
 use pocketmine\event\entity\EntityRegainHealthEvent;
+use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\level\Explosion;
 use pocketmine\math\Vector3;
 use pocketmine\network\protocol\PlayerActionPacket;

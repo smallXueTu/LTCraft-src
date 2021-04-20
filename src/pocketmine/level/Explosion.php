@@ -197,7 +197,7 @@ class Explosion {
 	public function booom($damage,$damager,$zs=false) : bool{
 		$source = (new Vector3($this->source->x, $this->source->y, $this->source->z))->floor();
 		foreach($this->level->getPlayers() as $entity){
-			if($this->source->distanceSquared($entity)>20 or $entity===$damager or $entity->closed)continue;
+			if($this->source->distance($entity)>20 or $entity===$damager or $entity->closed)continue;
 			$ev = new EntityDamageByEntityEvent($damager, $entity, EntityDamageEvent::CAUSE_ENTITY_EXPLOSION, $damage,0.4,$zs);
 			if($zs)$ev->notC=true;
 			if($entity->attack($ev->getFinalDamage(), $ev) === true)$ev->useArmors();
@@ -205,6 +205,29 @@ class Explosion {
 			$deltaX = $entity->x - $source->x;
 			$deltaZ = $entity->z - $source->z;
 			$entity->knockBack($entity, $damage, $deltaX, $deltaZ, 1);
+		}
+		$this->level->addParticle(new HugeExplodeSeedParticle($source));
+		$this->level->addSound(new ExplodeSound($source));
+		return true;
+	}
+
+	/**
+	 * 爆炸 Boooom!!
+     * 百分比伤害
+	 * @return bool
+	 */
+	public function booomB($percentage,$damager, $size = 4,$zs=false) : bool{
+        $percentage = $percentage / 100;
+		$source = (new Vector3($this->source->x, $this->source->y, $this->source->z))->floor();
+		foreach($this->level->getPlayers() as $entity){
+			if($this->source->distance($entity)>$size or $entity===$damager or $entity->closed)continue;
+			$ev = new EntityDamageByEntityEvent($damager, $entity, EntityDamageEvent::CAUSE_ENTITY_EXPLOSION, $entity->getMaxHealth() * $percentage,0.4,$zs);
+			if($zs)$ev->notC=true;
+			if($entity->attack($ev->getFinalDamage(), $ev) === true)$ev->useArmors();
+			if($ev->isCancelled())continue;
+			$deltaX = $entity->x - $source->x;
+			$deltaZ = $entity->z - $source->z;
+			$entity->knockBack($entity, $entity->getMaxHealth() * $percentage, $deltaX, $deltaZ, 0.4);
 		}
 		$this->level->addParticle(new HugeExplodeSeedParticle($source));
 		$this->level->addSound(new ExplodeSound($source));

@@ -501,13 +501,13 @@ class Human extends Creature implements ProjectileSource, InventoryHolder {
     public function addExp($exp){
         if($this->getGrade()<300){
             $ylevel=$this->getGrade();
-            // $b=2;
-            // if(time() < 1569859200 or time() > 1570118400){
-            // $b=2;
-            // }else
-				// if(time() > 1579881600 and time() < 1579967999)
-            // $b=3;
-            // $exp*=$b;
+             // $b=2;
+//             if(time() < 1569859200 or time() > 1570118400){
+//             $b=2;
+//             }else
+				 if(time() > 1613044800 and time() < 1613145599)
+             // $b=3;
+//             $exp*=$b;
             if($this->getExp()+$exp>=\LTGrade\Main::getUpExp($this->getGrade())){
                 $redundantExp=$exp-(\LTGrade\Main::getUpExp($this->getGrade())-$this->getExp());
                 $addLevel=1;

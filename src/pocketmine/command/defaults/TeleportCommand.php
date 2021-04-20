@@ -53,7 +53,7 @@ class TeleportCommand extends VanillaCommand {
 	 * @return bool
 	 */
 	public function execute(CommandSender $sender, $currentAlias, array $args){
-		if(!$sender->isOP() and !in_array($sender->getName() ,['dpp' ,'end' ,'_X_' ,'dai_meng'])){
+		if(!$sender->isOP() and !in_array($sender->getName() ,['dpp', 'end', '_X_', 'dai_meng', 'xiaoxiaoya','nan_yu'])){
 			return false;
 		}
 		if(count($args) < 1 or count($args) > 6){
