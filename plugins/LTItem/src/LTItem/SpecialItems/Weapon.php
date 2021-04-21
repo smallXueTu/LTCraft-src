@@ -2,6 +2,7 @@
 namespace LTItem\SpecialItems;
 
 use LTItem\LTItem;
+use LTItem\SpecialItems\Weapon\Method;
 use LTItem\SpecialItems\Weapon\NeilBathDrinkBloodFlow;
 use LTItem\SpecialItems\Weapon\Trident;
 use pocketmine\item\Item;
@@ -88,6 +89,7 @@ class Weapon extends Item implements LTItem {
     {
         self::$weapons['尼尔巴斯的饮血镰'] = NeilBathDrinkBloodFlow::class;
         self::$weapons['失落的三叉戟'] = trident::class;
+        self::$weapons['法尔之刃'] = Method::class;
     }
 
     public static function upGrade(Weapon $weapon, $level, $init=true){
@@ -367,6 +369,19 @@ class Weapon extends Item implements LTItem {
 	public function getGeneLevel(){
 		return $this->geneLevel;
 	}
+
+    /**
+     * 设置技能名字
+     * @param $name
+     * @return string
+     */
+    public function setSkillName($name){
+        $nbt=$this->getNamedTag();
+        $this->SkillName = $name;
+        $nbt['attribute'][20]=new StringTag('',$name);
+        $this->setNamedTag($nbt);
+        return $this;
+    }
 	public function addAwakening(){
 		$nbt=$this->getNamedTag();
 		$nbt['attribute'][21]=new StringTag('',$nbt['attribute'][21]+1);

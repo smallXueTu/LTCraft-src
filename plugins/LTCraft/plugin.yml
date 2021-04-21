@@ -24,12 +24,18 @@ commands:
  bt:
   description: 回到传送前的位置
   permission: LTCraft.all
+ 锁:
+  description: 锁上自己的箱子
+  permission: LTCraft.all
  sj:
   description: 新手教程
   permission: LTCraft.all
  setip:
   description: 设置交互IP
   permission: LTCraft.op
+ 开:
+  description: 取消锁定自己的箱子
+  permission: LTCraft.all
  sign:
   description: 修改木牌内容
   permission: LTCraft.all

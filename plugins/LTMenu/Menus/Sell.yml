@@ -52,18 +52,6 @@ items:
   cost_item: ~
   multilevel: false
 - item:
-  - 351
-  - 4
-  - 1
-  nametag: 青金石 单价:150/个
-  commands: []
-  teleport: ~
-  money: 150
-  price: "0"
-  give_item: ~
-  cost_item: ~
-  multilevel: false
-- item:
   - 331
   - 0
   - 1
@@ -251,18 +239,6 @@ items:
   commands: []
   teleport: ~
   money: 200
-  price: "0"
-  give_item: ~
-  cost_item: ~
-  multilevel: false
-- item:
-  - 351
-  - 0
-  - 1
-  nametag: 副本材料 单价:100/个
-  commands: []
-  teleport: ~
-  money: 100
   price: "0"
   give_item: ~
   cost_item: ~

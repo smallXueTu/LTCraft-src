@@ -112,7 +112,6 @@ abstract class WalkingEntity extends BaseEntity
             return null;
         }
         $tickDiff = 3;
-		$before = $this->baseTarget;
 		$this->checkTarget();
 		if(!($this->baseTarget instanceof Vector3)){
 			$this->checkTarget();
@@ -137,9 +136,11 @@ abstract class WalkingEntity extends BaseEntity
 			$pitch = $y>0?-90:90;
 			if($y==0)$pitch=0;
 		}else{
-			$this->yaw = -atan2($x / $diff, $z / $diff) * 180 / M_PI;
-			$this->pitch = $y == 0 ? 0 : rad2deg(-atan2($y, sqrt($x ** 2 + $z ** 2)));
+			$yaw = -atan2($x / $diff, $z / $diff) * 180 / M_PI;
+			$pitch = $y == 0 ? 0 : rad2deg(-atan2($y, sqrt($x ** 2 + $z ** 2)));
 		}
+        $this->yaw = $yaw;
+        $this->pitch = $pitch;
 		if($this->enConfig['怪物模式'] == 0) {
 			$this->updateMovement();
 			return $this->baseTarget;

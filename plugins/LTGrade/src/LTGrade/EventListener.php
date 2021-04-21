@@ -284,7 +284,8 @@ class EventListener implements Listener
 		$player=$event->getEntity();
 		if($player instanceof Player){
 			if($player->injuredTime>0){
-				$event->setAmount($event->getAmount()/2);
+			    $max = $player->getMaxHealth() * 0.05;
+				$event->setAmount($event->getAmount()/2 > $max?$max:$event->getAmount()/2);
 			}
 		}
 	}

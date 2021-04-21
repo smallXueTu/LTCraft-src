@@ -125,9 +125,9 @@ class Main extends PluginBase implements Listener{
 					$name=strtolower($player->getName());
 					self::$see=$player->getName();
 					$hand=$player->getItemInHand();
-					if(LTItem::getInstance()->isEquals($hand, ['材料', '新春红包'])){
-						if(time()<1579870800){
-							$player->sendTitle('§l§c还没到时间呢', '§l§e请1月24号21点后再来开启吧~');
+					if(LTItem::getInstance()->isEquals($hand, ['材料', '§a新春红包'])){
+						if(time()<1613046600){
+							$player->sendTitle('§l§c还没到时间呢', '§l§e请2月11号20点30后再来开启吧~');
 							return;
 						}
 						// if(time()>1549382399){
@@ -165,9 +165,9 @@ class Main extends PluginBase implements Listener{
 								break;
 								}
 							}elseif($rand>=70){
-								$player->getInventory()->addItem(LTItem::getInstance()->createWeapon('近战','鼠年神器',$player));
-								$player->sendTitle('§l§a恭喜你 稀有神器','§d抽到了鼠年神器~');
-								$this->getServer()->broadcastMessage('§l§a玩家'.$player->getName().'打开红包后获得了鼠年神器!!');
+								$player->getInventory()->addItem(LTItem::getInstance()->createWeapon('近战','牛年神器',$player));
+								$player->sendTitle('§l§a恭喜你 稀有神器','§d抽到了牛年神器~');
+								$this->getServer()->broadcastMessage('§l§a玩家'.$player->getName().'打开红包后获得了牛年神器!!');
 							}elseif($rand>=40){
 								switch(mt_rand(1,10)){
 								case 1:
@@ -220,9 +220,9 @@ class Main extends PluginBase implements Listener{
 								$player->sendTitle('§l§a恭喜你','§d抽到了奖励箱-基因~');
 								$this->getServer()->broadcastMessage('§l§a玩家'.$player->getName().'打开红包后获得了奖励箱-基因!');
 							}elseif($rand>15){
-								$player->getInventory()->addItem(LTItem::getInstance()->createMaterial('Bigger！Bigger！Bigger！'));
-								$player->sendTitle('§l§a恭喜你','§d抽到了Bigger！Bigger！Bigger！');
-								$this->getServer()->broadcastMessage('§l§a玩家'.$player->getName().'打开红包后获得了Bigger！Bigger！Bigger！!');
+								$player->getInventory()->addItem(LTItem::getInstance()->createMaterial('§e耀魂宝珠'));
+								$player->sendTitle('§l§a恭喜你','§d抽到了§e耀魂宝珠！');
+								$this->getServer()->broadcastMessage('§l§a玩家'.$player->getName().'打开红包后获得了§e耀魂宝珠！!');
 							}elseif($rand>8){
 								$money=mt_rand(50000,1000000);
 								$player->sendTitle('§l§a运气不错,开到了'.$money.'橙币');

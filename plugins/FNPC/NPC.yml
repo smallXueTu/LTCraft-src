@@ -586,7 +586,7 @@ t1:
     data: 0
   type: command
   command:
-  - menu MaterialShop 8
+  - menu MaterialShop 9
 startPvp:
   x: 129.516000
   "y": 46.000000
@@ -830,28 +830,4 @@ openE:
   type: command
   command:
   - menu Exchange
-Inlay:
-  x: -299.011200
-  "y": 101.000000
-  z: 464.413900
-  level: pve
-  yaw: ""
-  pitch: ""
-  skin: ""
-  nametag: §e武器大师
-  clientID: 4932223
-  skinName: Standard_Custom
-  pay: 0
-  cape: ""
-  头: false
-  胸: false
-  腿: false
-  脚: false
-  extra: ""
-  handItem:
-    id: 0
-    data: 0
-  type: command
-  command:
-  - menu Inlay
 ...

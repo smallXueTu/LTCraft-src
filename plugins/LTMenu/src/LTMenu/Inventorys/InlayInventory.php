@@ -104,6 +104,20 @@ class InlayInventory extends OperationInventory{
                                         $item->initW();
                                     }
 								break;
+								case '樱花的誓约技能石':
+                                    if ($item instanceof Weapon){
+                                        /** @var $item Weapon */
+                                        $item->setSkillName('樱花的誓约');
+                                        $count = 1;
+                                    }
+                                break;
+								case '时空撕裂技能石':
+								    if ($item instanceof Weapon){
+								        /** @var $item Weapon */
+                                        $item->setSkillName('时空撕裂');
+                                        $count = 1;
+                                    }
+								break;
 								case '耀魂碎片':
 								    if ($item instanceof Weapon\DrawingKnife and $item->getDurable() < 0 and $item->canUse($event->getPlayer())){
 								        /** @var $item Weapon\DrawingKnife */

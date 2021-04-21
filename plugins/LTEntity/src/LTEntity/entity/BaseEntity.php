@@ -167,7 +167,7 @@ abstract class BaseEntity extends Creature
 		if($this instanceof ProjectileSource and substr($this->enConfig['手持ID'], 0, 3)==261){
 			$this->attackMove=1;
 		}
-		if(in_array($this->enConfig['名字'], ['生化统治者','觉醒法老','异界统治者','冰之神','怪魔制造者','碎骨者','灭世者','命末神','死神审判者','骑士']))$this->hasSkill=true;
+		if(in_array($this->enConfig['名字'], ['守护者-卡拉森','生化统治者','觉醒法老','异界统治者','冰之神','怪魔制造者','碎骨者','灭世者','命末神','死神审判者','骑士']))$this->hasSkill=true;
 		if(isset($this->enConfig['类型']) and in_array($this->enConfig['类型'], DataList::$EMods)){
 			if($this->enConfig['手持ID']!==false){
 				$pk = new MobEquipmentPacket();

@@ -47,7 +47,6 @@ class LTNPC extends WalkingPet{
 				return $player->sendMessage('§c亲密度不足！');
 			}
 			if($player!==$this->getOwner()){
-				// return;//TODO 女仆不被主人啪啪啪 [强奸]
 				if($player->getMoney()<10000){
 					return $player->sendMessage('§c你的钱不够啪啪啪别人女仆！');
 				}

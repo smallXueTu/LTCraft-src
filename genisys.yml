@@ -20,7 +20,7 @@ config:
  
 level:
  #设置是否变换天气
- weather: false
+ weather: true
  #随机天气持续时长最小值，最大值
  weather-random-duration-min: 12000
  weather-random-duration-max: 36000
@@ -62,8 +62,8 @@ nether:
  #是否允许生成地狱门
  allow-nether-portal: true
  #是否允许通过地狱传送门传送到地狱
- enable-nether-portal: true
-
+ enable-nether-portal: false
+ 
 
 ender:
  #是否允许末地，打开此选项会自动生成下界地图
@@ -73,7 +73,7 @@ ender:
  #是否允许生成末地传送门
  allow-end-portal: true
  #是否允许通过末地传送门传送到末地
- enable-end-portal: true
+ enable-end-portal: false
  
 server:
  #是否允许跨协议版本进服

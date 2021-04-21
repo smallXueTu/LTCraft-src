@@ -1,45 +1,38 @@
 <?php
 namespace LTEntity;
 
+use LTEntity\entity\Boss\Prisoners;
+use LTEntity\entity\Boss\SkillsEntity\Sakura;
 use LTEntity\entity\Gaia\GaiaCrystal;
 use LTEntity\entity\Gaia\GaiaGuardians;
 use LTEntity\entity\Guide\Trident;
 use LTEntity\entity\Process\Fusion;
 use LTItem\SpecialItems\Weapon;
-use pocketmine\event\block\ItemFrameDropItemEvent;
+use LTPet\Commands\RecomeAll;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
-use pocketmine\command\ {Command, CommandSender};
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\item\Item;
-use pocketmine\block\Block;
 use pocketmine\math\Vector3;
-use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
-use pocketmine\event\player\PlayerAnimationEvent;
-use pocketmine\scheduler\CallbackTask;
 use pocketmine\utils\Config;
 use pocketmine\entity\Entity;
 use pocketmine\entity\Effect;
 use pocketmine\entity\Item as entityItem;
 use pocketmine\level\Position;
 use pocketmine\level\Level;
-use pocketmine\event\entity\{EntityDamageByBlockEvent,
+use pocketmine\event\entity\{
     EntityDeathEvent,
     EntityDamageEvent,
     EntityDamageByEntityEvent,
     EntityCombustByEntityEvent,
     EntityRegainHealthEvent};
-use pocketmine\nbt\tag\ {ByteTag, CompoundTag, DoubleTag, FloatTag, ListTag, StringTag, IntTag};
-use pocketmine\item\enchantment\Enchantment;
+use pocketmine\nbt\tag\ {CompoundTag, DoubleTag, FloatTag, ListTag, StringTag};
 
-use LTEntity\DataList;
-use LTEntity\Commands;
 use LTEntity\entity\BaseEntity;
-use LTEntity\entity\FlyingEntity;
 use LTCraft\FloatingText;
 
 use LTEntity\entity\projectile\ {
@@ -120,6 +113,7 @@ class Main extends PluginBase implements Listener
     public $killCount = [];
     public $errorCount = [];
     public $gaia = [];
+    public $skills = [];
     public $fusion = [];
     /** @var array */
     public array $EnConfig;
@@ -136,39 +130,39 @@ class Main extends PluginBase implements Listener
     /**
      * @return Main
      */
-	public static function getInstance(){
-		return self::$instance;
-	}
-	public static function getErrorCount($name){
-		return self::$instance->errorCount[$name]??0;
-	}
-	public static function addErrorCount($player){
-		$name = $player->getName();
-		if(isset(self::$instance->errorCount[$name])){
-			self::$instance->errorCount[$name] += 1;
-		}else{
-			self::$instance->errorCount[$name] = 1;
-		}
-		if(self::$instance->errorCount[$name]>5)$player->kick('§c验证失败次数过多！');
-	}
-	public static function resetErrorCount($name){
-		self::$instance->errorCount[$name]=0;
-	}
-	public static function getCount($name){
-		return self::$instance->killCount[$name]??0;
-	}
-	public static function addCount($player){
-		$name = $player->getName();
-		if(isset(self::$instance->killCount[$name])){
-			self::$instance->killCount[$name] += 1;
-		}else{
-			self::$instance->killCount[$name] = 1;
-		}
-		if(self::$instance->killCount[$name]>7)$player->sendMessage(('§l§c警告:你的击杀次数剩余'. (10-self::$instance->killCount[$name]).'次，请打开菜单验证在线状态来重置！'));
-	}
-	public static function resetCount($name){
-		self::$instance->killCount[$name]=0;
-	}
+    public static function getInstance(){
+        return self::$instance;
+    }
+    public static function getErrorCount($name){
+        return self::$instance->errorCount[$name]??0;
+    }
+    public static function addErrorCount($player){
+        $name = $player->getName();
+        if(isset(self::$instance->errorCount[$name])){
+            self::$instance->errorCount[$name] += 1;
+        }else{
+            self::$instance->errorCount[$name] = 1;
+        }
+        if(self::$instance->errorCount[$name]>5)$player->kick('§c验证失败次数过多！');
+    }
+    public static function resetErrorCount($name){
+        self::$instance->errorCount[$name]=0;
+    }
+    public static function getCount($name){
+        return self::$instance->killCount[$name]??0;
+    }
+    public static function addCount($player){
+        $name = $player->getName();
+        if(isset(self::$instance->killCount[$name])){
+            self::$instance->killCount[$name] += 1;
+        }else{
+            self::$instance->killCount[$name] = 1;
+        }
+        if(self::$instance->killCount[$name]>7)$player->sendMessage(('§l§c警告:你的击杀次数剩余'. (10-self::$instance->killCount[$name]).'次，请打开菜单验证在线状态来重置！'));
+    }
+    public static function resetCount($name){
+        self::$instance->killCount[$name]=0;
+    }
     public function onEnable()
     {
         $classes = [
@@ -227,8 +221,9 @@ class Main extends PluginBase implements Listener
             GaiaCrystal::class,
             Fusion::class,
             Trident::class,
+            Prisoners::class,
             ANPC::class
-		];
+        ];
         foreach($classes as $name)
             Entity::registerEntity($name, true);
         self::$instance = $this;
@@ -239,37 +234,39 @@ class Main extends PluginBase implements Listener
         $this->WeeksExp = new Config($this->getDataFolder().'WeeksExp.yml', Config::YAML, []);
         $this->RPGSpawn = new Config($this->getDataFolder().'RPGSpawn.yml', Config::YAML, []);
         $this->EnConfig = $this->RPGSpawn->getAll();
-        $this->getCommand('ma')->setExecutor(new Commands($this));
-		/*
-			onRefresh 方法在LTPopuo中调用了
-		*/
+        $cmd = new Commands($this);
+        $this->getCommand('ma')->setExecutor($cmd);
+        $this->getCommand('lf')->setExecutor($cmd);
+        /*
+            onRefresh 方法在LTPopuo中调用了
+        */
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
-	public function onDisable(){
-		// $this->Data->save(false);
-		if(isset($this->WeeksExp))$this->WeeksExp->save(false);
-	}
-    public function killAll(){
-		
+    public function onDisable(){
+        // $this->Data->save(false);
+        if(isset($this->WeeksExp))$this->WeeksExp->save(false);
     }
-	public function updateTop(){
-		if($this->ExpRanking instanceof FloatingText){
-			$Data = $this->WeeksExp->getAll();
-			arsort($Data);
-			$n=1;
-			$text='§l§e周经验排行榜'."\n";
-			foreach($Data as $name => $exp){
-				if($name=='配置日期')continue;
-				$text.='§a'.$n .'#玩家名字'.$name .'§d经验:'.$exp ."\n";
-				if(++$n==11)break;
-			}
-			$this->ExpRanking->updateAll($text.'§3周经验会在周一进行结算 排行越高奖励越高');
-		}
-	}
-	public function setExpRanking(\LTCraft\FloatingText $FloatingText){
-		$this->ExpRanking=$FloatingText;
-		$this->updateTop();
-	}
+    public function killAll(){
+
+    }
+    public function updateTop(){
+        if($this->ExpRanking instanceof FloatingText){
+            $Data = $this->WeeksExp->getAll();
+            arsort($Data);
+            $n=1;
+            $text='§l§e周经验排行榜'."\n";
+            foreach($Data as $name => $exp){
+                if($name=='配置日期')continue;
+                $text.='§a'.$n .'#玩家名字'.$name .'§d经验:'.$exp ."\n";
+                if(++$n==11)break;
+            }
+            $this->ExpRanking->updateAll($text.'§3周经验会在周一进行结算 排行越高奖励越高');
+        }
+    }
+    public function setExpRanking(\LTCraft\FloatingText $FloatingText){
+        $this->ExpRanking=$FloatingText;
+        $this->updateTop();
+    }
     public function reloadConfig()
     {
         $this->RPGSpawn->reload();
@@ -291,20 +288,20 @@ class Main extends PluginBase implements Listener
             }
         }
         $level = $this->getServer()->getLevelByName('f6');
-		if($level){
-			foreach($level->getPlayers() as $player){
-				if(mt_rand(1,300)<=1 and $player->isSurvival()){
-					$data=$this->EnConfig['傀儡虫'];
+        if($level){
+            foreach($level->getPlayers() as $player){
+                if(mt_rand(1,300)<=1 and $player->isSurvival()){
+                    $data=$this->EnConfig['傀儡虫'];
                     $nbt = new CompoundTag;
                     $nbt->Pos = new ListTag('Pos', [
-						new DoubleTag('', $player->x+mt_rand(-5, 5)),
-						new DoubleTag('', $player->y + 0.5),
-						new DoubleTag('', $player->z+mt_rand(-5, 5))
-					]);
+                        new DoubleTag('', $player->x+mt_rand(-5, 5)),
+                        new DoubleTag('', $player->y + 0.5),
+                        new DoubleTag('', $player->z+mt_rand(-5, 5))
+                    ]);
                     $nbt->Rotation = new ListTag('Rotation', [
-						 new FloatTag('', 0),
-						 new FloatTag('', 0)
-					 ]);
+                        new FloatTag('', 0),
+                        new FloatTag('', 0)
+                    ]);
                     $nbt->Speed = new DoubleTag('Speed', 1.8);
                     for($i = 0; $i < 3; $i++) {
                         $pk = Entity::createEntity('ASilverfish', $level, $nbt);
@@ -312,18 +309,18 @@ class Main extends PluginBase implements Listener
                         $pk->enConfig = $data;
                         $pk->spawnToAll();
                         $pk->initThis();
-						$pk->setTarget($player);
+                        $pk->setTarget($player);
                     }
-					break;
-				}
-			}
-		}
+                    break;
+                }
+            }
+        }
         $level = $this->getServer()->getLevelByName('f9');
-		if ($level){
-		    foreach ($this->distorted as $name => $value){
-		        $player = $this->server->getPlayerExact($name);
-		        if ($value >= 100){
-		            if (!mt_rand(0, 349 - ((int)$value / 2))){
+        if ($level){
+            foreach ($this->distorted as $name => $value){
+                $player = $this->server->getPlayerExact($name);
+                if ($value >= 100){
+                    if (!mt_rand(0, 349 - ((int)$value / 2))){
                         $data=$this->EnConfig['失落领主傀儡'];
                         $nbt = new CompoundTag;
                         $nbt->Pos = new ListTag('Pos', [
@@ -338,7 +335,7 @@ class Main extends PluginBase implements Listener
                         $nbt->Speed = new DoubleTag('Speed', 1.8);
                         $skin=$this->getSkin($data['皮肤']);
                         $nbt->Skin = new CompoundTag('Skin', ['Data' => new StringTag('Data', $skin), 'Name' => new StringTag('Name', $data['皮肤ID'])]);
-                       /** @var BaseEntity $pk */
+                        /** @var BaseEntity $pk */
                         $pk = Entity::createEntity('ANPC', $level, $nbt);
                         $pk->enConfig = $data;
                         $pk->spawnToAll();
@@ -357,45 +354,50 @@ class Main extends PluginBase implements Listener
             if(!($l instanceof Level))continue;
             $pos = new Position($data['x'], $data['y'], $data['z'],$l);
             if(!isset($this->spawnTmp[$data['刷怪点']])){
-				$this->spawnTmp[$data['刷怪点']] = [
-					'数量' => 0,
-					'剩余时间' => (int)$data['刷怪时间']
-				];
-				$drops='';
-				foreach($data['掉落'] as $drop){
-					$dropItem = explode(':', $drop);
-					if(!isset($dropItem[3]))continue;
-					if(in_array($dropItem[0], ['材料', '近战', '远程', '通用', '盔甲'])) 
-						$drops.=$dropItem[0].'类型'.$dropItem[1].'×'.$dropItem[2] .' '.$dropItem[3].'%'.PHP_EOL;
-					else {
-						$item = Item::get((int)$dropItem[0], (int)$dropItem[1], (int)$dropItem[2]);
-						$drops.=$item->getName().'×'.$item->getCount() .' '.$dropItem[3].'%'.PHP_EOL;
-					}
-				}
-				$drops=substr($drops,0,strlen($drops)-1);
-				$pDrops='';
-				foreach($data['参与击杀掉落'] as $drop){
-					$dropItem = explode(':', $drop);
-					if(!isset($dropItem[3]))continue;
-					if(in_array($dropItem[0], ['材料', '近战', '远程', '通用', '盔甲'])) 
-						$pDrops.=$dropItem[0].'类型'.$dropItem[1].'×'.$dropItem[2] .' '.$dropItem[3].'%'.PHP_EOL;
-					else {
-						$item = Item::get((int)$dropItem[0], (int)$dropItem[1], (int)$dropItem[2]);
-						$pDrops.=$item->getName().'×'.$item->getCount() .' '.$dropItem[3].'%'.PHP_EOL;
-					}
-				}
-				$pDrops=substr($pDrops,0,strlen($pDrops)-1);
-				if($data['显示'])$this->spawnTmp[$data['刷怪点']]['悬浮字'] = new FloatingText($pos,
-					'§a=============['.$data['刷怪点'].']============= '. PHP_EOL 
-					.'§d名字:§3'.$data['名字'].'§d还有： @t '. PHP_EOL 
-					.'§6当前怪物数量：@c/'.$data['数量']
-					. ($data['悬浮介绍']!=false?(PHP_EOL . '§3介绍:'.$data['悬浮介绍']):'')
-					. (count($data['掉落'])>0?(PHP_EOL .'§e击杀掉落:'.$drops):'')
-					. (count($data['参与击杀掉落'])>0?(PHP_EOL .'§a参与击杀掉落:'.$pDrops):'')
-					. ($data['团队']==true?(PHP_EOL . '§c注意！这个怪物需要多个玩家配击杀！'):'')
-				, true);
-			}
-			$tmp=&$this->spawnTmp[$data['刷怪点']];
+                $this->spawnTmp[$data['刷怪点']] = [
+                    '数量' => 0,
+                    '剩余时间' => (int)$data['刷怪时间']
+                ];
+                $drops='';
+                foreach($data['掉落'] as $drop){
+                    $dropItem = explode(':', $drop);
+                    if(!isset($dropItem[3]))continue;
+                    if(in_array($dropItem[0], ['材料', '近战', '远程', '通用', '盔甲']))
+                        $drops.=$dropItem[0].'类型'.$dropItem[1].'×'.$dropItem[2] .' '.$dropItem[3].'%'.PHP_EOL;
+                    else {
+                        $item = Item::get((int)$dropItem[0], (int)$dropItem[1], (int)$dropItem[2]);
+                        $drops.=$item->getName().'×'.$item->getCount() .' '.$dropItem[3].'%'.PHP_EOL;
+                    }
+                }
+                $drops=substr($drops,0,strlen($drops)-1);
+                $pDrops='';
+                foreach($data['参与击杀掉落'] as $drop){
+                    $dropItem = explode(':', $drop);
+                    if(!isset($dropItem[3]))continue;
+                    if(in_array($dropItem[0], ['材料', '近战', '远程', '通用', '盔甲']))
+                        $pDrops.=$dropItem[0].'类型'.$dropItem[1].'×'.$dropItem[2] .' '.$dropItem[3].'%'.PHP_EOL;
+                    else {
+                        $item = Item::get((int)$dropItem[0], (int)$dropItem[1], (int)$dropItem[2]);
+                        $pDrops.=$item->getName().'×'.$item->getCount() .' '.$dropItem[3].'%'.PHP_EOL;
+                    }
+                }
+                $pDrops=substr($pDrops,0,strlen($pDrops)-1);
+                $probability = 1;
+                $add = $data['血量'] / 5000;
+                if ($add > 29)$add = 29;
+                $probability += $add;
+                if($data['显示'])$this->spawnTmp[$data['刷怪点']]['悬浮字'] = new FloatingText($pos,
+                    '§a=============['.$data['刷怪点'].']============= '. PHP_EOL
+                    .'§d名字:§3'.$data['名字'].'§d还有： @t '. PHP_EOL
+                    .'§6当前怪物数量：@c/'.$data['数量'].PHP_EOL
+                    .'§c掉落Craft任意字符几率：'.$probability.'%'
+                    . ($data['悬浮介绍']!=false?(PHP_EOL . '§3介绍:'.$data['悬浮介绍']):'')
+                    . (count($data['掉落'])>0?(PHP_EOL .'§e击杀掉落:'.$drops):'')
+                    . (count($data['参与击杀掉落'])>0?(PHP_EOL .'§a参与击杀掉落:'.$pDrops):'')
+                    . ($data['团队']==true?(PHP_EOL . '§c注意！这个怪物需要多个玩家配击杀！'):'')
+                    , true);
+            }
+            $tmp=&$this->spawnTmp[$data['刷怪点']];
             $no_player = true;
             foreach($l->getPlayers() as $player) {
                 if($player->distance($pos) <=  $data['边界范围半径']) {
@@ -404,34 +406,34 @@ class Main extends PluginBase implements Listener
                 }
             }
             if($tmp['数量'] < (int)$data['数量']) {
-				 $tmp['剩余时间']--;
-				if($vid==='boss' and $tmp['剩余时间']<60 and count($l->getPlayers())<=0){
-					$tmp['剩余时间']=60;
-					continue;
-				}
+                $tmp['剩余时间']--;
+                if($vid==='boss' and $tmp['剩余时间']<60 and count($l->getPlayers())<=0){
+                    $tmp['剩余时间']=60;
+                    continue;
+                }
                 if($tmp['剩余时间'] <= 0 and !$no_player) {
-					$tmp['剩余时间'] = (int)$data['刷怪时间'];
+                    $tmp['剩余时间'] = (int)$data['刷怪时间'];
                     $nbt = new CompoundTag;
                     $nbt->Pos = new ListTag('Pos', [
-						new DoubleTag('', $pos->x),
-						new DoubleTag('', $pos->y + ($data['怪物模式']==0?0:0.5)),
-						new DoubleTag('', $pos->z)
-					]);
+                        new DoubleTag('', $pos->x),
+                        new DoubleTag('', $pos->y + ($data['怪物模式']==0?0:0.5)),
+                        new DoubleTag('', $pos->z)
+                    ]);
                     $nbt->Rotation = new ListTag('Rotation', [
-						 new FloatTag('', 0),
-						 new FloatTag('', 0)
-					 ]);
+                        new FloatTag('', 0),
+                        new FloatTag('', 0)
+                    ]);
                     $nbt->Speed = new DoubleTag('Speed', $data['速度']);
                     if($data['类型'] == 'npc') {
-						if($data['皮肤']=='默认' or (!is_file($this->getDataFolder().'skins/'.$data['皮肤'].'.png') and !is_file($this->getDataFolder().'skins/cache/'.$data['皮肤'].'.png.cache'))){
-							$skin=$this->getSkin('默认');
-							$nbt->Skin = new CompoundTag('Skin', ['Data' => new StringTag('Data', $skin), 'Name' => new StringTag('Name', 'Standard_Custom')]);
-						}else{
-							$skin=$this->getSkin($data['皮肤']);
-							$nbt->Skin = new CompoundTag('Skin', ['Data' => new StringTag('Data', $skin), 'Name' => new StringTag('Name', $data['皮肤ID'])]);
-						}
+                        if($data['皮肤']=='默认' or (!is_file($this->getDataFolder().'skins/'.$data['皮肤'].'.png') and !is_file($this->getDataFolder().'skins/cache/'.$data['皮肤'].'.png.cache'))){
+                            $skin=$this->getSkin('默认');
+                            $nbt->Skin = new CompoundTag('Skin', ['Data' => new StringTag('Data', $skin), 'Name' => new StringTag('Name', 'Standard_Custom')]);
+                        }else{
+                            $skin=$this->getSkin($data['皮肤']);
+                            $nbt->Skin = new CompoundTag('Skin', ['Data' => new StringTag('Data', $skin), 'Name' => new StringTag('Name', $data['皮肤ID'])]);
+                        }
                     }
-                    $pk = Entity::createEntity(DataList::$ModName[$data['类型']], $l, $nbt);
+                    $pk = Entity::createEntity(DataList::$ModName[$data['名字']]??DataList::$ModName[$data['类型']], $l, $nbt);
                     if(!($pk instanceof Entity)) {
                         $this->getLogger()->Warning($vid.'找不到实体！！');
                         continue;
@@ -446,12 +448,12 @@ class Main extends PluginBase implements Listener
             foreach($l->getEntities() as $entity) {
                 if($entity instanceof BaseEntity AND $entity->enConfig['刷怪点'] === $data['刷怪点']) {
                     if($no_player) {
-                        if(!$entity->onPlayer) {
+                        if(!$entity->onPlayer and $entity->enConfig['怪物模式'] !== 0) {
                             $entity->setOnPlayer(true);
-                            $particle = new SimpleFloatingText($entity->getPosition(), '§c范围内无玩家，回到出生坐标！');
+                           new SimpleFloatingText($entity->getPosition(), '§c范围内无玩家，回到出生坐标！');
                         }
                     }elseif($entity->distance($pos) >= $data['边界范围半径']) {
-                        $particle = new SimpleFloatingText($entity->getPosition(), '§b怪物超过范围，拉回怪物！');
+                        new SimpleFloatingText($entity->getPosition(), '§b怪物超过范围，拉回怪物！');
                         $entity->teleport($pos);
                     } else
                         $entity->setOnPlayer(false);
@@ -459,8 +461,8 @@ class Main extends PluginBase implements Listener
             }
             if(isset($tmp['悬浮字'])) {
                 if($tmp['数量'] >= $data['数量'])$time = '§6数量已达最大值';
-					else
-				$time = ($tmp['剩余时间'] < 0) ? '0秒刷出' : $tmp['剩余时间'].'秒刷出';
+                else
+                    $time = ($tmp['剩余时间'] < 0) ? '0秒刷出' : $tmp['剩余时间'].'秒刷出';
                 $tmp['悬浮字']->updateAll([$time, $tmp['数量']]);
             }
         }
@@ -487,8 +489,8 @@ class Main extends PluginBase implements Listener
         }
         if(!($ev instanceof EntityDamageByEntityEvent) or $ev->getCause() == EntityDamageEvent::CAUSE_THORNS)return;
         $damager = $ev->getDamager();
-       if($damager instanceof BaseEntity AND $entity instanceof Player AND $entity->getGamemode() == 0) {
-			if(!isset($damager->enConfig))$damager->close();
+        if($damager instanceof BaseEntity AND $entity instanceof Player AND $entity->getGamemode() == 0) {
+            if(!isset($damager->enConfig))$damager->close();
             if(in_array($ev->getCause(), [EntityDamageEvent::CAUSE_ENTITY_EXPLOSION]))return $ev->setCancelled();
             if($ev->getCause() == EntityDamageEvent::CAUSE_PROJECTILE and $damager->enConfig['名字'] === '异界统治者')return;
             if($damager->enConfig['燃烧'] !== 0) {
@@ -506,6 +508,28 @@ class Main extends PluginBase implements Listener
         }
         unset($ev, $entity);
     }
+
+    /**
+     * 获取今天击杀次数
+     * @param $name
+     * @param $player
+     * @return int
+     */
+    public static function getKillNumber($name, $player) : int {
+        $all = \LTCraft\Main::getInstance()->number->get($name.'击杀次数', []);
+        return $all[strtolower($player)]??0;
+    }
+
+    /**
+     * 获取上次击杀时间
+     * @param $name
+     * @param $player
+     * @return int
+     */
+    public static function getLastKillerTime($name, $player) : int {
+        $all = \LTCraft\Main::getInstance()->number->get($name.'上次击杀时间', []);
+        return $all[strtolower($player)]??0;
+    }
     public function onEntityDeath(EntityDeathEvent $ev)
     {
         $entity = $ev->getEntity();
@@ -522,156 +546,167 @@ class Main extends PluginBase implements Listener
             $number = mt_rand(10,30);
             $this->distorted[strtolower($player->getName())] += $number;
             $player->sendMessage('§e你击杀了失落领主获得了'.$number.'点扭曲值！');
+        }elseif($entity->getNormalName() == '囚禁者'){
+            $all = \LTCraft\Main::getInstance()->number->get('囚禁者击杀次数', []);
+            $all2 = \LTCraft\Main::getInstance()->number->get('囚禁者上次击杀时间', []);
+            if (isset($all[strtolower($player->getName())])){
+                $all[strtolower($player->getName())] = $all[strtolower($player->getName())]+1;
+            }else{
+                $all[strtolower($player->getName())] = 1;
+            }
+            $all2[strtolower($player->getName())] = time();
+            \LTCraft\Main::getInstance()->number->set('囚禁者击杀次数', $all);
+            \LTCraft\Main::getInstance()->number->set('囚禁者上次击杀时间', $all2);
         }
         foreach($entity->enConfig['掉落'] as $drop) {
             $dropItem = explode(':', $drop);
             if(!isset($dropItem[3]))continue;
             if(mt_rand(0, 10000) > $dropItem[3]*100*($player->getBuff()->getLucky()/100+1)){//$drop
-				$player->sendMessage('§l§c抱歉，你这次击杀未获得战利品：§e'.Item::getItemName($dropItem));
-				continue;
-			}
+                $player->sendMessage('§l§c抱歉，你这次击杀未获得战利品：§e'.Item::getItemName($dropItem));
+                continue;
+            }
             if(in_array($dropItem[0], ['材料', '近战', '远程', '通用', '盔甲'])) {
                 if($dropItem[0]=='材料')
-					$item = LTItem::getInstance()->createMaterial($dropItem[1]);
-				elseif(in_array($dropItem[0], ['近战', '远程', '通用']))
-					$item = LTItem::getInstance()->createWeapon($dropItem[0], $dropItem[1], $player);
-				elseif($dropItem[0]=='盔甲')
-					$item = LTItem::getInstance()->createArmor($dropItem[1], $player);
+                    $item = LTItem::getInstance()->createMaterial($dropItem[1]);
+                elseif(in_array($dropItem[0], ['近战', '远程', '通用']))
+                    $item = LTItem::getInstance()->createWeapon($dropItem[0], $dropItem[1], $player);
+                elseif($dropItem[0]=='盔甲')
+                    $item = LTItem::getInstance()->createArmor($dropItem[1], $player);
                 if($item == false or $item == null)continue;
                 $item->setCount((int)$dropItem[2]);
             } else {
                 $item = Item::get((int)$dropItem[0], (int)$dropItem[1], (int)$dropItem[2]);
                 if(isset($dropItem[4]))$item->setCustomName($dropItem[4]);
             }
-			$dropItem = $level->dropItem($entity, $item);
-			if($dropItem instanceof entityItem)$dropItem->setOwner(strtolower($player->getName()));
+            $dropItem = $level->dropItem($entity, $item);
+            if($dropItem instanceof entityItem)$dropItem->setOwner(strtolower($player->getName()));
         }
-		if($entity->enConfig['团队']){
-			$max = 0;
-			foreach($entity->participants as $PPlayer){
-				$max = max($max, $PPlayer[1]);
-			}
-			$mess='§a§l你参与击杀了'.$entity->enConfig['名字'].'获得了:';
-			$len=strlen($mess);
-			foreach($entity->participants as $PPlayer){
-				if($PPlayer[0]->closed)continue;
-				if($PPlayer[1]<$max*0.25){
+        if($entity->enConfig['团队']){
+            $max = 0;
+            foreach($entity->participants as $PPlayer){
+                $max = max($max, $PPlayer[1]);
+            }
+            $mess='§a§l你参与击杀了'.$entity->enConfig['名字'].'获得了:';
+            $len=strlen($mess);
+            foreach($entity->participants as $PPlayer){
+                if($PPlayer[0]->closed)continue;
+                if($PPlayer[1]<$max*0.25){
                     $PPlayer[0]->sendMessage('§l§c你对团队贡献低于第一名的25%！无法获得奖励！');
                     $PPlayer[0]->sendMessage('§l§c第一名攻击次数：'.$max.' 你攻击次数：'.$PPlayer[1]);
-					continue;
-				}
-				if ($weapon instanceof Weapon){
+                    continue;
+                }
+                if ($weapon instanceof Weapon){
                     if ($weapon->getAttribute('参与不掉落', true) and $PPlayer[0]!==$player){
                         continue;
                     }
                 }
-				foreach($entity->enConfig['参与击杀掉落'] as $drop) {
-					$dropItem = explode(':', $drop);
-					// var_dump($dropItem);
-					if(!isset($dropItem[3]))continue;
-					if(mt_rand(0, 10000) > $dropItem[3]*100*($PPlayer[0]->getBuff()->getLucky()/100+1)){
-						$PPlayer[0]->sendMessage('§l§c抱歉，你这次击杀未获得战利品：§e'.$drop);
-						continue;
-					}
-					if(in_array($dropItem[0], ['材料', '近战', '远程', '通用', '盔甲'])) {
-						if($dropItem[0]=='材料')
-							$item = LTItem::getInstance()->createMaterial($dropItem[1]);
-						elseif(in_array($dropItem[0], ['近战', '远程', '通用']))
-							$item = LTItem::getInstance()->createWeapon($dropItem[0], $dropItem[1], $PPlayer[0]);
-						elseif($dropItem[0]=='盔甲')
-							$item = LTItem::getInstance()->createArmor($dropItem[1], $PPlayer[0]);
-						if($item == false or $item == null)continue;
-						$item->setCount((int)$dropItem[2]);
-					} else {
-						$item = Item::get((int)$dropItem[0], (int)$dropItem[1], (int)$dropItem[2]);
-						if(isset($dropItem[4]))$item->setCustomName($dropItem[4]);
-					}
-					// $dropItem = $level->dropItem($entity, $item);
-					// if($dropItem instanceof entityItem)$dropItem->setOwner(strtolower($PPlayer->getName()));
-					
-					if(!$PPlayer[0]->getInventory()->canAddItem($item)){
-						\LTCraft\Main::sendItem($PPlayer[0]->getName(), $dropItem);
-						$PPlayer[0]->sendMessage('§l§c哎呀,背包空间不足,无法获得§e'.Item::getItemString($item).'§c已发送到你的邮箱~');
-					}else{
-						$PPlayer[0]->getInventory()->addItem($item);
-						// $player->getServer()->BroadCastMessage('§e恭喜玩家§c'.$player->getName().'§e获得了§d'.$item->getItemString().'§e!');
-						$PPlayer[0]->sendMessage('§l§c你获得了§e'.Item::getItemString($item).'§c已发送到你的背包~');
-					}
-				}
+                foreach($entity->enConfig['参与击杀掉落'] as $drop) {
+                    $dropItem = explode(':', $drop);
+                    // var_dump($dropItem);
+                    if(!isset($dropItem[3]))continue;
+                    if(mt_rand(0, 10000) > $dropItem[3]*100*($PPlayer[0]->getBuff()->getLucky()/100+1)){
+                        $PPlayer[0]->sendMessage('§l§c抱歉，你这次击杀未获得战利品：§e'.$drop);
+                        continue;
+                    }
+                    if(in_array($dropItem[0], ['材料', '近战', '远程', '通用', '盔甲'])) {
+                        if($dropItem[0]=='材料')
+                            $item = LTItem::getInstance()->createMaterial($dropItem[1]);
+                        elseif(in_array($dropItem[0], ['近战', '远程', '通用']))
+                            $item = LTItem::getInstance()->createWeapon($dropItem[0], $dropItem[1], $PPlayer[0]);
+                        elseif($dropItem[0]=='盔甲')
+                            $item = LTItem::getInstance()->createArmor($dropItem[1], $PPlayer[0]);
+                        if($item == false or $item == null)continue;
+                        $item->setCount((int)$dropItem[2]);
+                    } else {
+                        $item = Item::get((int)$dropItem[0], (int)$dropItem[1], (int)$dropItem[2]);
+                        if(isset($dropItem[4]))$item->setCustomName($dropItem[4]);
+                    }
+                    // $dropItem = $level->dropItem($entity, $item);
+                    // if($dropItem instanceof entityItem)$dropItem->setOwner(strtolower($PPlayer->getName()));
+
+                    if(!$PPlayer[0]->getInventory()->canAddItem($item)){
+                        \LTCraft\Main::sendItem($PPlayer[0]->getName(), $dropItem);
+                        $PPlayer[0]->sendMessage('§l§c哎呀,背包空间不足,无法获得§e'.Item::getItemString($item).'§c已发送到你的邮箱~');
+                    }else{
+                        $PPlayer[0]->getInventory()->addItem($item);
+                        // $player->getServer()->BroadCastMessage('§e恭喜玩家§c'.$player->getName().'§e获得了§d'.$item->getItemString().'§e!');
+                        $PPlayer[0]->sendMessage('§l§c你获得了§e'.Item::getItemString($item).'§c已发送到你的背包~');
+                    }
+                }
                 if(($PPlayer[0]->getGrade()>50 or $PPlayer[0]->getGTo()>5) and $entity->enConfig['刷怪点']!=='傀儡')self::addCount($PPlayer[0]);
-				if($PPlayer[0]===$player)continue;
-				$PPlayer[0]->getTask()->action('参与击杀怪物', $entity->enConfig['名字']);
-				$tmpMess=$mess;
-				if($entity->enConfig['参与经验'] >0 and $PPlayer[0] instanceof Player){
-					$PPlayer[0]->addExp($entity->enConfig['参与经验']);
-					$n=strtolower($PPlayer[0]->getName());
-					$this->WeeksExp->set($n, $this->getWeeksExp($n)+$entity->enConfig['参与经验']);
-					$tmpMess.=PHP_EOL .$entity->enConfig['参与经验'].'点经验';
-				}
-				if($entity->enConfig['参与橙币'] >0 and $PPlayer[0] instanceof Player){
-					$PPlayer[0]->addMoney($entity->enConfig['参与橙币'], '参与击杀怪物获得');
-					$tmpMess.=PHP_EOL .$entity->enConfig['参与橙币'].'点橙币';
-				}
-				if(strlen($tmpMess)>$len)$PPlayer[0]->sendCenterTip($tmpMess);
-			}
-		}
-		/*
-		$n=$level->getName(){3};
-		if(is_numeric($n) and $player->getGTo()>$n-2){
-			if(mt_rand(0, 100)==0 and \LTCraft\Main::calculateS($player->getName())){
-				$dropItem=$level->dropItem($entity, LTItem::getInstance()->createMaterial('LTCraft'{mt_rand(0, 6)}));
-				if($dropItem instanceof entityItem)$dropItem->setOwner(strtolower($player->getName()));
-			}
-		}else{
-			if($entity->enConfig['刷怪点']==='傀儡')return;
-			if(\LTCraft\Main::calculateS($player->getName())){
-				$player->getInventory()->addItem(LTItem::getInstance()->createMaterial('LTCraft'{mt_rand(0, 6)}));
-				$player->sendMessage('§a你击杀了"§e暗黑影龙§a" 已将碎片发送到你背包');
-			}
-		}
-		*/
-		$mess='§a§l你击杀了'.$entity->enConfig['名字'].'获得了:';
-		$player->getTask()->action('击杀怪物', $entity->enConfig['名字']);
-		$len=strlen($mess);
+                if($PPlayer[0]===$player)continue;
+                $PPlayer[0]->getTask()->action('参与击杀怪物', $entity->enConfig['名字']);
+                $tmpMess=$mess;
+                if($entity->enConfig['参与经验'] >0 and $PPlayer[0] instanceof Player){
+                    $PPlayer[0]->addExp($entity->enConfig['参与经验']);
+                    $n=strtolower($PPlayer[0]->getName());
+                    $this->WeeksExp->set($n, $this->getWeeksExp($n)+$entity->enConfig['参与经验']);
+                    $tmpMess.=PHP_EOL .$entity->enConfig['参与经验'].'点经验';
+                }
+                if($entity->enConfig['参与橙币'] >0 and $PPlayer[0] instanceof Player){
+                    $PPlayer[0]->addMoney($entity->enConfig['参与橙币'], '参与击杀怪物获得');
+                    $tmpMess.=PHP_EOL .$entity->enConfig['参与橙币'].'点橙币';
+                }
+                if(strlen($tmpMess)>$len)$PPlayer[0]->sendCenterTip($tmpMess);
+            }
+        }
+        /*
+        $n=$level->getName(){3};
+        if(is_numeric($n) and $player->getGTo()>$n-2){
+            if(mt_rand(0, 100)==0 and \LTCraft\Main::calculateS($player->getName())){
+                $dropItem=$level->dropItem($entity, LTItem::getInstance()->createMaterial('LTCraft'{mt_rand(0, 6)}));
+                if($dropItem instanceof entityItem)$dropItem->setOwner(strtolower($player->getName()));
+            }
+        }else{
+            if($entity->enConfig['刷怪点']==='傀儡')return;
+            if(\LTCraft\Main::calculateS($player->getName())){
+                $player->getInventory()->addItem(LTItem::getInstance()->createMaterial('LTCraft'{mt_rand(0, 6)}));
+                $player->sendMessage('§a你击杀了"§e暗黑影龙§a" 已将碎片发送到你背包');
+            }
+        }
+        */
+        $mess='§a§l你击杀了'.$entity->enConfig['名字'].'获得了:';
+        $player->getTask()->action('击杀怪物', $entity->enConfig['名字']);
+        $len=strlen($mess);
         if($entity->enConfig['经验'] >0 and $player instanceof Player){
-			$player->addExp($entity->enConfig['经验']);
-			$n=strtolower($player->getName());
-			$this->WeeksExp->set($n, $this->getWeeksExp($n)+$entity->enConfig['经验']);
-			$mess.=PHP_EOL .$entity->enConfig['经验'].'点经验';
-		}
+            $player->addExp($entity->enConfig['经验']);
+            $n=strtolower($player->getName());
+            $this->WeeksExp->set($n, $this->getWeeksExp($n)+$entity->enConfig['经验']);
+            $mess.=PHP_EOL .$entity->enConfig['经验'].'点经验';
+        }
         if($entity->enConfig['橙币'] >0 and $player instanceof Player){
-			$player->addMoney($entity->enConfig['橙币'], '击杀怪物获得');
-			$mess.=PHP_EOL .$entity->enConfig['橙币'].'点橙币';
-		}
-		if(strlen($mess)>$len)$player->sendCenterTip($mess);
-		if(!$entity->enConfig['团队'] and ($player->getGrade()>50 or $player->getGTo()>5) and $entity->enConfig['刷怪点']!=='傀儡')self::addCount($player);
-		// if($entity->enConfig['团队']){
-			// $mess='§a§l你参与击杀了'.$entity->enConfig['名字'].'获得了:';
-			// $len=strlen($mess);
-			// foreach($entity->participants as $PPlayer){
-				// if($PPlayer->closed)continue;
-				// if($PPlayer===$player)continue;
-				// $PPlayer->getTask()->action('参与击杀怪物', $entity->enConfig['名字']);
-				// $tmpMess=$mess;
-				// if($entity->enConfig['参与经验'] >0 and $PPlayer instanceof Player){
-					// $PPlayer->addExp($entity->enConfig['参与经验']);
-					// $n=strtolower($PPlayer->getName());
-					// $this->WeeksExp->set($n, $this->getWeeksExp($n)+$entity->enConfig['参与经验']);
-					// $tmpMess.=PHP_EOL .$entity->enConfig['参与经验'].'点经验';
-				// }
-				// if($entity->enConfig['参与橙币'] >0 and $PPlayer instanceof Player){
-					// $PPlayer->addMoney($entity->enConfig['参与橙币'], '参与击杀怪物获得');
-					// $tmpMess.=PHP_EOL .$entity->enConfig['参与橙币'].'点橙币';
-				// }
-				// if(strlen($tmpMess)>$len)$PPlayer->sendCenterTip($tmpMess);
-			// }
-		// }
-		foreach($entity->enConfig['击杀药水'] as $potion) {
-			$attribute = explode(':', $potion);
-			if(!isset($attribute[2]) or $attribute[0] < 0 or $attribute[0] > 25) return;
-			$effect = Effect::getEffect((int)$attribute[0])->setDuration((int)$attribute[1] * 20)->setAmplifier((int)$attribute[2]);
-			$player->addEffect($effect);
-		}
+            $player->addMoney($entity->enConfig['橙币'], '击杀怪物获得');
+            $mess.=PHP_EOL .$entity->enConfig['橙币'].'点橙币';
+        }
+        if(strlen($mess)>$len)$player->sendCenterTip($mess);
+        if(!$entity->enConfig['团队'] and ($player->getGrade()>50 or $player->getGTo()>5) and $entity->enConfig['刷怪点']!=='傀儡')self::addCount($player);
+        // if($entity->enConfig['团队']){
+        // $mess='§a§l你参与击杀了'.$entity->enConfig['名字'].'获得了:';
+        // $len=strlen($mess);
+        // foreach($entity->participants as $PPlayer){
+        // if($PPlayer->closed)continue;
+        // if($PPlayer===$player)continue;
+        // $PPlayer->getTask()->action('参与击杀怪物', $entity->enConfig['名字']);
+        // $tmpMess=$mess;
+        // if($entity->enConfig['参与经验'] >0 and $PPlayer instanceof Player){
+        // $PPlayer->addExp($entity->enConfig['参与经验']);
+        // $n=strtolower($PPlayer->getName());
+        // $this->WeeksExp->set($n, $this->getWeeksExp($n)+$entity->enConfig['参与经验']);
+        // $tmpMess.=PHP_EOL .$entity->enConfig['参与经验'].'点经验';
+        // }
+        // if($entity->enConfig['参与橙币'] >0 and $PPlayer instanceof Player){
+        // $PPlayer->addMoney($entity->enConfig['参与橙币'], '参与击杀怪物获得');
+        // $tmpMess.=PHP_EOL .$entity->enConfig['参与橙币'].'点橙币';
+        // }
+        // if(strlen($tmpMess)>$len)$PPlayer->sendCenterTip($tmpMess);
+        // }
+        // }
+        foreach($entity->enConfig['击杀药水'] as $potion) {
+            $attribute = explode(':', $potion);
+            if(!isset($attribute[2]) or $attribute[0] < 0 or $attribute[0] > 25) return;
+            $effect = Effect::getEffect((int)$attribute[0])->setDuration((int)$attribute[1] * 20)->setAmplifier((int)$attribute[2]);
+            $player->addEffect($effect);
+        }
         if($entity->enConfig['死亡执行命令'] != null) {
             foreach(explode('&', $entity->enConfig['死亡执行命令']) as $c) {
                 $command = explode('%', $c);
@@ -694,39 +729,39 @@ class Main extends PluginBase implements Listener
     {
         return in_array($name, ['异界统治者', '冰之神', '怪魔制造者', '远古巨龙', '纳什男爵', '烬灭:元素之神', '圣龙骑士', '魔雾制造者', '符文之城的统治-虐杀']);
     }
-	public function getWeeksExp($name){
-		$name=strtolower($name);
-		return $this->WeeksExp->get($name, 0);
-	}
-	public function updateWeeksExpConfig(){
-		if(date("w")==1){//是周一了
-			$this->WeeksExp->save(false);
-			copy($this->WeeksExp->getFile(), $this->getDataFolder().'WeeksExp/'.$this->WeeksExp->get('配置日期').'.yml');
-			$keep=$this->WeeksExp->getAll();
-			arsort($keep);//排名
-			$i=1;
-			foreach($keep as $name=>$count){
-				if($i<4){
-					\LTCraft\Main::sendItem($name, ['材料', '觉醒石', 4-$i]);
-					\LTCraft\Main::sendItem($name, ['材料', '盔甲精髓', 4-$i]);
-				}
-				\LTCraft\Main::sendItem($name, ['材料', '碎片熔炼坛碎片', 11-$i]);
-				if(++$i==11)break;
-			}
-			$this->getServer()->getScheduler()->scheduleAsyncTask(new \LTCraft\RankingsReward($keep, \LTCraft\RankingsReward::PVE_EXP));
-			$this->WeeksExp->setAll([]);
-		}
-	}
+    public function getWeeksExp($name){
+        $name=strtolower($name);
+        return $this->WeeksExp->get($name, 0);
+    }
+    public function updateWeeksExpConfig(){
+        if(date("w")==1){//是周一了
+            $this->WeeksExp->save(false);
+            copy($this->WeeksExp->getFile(), $this->getDataFolder().'WeeksExp/'.$this->WeeksExp->get('配置日期').'.yml');
+            $keep=$this->WeeksExp->getAll();
+            arsort($keep);//排名
+            $i=1;
+            foreach($keep as $name=>$count){
+                if($i<4){
+                    \LTCraft\Main::sendItem($name, ['材料', '觉醒石', 4-$i]);
+                    \LTCraft\Main::sendItem($name, ['材料', '盔甲精髓', 4-$i]);
+                }
+                \LTCraft\Main::sendItem($name, ['材料', '碎片熔炼坛碎片', 11-$i]);
+                if(++$i==11)break;
+            }
+            $this->getServer()->getScheduler()->scheduleAsyncTask(new \LTCraft\RankingsReward($keep, \LTCraft\RankingsReward::PVE_EXP));
+            $this->WeeksExp->setAll([]);
+        }
+    }
     public function onJoinEvent(PlayerJoinEvent $e){
-    	$name=strtolower($e->getPlayer()->getName());
-		if($this->WeeksExp->get($name)===false){
-			$this->WeeksExp->set($name, 0);
-		}
-		$this->distorted[$name] = 0;
+        $name=strtolower($e->getPlayer()->getName());
+        if($this->WeeksExp->get($name)===false){
+            $this->WeeksExp->set($name, 0);
+        }
+        $this->distorted[$name] = 0;
     }
     public function onQuitEvent(PlayerQuitEvent $e){
-    	$name=$e->getPlayer()->getName();
-		unset($this->killCount[$name], $this->errorCount[$name], $this->distorted[strtolower($name)]);
+        $name=$e->getPlayer()->getName();
+        unset($this->killCount[$name], $this->errorCount[$name], $this->distorted[strtolower($name)]);
     }
     public function onRegainHealthEvent(EntityRegainHealthEvent $e){
         if ($e->getEntity() instanceof Player){
@@ -744,8 +779,7 @@ class Main extends PluginBase implements Listener
         }
     }
     public function onMoveEvent(PlayerMoveEvent $e){
-	    $player = $e->getPlayer();
-	    $gaia = null;
+        $player = $e->getPlayer();
         foreach ($this->gaia as $entity){
             /** @var GaiaGuardians $entity */
             if ($entity->getBasePos()->distance($e->getPlayer())<=13){
@@ -763,6 +797,45 @@ class Main extends PluginBase implements Listener
                 }
                 return;
             }elseif ($entity->getBasePos()->distance($e->getPlayer())<=15){
+                $x=$entity->getBasePos()->x - $player->x;
+                $z=$entity->getBasePos()->z - $player->z;
+                $f = sqrt($x * $x + $z * $z);
+                $v3=new Vector3(0, 0.1, 0);
+                if($f > 0){
+                    $f = 1 / $f;
+                    $v3->x = $x * $f * 2;
+                    $v3->z = $z * $f * 2;
+                }
+                $player->setMotion($v3);
+                return;
+            }
+        }
+        if (isset($this->skills['Sakura']))foreach ($this->skills['Sakura'] as $entity){
+            /** @var $entity Sakura */
+            if ($entity->getOwner() instanceof Player){
+                /** @var Player $owner */
+                $owner = $entity->getOwner();
+                if ($owner->getName() == $player->getName())continue;
+            }
+            /** @var Sakura $entity */
+            if ($entity->getBasePos()->distance($e->getPlayer())<=15){
+                if ($e->getTo()->distance($entity->getBasePos())>12.5){
+                    $x=$entity->getBasePos()->x - $player->x;
+                    $z=$entity->getBasePos()->z - $player->z;
+                    $f = sqrt($x * $x + $z * $z);
+                    $v3=new Vector3(0, 0.1, 0);
+                    if($f > 0){
+                        $f = 1 / $f;
+                        $v3->x = $x * $f * 1.5;
+                        $v3->z = $z * $f * 1.5;
+                    }
+                    $player->setMotion($v3);
+                }
+                if ($e->getTo()->distance($entity->getBasePos())<10 and $player->y - $entity->getBasePos()->getY() > 0.4){
+                    $player->setMotion(new Vector3(0,  0 - ($player->y - $entity->getBasePos()->getY()), 0));
+                }
+                return;
+            }elseif ($entity->getBasePos()->distance($e->getPlayer())<=22){
                 $x=$entity->getBasePos()->x - $player->x;
                 $z=$entity->getBasePos()->z - $player->z;
                 $f = sqrt($x * $x + $z * $z);

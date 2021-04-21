@@ -53,7 +53,8 @@ class Main extends PluginBase{
 		}
 	}
 	public static function getCleanName($name){
-		return preg_replace('#§.#', '', strtolower($name));
+		$name = preg_replace('#§.#', '', strtolower($name));
+        return str_replace(' ', '', $name);
 	}
 	public function addPet($player,$type,$name){
 		$conf=['type'=>$type, 'hunger'=>10000, 'love'=>0, 'name'=>$name, 'skin'=>''];

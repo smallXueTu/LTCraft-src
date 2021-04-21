@@ -287,8 +287,6 @@ class Main extends PluginBase implements Listener
 					$sender->sendMessage(self::HEAD.'a伪装成功！');
 				} else $sender->sendMessage(self::HEAD.'c实体范围1~120');
 			break;
-			/*case '骑乘':TDOD:骑人
-			break;*/
 			/*case '附魔':TODO:附魔
 				$vip=$this->isVIP($sender->getName());
 				if($vip===false or $vip<3)return $sender->sendMessage(self::HEAD.'c抱歉，你不是VIP3。');

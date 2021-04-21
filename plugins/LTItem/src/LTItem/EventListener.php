@@ -1,7 +1,10 @@
 <?php
 namespace LTItem;
+use LTEntity\entity\Boss\SkillsEntity\Sakura;
+use LTEntity\entity\Boss\SkillsEntity\SpaceTear;
 use LTItem\Mana\Mana;
 use pocketmine\block\Air;
+use pocketmine\entity\Creature;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\entity\EntityCombustEvent;
 use pocketmine\event\entity\EntityCombustByEntityEvent;
@@ -192,7 +195,47 @@ class EventListener implements Listener
 						$player->sendMessage('§a释放技能成功~');
                         Cooling::$weapon[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD()-30;
 					}
-				break;
+                    break;
+                    case '樱花的誓约':
+                        if(!isset(Cooling::$weapon[$player->getName()][$Hand->getLTName()]) or Cooling::$weapon[$player->getName()][$Hand->getLTName()]<time()){
+                            if (!$player->getBuff()->consumptionMana(500)){
+                                $player->sendMessage('§cMana不足！');
+                                return;
+                            }
+                            $nbt = new CompoundTag;
+                            $nbt->Pos = new ListTag("Pos", [
+                                new DoubleTag("",  $player->x+0.5),
+                                new DoubleTag("",  $player->y+0.5),
+                                new DoubleTag("",  $player->z+0.5)
+                            ]);
+                            $nbt->Rotation = new ListTag('Rotation', [
+                                new FloatTag('', 0),
+                                new FloatTag('', 0)
+                            ]);
+                            new Sakura( $player->getLevel(), $nbt,  $player);
+                            Cooling::$weapon[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD();
+                        }
+                    break;
+                    case '时空撕裂':
+                        if(!isset(Cooling::$weapon[$player->getName()][$Hand->getLTName()]) or Cooling::$weapon[$player->getName()][$Hand->getLTName()]<time()){
+                            if (!$player->getBuff()->consumptionMana(500)){
+                                $player->sendMessage('§cMana不足！');
+                                return;
+                            }
+                            $nbt = new CompoundTag;
+                            $nbt->Pos = new ListTag("Pos", [
+                                new DoubleTag("",  $player->x+0.5),
+                                new DoubleTag("",  $player->y+0.5),
+                                new DoubleTag("",  $player->z+0.5)
+                            ]);
+                            $nbt->Rotation = new ListTag('Rotation', [
+                                new FloatTag('', 0),
+                                new FloatTag('', 0)
+                            ]);
+                            new SpaceTear($player->getLevel(), $nbt, $player);
+                            Cooling::$weapon[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD();
+                         }
+                    break;
 			}
 		}
 	}
@@ -450,6 +493,14 @@ class EventListener implements Listener
 			}
 		}
 	}
+
+    /**
+     * 修复击杀提示消失
+     * @param PlayerDeathEvent $event
+     */
+	public function onPlayerDeathEvent(PlayerDeathEvent $event){
+        $this->onDeathEvent($event);
+    }
 	public function onDeathEvent(EntityDeathEvent $event)
 	{
 		$entity = $event->getEntity();
@@ -490,31 +541,34 @@ class EventListener implements Listener
                                 $damager->sendMessage('§c你的'.$hand->getLTName().'无耐久了，无法获得荣耀值和击杀数。');
                             }
                         }
+                        if (\LTCraft\Main::getCNumber($damager->getName()) < 10){
+                            $probability = 1;
+                            $add = $entity->getMaxHealth() / 50000;
+                            if ($add > 29)$add = 29;
+                            if (mt_rand(1, 100) <= $probability + $add){
+                                $c = '§a'.'Craft'[mt_rand(0, 4)];
+                                $item = Main::getInstance()->createMaterial($c);
+                                $itemE = $entity->getLevel()->dropItem($entity, $item);
+                                $itemE->setOwner($damager);
+                                $damager->sendMessage('§c你击杀了'.$entity->getNormalName().'掉落了一个字符'.$c.'。');
+                                \LTCraft\Main::addCNumber($damager->getName());
+                            }
+                        }
                     }
                 }
             }
         }
 	}
-
-    /**
-     * @param $cause
-     * @return bool
-     */
 	public static function canCalculate($cause){
 		return !in_array($cause, [EntityDamageEvent::CAUSE_ENTITY_EXPLOSION, EntityDamageEvent::CAUSE_THORNS, EntityDamageEvent::CAUSE_SECONDS_KILL]);
 	}
-
-    /**
-     * @param EntityDamageEvent $event
-     * @return mixed|void
-     */
 	public function onEntityDEvent(EntityDamageEvent $event)
 	{
 		if($event->isCancelled())return;
 		$entity = $event->getEntity();
 		if($event instanceof EntityDamageByEntityEvent and self::canCalculate($event->getCause())) {
 			$damager = $event->getDamager();
-			if(($entity instanceof Player and $damager instanceof Player and $entity->getBuff()->miss()) or $damager->getBlindness()) {
+			if(($entity instanceof Player and $damager instanceof Player and $entity->getBuff()->miss()) or ($damager instanceof Creature and $damager->getBlindness())) {
 				new FloatingText($entity, '§c未命中~', 0.8);
                 $entity->newProgress('抱歉，今天不行。', '躲避一次攻击。');
 				return $event->setCancelled(true);
