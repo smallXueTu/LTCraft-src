@@ -5,21 +5,31 @@ namespace pocketmine\tile;
 
 
 use LTEntity\entity\Mana\ManaFloating;
+use LTItem\Mana\Mana;
 use pocketmine\inventory\ChestInventory;
 use pocketmine\level\Level;
+use pocketmine\level\particle\DustParticle;
 use pocketmine\level\Position;
+use pocketmine\math\Vector3;
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\IntTag;
 use pocketmine\nbt\tag\ListTag;
+use pocketmine\Server;
 
 class ManaCache extends Tile
 {
     const MAX_MANA = 1000000;
     /** @var int  */
     private $mana = 0;
+    private bool $spawnParticle = false;
+    public $progress = 0;//MAX 360
+    /**
+     * @var int
+     */
+    protected $lastUpdateTick = 0;
 
     /**
      * Chest constructor.
@@ -33,8 +43,73 @@ class ManaCache extends Tile
             $this->namedtag->Mana = new IntTag("Mana", 0);
         }
         $this->mana =  $this->namedtag['Mana'];
+        $this->scheduleUpdate();
     }
 
+    /**
+     * 向上方容器输入魔力
+     * @return bool
+     */
+    public function onUpdate()
+    {
+        if (Server::getInstance()->getTick() - $this->lastUpdateTick >= 10){
+            $this->spawnParticle = false;
+            $this->lastUpdateTick = Server::getInstance()->getTick();
+            $arr = [[0, 1, 0], [1, 0, 0], [-1, 0, 0], [0, 0, 1], [0, 0, -1]];
+            foreach ($arr as $a){//向四周抽取Mana 向上方输出Mana
+                $chest = $this->getLevel()->getTile($this->add($a[0], $a[1], [2]));
+                if ($chest !== null and $chest instanceof Chest){
+                    if ($a[1] == 1){
+                        foreach ($chest->getInventory()->getContents() as $i => $item){
+                            /** @var $item Mana */
+                            if ($item instanceof Mana){
+                                if ($this->getMana() < $item->getMaxMana()){
+                                    $enter = min($item->getMaxMana() - $item->getMana(), 100);                                    if ($enter == 0)continue;
+                                    $this->spawnParticle = true;
+                                    if ($this->putMana($enter)){
+                                        $item->addMana($enter);
+                                        $chest->getInventory()->setItem($i, $item);
+                                    }
+                                }
+                            }
+                        }
+                    }else{
+                        foreach ($chest->getInventory()->getContents() as $i => $item){
+                            /** @var $item Mana */
+                            if ($item instanceof Mana and $item->canPutMana()){
+                                if ($item->getMana() > 0){
+                                    $enter = min($item->getMana(), 100);
+                                    if ($enter == 0)continue;
+                                    if ($item->consumptionMana($enter)){
+                                        $this->addMana($enter);
+                                        $chest->getInventory()->setItem($i, $item);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if ($this->spawnParticle)$this->spawnParticle();
+        $this->progress++;
+        if ($this->progress >= 360)$this->progress = 0;
+        return true;
+    }
+
+    public function spawnParticle(){
+        $r = 0.8;
+        $x=$this->x + 0.5;
+        $y=$this->y + 1.4;
+        $z=$this->z + 0.5;
+        for ($ii = 0; $ii < 4; $ii++){
+            $iii = $this->progress + $ii * 45;
+            if ($iii >= 360)$iii -= 360;
+            $a = $x+$r*cos($iii*3.14/90);
+            $b = $z+$r*sin($iii*3.14/90);
+            $this->getLevel()->addParticle(new DustParticle(new Vector3($a,$y,$b), 0, 220, 0));
+        }
+    }
     /**
      * @return int
      */

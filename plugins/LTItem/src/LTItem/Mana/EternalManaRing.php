@@ -30,4 +30,13 @@ class EternalManaRing extends ManaOrnaments
     {
         return true;
     }
+
+    /**
+     * 用能魔力戒指不能取mana
+     * @return bool
+     */
+    public function canPutMana(): bool
+    {
+        return false;
+    }
 }

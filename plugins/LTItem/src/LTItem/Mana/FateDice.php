@@ -64,4 +64,8 @@ class FateDice extends BaseMana
         $player->sendMessage("§c骰子落在了".$side."，发现他变成了另一件物品。");
         return true;
     }
+    public function canPutMana(): bool
+    {
+        return false;
+    }
 }

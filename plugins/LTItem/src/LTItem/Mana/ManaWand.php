@@ -52,8 +52,12 @@ class ManaWand extends BaseMana
         if ($target instanceof ManaCache) {
             /** @var \pocketmine\tile\ManaCache $tile */
             $tile = $level->getTile($target);
-            if ($tile != null) {
-                $player->sendMessage('Mana:' .$tile->getMana());
+            if ($player->isSneaking()){//说不定有用
+
+            }else{
+                if ($tile != null) {
+                    $player->sendMessage('Mana:' .$tile->getMana());
+                }
             }
         }
         return true;

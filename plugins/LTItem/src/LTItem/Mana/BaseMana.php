@@ -249,4 +249,9 @@ class BaseMana extends Item implements LTItem,Mana
     {
         return 1;
     }
+
+    public function canPutMana(): bool
+    {
+        return true;
+    }
 }

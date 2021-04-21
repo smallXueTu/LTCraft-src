@@ -252,4 +252,9 @@ class ManaTool extends Tool implements LTItem,Mana
     {
         return 1;
     }
+
+    public function canPutMana(): bool
+    {
+        return false;
+    }
 }

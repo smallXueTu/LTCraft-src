@@ -85,7 +85,7 @@ class ManaCache extends Solid {
      */
     public function onActivate(Item $item, Player $player = null)
     {
-        if ($player->isSurvival() and $item instanceof Mana and !($item instanceof EternalManaRing) and !($item instanceof TerraShatterer)){
+        if ($player->isSurvival()){
             /** @var \pocketmine\tile\ManaCache $tile */
             $tile = $this->level->getTile($this);
             if (!($tile instanceof \pocketmine\tile\ManaCache)) {
@@ -99,6 +99,7 @@ class ManaCache extends Solid {
 
                 $tile = Tile::createTile("ManaCache", $this->getLevel(), $nbt);
             }
+            /*
             $mana = $item->getMana();
             if ($mana>0){
                 if ($item->consumptionMana($mana)) {
@@ -116,7 +117,9 @@ class ManaCache extends Solid {
                 }
                 $player->getInventory()->setItemInHand($item);
             }
+            */
         }
+        return true;
     }
 
     /**
