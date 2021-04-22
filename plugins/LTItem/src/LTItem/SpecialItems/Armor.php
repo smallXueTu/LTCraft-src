@@ -2,6 +2,8 @@
 namespace LTItem\SpecialItems;
 
 use pocketmine\item\Item;
+use pocketmine\nbt\tag\ByteTag;
+use pocketmine\nbt\tag\NamedTag;
 use pocketmine\Player;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\nbt\tag\CompoundTag;
@@ -34,7 +36,11 @@ class Armor extends Item implements LTItem{
 		$idInfo=explode(':',$conf['ID']);
 		parent::__construct($idInfo[0], $idInfo[1]??0, $count);
 		$this->setCompoundTag($nbt);
-		$this->setCustomName($conf['名字']);
+		if ($this->isPhantom()){
+            $this->setCustomName($conf['名字']."\n§d幻影药水染色");
+        }else{
+            $this->setCustomName($conf['名字']);
+        }
 		if($init)$this->initW($conf);
 		$this->conf = $conf;
 		$this->ArmorName = $this->getNamedTag()['armor'][1];
@@ -217,6 +223,24 @@ class Armor extends Item implements LTItem{
 	public function isResistanceFire(){
 		return $this->resistanceFire;
 	}
+    /**
+     * @return bool 如果是幻影外表
+     */
+    public function isPhantom(): bool
+    {
+        $tag = $this->getNamedTagEntry("phantom");
+        return $tag !== null and $tag->getValue() > 0;
+    }
+    /**
+     * @return Armor 设置幻影外表
+     */
+    public function setPhantom(bool $value): Armor
+    {
+        $nbt = $this->getNamedTag();
+        $nbt->Unbreakable=new ByteTag('Unbreakable',(int)$value);
+        $this->setNamedTag($nbt);
+        return $this;
+    }
 	public function getSpeed(){
 		return $this->speed;
 	}	

@@ -21,6 +21,7 @@
 
 namespace pocketmine\inventory;
 
+use LTItem\SpecialItems\Armor;
 use pocketmine\entity\Human;
 use pocketmine\event\entity\EntityArmorChangeEvent;
 use pocketmine\event\entity\EntityInventoryChangeEvent;
@@ -525,7 +526,12 @@ class PlayerInventory extends BaseInventory {
 				$pk2->targetEid = $player->getId();
 				$player->dataPacket($pk2);
 			}else{
-				$player->dataPacket($pk);
+                $hpk = clone $pk;
+                foreach ($pk->slots as $item){
+                    if ($item instanceof Armor and $item->isPhantom())
+                        $hpk = Item::get(0);
+                }
+				$player->dataPacket($hpk);
 			}
 		}
 	}
@@ -574,7 +580,12 @@ class PlayerInventory extends BaseInventory {
 				$pk2->item = $this->getItem($index);
 				$player->dataPacket($pk2);
 			}else{
-				$player->dataPacket($pk);
+			    $hpk = clone $pk;
+			    foreach ($pk->slots as $item){
+			        if ($item instanceof Armor and $item->isPhantom())
+			            $hpk = Item::get(0);
+                }
+				$player->dataPacket($hpk);
 			}
 		}
 	}
@@ -660,7 +671,9 @@ class PlayerInventory extends BaseInventory {
 					continue;
 				}
 				$pk->windowid = $id;
-				$player->dataPacket(clone $pk);
+                $hpk = clone $pk;
+                if ($hpk->item instanceof Armor and $hpk->item->isPhantom())$hpk->item = Item::get(0);
+				$player->dataPacket($hpk);
 			}
 		}
 	}

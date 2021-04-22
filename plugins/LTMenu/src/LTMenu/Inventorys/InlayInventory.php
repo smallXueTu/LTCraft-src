@@ -393,6 +393,12 @@ class InlayInventory extends OperationInventory{
                                     $item->setNamedTag($nbt);
 									$item->initW($item->getConfig());
 								break;
+                                case '幻影药水':
+                                    if (!$item->isPhantom()){
+                                        $count = 1;
+                                        $item->setPhantom(true);
+                                    }
+                                break;
 								case '黑色金刚石':
 									if($item->getAttribute('附加护甲最大值')==false)continue 2;
 									$count=$nbt['armor'][3];

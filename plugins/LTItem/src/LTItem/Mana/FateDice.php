@@ -68,4 +68,12 @@ class FateDice extends BaseMana
     {
         return false;
     }
+
+    /**
+     * 随机一个物品
+     * @return Item
+     */
+    public function randItem(): Item{
+
+    }
 }

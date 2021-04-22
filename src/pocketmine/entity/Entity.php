@@ -346,13 +346,13 @@ abstract class Entity extends Location implements Metadatable {
 	public $positionChanged;
 	public $motionChanged;
 	public $deadTicks = 0;
-	protected $age = 0;
+	protected int $age = 0;
 
-	public $height;
+	public float $height;
 
-	public $eyeHeight = null;
+	public float $eyeHeight = null;
 
-	public $width;
+	public float $width;
 	public $length;
 
 	/** @var int */
