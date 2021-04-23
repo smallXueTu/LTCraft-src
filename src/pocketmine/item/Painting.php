@@ -62,7 +62,7 @@ class Painting extends Item {
 				["Aztec", 1, 1],
 				["Alban", 1, 1],
 				["Aztec2", 1, 1],
-				["Bomb", 1, 1],
+				["Landmine", 1, 1],
 				["Plant", 1, 1],
 				["Wasteland", 1, 1],
 				["Wanderer", 1, 2],

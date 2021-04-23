@@ -3,7 +3,7 @@
 
 namespace LTEntity\entity\Gaia;
 
-use LTEntity\entity\Gaia\SkillEntity\Bomb;
+use LTEntity\entity\Gaia\SkillEntity\Landmine;
 use LTEntity\entity\Gaia\SkillEntity\DieArea;
 use LTEntity\Main;
 use LTItem\SpecialItems\Armor;
@@ -61,7 +61,7 @@ class GaiaGuardiansIII extends Creature
     /** @var ?Position  */
     private ?Position $baseTarget = null;
     /** @var array  */
-    private array $bombs = [];
+    private array $landmines = [];
     /** @var int  */
     public int $onSky = 0;
     /** @var int  */
@@ -139,46 +139,6 @@ class GaiaGuardiansIII extends Creature
 
     public function onUpdate($tick)
     {
-
-    }
-
-    /**
-     * 震动屏幕
-     */
-    private function shakeScreen(){
-        foreach ($this->hasSpawned as $player) {
-            $x=$player->x - $this->x;
-            $y=$player->y - $this->y;
-            $z=$player->z - $this->z;
-            if($x==0 and $z==0){
-                $yaw = 0;
-                $pitch = $y>0?-90:90;
-                if($y==0)$pitch=0;
-            }else{
-                $yaw=asin($x/sqrt($x*$x+$z*$z))/3.14*180;
-                $pitch=round(asin($y/sqrt($x*$x+$z*$z+$y*$y))/3.14*180);
-            }
-            if($z>0)
-            {
-                $yaw=-$yaw+180;
-            }
-            $location = $player->asLocation();
-            $x = (mt_rand(1, 100) / 100 - 0.5) * 2;
-            $z = (mt_rand(1, 100)/ 100 - 0.5) * 2;
-            $location = $location->add($x / 5, 0, $z / 5);
-
-            $location->yaw = $yaw - $x * 2;
-            $location->pitch = $pitch - $z * 2;
-            $player->sendPosition($location, $location->yaw, $location->pitch);
-            $player->newPosition = $location;
-        }
-    }
-
-    /**
-     * TODO: 在关服的时候保存盖亚到地图
-     */
-    public function saveNBT()
-    {
         if ($this->getPresencePlayerCount() > $this->getPlayerCount()){
             foreach ($this->getLevel()->getPlayers() as $p){
                 /** @var Player $p */
@@ -245,34 +205,51 @@ class GaiaGuardiansIII extends Creature
                 if ($block->equals($this->getBasePos()))continue;
                 $this->getLevel()->useBreakOn($block);//破坏碰撞的方块..
             }
-            $this->spawnBomb();
+            $this->spawnLandmine();
         }
-        $this->updateBombs();
+        $this->updateLandmines();
         $this->updateTarget();
         return true;
     }
 
     /**
-     * 更新凋零区域
+     * TODO: 在关服的时候保存盖亚到地图
      */
-    public function spawnBomb(){
+    public function saveNBT()
+    {
+
+    }
+
+    /**
+     * 发射炸弹
+     */
+    public function launchBomb(){
+        $count = mt_rand(1, 3);
+        foreach ($this->getPresencePlayer() as $player){
+
+        }
+    }
+    /**
+     * 产出炸弹
+     */
+    public function spawnLandmine(){//landmine
         $count = mt_rand(1, 3);
         $count += $this->getPlayerCount();
         while($count-->0){
             $randX = mt_rand(-10, 10);
             $randZ = mt_rand(-10, 10);
-            $bomb = new Bomb($this->getBasePos()->add($randX, 0, $randZ), 0.5, $this);
-            $this->bombs[spl_object_hash($bomb)] = $bomb;
+            $landmine = new Landmine($this->getBasePos()->add($randX, 0, $randZ), 0.5, $this);
+            $this->landmines[spl_object_hash($landmine)] = $landmine;
         }
     }
-    public function updateBombs(){
-        /** @var Bomb $bomb */
-        foreach ($this->bombs as $bomb) {
-            $bomb->onUpdate();
+    public function updateLandmines(){
+        /** @var Landmine $landmine */
+        foreach ($this->landmines as $landmine) {
+            $landmine->onUpdate();
         }
     }
-    public function removeBomb(Bomb $bomb){
-        unset($this->bombs[spl_object_hash($bomb)]);
+    public function removeLandmine(Landmine $landmine){
+        unset($this->landmines[spl_object_hash($landmine)]);
     }
     /**
      * 检查看的目标
