@@ -3,17 +3,20 @@
 
 namespace LTEntity\entity\Gaia;
 
+use LTEntity\entity\Gaia\SkillEntity\Bomb;
 use LTEntity\entity\Gaia\SkillEntity\Landmine;
-use LTEntity\entity\Gaia\SkillEntity\DieArea;
+use LTEntity\entity\Gaia\SkillEntity\Servant;
 use LTEntity\Main;
 use LTItem\SpecialItems\Armor;
 use LTItem\SpecialItems\BaseOrnaments;
 use LTItem\SpecialItems\Weapon;
+use pocketmine\entity\Attribute;
 use pocketmine\entity\Creature;
 use pocketmine\entity\Entity;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\item\Item;
+use pocketmine\level\format\Chunk;
 use pocketmine\level\Level;
 use pocketmine\level\particle\DustParticle;
 use pocketmine\level\Position;
@@ -24,26 +27,33 @@ use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\NamedTag;
+use pocketmine\network\protocol\AddPlayerPacket;
+use pocketmine\network\protocol\BossEventPacket;
 use pocketmine\network\protocol\PlayerListPacket;
+use pocketmine\network\protocol\UpdateAttributesPacket;
 use pocketmine\Player;
 use pocketmine\Server;
-use pocketmine\utils\BinaryStream;
 use pocketmine\utils\UUID;
 
+/**
+ * 盖亚守护者3
+ * Class GaiaGuardiansIII
+ * @package LTEntity\entity\Gaia
+ */
 class GaiaGuardiansIII extends Creature
 {
     /**
      * @var float
      */
-    public float $width = 0.6;
+    public $width = 0.6;
     /***
      * @var float
      */
-    public float $height = 1.8;
+    public $height = 1.8;
     /**
      * @var float
      */
-    public float $eyeHeight = 1.62;
+    public $eyeHeight = 1.62;
     /** @var int */
     private int $playerCount = 0;
     /** @var ?UUID */
@@ -55,17 +65,19 @@ class GaiaGuardiansIII extends Creature
     /** @var array  */
     private array $crystas = [];
     /** @var array  */
+    private array $servants = [];
+    /** @var array  */
     private $lastMove = 0;
     /** @var int  */
     private int $lastUpdateSee = 0;
     /** @var ?Position  */
     private ?Position $baseTarget = null;
-    /** @var array  */
-    private array $landmines = [];
     /** @var int  */
     public int $onSky = 0;
     /** @var int  */
     public int $onPlayerTick = 0;
+    private int $nextLaunchInterval = 50;
+
     public function __construct(Level $level, CompoundTag $nbt)
     {
         parent::__construct($level, $nbt);
@@ -85,7 +97,7 @@ class GaiaGuardiansIII extends Creature
         $nbt = new CompoundTag;
         $nbt->Pos = new ListTag('Pos', [
             new DoubleTag('', $position->x + 0.5),
-            new DoubleTag('', $position->y + 5),
+            new DoubleTag('', $position->y + 1),
             new DoubleTag('', $position->z + 0.5)
         ]);
         $nbt->Rotation = new ListTag('Rotation', [
@@ -103,6 +115,7 @@ class GaiaGuardiansIII extends Creature
         $entity->setArmorV(150);//150护甲
         $entity->setNameTag('盖亚守护者 III');
         $entity->spawnCrysta();
+        $entity->lastMove = Server::getInstance()->getTick();
         Main::getInstance()->gaia[$entity->getId()] = $entity;
     }
     /**
@@ -164,9 +177,9 @@ class GaiaGuardiansIII extends Creature
         if ($this->age % 5 == 0){
             /** @var Player $player */
             foreach ($this->getPresencePlayer() as $player){
-                if($player->isCreative()){
-                    $player->setGamemode(0);
-                }
+//                if($player->isCreative()){
+//                    $player->setGamemode(0);
+//                }
                 if (!$player->canSelected() or !$player->isSurvival())continue;
                 if ($this->getBasePos()->y - $player->y > 1){
                     $player->setLastDamageCause(new EntityDamageByEntityEvent($this, $player, EntityDamageEvent::CAUSE_DIDI, PHP_INT_MAX));
@@ -207,8 +220,12 @@ class GaiaGuardiansIII extends Creature
             }
             $this->spawnLandmine();
         }
-        $this->updateLandmines();
+        if ($this->age % $this->nextLaunchInterval == 0){
+            $this->launchBomb();
+            $this->nextLaunchInterval = mt_rand(60, 140);
+        }
         $this->updateTarget();
+        parent::onUpdate($tick);
         return true;
     }
 
@@ -219,37 +236,113 @@ class GaiaGuardiansIII extends Creature
     {
 
     }
+    public function knockBack(Entity $attacker, $damage, $x, $z, $base = 0.4, $force = false)
+    {
+
+    }
 
     /**
      * 发射炸弹
      */
     public function launchBomb(){
-        $count = mt_rand(1, 3);
+        $nbt = new CompoundTag;
+        $nbt->Pos = new ListTag("Pos", [
+            new DoubleTag("", $this->x),
+            new DoubleTag("", $this->y + $this->eyeHeight),
+            new DoubleTag("", $this->z)
+        ]);
+        $nbt->Rotation = new ListTag('Rotation', [
+            new FloatTag('', 0),
+            new FloatTag('', -90)
+        ]);
+        /** @var Player $player */
         foreach ($this->getPresencePlayer() as $player){
-
+            $nbt->Motion = new ListTag('Motion', [
+                new DoubleTag('', ($player->x - $this->x) / 20),
+                new DoubleTag('', 0.4),
+                new DoubleTag('', ($player->z - $this->z) / 20)
+            ]);
+            $bomb = new Bomb($this->getLevel(), $nbt, $this);
+            $bomb->spawnToAll();
         }
     }
     /**
-     * 产出炸弹
+     * 产出地雷
      */
     public function spawnLandmine(){//landmine
-        $count = mt_rand(1, 3);
+        $count = mt_rand(1, 2);
         $count += $this->getPlayerCount();
+        $nbt = new CompoundTag;
+        $nbt->Rotation = new ListTag('Rotation', [
+            new FloatTag('', 0),
+            new FloatTag('', )
+        ]);
         while($count-->0){
             $randX = mt_rand(-10, 10);
             $randZ = mt_rand(-10, 10);
-            $landmine = new Landmine($this->getBasePos()->add($randX, 0, $randZ), 0.5, $this);
-            $this->landmines[spl_object_hash($landmine)] = $landmine;
+            $nbt->Pos = new ListTag("Pos", [
+                new DoubleTag("", $this->basePos->x + $randX),
+                new DoubleTag("", $this->basePos->y),
+                new DoubleTag("", $this->basePos->z + $randZ)
+            ]);
+            $landmine = new Landmine($this->getLevel(), $nbt, 0.6, $this);
+            $landmine->spawnToAll();
         }
     }
-    public function updateLandmines(){
-        /** @var Landmine $landmine */
-        foreach ($this->landmines as $landmine) {
-            $landmine->onUpdate();
-        }
+
+    /**
+     * 初始化
+     */
+    public function initEntity()
+    {
+        $this->getAttributeMap()->addAttribute(new Attribute(Attribute::HEALTH, "minecraft:health", 0, 300, 300, true));
+        $this->spawnToAll();
+        parent::initEntity();
     }
-    public function removeLandmine(Landmine $landmine){
-        unset($this->landmines[spl_object_hash($landmine)]);
+    public function setHealth($amount)
+    {
+        $oldAmount = $this->getHealth();
+        parent::setHealth($amount);
+        $health = $this->getHealth();
+        if ((($oldAmount > $this->getMaxHealth() * 0.3 and $health < $this->getMaxHealth() * 0.3) or ($oldAmount > $this->getMaxHealth() * 0.7 and $health < $this->getMaxHealth() * 0.7)) and count($this->servants) < 4){//召唤仆从
+            /** @var Player $player */
+            foreach ($this->getPresencePlayer() as $player){
+                $player->sendMessage($this->getName() . '召唤了仆从，优先击杀仆从哦！');
+            }
+            $this->spawnServant();
+        }
+        $this->getAttributeMap()->getAttribute(Attribute::HEALTH)->setMaxValue($this->getMaxHealth())->setValue($amount, true);
+        $this->sendAttributes();
+    }
+
+    /**
+     * 召唤仆从
+     */
+    public function spawnServant(){
+        $nbt = new CompoundTag;
+        $nbt->Rotation = new ListTag('Rotation', [
+            new FloatTag('', 0),
+            new FloatTag('', )
+        ]);
+        $v3 = $this->getBasePos();
+        $blocks[] = $this->getLevel()->getBlock($v3->add(4, 2, 4))->floor();
+        $blocks[] = $this->getLevel()->getBlock($v3->add(4, 2, -4))->floor();
+        $blocks[] = $this->getLevel()->getBlock($v3->add(-4, 2, -4))->floor();
+        $blocks[] = $this->getLevel()->getBlock($v3->add(-4, 2, 4))->floor();
+        foreach ($blocks as $block){
+            $index = $block->x . ":" . $block->y . ":" . $block->z;
+            if (isset($this->servants[$index]))continue;
+            $nbt->Pos = new ListTag("Pos", [
+                new DoubleTag("", $block->x),
+                new DoubleTag("", $block->y),
+                new DoubleTag("", $block->z)
+            ]);
+            $servant = new Servant($this->getLevel(), $nbt, $this);
+            $servant->setMaxHealth(50);
+            $servant->setHealth($this->getMaxHealth());
+            $servant->spawnToAll();
+            $this->servants[$index] = $servant;
+        }
     }
     /**
      * 检查看的目标
@@ -302,6 +395,20 @@ class GaiaGuardiansIII extends Creature
     }
 
     /**
+     * 受伤
+     */
+    public function attack($damage, EntityDamageEvent $source)
+    {
+        parent::attack($damage, $source);
+        if(!$source->isCancelled()){
+            if ($source instanceof EntityDamageByEntityEvent){
+                if ($this->getHealth() <= $this->getMaxHealth()*0.2){
+                    $this->lastMove -= 80;
+                }
+            }
+        }
+    }
+    /**
      * @return array
      */
     public function getPresencePlayer(){
@@ -312,6 +419,26 @@ class GaiaGuardiansIII extends Creature
             }
         }
         return $players;
+    }
+
+    /**
+     * @return bool|void
+     */
+    public function updateMovement()
+    {
+        if(!($this->chunk instanceof Chunk)){
+            $this->close();
+            return false;
+        }
+        if($this->lastX !== $this->x || $this->lastY !== $this->y || $this->lastZ !== $this->z || $this->lastYaw !== $this->yaw || $this->lastPitch !== $this->pitch) {
+            $this->lastX = $this->x;
+            $this->lastY = $this->y;
+            $this->lastZ = $this->z;
+            $this->lastYaw = $this->yaw;
+            $this->lastPitch = $this->pitch;
+        }
+        $yaw = $this->yaw;
+        $this->level->addEntityMovement($this->chunk->getX(), $this->chunk->getZ(), $this->id, $this->x, $this->y + 1.62, $this->z, $yaw, $this->pitch, $yaw);
     }
 
     /**
@@ -343,6 +470,10 @@ class GaiaGuardiansIII extends Creature
         foreach ($this->crystas as $crysta){
             /** @var GaiaCrystal $crysta */
             $crysta->close();
+        }
+        foreach ($this->servants as $servant){
+            /** @var Servant $crysta */
+            $servant->close();
         }
         unset(Main::getInstance()->gaia[$this->getId()]);
         parent::close();
@@ -380,7 +511,7 @@ class GaiaGuardiansIII extends Creature
      */
     public function getUniqueId(){
         if ($this->uid === null){
-            $this->uid=UUID::fromData($this->getId(), $this->skinData, ('盖亚守护者 '.($this->type == 0?'I':'II')));
+            $this->uid=UUID::fromData($this->getId(), $this->skinData, ('盖亚守护者 III'));
         }
         return $this->uid;
     }
@@ -399,6 +530,55 @@ class GaiaGuardiansIII extends Creature
             }
             $player->setDataFlag(Entity::DATA_FLAGS, Entity::DATA_FLAG_IMMOBILE, false);
             parent::despawnFrom($player, $send);
+        }
+    }
+    /**
+     * @param Player $player
+     */
+    public function spawnTo(Player $player){
+        if(!isset($this->hasSpawned[$player->getLoaderId()]) && isset($player->usedChunks[Level::chunkHash($this->chunk->getX(), $this->chunk->getZ())])){
+            if ($this->age < 20*20){
+                //$player->sendTitle("§c盖亚守护者抑制了你的行动！！");
+                //$player->setDataFlag(Entity::DATA_FLAGS, Entity::DATA_FLAG_IMMOBILE, true);
+            }
+            $pk = new AddPlayerPacket();
+            $pk->uuid = $this->getUniqueId();
+            $pk->username = $this->getName();
+            $pk->eid = $this->getId();
+            $pk->x = $this->x;
+            $pk->y = $this->y;
+            $pk->z = $this->z;
+            $pk->speedX = 0;
+            $pk->speedY = 0;
+            $pk->speedZ = 0;
+            $pk->yaw = $this->yaw;
+            $pk->pitch = $this->pitch;
+            $pk->item=Item::get(0);
+            $pk->metadata = $this->dataProperties;
+            $player->dataPacket($pk);
+            $bpk = new BossEventPacket();
+            $bpk->eid = $this->getId();
+            $bpk->eventType = 1;
+            $player->dataPacket($bpk);
+            $this->sendAttributes();
+            parent::spawnTo($player);
+        }
+    }
+    /**
+     * @param bool $sendAll
+     */
+    public function sendAttributes(bool $sendAll = false){
+        $entries = $sendAll ? $this->attributeMap->getAll() : $this->attributeMap->needSend();
+        if(count($entries) > 0){
+            $pk = new UpdateAttributesPacket();
+            $pk->entityId = $this->id;
+            $pk->entries = $entries;
+            foreach ($this->hasSpawned as $player) {
+                $player->dataPacket($pk);
+            }
+            foreach($entries as $entry){
+                $entry->markSynchronized();
+            }
         }
     }
     /**

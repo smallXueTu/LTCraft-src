@@ -348,11 +348,11 @@ abstract class Entity extends Location implements Metadatable {
 	public $deadTicks = 0;
 	protected int $age = 0;
 
-	public float $height;
+	public $height;
 
-	public float $eyeHeight = null;
+	public $eyeHeight = 0.0;
 
-	public float $width;
+	public $width;
 	public $length;
 
 	/** @var int */

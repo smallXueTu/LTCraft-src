@@ -167,7 +167,7 @@ abstract class Creature extends Living {
 			$this->pitch=0;
 			$this->forceUpdateMovement();
 		}
-		parent::entityBaseTick();
+		//parent::entityBaseTick();
 		return parent::onUpdate($tick);
 	}
 	 public function move($dx, $dy, $dz) : bool{

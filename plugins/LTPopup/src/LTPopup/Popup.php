@@ -80,7 +80,6 @@ class Popup extends PluginBase implements Listener{
 				return;
 			}
 		}
-		$p = count($this->getServer()->getOnlinePlayers());
 		$colorArray = ['§a','§b','§c','§d','§e','§6','§2','§3'];
 		$QQ=$colorArray[mt_rand(0,7)].'★QQ群号'.$colorArray[mt_rand(0,7)].':862859409★';
 		$top=$colorArray[mt_rand(0,7)].'§l☞'.$colorArray[mt_rand(0,7)].'L'.$colorArray[mt_rand(0,7)].'T'.$colorArray[mt_rand(0,7)].'C'.$colorArray[mt_rand(0,7)].'r'.$colorArray[mt_rand(0,7)].'a'.$colorArray[mt_rand(0,7)].'f'.$colorArray[mt_rand(0,7)].'t '.$colorArray[mt_rand(0,7)].'S'.$colorArray[mt_rand(0,7)].'e'.$colorArray[mt_rand(0,7)].'r'.$colorArray[mt_rand(0,7)].'v'.$colorArray[mt_rand(0,7)].'e'.$colorArray[mt_rand(0,7)].'r'.$colorArray[mt_rand(0,7)].'☜'.PHP_EOL;

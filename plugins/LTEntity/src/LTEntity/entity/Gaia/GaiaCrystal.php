@@ -72,7 +72,7 @@ class GaiaCrystal extends Creature
             $this->despawnFromAll();
             return false;
         }
-        if ($this->shootingEntity->getAge() < 20*20 or ($this->shootingEntity->onSky!=0 and $this->shootingEntity->onSky < 20*30)){
+        if ($this->shootingEntity instanceof GaiaGuardians and ($this->shootingEntity->getAge() < 20*20 or ($this->shootingEntity->onSky!=0 and $this->shootingEntity->onSky < 20*30))){
             $this->spawnParticle();
         }
         return true;

@@ -303,4 +303,9 @@ class Trident extends \LTItem\SpecialItems\Weapon implements DrawingKnife, Mana
             return parent::getHandMessage($player).'§e耐久:'.$this->getDurable();
         }else return '你不是这个武器的拥有者！';
     }
+
+    public function canPutMana(): bool
+    {
+        return false;
+    }
 }

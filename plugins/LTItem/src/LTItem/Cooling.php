@@ -20,6 +20,10 @@ class Cooling implements Listener
      */
     public static array $weapon = [];
     /**
+     * @var array 饰品冷却时间
+     */
+    public static array $ornaments = [];
+    /**
      * @var array 使用材料冷却时间
      */
     public static array $material = [];
@@ -43,6 +47,7 @@ class Cooling implements Listener
             self::$weapon[$player],
             self::$material[$player],
             self::$launch[$player],
+            self::$ornaments[$player],
             self::$willOfTula[$player],
         );
     }
@@ -50,6 +55,7 @@ class Cooling implements Listener
         $player = $player->getName();
         self::$weapon[$player] = [];
         self::$material[$player] = [];
+        self::$ornaments[$player] = [];
         self::$launch[$player] = 0;
         self::$willOfTula[$player] = 0;
     }

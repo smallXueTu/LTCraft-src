@@ -4,6 +4,7 @@ namespace LTEntity;
 
 use LTEntity\entity\Boss\SkillsEntity\Sakura;
 use LTEntity\entity\Boss\SkillsEntity\SpaceTear;
+use LTEntity\entity\Gaia\GaiaGuardiansIII;
 use pocketmine\level\Position;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\DoubleTag;
@@ -137,6 +138,10 @@ class Commands extends PluginBase implements CommandExecutor{
                     new SpaceTear($sender->getLevel(), $nbt, $sender);
                 break;
                 */
+                case 'test3':
+                    /** @var $sender Player */
+                    GaiaGuardiansIII::spawn($sender->asPosition(), $sender);
+                break;
                 case 'del':
                     if (!isset($args[1])) return $sender->sendMessage("§c请指定需要被删除的刷怪点名字.");
                     if (!isset($this->plugin->enConfig[$args[1]])) return $sender->sendMessage("§c刷怪点§e{$args[1]}§c不存在.");
