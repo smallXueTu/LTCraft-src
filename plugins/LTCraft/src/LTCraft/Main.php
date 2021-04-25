@@ -811,7 +811,7 @@ class Main extends PluginBase implements Listener{
 			if(isset($this->sign[$name])){
 				$sign = $player->getLevel()->getTile($block);
 				if(!($sign instanceof Sign))return;
-				$sign->setLineText((int)$this->sign[$player->getName()][0], $this->sign[$name][1]);
+				$sign->setLineText((int)$this->sign[$player->getName()][0]-1, $this->sign[$name][1]);
 				unset($this->sign[$name]);
 				$player->sendMessage('§l§a[提示]§a修改完成！');
 				return;

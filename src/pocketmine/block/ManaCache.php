@@ -75,7 +75,7 @@ class ManaCache extends Solid {
     }
     public function canBeActivated(): bool
     {
-        return true;
+        return false;
     }
 
     /**

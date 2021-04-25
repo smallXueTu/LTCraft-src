@@ -78,17 +78,17 @@ class Sign extends Spawnable {
 	}
    public function setLineText(Int $line, $text=''){
 		switch($line){
+			case 0:
+                $this->namedtag->Text1 = new StringTag("Text1", $text);
+			break;
 			case 1:
-					$this->namedtag->Text1 = new StringTag("Text1", $text);
+                $this->namedtag->Text2 = new StringTag("Text2", $text);
 			break;
 			case 2:
-					$this->namedtag->Text2 = new StringTag("Text2", $text);
+                $this->namedtag->Text3 = new StringTag("Text3", $text);
 			break;
 			case 3:
-					$this->namedtag->Text3 = new StringTag("Text3", $text);
-			break;
-			case 4:
-					$this->namedtag->Text4 = new StringTag("Text4", $text);
+                $this->namedtag->Text4 = new StringTag("Text4", $text);
 			break;
 		}
 		$this->onChanged();

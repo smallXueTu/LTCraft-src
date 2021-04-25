@@ -6,6 +6,7 @@ namespace pocketmine\tile;
 
 use LTEntity\entity\Mana\ManaFloating;
 use LTItem\Mana\Mana;
+use LTPet\Main;
 use pocketmine\inventory\ChestInventory;
 use pocketmine\level\Level;
 use pocketmine\level\particle\DustParticle;
@@ -57,10 +58,11 @@ class ManaCache extends Tile
             $this->lastUpdateTick = Server::getInstance()->getTick();
             $arr = [[0, 1, 0], [1, 0, 0], [-1, 0, 0], [0, 0, 1], [0, 0, -1]];
             foreach ($arr as $a){//向四周抽取Mana 向上方输出Mana
-                $chest = $this->getLevel()->getTile($this->add($a[0], $a[1], [2]));
-                if ($chest !== null and $chest instanceof Chest){
+                $tile = $this->getLevel()->getTile($this->add($a[0], $a[1], $a[2]));
+                if ($tile !== null and $tile instanceof Chest){
+                    if (($tile->getInventory()->getViewers()) >= 1)continue;
                     if ($a[1] == 1){
-                        foreach ($chest->getInventory()->getContents() as $i => $item){
+                        foreach ($tile->getInventory()->getContents() as $i => $item){
                             /** @var $item Mana */
                             if ($item instanceof Mana){
                                 if ($this->getMana() < $item->getMaxMana()){
@@ -68,13 +70,13 @@ class ManaCache extends Tile
                                     $this->spawnParticle = true;
                                     if ($this->putMana($enter)){
                                         $item->addMana($enter);
-                                        $chest->getInventory()->setItem($i, $item);
+                                        $tile->getInventory()->setItem($i, $item);
                                     }
                                 }
                             }
                         }
                     }else{
-                        foreach ($chest->getInventory()->getContents() as $i => $item){
+                        foreach ($tile->getInventory()->getContents() as $i => $item){
                             /** @var $item Mana */
                             if ($item instanceof Mana and $item->canPutMana()){
                                 if ($item->getMana() > 0){
@@ -82,11 +84,17 @@ class ManaCache extends Tile
                                     if ($enter == 0)continue;
                                     if ($item->consumptionMana($enter)){
                                         $this->addMana($enter);
-                                        $chest->getInventory()->setItem($i, $item);
+                                        $tile->getInventory()->setItem($i, $item);
                                     }
                                 }
                             }
                         }
+                    }
+                }elseif ($tile != null and $tile instanceof Sign){
+                    /** @var Sign $tile */
+                    $line1 = $tile->getText()[0];
+                    if (strtolower(substr(Main::getCleanName($line1), 0, 4)) == 'mana'){
+                        $tile->setText("§eMana:", "§d" . self::MAX_MANA . "/" . $this->getMana());
                     }
                 }
             }

@@ -579,8 +579,10 @@ class EventListener implements Listener
                 if ($entity->getBuff()->checkOrnamentsInstall('神圣斗篷', '饰品')) {
                     $health = $entity->getHealth();
                     if ($health > $entity->getMaxHealth() * 0.8 and $health - $event->getFinalDamage() <= 0 and Cooling::$ornaments[$entity->getName()]['神圣斗篷'] > time()) {//玩家可能在这个事件之后死亡
-                        Cooling::$ornaments[$entity->getName()]['神圣斗篷'] = time() + 30;
+                        Cooling::$ornaments[$entity->getName()]['神圣斗篷'] = time() + 10;
                         $entity->setHealth($entity->getMaxHealth() / 2);
+                        $event->setDamage(1);
+                        $event->setDamage(1, EntityDamageEvent::MODIFIER_REAL_DAMAGE);
                     }
                 }
             }

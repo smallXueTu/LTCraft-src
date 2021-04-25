@@ -49,9 +49,12 @@ class ManaWand extends BaseMana
      */
     public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz)
     {
+        var_dump($block);
+        var_dump($target);
         if ($target instanceof ManaCache) {
             /** @var \pocketmine\tile\ManaCache $tile */
             $tile = $level->getTile($target);
+            var_dump($tile);
             if ($player->isSneaking()){//说不定有用
 
             }else{
