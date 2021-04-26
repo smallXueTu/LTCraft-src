@@ -246,6 +246,6 @@ class DataBase extends \Thread{
 
     public function setGarbage()
     {
-        // TODO: Implement setGarbage() method.
+        //ignore
     }
 }

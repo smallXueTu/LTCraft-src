@@ -158,7 +158,7 @@ class Popup extends PluginBase implements Listener{
 				if (($index = $player->getBuff()->getOrnamentsInstallIndex("天翼族之冠"))!==false and $player->isSurvival()){
                     $additional.=PHP_EOL.$colorArray[mt_rand(0,7)]."飞行能量：".$player->getOrnamentsInventory()->getItem($index)->energy;
                 }
-                $allMana = 0;//MAX:40000
+                $allMana = 0;
                 /** @var Player $entity */
                 foreach ($player->getInventory()->getArmorContents() as $item){
                     if ($item instanceof ManaArmor and $item->getMana() > 0){

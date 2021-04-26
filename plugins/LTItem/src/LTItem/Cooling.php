@@ -28,6 +28,10 @@ class Cooling implements Listener
      */
     public static array $material = [];
     /**
+     * @var array Mana盔甲护盾
+     */
+    public static array $manaArmorShield = [];
+    /**
      * @var array 查询冷却时间
      */
     public static array $query = [];
@@ -49,6 +53,7 @@ class Cooling implements Listener
             self::$launch[$player],
             self::$ornaments[$player],
             self::$willOfTula[$player],
+            self::$manaArmorShield[$player],
         );
     }
     public static function onPlayerJoin(Player $player){
@@ -58,5 +63,6 @@ class Cooling implements Listener
         self::$ornaments[$player] = [];
         self::$launch[$player] = 0;
         self::$willOfTula[$player] = 0;
+        self::$manaArmorShield[$player] = 0;
     }
 }

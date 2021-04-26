@@ -1,38 +1,45 @@
 <?php
 namespace LTItem\SpecialItems\Armor;
 
+use LTItem\Cooling;
 use LTItem\SpecialItems\Armor;
 use LTItem\Mana\Mana;
 use pocketmine\entity\Creature;
-use pocketmine\entity\Entity;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\inventory\BaseInventory;
-use pocketmine\level\particle\DustParticle;
+use pocketmine\inventory\PlayerInventory;
 use pocketmine\level\particle\GenericParticle;
 use pocketmine\level\particle\Particle;
-use pocketmine\level\particle\PortalParticle;
 use pocketmine\level\Position;
 use pocketmine\level\sound\AnvilFallSound;
 use pocketmine\math\Vector3;
-use pocketmine\nbt\tag\NamedTag;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\Player;
+use pocketmine\Server;
 
 class ManaArmor extends Armor implements Mana
 {
-    const MAX_MANA = 10000;
     private int $Mana;
+    private int $MaxMana;
     private int $lastDamage = 0;
+    private int $lastShield = 0;
+    private int $lastRecharge = 0;
+    private int $noteMagicSpeed = 1;
+
     public function __construct(array $conf, int $count, \pocketmine\nbt\tag\CompoundTag $nbt, $init = true)
     {
         parent::__construct($conf, $count, $nbt, $init);
 
         $nbt = $this->getNamedTag();
-        if(!isset($nbt['armor'][15])){
+        if(!isset($nbt['armor'][17])){
             $nbt['armor'][15]=new StringTag('',$nbt['armor'][15]??0);//15 对于 ManaArmor来说 15就是Mana
+            $nbt['armor'][16]=new StringTag('',$nbt['armor'][16]??1);//16
+            $nbt['armor'][17]=new StringTag('',$nbt['armor'][17]??1);//17
             $this->setNamedTag($nbt);
         }
         $this->Mana = $nbt['armor'][15];
+        $this->MaxMana = $nbt['armor'][16] * 100;
+        $this->noteMagicSpeed = $nbt['armor'][17];
         $this->updateName();
     }
 
@@ -40,7 +47,7 @@ class ManaArmor extends Armor implements Mana
      * 更新名字
      */
     public function updateName(){
-        $this->setCustomName($this->getLTName().PHP_EOL.'§eMana:'.$this->getMana(), true);
+        $this->setCustomName($this->getLTName().PHP_EOL.'§d储魔升级:'.$this->getStorageUpgrade().PHP_EOL.'§d注魔升级:'.$this->getNoteMagicUpgrade().PHP_EOL.'§eMana:'.$this->getMana(), true);
     }
 
     /**
@@ -56,7 +63,7 @@ class ManaArmor extends Armor implements Mana
      */
     public function getMaxMana(): int
     {
-        return self::MAX_MANA;
+        return $this->MaxMana;
     }
 
     /**
@@ -86,6 +93,7 @@ class ManaArmor extends Armor implements Mana
         if ($this->Mana>$this->getMaxMana()){
             $this->Mana = $this->getMaxMana();
         }
+        $this->updateName();
         $this->saveMana();
     }
     public function setMana(int $mane){
@@ -93,6 +101,7 @@ class ManaArmor extends Armor implements Mana
         if ($this->Mana>$this->getMaxMana()){
             $this->Mana = $this->getMaxMana();
         }
+        $this->updateName();
         $this->saveMana();
     }
     /**
@@ -104,19 +113,48 @@ class ManaArmor extends Armor implements Mana
         if ($this->Mana < $mana)return false;
         $this->Mana -= $mana;
         $this->saveMana();
+        $this->updateName();
         return true;
     }
-
+    public function getStorageUpgrade(): int
+    {
+        $tag = $this->getNamedTag();
+        return (int)$tag['armor'][16];
+    }
+    public function setStorageUpgrade(int $value): ManaArmor
+    {
+        $tag = $this->getNamedTag();
+        $tag['armor'][16] = new StringTag('', $value);
+        $this->MaxMana = $value * 100;
+        $this->setNamedTag($tag);
+        return $this;
+    }
+    public function getNoteMagicUpgrade(): int
+    {
+        $tag = $this->getNamedTag();
+        return (int)$tag['armor'][17];
+    }
+    public function setNoteMagicUpgrade(int $value): ManaArmor
+    {
+        $tag = $this->getNamedTag();
+        $tag['armor'][17] = new StringTag('', $value);
+        $this->noteMagicSpeed = $value;
+        $this->setNamedTag($tag);
+        return $this;
+    }
     public function onTick(Player $player, int $index, BaseInventory $inventory): bool
     {
+        /** @var PlayerInventory $inventory */
         if ($player->getServer()->getTick() - $this->lastDamage > 10){
             if (!$this->canUse($player)){
                 $this->lastDamage = $player->getServer()->getTick();
                 $player->attack($player->getMaxHealth() * 0.1, new EntityDamageEvent($player, EntityDamageEvent::CAUSE_PUNISHMENT, $player->getMaxHealth() * 0.1, true));
             }
-            if ($index < 36)return true;
-            if ($this->getMana() < self::MAX_MANA){
-                $mana = min(self::MAX_MANA - $this->getMana(), 100);
+        }
+        if ($player->getServer()->getTick() - $this->lastRecharge > 40){
+            $this->lastRecharge = $player->getServer()->getTick();
+            if ($this->getMana() < $this->getMaxMana()){
+                $mana = min($this->getMaxMana() - $this->getMana(), $this->noteMagicSpeed * 4);
                 if ($player->getBuff()->consumptionMana($mana)){
                     $this->addMana($mana);
                     $inventory->setItem($index, $this);
@@ -132,12 +170,21 @@ class ManaArmor extends Armor implements Mana
     }
     public function canUse(\pocketmine\Player $player, $playerCheck = true):bool
     {
-        return parent::canUse($player, $playerCheck); // TODO: Change the autogenerated stub
+        return parent::canUse($player, $playerCheck);
     }
-    public static function shield(Position $position, $damager = null){
-        self::spawnParticle($position, $damager);
-        $position->getLevel()->addSound(new AnvilFallSound($position));
+    public static function shield(Player $player, $damager = null){
+        if (Server::getInstance()->getTick() - Cooling::$manaArmorShield[$player->getName()] < 10)return;//动画和生效冷却
+        Cooling::$manaArmorShield[$player->getName()] = Server::getInstance()->getTick();
+        self::spawnParticle($player, $damager);
+        $player->getLevel()->addSound(new AnvilFallSound($player));
     }
+
+    /**
+     * 护盾粒子 圆球
+     * //TODO: 优化它！
+     * @param Position $position
+     * @param null $damager
+     */
     public static function spawnParticle(Position $position, $damager = null){
         $level = $position->getLevel();
         $h = 2.8 / 45;

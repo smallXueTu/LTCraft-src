@@ -148,7 +148,7 @@ class Commands extends PluginBase implements CommandExecutor{
                 case 'test4':
                     /** @var $sender Player */
                     $sender->getServer()->getScheduler()->scheduleRepeatingTask(new CallbackTask(function($pos){
-                        ManaArmor::shield($pos, Server::getInstance()->getPlayer("Angel_XX"));
+                        ManaArmor::spawnParticle($pos, Server::getInstance()->getPlayer("Angel_XX"));
                     }, [$sender->asPosition()]), 20);//重复任务
 
                 break;

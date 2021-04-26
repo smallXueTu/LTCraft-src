@@ -142,7 +142,7 @@ abstract class BaseInventory implements Inventory {
 	public function getContents(bool $includeEmpty = false) : array{
 		$contents = [];
 		$air = null;
-        for ($i = 0; $i < $this->getSize(); $i++){
+        for ($i = 0; $i < $this->size; $i++){
             $slot = $this->slots[$i]??null;
 			if($slot !== null){
 				$contents[$i] = clone $slot;

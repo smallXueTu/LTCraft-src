@@ -9,6 +9,7 @@ use pocketmine\entity\Effect;
 use pocketmine\entity\Entity;
 use pocketmine\entity\Sheep;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
+use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\level\particle\InkParticle;
@@ -46,8 +47,9 @@ class Landmine extends Entity
         if ($this->age > 10){
             foreach ($this->getLevel()->getCollidingEntities($this->axisAlignedBB) as $entity){
                 if ($entity instanceof Player and $entity->canSelected() and $entity->isSurvival()){
-                    $entity->setLastDamageCause(new EntityDamageByEntityEvent($this->owner, $entity, EntityDamageByEntityEvent::CAUSE_ENTITY_ATTACK, $entity->getHealth(), 0));
-                    $entity->setHealth(0);
+                    $ev = new EntityDamageByEntityEvent($this->owner, $entity, EntityDamageByEntityEvent::CAUSE_ENTITY_ATTACK, $entity->getHealth(), 0);
+                    $ev->setDamage($entity->getHealth(), EntityDamageEvent::MODIFIER_REAL_DAMAGE);
+                    $entity->attack($entity->getHealth(), $ev);
                     $this->close();
                     return false;
                 }

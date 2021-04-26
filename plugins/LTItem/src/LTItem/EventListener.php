@@ -2,21 +2,15 @@
 namespace LTItem;
 use LTEntity\entity\Boss\SkillsEntity\Sakura;
 use LTEntity\entity\Boss\SkillsEntity\SpaceTear;
-use LTItem\Mana\Mana;
-use pocketmine\block\Air;
 use pocketmine\entity\Creature;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\entity\EntityCombustEvent;
-use pocketmine\event\entity\EntityCombustByEntityEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\entity\Entity;
 use pocketmine\event\entity\EntityDeathEvent;
 use pocketmine\event\entity\EntityRegainHealthEvent;
-use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\level\Explosion;
-use pocketmine\level\sound\AnvilFallSound;
 use pocketmine\math\Vector3;
-use pocketmine\nbt\tag\NamedTag;
 use pocketmine\network\protocol\PlayerActionPacket;
 use pocketmine\network\protocol\SetEntityMotionPacket;
 use pocketmine\network\protocol\UseItemPacket;
@@ -37,7 +31,6 @@ use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\ByteTag;
 use pocketmine\Player;
-use pocketmine\item\Item;
 use pocketmine\item\Armor as ItemArmor;
 use LTItem\SpecialItems\Weapon;
 use LTItem\SpecialItems\Armor;
@@ -51,7 +44,6 @@ use LTLogin\Events;
 use LTEntity\entity\BaseEntity;
 use LTGrade\FloatingText;
 use pocketmine\Server;
-use pocketmine\utils\BinaryStream;
 
 class EventListener implements Listener
 {
@@ -570,7 +562,7 @@ class EventListener implements Listener
         if($event->isCancelled())return;
         $entity = $event->getEntity();
         if ($entity instanceof Player){
-            $allMana = 0;//MAX:40000
+            $allMana = 0;
             $count = 0;
             /** @var Player $entity */
             foreach ($entity->getInventory()->getArmorContents() as $item){
@@ -581,24 +573,30 @@ class EventListener implements Listener
             }
             if ($allMana > 0){
                 $finalDamage = $event->getFinalDamage();
-                if ($allMana - $finalDamage * 100 >= 0){
-                    $cb = $finalDamage * 100 / $count;
+                if ($allMana - $finalDamage / 2 >= 0){
+                    if ($finalDamage > $entity->getHealth())
+                        $entity->sendMessage("§l§c[警告]强大的打击！");
+                    $cb = $finalDamage / 2 / $count;
                     $avg = $allMana / $count;
                     $sign = true;
-                    foreach ($entity->getInventory()->getArmorContents() as $item){
+                    foreach ($entity->getInventory()->getArmorContents() as $index => $item){
                         if ($item instanceof Armor\ManaArmor and $item->getMana() > 0){
                             $item->setMana($avg);
                             if (!$item->consumptionMana($cb))$sign = false;
+                            $entity->getInventory()->setItem($entity->getInventory()->getSize() + $index, $item);
                         }
                     }
-                    Armor\ManaArmor::shield($entity, $event instanceof EntityDamageByEntityEvent?$event->getDamager():null);
-                    if ($sign)return $event->setCancelled(true);
-                }elseif($allMana - $finalDamage * 10 >= 0){
+                    if ($sign){
+                        Armor\ManaArmor::shield($entity, $event instanceof EntityDamageByEntityEvent?$event->getDamager():null);
+                        return $event->setCancelled(true);
+                    }
+                }elseif($allMana - $finalDamage / 10 >= 0){
                     $entity->sendMessage("§l§c[警告]强大的打击！");
                     $entity->setHealth(1);
-                    foreach ($entity->getInventory()->getArmorContents() as $item){
+                    foreach ($entity->getInventory()->getArmorContents() as $index => $item){
                         if ($item instanceof Armor\ManaArmor and $item->getMana() > 0){
                             $item->setMana(0);
+                            $entity->getInventory()->setItem($entity->getInventory()->getSize() + $index, $item);
                         }
                     }
                     Armor\ManaArmor::shield($entity, $event instanceof EntityDamageByEntityEvent?$event->getDamager():null);
