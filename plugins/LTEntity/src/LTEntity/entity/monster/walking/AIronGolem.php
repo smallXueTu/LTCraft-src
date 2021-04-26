@@ -8,29 +8,32 @@ use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\item\Item;
 
-class AIronGolem extends WalkingMonster{
- const NETWORK_ID = 20;
+class AIronGolem extends WalkingMonster
+{
+    const NETWORK_ID = 20;
 
- public $width = 0.72;
- public $height = 2.1;
+    public $width = 0.72;
+    public $height = 2.1;
 
 
+    public function getName()
+    {
+        return "IronGolem";
+    }
 
- public function getName(){
-  return "IronGolem";
- }
- 
- public function attackEntity(Entity $player){
-  if($this->attackDelay > 10 && ($this->distanceSquared($player) < 1 or ($this->distanceSquaredNoY($player) < 1 and abs($player->y - $this->y)<1.5))){
-   $this->attackDelay = 0;
+    public function attackEntity(Entity $player)
+    {
+        if ($this->attackDelay > 10 && ($this->distanceSquared($player) < 1 or ($this->distanceSquaredNoY($player) < 1 and abs($player->y - $this->y) < 1.5))) {
+            $this->attackDelay = 0;
 
-   $ev = new EntityDamageByEntityEvent($this, $player, EntityDamageEvent::CAUSE_ENTITY_ATTACK, $this->getDamage());
-   $player->attack($ev->getFinalDamage(), $ev);
-  }
- }
+            $ev = new EntityDamageByEntityEvent($this, $player, EntityDamageEvent::CAUSE_ENTITY_ATTACK, $this->getDamage());
+            $player->attack($ev->getFinalDamage(), $ev);
+        }
+    }
 
- public function getDrops(){
-  return [];
- }
+    public function getDrops()
+    {
+        return [];
+    }
 
 }

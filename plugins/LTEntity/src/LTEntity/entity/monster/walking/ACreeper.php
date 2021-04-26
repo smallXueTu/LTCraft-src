@@ -11,31 +11,35 @@ use pocketmine\level\Explosion;
 use pocketmine\level\sound\TNTPrimeSound;
 use pocketmine\scheduler\CallbackTask;
 
-class ACreeper extends WalkingMonster{
- const NETWORK_ID = 33;
+class ACreeper extends WalkingMonster
+{
+    const NETWORK_ID = 33;
 
- public $width = 0.72;
- public $height = 1.8;
-public $eyeHeight = 1.6;
+    public $width = 0.72;
+    public $height = 1.8;
+    public $eyeHeight = 1.6;
 
- public function getName(){
-  return "Creeper";
- }
- 
- public function attackEntity(Entity $player){
-  if($this->attackDelay > 20 && $this->distanceSquared($player) < 1){
-   $this->attackDelay = 0;
+    public function getName()
+    {
+        return "Creeper";
+    }
 
-		$this->level->addSound(new TNTPrimeSound($this));
-				$ex = new Explosion($this, 3, $this);
-				$ex->booom($this->enConfig["攻击"], $this, true);
-   $this->close();
-  }
- }
+    public function attackEntity(Entity $player)
+    {
+        if ($this->attackDelay > 20 && $this->distanceSquared($player) < 1) {
+            $this->attackDelay = 0;
 
- public function getDrops(){
-  return [];
- }
+            $this->level->addSound(new TNTPrimeSound($this));
+            $ex = new Explosion($this, 3, $this);
+            $ex->booom($this->enConfig["攻击"], $this, true);
+            $this->close();
+        }
+    }
+
+    public function getDrops()
+    {
+        return [];
+    }
 
 }
 

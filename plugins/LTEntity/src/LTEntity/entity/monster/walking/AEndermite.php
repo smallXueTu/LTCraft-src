@@ -7,7 +7,8 @@ use pocketmine\entity\Entity;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 
-class AEndermite extends WalkingMonster{
+class AEndermite extends WalkingMonster
+{
     const NETWORK_ID = 55;
 
     public $width = 0.4;
@@ -16,12 +17,14 @@ class AEndermite extends WalkingMonster{
     public $eyeHeight = 0.1;
 
 
-    public function getName(){
+    public function getName()
+    {
         return "Endermite";
     }
 
-    public function attackEntity(Entity $player){
-        if($this->attackDelay > 10 && ($this->distanceSquared($player) < 1 or ($this->distanceSquaredNoY($player) < 1 and abs($player->y - $this->y)<1.5))){
+    public function attackEntity(Entity $player)
+    {
+        if ($this->attackDelay > 10 && ($this->distanceSquared($player) < 1 or ($this->distanceSquaredNoY($player) < 1 and abs($player->y - $this->y) < 1.5))) {
             $this->attackDelay = 0;
 
             $ev = new EntityDamageByEntityEvent($this, $player, EntityDamageEvent::CAUSE_ENTITY_ATTACK, $this->getDamage());
@@ -29,7 +32,8 @@ class AEndermite extends WalkingMonster{
         }
     }
 
-    public function getDrops(){
+    public function getDrops()
+    {
         return [];
     }
 

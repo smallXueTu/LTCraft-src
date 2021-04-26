@@ -8,29 +8,33 @@ use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\item\Item;
 
-class ASquid extends WalkingMonster{
- const NETWORK_ID = 17;
+class ASquid extends WalkingMonster
+{
+    const NETWORK_ID = 17;
 
- public $width = 0.72;
- public $height = 0.9;
+    public $width = 0.72;
+    public $height = 0.9;
 
     public $eyeHeight = 0.6;
 
- public function getName(){
-  return "Spuid";
- }
- 
- public function attackEntity(Entity $player){
-  if($this->attackDelay > 10 && ($this->distanceSquared($player) < 1 or ($this->distanceSquaredNoY($player) < 1 and abs($player->y - $this->y)<1.5))){
-   $this->attackDelay = 0;
+    public function getName()
+    {
+        return "Spuid";
+    }
 
-   $ev = new EntityDamageByEntityEvent($this, $player, EntityDamageEvent::CAUSE_ENTITY_ATTACK, $this->getDamage());
-   $player->attack($ev->getFinalDamage(), $ev);
-  }
- }
+    public function attackEntity(Entity $player)
+    {
+        if ($this->attackDelay > 10 && ($this->distanceSquared($player) < 1 or ($this->distanceSquaredNoY($player) < 1 and abs($player->y - $this->y) < 1.5))) {
+            $this->attackDelay = 0;
 
- public function getDrops(){
-  return [];
- }
+            $ev = new EntityDamageByEntityEvent($this, $player, EntityDamageEvent::CAUSE_ENTITY_ATTACK, $this->getDamage());
+            $player->attack($ev->getFinalDamage(), $ev);
+        }
+    }
+
+    public function getDrops()
+    {
+        return [];
+    }
 
 }

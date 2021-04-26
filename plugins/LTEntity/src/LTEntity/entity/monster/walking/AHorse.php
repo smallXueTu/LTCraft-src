@@ -8,29 +8,33 @@ use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\item\Item;
 
-class AHorse extends WalkingMonster{
- const NETWORK_ID = 23;
+class AHorse extends WalkingMonster
+{
+    const NETWORK_ID = 23;
 
- public $width = 0.72;
- public $height = 1.12;
+    public $width = 0.72;
+    public $height = 1.12;
 
     public $eyeHeight = 1.0;
 
- public function getName(){
-  return "Horse";
- }
- 
- public function attackEntity(Entity $player){
-  if($this->attackDelay > 10 && ($this->distanceSquared($player) < 1 or ($this->distanceSquaredNoY($player) < 1 and abs($player->y - $this->y)<1.5))){
-   $this->attackDelay = 0;
+    public function getName()
+    {
+        return "Horse";
+    }
 
-   $ev = new EntityDamageByEntityEvent($this, $player, EntityDamageEvent::CAUSE_ENTITY_ATTACK, $this->getDamage());
-   $player->attack($ev->getFinalDamage(), $ev);
-  }
- }
+    public function attackEntity(Entity $player)
+    {
+        if ($this->attackDelay > 10 && ($this->distanceSquared($player) < 1 or ($this->distanceSquaredNoY($player) < 1 and abs($player->y - $this->y) < 1.5))) {
+            $this->attackDelay = 0;
 
- public function getDrops(){
-  return [];
- }
+            $ev = new EntityDamageByEntityEvent($this, $player, EntityDamageEvent::CAUSE_ENTITY_ATTACK, $this->getDamage());
+            $player->attack($ev->getFinalDamage(), $ev);
+        }
+    }
+
+    public function getDrops()
+    {
+        return [];
+    }
 
 }
