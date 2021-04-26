@@ -2091,6 +2091,12 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
                 $item->onTick($this, $index,  $this->ornamentsInventory);
             }
         }
+        foreach ($this->ornamentsInventory->getContents() as $index => $item){
+            if ($item instanceof Mana){
+                /** @var Mana $item */
+                $item->onTick($this, $index,  $this->ornamentsInventory);
+            }
+        }
     }
 
     /**

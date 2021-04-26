@@ -13,6 +13,7 @@ class ACaveSpider extends WalkingMonster{
 
  public $width = 0.72;
  public $height = 0.9;
+public $eyeHeight = 0.5;
 
  public function getName(){
   return "CaveSpider";

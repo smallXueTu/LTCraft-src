@@ -15,6 +15,8 @@ class ARabbit extends WalkingMonster{
  public $width = 0.4;
  public $height = 0.75;
 
+    public $eyeHeight = 0.6;
+
  public function getName(){
   return "Rabbit";
  }

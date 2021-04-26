@@ -22,6 +22,8 @@ use LTEntity\DataList;
 use LTEntity\entity\BaseEntity;
 use LTItem\Main as LTMain;
 use LTItem\LTItem;
+use pocketmine\scheduler\CallbackTask;
+use pocketmine\Server;
 
 class Commands extends PluginBase implements CommandExecutor{
     /** @var Main $plugin */
@@ -145,7 +147,10 @@ class Commands extends PluginBase implements CommandExecutor{
                 break;
                 case 'test4':
                     /** @var $sender Player */
-                    ManaArmor::spawnParticle($sender->asPosition(), null);
+                    $sender->getServer()->getScheduler()->scheduleRepeatingTask(new CallbackTask(function($pos){
+                        ManaArmor::shield($pos, Server::getInstance()->getPlayer("Angel_XX"));
+                    }, [$sender->asPosition()]), 20);//重复任务
+
                 break;
                 case 'del':
                     if (!isset($args[1])) return $sender->sendMessage("§c请指定需要被删除的刷怪点名字.");

@@ -23,6 +23,8 @@ class ASnowGolem extends WalkingMonster implements ProjectileSource{
  public $width = 0.6;
  public $height = 1.8;
 
+    public $eyeHeight = 1.6;
+
  public function getName(){
   return "SnowGolem";
  }

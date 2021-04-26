@@ -360,7 +360,7 @@ class GaiaGuardians extends Creature
     public function spawnBorderParticle(){
         $r = 12;
         $yy = $this->getBasePos()->getY()+5;
-        for($i=1;$i<=360;$i++){
+        for($i=1;$i<=180;$i++){
             $a=$this->getBasePos()->getX()+$r*cos($i*3.14/90) ;
             $b=$this->getBasePos()->getZ()+$r*sin($i*3.14/90) ;
             $this->getLevel()->addParticle(new DustParticle(new Vector3($a,$yy,$b),200,0,0));

@@ -15,6 +15,8 @@ class AMooshroom extends WalkingMonster{
  public $width = 0.72;
  public $height = 1.12;
 
+    public $eyeHeight = 1.0;
+
 
  public function getName(){
   return "Mooshroom";

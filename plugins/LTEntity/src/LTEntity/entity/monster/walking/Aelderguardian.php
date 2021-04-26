@@ -17,6 +17,8 @@ class Aelderguardian extends WalkingMonster{
  public $width = 0.72;
  public $height = 2.4;
 
+public $eyeHeight = 2.0;
+
 
  public function getName(){
   return "elderguardian";

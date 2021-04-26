@@ -1,6 +1,7 @@
 <?php
 namespace LTItem\SpecialItems;
 
+use LTItem\SpecialItems\Armor\ManaArmor;
 use pocketmine\item\Item;
 use pocketmine\nbt\tag\ByteTag;
 use pocketmine\nbt\tag\NamedTag;
@@ -31,6 +32,38 @@ class Armor extends Item implements LTItem{
      * @var mixed
      */
     private $Wlevel;
+
+
+
+    private static $armors = [];
+
+    /**
+     * @param string $name
+     * @param array $conf
+     * @param int $count
+     * @param CompoundTag $nbt
+     * @param bool $init
+     * @return Armor
+     */
+    public static function getArmor(string $name, array $conf, int $count, CompoundTag $nbt, $init=true) : Armor
+    {
+        if (isset(self::$armors[$name])){
+            return new self::$armors[$name]($conf, $count, $nbt, $init);
+        }
+        return new Armor($conf, $count, $nbt, $init);
+    }
+
+
+    /**
+     * 初始化武器
+     */
+    public static function initArmor()
+    {
+        self::$armors['魔力之靴'] = ManaArmor::class;
+        self::$armors['魔力护腿'] = ManaArmor::class;
+        self::$armors['魔力之帽'] = ManaArmor::class;
+        self::$armors['魔力之甲'] = ManaArmor::class;
+    }
 
     public function __construct(array $conf, int $count, CompoundTag $nbt, $init=true){
 		$idInfo=explode(':',$conf['ID']);

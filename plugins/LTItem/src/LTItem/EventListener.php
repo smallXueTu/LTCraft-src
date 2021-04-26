@@ -591,10 +591,9 @@ class EventListener implements Listener
                             if (!$item->consumptionMana($cb))$sign = false;
                         }
                     }
-                    $entity->getLevel()->addSound(new AnvilFallSound($entity));
-                    Armor\ManaArmor::spawnParticle($entity, $event instanceof EntityDamageByEntityEvent?$event->getDamager():null);
+                    Armor\ManaArmor::shield($entity, $event instanceof EntityDamageByEntityEvent?$event->getDamager():null);
                     if ($sign)return $event->setCancelled(true);
-                }elseif($allMana - $finalDamage * 25 >= 0){
+                }elseif($allMana - $finalDamage * 10 >= 0){
                     $entity->sendMessage("§l§c[警告]强大的打击！");
                     $entity->setHealth(1);
                     foreach ($entity->getInventory()->getArmorContents() as $item){
@@ -602,8 +601,7 @@ class EventListener implements Listener
                             $item->setMana(0);
                         }
                     }
-                    $entity->getLevel()->addSound(new AnvilFallSound($entity));
-                    Armor\ManaArmor::spawnParticle($entity, $event instanceof EntityDamageByEntityEvent?$event->getDamager():null);
+                    Armor\ManaArmor::shield($entity, $event instanceof EntityDamageByEntityEvent?$event->getDamager():null);
                     return $event->setCancelled();
                 }
             }

@@ -12,6 +12,7 @@ class ALavaSlime extends WalkingMonster{
 
  public $width = 0.2;
  public $height = 0.2;
+    public $eyeHeight = 0.2;
 
 
 

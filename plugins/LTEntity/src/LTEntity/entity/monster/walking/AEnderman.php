@@ -13,6 +13,7 @@ class AEnderman extends WalkingMonster{
 
  public $width = 0.72;
  public $height = 1.8;
+public $eyeHeight = 1.6;
 
 
  public function getName(){

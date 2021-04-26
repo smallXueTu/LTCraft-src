@@ -13,6 +13,8 @@ class ASilverfish extends WalkingMonster{
  public $width = 0.4;
  public $height = 0.2;
 
+    public $eyeHeight = 0.2;
+
  public function getName(){
   return "Silverfish";
  }

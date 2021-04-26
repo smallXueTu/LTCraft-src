@@ -1,5 +1,6 @@
 <?php
 namespace LTPopup;
+use LTItem\SpecialItems\Armor\ManaArmor;
 use pocketmine\utils\Config;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -156,6 +157,16 @@ class Popup extends PluginBase implements Listener{
 					$additional=$QQ;
 				if (($index = $player->getBuff()->getOrnamentsInstallIndex("天翼族之冠"))!==false and $player->isSurvival()){
                     $additional.=PHP_EOL.$colorArray[mt_rand(0,7)]."飞行能量：".$player->getOrnamentsInventory()->getItem($index)->energy;
+                }
+                $allMana = 0;//MAX:40000
+                /** @var Player $entity */
+                foreach ($player->getInventory()->getArmorContents() as $item){
+                    if ($item instanceof ManaArmor and $item->getMana() > 0){
+                        $allMana += $item->getMana();
+                    }
+                }
+                if ($allMana >0){
+                    $additional.=PHP_EOL.$colorArray[mt_rand(0,7)]."盔甲Mana：".$allMana;
                 }
 				$player->sendPopup($top.$colorArray[mt_rand(0,7)].'◆橙币:'.$colorArray[mt_rand(0,7)].$m.' '.$colorArray[mt_rand(0,7)].$colorArray[mt_rand(0,7)].'◆坐标:'.$colorArray[mt_rand(0,7)].$sx.':'.$sy.':'.$sz.$colorArray[mt_rand(0,7)].' ◆Mana:'.$colorArray[mt_rand(0,7)].$player->getBuff()->getMana().' '.PHP_EOL .$additional);
 			}

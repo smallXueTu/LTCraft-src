@@ -13,6 +13,7 @@ class AOcelot extends WalkingMonster{
 
  public $width = 0.72;
  public $height = 0.9;
+    public $eyeHeight = 0.7;
 
  public function getName(){
   return "Ocelot";

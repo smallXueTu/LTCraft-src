@@ -98,6 +98,7 @@ class Main extends PluginBase{
 		ManaSystem::initMana();
 		Material::initMaterial();
 		Weapon::initWeapons();
+		Armor::initArmor();
 		Item::$LTIteminitd=true;
 	}
 	public static function updateArmorColor(){
@@ -128,7 +129,6 @@ class Main extends PluginBase{
 		}
 	}
 	public function runEffect(){
-		$this->R->save();
 		foreach($this->getServer()->getOnlinePlayers() as $p){
 			$p->getBuff()->runEffect();
 		}
@@ -429,30 +429,29 @@ class Main extends PluginBase{
     public function createArmor($name, $player=null){
         if(isset($this->KJ[$name]))$conf=$this->KJ[$name]->getAll();else return Item::get(0);
 		if($player instanceof Player)$player=strtolower($player->getName());
-		$item=new Armor($conf, 1, new CompoundTag('',[
-				'Unbreakable'=>new ByteTag('Unbreakable',1),
-				'armor'=>new ListTag('armor',[
-					new StringTag('',$conf['全员可用']==true?'*':$player),//0 绑定
-					new StringTag('',$name),//1 装备名字
-					new StringTag('', 0),//2 附加生命值
-					new StringTag('', 0),//3 附加护甲
-					new StringTag('', 0),//4 附加反伤
-					new StringTag('', 0),//5 附加闪避
-					new StringTag('', 0),//6 附加速度
-					new StringTag('', 0),//7 减少控制百分比
-					new StringTag('', ''),//8 药水
-					new StringTag('', 1),//9 等级
-					new StringTag('', 0),//10 经验
-					new StringTag('', 1),//11 星级
-					new StringTag('', 0),//12 反伤
-					new StringTag('', 0),//13 坚韧
-					new StringTag('', 0),//14 幸运
-				]),
-				'display' => new CompoundTag("display", [
-					"Name" => new StringTag("Name", $conf['名字'])
-				])
-			]));
-		return $item;
+        return Armor::getArmor($name, $conf, 1, new CompoundTag('',[
+                'Unbreakable'=>new ByteTag('Unbreakable',1),
+                'armor'=>new ListTag('armor',[
+                    new StringTag('',$conf['全员可用']==true?'*':$player),//0 绑定
+                    new StringTag('',$name),//1 装备名字
+                    new StringTag('', 0),//2 附加生命值
+                    new StringTag('', 0),//3 附加护甲
+                    new StringTag('', 0),//4 附加反伤
+                    new StringTag('', 0),//5 附加闪避
+                    new StringTag('', 0),//6 附加速度
+                    new StringTag('', 0),//7 减少控制百分比
+                    new StringTag('', ''),//8 药水
+                    new StringTag('', 1),//9 等级
+                    new StringTag('', 0),//10 经验
+                    new StringTag('', 1),//11 星级
+                    new StringTag('', 0),//12 反伤
+                    new StringTag('', 0),//13 坚韧
+                    new StringTag('', 0),//14 幸运
+                ]),
+                'display' => new CompoundTag("display", [
+                    "Name" => new StringTag("Name", $conf['名字'])
+                ])
+            ]));
     }
 	public function existsLTItem($type,$name){
 		switch($type){

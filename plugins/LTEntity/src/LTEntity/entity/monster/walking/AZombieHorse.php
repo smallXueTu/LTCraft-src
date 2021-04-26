@@ -14,6 +14,8 @@ class AZombieHorse extends WalkingMonster{
  public $width = 0.72;
  public $height = 1.12;
 
+    public $eyeHeight = 1.1;
+
 
  public function getName(){
   return "ZombieHorse";

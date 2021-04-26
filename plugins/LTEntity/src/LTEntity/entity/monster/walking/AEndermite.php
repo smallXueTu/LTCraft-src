@@ -13,6 +13,8 @@ class AEndermite extends WalkingMonster{
     public $width = 0.4;
     public $height = 0.2;
 
+    public $eyeHeight = 0.1;
+
 
     public function getName(){
         return "Endermite";
