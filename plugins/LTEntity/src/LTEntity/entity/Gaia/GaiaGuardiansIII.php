@@ -177,9 +177,9 @@ class GaiaGuardiansIII extends Creature
         if ($this->age % 5 == 0){
             /** @var Player $player */
             foreach ($this->getPresencePlayer() as $player){
-//                if($player->isCreative()){
-//                    $player->setGamemode(0);
-//                }
+                if($player->isCreative()){
+                    $player->setGamemode(0);
+                }
                 if (!$player->canSelected() or !$player->isSurvival())continue;
                 if ($this->getBasePos()->y - $player->y > 1){
                     $player->setLastDamageCause(new EntityDamageByEntityEvent($this, $player, EntityDamageEvent::CAUSE_DIDI, PHP_INT_MAX));

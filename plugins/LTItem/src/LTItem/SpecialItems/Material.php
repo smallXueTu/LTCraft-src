@@ -2,6 +2,7 @@
 namespace LTItem\SpecialItems;
 
 use LTItem\SpecialItems\Material\BraveManWeaponGiftBag;
+use LTItem\SpecialItems\Material\ChallengeCoupon;
 use LTItem\SpecialItems\Material\Coolant;
 use LTItem\SpecialItems\Material\Drawings;
 use LTItem\SpecialItems\Material\EmptyRewardBox;
@@ -69,6 +70,7 @@ class Material extends Item implements LTItem{
         self::$materials['空奖励箱'] = EmptyRewardBox::class;
         self::$materials['奖励箱-基因'] = RewardBoxGene::class;
         self::$materials['魔法棍'] = MagicStick::class;
+        self::$materials['挑战券'] = ChallengeCoupon::class;
     }
     /**
      * Material constructor.

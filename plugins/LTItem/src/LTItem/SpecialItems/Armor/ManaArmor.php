@@ -22,7 +22,6 @@ class ManaArmor extends Armor implements Mana
     private int $Mana;
     private int $MaxMana;
     private int $lastDamage = 0;
-    private int $lastShield = 0;
     private int $lastRecharge = 0;
     private int $noteMagicSpeed = 1;
 
