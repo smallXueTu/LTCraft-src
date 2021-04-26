@@ -55,7 +55,7 @@ abstract class Particle extends Vector3 {
 	const TYPE_MOB_SPELL_AMBIENT = 27;//看不到
 	const TYPE_MOB_SPELL_INSTANTANEOUS = 28;//看不到
 	const TYPE_INK = 29;//黑粒子
-	const TYPE_SLIME = 30;//蓝粒子
+	const TYPE_SLIME = 30;//粘液球
 	const TYPE_RAIN_SPLASH = 31;//刷怪笼的火
 	const TYPE_VILLAGER_ANGRY = 32;//村民生气
 	const TYPE_VILLAGER_HAPPY = 33;//村民高兴

@@ -14,6 +14,7 @@ use pocketmine\event\entity\EntityDeathEvent;
 use pocketmine\event\entity\EntityRegainHealthEvent;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\level\Explosion;
+use pocketmine\level\sound\AnvilFallSound;
 use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\NamedTag;
 use pocketmine\network\protocol\PlayerActionPacket;
@@ -568,6 +569,45 @@ class EventListener implements Listener
     {
         if($event->isCancelled())return;
         $entity = $event->getEntity();
+        if ($entity instanceof Player){
+            $allMana = 0;//MAX:40000
+            $count = 0;
+            /** @var Player $entity */
+            foreach ($entity->getInventory()->getArmorContents() as $item){
+                if ($item instanceof Armor\ManaArmor and $item->getMana() > 0){
+                    $allMana += $item->getMana();
+                    $count++;
+                }
+            }
+            if ($allMana > 0){
+                $finalDamage = $event->getFinalDamage();
+                if ($allMana - $finalDamage * 100 >= 0){
+                    $cb = $finalDamage * 100 / $count;
+                    $avg = $allMana / $count;
+                    $sign = true;
+                    foreach ($entity->getInventory()->getArmorContents() as $item){
+                        if ($item instanceof Armor\ManaArmor and $item->getMana() > 0){
+                            $item->setMana($avg);
+                            if (!$item->consumptionMana($cb))$sign = false;
+                        }
+                    }
+                    $entity->getLevel()->addSound(new AnvilFallSound($entity));
+                    Armor\ManaArmor::spawnParticle($entity, $event instanceof EntityDamageByEntityEvent?$event->getDamager():null);
+                    if ($sign)return $event->setCancelled(true);
+                }elseif($allMana - $finalDamage * 25 >= 0){
+                    $entity->sendMessage("§l§c[警告]强大的打击！");
+                    $entity->setHealth(1);
+                    foreach ($entity->getInventory()->getArmorContents() as $item){
+                        if ($item instanceof Armor\ManaArmor and $item->getMana() > 0){
+                            $item->setMana(0);
+                        }
+                    }
+                    $entity->getLevel()->addSound(new AnvilFallSound($entity));
+                    Armor\ManaArmor::spawnParticle($entity, $event instanceof EntityDamageByEntityEvent?$event->getDamager():null);
+                    return $event->setCancelled();
+                }
+            }
+        }
         if($event instanceof EntityDamageByEntityEvent and self::canCalculate($event->getCause())) {
             $damager = $event->getDamager();
             if(($entity instanceof Player and $damager instanceof Player and $entity->getBuff()->miss()) or ($damager instanceof Creature and $damager->getBlindness())) {

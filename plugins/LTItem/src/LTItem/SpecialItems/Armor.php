@@ -187,7 +187,7 @@ class Armor extends Item implements LTItem{
 	public function getBinding(){
 		return $this->binding;
 	}
-	public function canUse(Player $player){
+	public function canUse(Player $player, $playerCheck = true){
 		if($this->binding==='*' or $this->binding===strtolower($player->getName()))return true;
 		return false;
 	}

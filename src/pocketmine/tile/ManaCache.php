@@ -71,6 +71,7 @@ class ManaCache extends Tile
                                     if ($this->putMana($enter)){
                                         $item->addMana($enter);
                                         $tile->getInventory()->setItem($i, $item);
+                                        break;
                                     }
                                 }
                             }
@@ -85,6 +86,7 @@ class ManaCache extends Tile
                                     if ($item->consumptionMana($enter)){
                                         $this->addMana($enter);
                                         $tile->getInventory()->setItem($i, $item);
+                                        break;
                                     }
                                 }
                             }

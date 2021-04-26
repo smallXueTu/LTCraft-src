@@ -5,6 +5,7 @@ namespace LTEntity;
 use LTEntity\entity\Boss\SkillsEntity\Sakura;
 use LTEntity\entity\Boss\SkillsEntity\SpaceTear;
 use LTEntity\entity\Gaia\GaiaGuardiansIII;
+use LTItem\SpecialItems\Armor\ManaArmor;
 use pocketmine\level\Position;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\DoubleTag;
@@ -141,6 +142,10 @@ class Commands extends PluginBase implements CommandExecutor{
                 case 'test3':
                     /** @var $sender Player */
                     GaiaGuardiansIII::spawn($sender->asPosition(), $sender);
+                break;
+                case 'test4':
+                    /** @var $sender Player */
+                    ManaArmor::spawnParticle($sender->asPosition(), null);
                 break;
                 case 'del':
                     if (!isset($args[1])) return $sender->sendMessage("§c请指定需要被删除的刷怪点名字.");
