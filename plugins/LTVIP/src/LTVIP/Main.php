@@ -66,6 +66,7 @@ class Main extends PluginBase implements Listener
 	}
     public function onCommand(CommandSender $sender, Command $command, $label, array $args)
     {
+        /** @var Player $sender */
 		if($command=="mtps"){
 			if($sender->getForceTP()){
 				$sender->setForceTP(false);
@@ -74,7 +75,7 @@ class Main extends PluginBase implements Listener
 				$sender->setForceTP(true);
 				$sender->sendMessage(self::HEAD.'a开启被拉功能！');
 			}
-			return;
+			return true;
 		}
         if(!isset($args[0])) {
             $sender->sendMessage('§l§d自己VIP截止时间vip:§a/vip time');
@@ -86,7 +87,7 @@ class Main extends PluginBase implements Listener
             $sender->sendMessage('§l§d电击命令:§a/vip 电击 玩家');
             $sender->sendMessage('§l§d披风开关:§a/vip 披风开关');
             $sender->sendMessage('§l§d伪装实体命令:§a/vip 伪装实体 实体ID 大小(0.1~10)');
-            return;
+            return true;
         }
         switch(strtolower($args[0])) {
 			case 'add':
@@ -112,7 +113,7 @@ class Main extends PluginBase implements Listener
                     $name=strtolower($args[1]);
 					$this->server->dataBase->pushService('1'.chr(2)."update user set VIP=NULL where name='{$name}'");
 					$sender->sendMessage(self::HEAD.'a成功删除VIP玩家'.$player->getName());
-					return;
+					return true;
 				}
 				$vip = $player->isVIP();
 				if($vip===false)return $sender->sendMessage(self::HEAD.'c该玩家不是VIP');
@@ -176,7 +177,7 @@ class Main extends PluginBase implements Listener
 				if($data==null){
 					$sender->sendMessage(self::HEAD.'c你仿佛不是vip了！....');
 					$sender->setVIP(false);
-					return;
+					return true;
 				}
 				$time=explode(':', $data)[1];
 				$sender->sendMessage(self::HEAD.'e你的VIP截止到'.date("Y年m月d日H时i分s秒", $time));
@@ -266,7 +267,7 @@ class Main extends PluginBase implements Listener
 					if($args[1] == 0) {
 						$sender->sendMessage(self::HEAD.'a解除伪装成功。回归本体！');
 						$this->camouflage[$sender->getName()]->close();
-						return;
+						return true;
 					}
 					if(isset($this->camouflage[$sender->getName()])) {
 						$this->camouflage[$sender->getName()]->close();
