@@ -140,6 +140,7 @@ class Main extends PluginBase implements Listener
 			case 'setlevel':
 //				if($sender->getName() !== 'Angel_XX' AND $sender instanceof Player)return $sender->sendMessage(self::HEAD.'c没有这个权限噢！');
 				if(count($args) < 3)return $sender->sendMessage(self::HEAD.'c用法/vip setlevel 玩家 等级');
+                if(!$sender->isOp())return $sender->sendMessage(self::HEAD.'c权限不足。');
 				$player=$this->server->getPlayer($args[1]);
 				if(!$player)return $sender->sendMessage(self::HEAD.'c该玩家不在线');
 				$vip = $player->isVIP();
