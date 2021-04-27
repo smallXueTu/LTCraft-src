@@ -119,7 +119,7 @@ abstract class Creature extends Living {
 		}
 	}
 	public function onUpdate($tick){
-		if(!$this instanceof Human){
+		if(!($this instanceof Human)){
 			if($this->attackingTick > 0){
 				$this->attackingTick--;
 			}
@@ -150,7 +150,7 @@ abstract class Creature extends Living {
 					$this->motionY *= -0.5;
 				}
 
-				$this->updateMovement();
+//				$this->updateMovement();
 			}
 		}
 		if($this->freezeTime>0)

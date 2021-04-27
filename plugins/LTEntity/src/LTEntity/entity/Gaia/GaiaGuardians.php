@@ -166,7 +166,7 @@ class GaiaGuardians extends Creature
      */
     public function initEntity()
     {
-        $this->getAttributeMap()->addAttribute(new Attribute(Attribute::HEALTH, "minecraft:health", 0, 300, 300, true));
+        $this->getAttributeMap()->addAttribute(new Attribute(Attribute::HEALTH, "minecraft:health", 0, $this->getMaxHealth(), $this->getMaxHealth(), true));
         $this->spawnToAll();
         parent::initEntity();
     }
@@ -197,7 +197,6 @@ class GaiaGuardians extends Creature
             $this->onPlayerTick = 0;
         }
         if ($this->age % 20 == 0)$this->spawnBorderParticle();
-        $this->age ++;
 
         if ($this->age % 5 == 0){
             /** @var Player $player */
@@ -234,6 +233,7 @@ class GaiaGuardians extends Creature
             }
         }
         if ($this->age <= 20*20){
+            $this->age ++;
             $this->setHealth($this->getHealth() + ceil($this->getMaxHealth() / (20*20)));
             //if (Server::getInstance()->getTick() % 2 == 0)$this->shakeScreen();//震动玩家屏幕
             $this->yaw+=25;
@@ -246,6 +246,7 @@ class GaiaGuardians extends Creature
             }
             */
         }elseif($this->onSky!=0 and $this->onSky < 20*30){
+            $this->age ++;
             $this->onSky++;
             $this->yaw+=25;
             $this->pitch=0;

@@ -65,6 +65,10 @@ class Servant extends Creature
         if ($this->attackTime > 0){
             $this->attackTime--;
         }
+        if (!$this->isAlive()){
+            $this->close();
+            return false;
+        }
         return true;
     }
 
