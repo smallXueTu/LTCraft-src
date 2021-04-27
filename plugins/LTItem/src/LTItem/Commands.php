@@ -437,7 +437,7 @@ class Commands
 				}
 			return;
 		}
-//		if($sender->getName() !== 'Angel_XX' AND $sender instanceof Player)return;
+		if(!$sender->isOp())return;
 		if(!isset($args[0]))return $sender->sendMessage('§c用法:/tw [add reload give]');
 		switch($args[0]) {
 		case 'add':
