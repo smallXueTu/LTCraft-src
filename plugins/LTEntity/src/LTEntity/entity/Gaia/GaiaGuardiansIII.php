@@ -118,7 +118,7 @@ class GaiaGuardiansIII extends Creature
         $entity->setHealth($entity->getMaxHealth());
         $entity->setNameTagVisible(true);
         $entity->setNameTagAlwaysVisible(true);
-        $entity->setArmorV(300);//200护甲
+        $entity->setArmorV(300);//300护甲
         $entity->setNameTag('盖亚守护者 III');
         $entity->spawnCrysta();
         $entity->lastMove = Server::getInstance()->getTick();
