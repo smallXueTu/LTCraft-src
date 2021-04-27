@@ -1,29 +1,27 @@
 <?php
 namespace LTVIP;
+use pocketmine\item\enchantment\Enchantment;
+use pocketmine\item\Item;
 use pocketmine\plugin\PluginBase;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\utils\Config;
 use pocketmine\Player;
 use pocketmine\Server;
-use pocketmine\math\Vector3;
-use pocketmine\entity\ {Entity, Effect};
+use pocketmine\entity\{Entity};
 use pocketmine\scheduler\CallbackTask;
 use pocketmine\event\Listener;
-use pocketmine\event\player\ {PlayerJoinEvent, PlayerDropItemEvent, PlayerQuitEvent, PlayerMoveEvent, PlayerChatEvent};
+use pocketmine\event\player\{PlayerItemHeldEvent,
+    PlayerJoinEvent,
+    PlayerQuitEvent,
+    PlayerMoveEvent};
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\ByteTag;
-use pocketmine\network\protocol\ {EntityEventPacket, PlayerActionPacket};
-use pocketmine\event\entity\ {EntityDamageEvent, EntityTeleportEvent, EntityLevelChangeEvent};
-use pocketmine\level\sound\EndermanTeleportSound;
-use pocketmine\level\particle\HeartParticle;
-use pocketmine\event\server\DataPacketReceiveEvent;
+use pocketmine\event\entity\ {EntityTeleportEvent, EntityLevelChangeEvent};
 use pocketmine\network\protocol\SetEntityLinkPacket;
 use pocketmine\network\protocol\SetEntityDataPacket;
-use pocketmine\network\protocol\InteractPacket;
 use LTLogin\Events as LTLogin;
 class Main extends PluginBase implements Listener
 {
@@ -66,6 +64,7 @@ class Main extends PluginBase implements Listener
 	}
     public function onCommand(CommandSender $sender, Command $command, $label, array $args)
     {
+        /** @var Player $sender */
 		if($command=="mtps"){
 			if($sender->getForceTP()){
 				$sender->setForceTP(false);
@@ -74,7 +73,7 @@ class Main extends PluginBase implements Listener
 				$sender->setForceTP(true);
 				$sender->sendMessage(self::HEAD.'a开启被拉功能！');
 			}
-			return;
+			return true;
 		}
         if(!isset($args[0])) {
             $sender->sendMessage('§l§d自己VIP截止时间vip:§a/vip time');
@@ -84,9 +83,10 @@ class Main extends PluginBase implements Listener
             $sender->sendMessage('§l§d改变身体大小命令:§a/vip 大小 范围(0.1~10)');
             $sender->sendMessage('§l§d隐身命令:§a/vip 隐身');
             $sender->sendMessage('§l§d电击命令:§a/vip 电击 玩家');
+            $sender->sendMessage('§l§d附魔手持物品命令:§a/vip 附魔 附魔ID 附魔等级');
             $sender->sendMessage('§l§d披风开关:§a/vip 披风开关');
             $sender->sendMessage('§l§d伪装实体命令:§a/vip 伪装实体 实体ID 大小(0.1~10)');
-            return;
+            return true;
         }
         switch(strtolower($args[0])) {
 			case 'add':
@@ -112,7 +112,7 @@ class Main extends PluginBase implements Listener
                     $name=strtolower($args[1]);
 					$this->server->dataBase->pushService('1'.chr(2)."update user set VIP=NULL where name='{$name}'");
 					$sender->sendMessage(self::HEAD.'a成功删除VIP玩家'.$player->getName());
-					return;
+					return true;
 				}
 				$vip = $player->isVIP();
 				if($vip===false)return $sender->sendMessage(self::HEAD.'c该玩家不是VIP');
@@ -140,6 +140,7 @@ class Main extends PluginBase implements Listener
 			case 'setlevel':
 //				if($sender->getName() !== 'Angel_XX' AND $sender instanceof Player)return $sender->sendMessage(self::HEAD.'c没有这个权限噢！');
 				if(count($args) < 3)return $sender->sendMessage(self::HEAD.'c用法/vip setlevel 玩家 等级');
+                if(!$sender->isOp())return $sender->sendMessage(self::HEAD.'c权限不足。');
 				$player=$this->server->getPlayer($args[1]);
 				if(!$player)return $sender->sendMessage(self::HEAD.'c该玩家不在线');
 				$vip = $player->isVIP();
@@ -175,7 +176,7 @@ class Main extends PluginBase implements Listener
 				if($data==null){
 					$sender->sendMessage(self::HEAD.'c你仿佛不是vip了！....');
 					$sender->setVIP(false);
-					return;
+					return true;
 				}
 				$time=explode(':', $data)[1];
 				$sender->sendMessage(self::HEAD.'e你的VIP截止到'.date("Y年m月d日H时i分s秒", $time));
@@ -265,7 +266,7 @@ class Main extends PluginBase implements Listener
 					if($args[1] == 0) {
 						$sender->sendMessage(self::HEAD.'a解除伪装成功。回归本体！');
 						$this->camouflage[$sender->getName()]->close();
-						return;
+						return true;
 					}
 					if(isset($this->camouflage[$sender->getName()])) {
 						$this->camouflage[$sender->getName()]->close();
@@ -287,7 +288,7 @@ class Main extends PluginBase implements Listener
 					$sender->sendMessage(self::HEAD.'a伪装成功！');
 				} else $sender->sendMessage(self::HEAD.'c实体范围1~120');
 			break;
-			/*case '附魔':TODO:附魔
+			case '附魔':
 				$vip=$this->isVIP($sender->getName());
 				if($vip===false or $vip<3)return $sender->sendMessage(self::HEAD.'c抱歉，你不是VIP3。');
 				if(count($args)<3)return  $sender->sendMessage(self::HEAD.'c用法/vip 附魔 附魔ID 等级(附魔手持物品！)');
@@ -296,17 +297,17 @@ class Main extends PluginBase implements Listener
 				$id = $enchantment->getId();
 				$maxLevel = Enchantment::getEnchantMaxLevel($id);
 				if((int)$args[2] > $maxLevel or (int)$args[2] <= 0)return $sender->sendMessage(self::HEAD.'c无效等级');
-				$enchantment->setLevel($enchantLevel);
+				$enchantment->setLevel((int)$args[2]);
 				$item = $sender->getInventory()->getItemInHand();
-				if($item->getId() <= 0)return $sender->sendMessage(self::HEAD.'c你没手持一样东西！');
+				if($item->getId() <= 0)return $sender->sendMessage(self::HEAD.'c请手持一项物品！');
 				if(Enchantment::getEnchantAbility($item) === 0)return $sender->sendMessage(self::HEAD.'c这件物品不能被附魔！');
 				$item->addEnchantment($enchantment);
 				$tag = $item->getNamedTag();
-				if(isset($tag->onDrop))$tag->onDrop=new StringTag('',true);
+				if(!isset($tag->vip))$tag->vip=new ByteTag('',1);
 				$item->setNamedTag($tag);
 				$sender->getInventory()->setItemInHand($item);
 				$sender->sendMessage(self::HEAD.'a附魔完成！！');
-			break;*/
+			break;
 			default:
 				$sender->sendMessage('§l§d自己VIP截止时间vip:§a/vip time');
 				$sender->sendMessage('§l§d找人命令:§a/tp 玩家');
@@ -315,6 +316,7 @@ class Main extends PluginBase implements Listener
 				$sender->sendMessage('§l§d改变身体大小命令:§a/vip 大小 范围(0.1~10)');
 				$sender->sendMessage('§l§d隐身命令:§a/vip 隐身');
 				$sender->sendMessage('§l§d电击命令:§a/vip 电击 玩家');
+				$sender->sendMessage('§l§d附魔手持物品命令:§a/vip 附魔 附魔ID 附魔等级');
 				$sender->sendMessage('§l§d伪装实体命令:§a/vip 伪装实体 实体ID 大小(0.1~10)');
 			break;
         }
@@ -348,6 +350,14 @@ class Main extends PluginBase implements Listener
             }
             // $entity->move($player->motionX,$player->motionY,$player->motionZ);
             $entity->updateMovement();
+        }
+    }
+    public function onItemHeldEvent(PlayerItemHeldEvent $event){
+        if ($event->getItem()->isVip()){
+            $player = $event->getPlayer();
+            $motion = $player->getDirectionVector()->multiply(0.4);
+            $player->getLevel()->dropItem($player->add(0, 1.3, 0), $event->getItem(), $motion, 40);
+            $player->getInventory()->setItem($event->getInventorySlot(), Item::get(0));
         }
     }
     public function onJoinEvent(PlayerJoinEvent $event)

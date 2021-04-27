@@ -33,8 +33,8 @@ class FateDice extends BaseMana
             }
         }
         if (count($all) == 0){
-            $player->sendMessage("§c骰子落在了".mt_rand(1, 6)."，接着消失不见了。");
-            $player->getInventory()->setItemInHand(Item::get(0));
+//            $player->sendMessage("§c骰子落在了".mt_rand(1, 6)."，接着消失不见了。");
+            $player->getInventory()->setItemInHand(self::randItem());
             return true;
         }
         $side = $all[array_rand($all)];
@@ -74,6 +74,34 @@ class FateDice extends BaseMana
      * @return Item
      */
     public function randItem(): Item{
-
+        $rand = mt_rand(0, 99);
+        $item = Item::get(0);
+        switch (true){
+            case $rand >= 90:
+                $item = Main::getInstance()->createMaterial("挑战券");
+                break;
+            case $rand >= 85:
+                $item = Main::getInstance()->createMaterial("幻影药水");
+                break;
+            case $rand >= 60:
+                $item = Main::getInstance()->createMaterial("圣布");
+                break;
+            case $rand >= 50:
+                $item = Main::getInstance()->createMaterial("泰拉钢锭");
+                break;
+            case $rand >= 30:
+                $item = Item::get(265, 0, mt_rand(1, 10));
+                break;
+            case $rand >= 15:
+                $item = Item::get(266, 0, mt_rand(1, 10));
+                break;
+            case $rand >= 5:
+                $item = Item::get(264, 0, mt_rand(1, 5));
+                break;
+            case $rand < 5:
+                $item = Item::get(263, 0, mt_rand(5, 32));
+                break;
+        }
+        return $item;
     }
 }

@@ -674,6 +674,14 @@ class Item implements ItemIds, \JsonSerializable {
     /**
      * @return bool
      */
+    public function isVip(){
+        $tag = $this->getNamedTagEntry("vip");
+        return $tag !== null and $tag->getValue() > 0;
+    }
+
+    /**
+     * @return bool
+     */
     public function hasCompoundTag() : bool{
         return $this->tags !== "";
     }
