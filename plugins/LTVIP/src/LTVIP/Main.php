@@ -83,6 +83,7 @@ class Main extends PluginBase implements Listener
             $sender->sendMessage('§l§d改变身体大小命令:§a/vip 大小 范围(0.1~10)');
             $sender->sendMessage('§l§d隐身命令:§a/vip 隐身');
             $sender->sendMessage('§l§d电击命令:§a/vip 电击 玩家');
+            $sender->sendMessage('§l§d附魔手持物品命令:§a/vip 附魔 附魔ID 附魔等级');
             $sender->sendMessage('§l§d披风开关:§a/vip 披风开关');
             $sender->sendMessage('§l§d伪装实体命令:§a/vip 伪装实体 实体ID 大小(0.1~10)');
             return true;
@@ -315,6 +316,7 @@ class Main extends PluginBase implements Listener
 				$sender->sendMessage('§l§d改变身体大小命令:§a/vip 大小 范围(0.1~10)');
 				$sender->sendMessage('§l§d隐身命令:§a/vip 隐身');
 				$sender->sendMessage('§l§d电击命令:§a/vip 电击 玩家');
+				$sender->sendMessage('§l§d附魔手持物品命令:§a/vip 附魔 附魔ID 附魔等级');
 				$sender->sendMessage('§l§d伪装实体命令:§a/vip 伪装实体 实体ID 大小(0.1~10)');
 			break;
         }
