@@ -60,6 +60,7 @@ use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\IntTag;
+use pocketmine\nbt\tag\NamedTag;
 use pocketmine\nbt\tag\ShortTag;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\network\protocol\MobEffectPacket;
@@ -464,21 +465,25 @@ abstract class Entity extends Location implements Metadatable {
 		$this->server = $level->getServer();
 
 		$this->boundingBox = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
-		//if($this instanceof Player){
-			//$this->teleport(new Position(128.5,65,128.5),0,0,false);
-		//}else{
-			$this->setPositionAndRotation(
-				$this->temporalVector->setComponents(
-					$this->namedtag["Pos"][0],
-					$this->namedtag["Pos"][1],
-					$this->namedtag["Pos"][2]
-				),
-				$this->namedtag->Rotation[0]===NAN?0:$this->namedtag->Rotation[0],
-				$this->namedtag->Rotation[1]===NAN?0:$this->namedtag->Rotation[1]);
-				if(isset($this->namedtag["Motion"])){
-					$this->setMotion($this->temporalVector->setComponents($this->namedtag["Motion"][0], $this->namedtag["Motion"][1], $this->namedtag["Motion"][2]));
-				}
-			//}
+
+        if(!isset($this->namedtag["Rotation"])){
+            $this->namedtag->Rotation = new ListTag('Rotation', [
+                new FloatTag('', 0),
+                new FloatTag('', 0)
+            ]);
+        }
+        $this->setPositionAndRotation(
+
+        $this->temporalVector->setComponents(
+            $this->namedtag["Pos"][0],
+            $this->namedtag["Pos"][1],
+            $this->namedtag["Pos"][2]
+        ),
+        $this->namedtag->Rotation[0]===NAN?0:$this->namedtag->Rotation[0],
+        $this->namedtag->Rotation[1]===NAN?0:$this->namedtag->Rotation[1]);
+        if(isset($this->namedtag["Motion"])){
+            $this->setMotion($this->temporalVector->setComponents($this->namedtag["Motion"][0], $this->namedtag["Motion"][1], $this->namedtag["Motion"][2]));
+        }
 
 		assert(!is_nan($this->x) and !is_infinite($this->x) and !is_nan($this->y) and !is_infinite($this->y) and !is_nan($this->z) and !is_infinite($this->z));
 

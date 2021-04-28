@@ -261,10 +261,6 @@ class Main extends PluginBase implements Listener{
             new DoubleTag('', 9.0625),
             new DoubleTag('', -612.4217)
         ]);
-        $nbt->Rotation = new ListTag('Rotation', [
-            new FloatTag('', 0),
-            new FloatTag('', 0)
-        ]);
         new Trident($this->getServer()->getLevelByName("f9"), $nbt);
     }
 	public function getMode(){

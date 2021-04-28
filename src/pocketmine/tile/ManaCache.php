@@ -159,10 +159,6 @@ class ManaCache extends Tile
                 new DoubleTag("", $this->y+0.5),
                 new DoubleTag("", $this->z+0.5)
             ]);
-            $nbt->Rotation = new ListTag('Rotation', [
-                new FloatTag('', 0),
-                new FloatTag('', 0)
-            ]);
             $entity = new ManaFloating($this->getLevel(), $nbt);
             $entity->setTarget($position->add(0.5, 0.5, 0.5));
             $entity->setStarting($this);

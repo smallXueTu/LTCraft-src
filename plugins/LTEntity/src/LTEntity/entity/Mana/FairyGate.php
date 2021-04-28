@@ -10,10 +10,14 @@ use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\entity\Entity;
+use pocketmine\nbt\tag\DoubleTag;
+use pocketmine\nbt\tag\ListTag;
+use pocketmine\nbt\tag\NamedTag;
+use pocketmine\nbt\tag\StringTag;
+use pocketmine\Player;
 
 class FairyGate extends Entity
 {
-    const DEFAULT_EXTEND = 0;
     const X_EXTEND = 1;
     const Z_EXTEND = 2;
     private static array $liveWoodsPos = [
@@ -49,21 +53,26 @@ class FairyGate extends Entity
 
     /**
      * @param Block $coreBlock
+     * @param Player $player
      * @return array
      */
-    public static function checkBlocks(Block $coreBlock): array{
+    public static function checkBlocks(Block $coreBlock, Player $player): array{
         $level = $coreBlock->getLevel();
-        $cx = self::DEFAULT_EXTEND;//x延伸
-        if ($level->getBlock($coreBlock->add(1)) instanceof LiveWood and $level->getBlock($coreBlock->add(-1))){//x
+        $yaw = $player->getYaw();
+        if (($yaw <= 45 or $yaw > 315) or ($yaw >= 135 and $yaw < 225))
+            $cx = self::X_EXTEND;//x延伸
+        else
+            $cx = self::Z_EXTEND;
+        if ($level->getBlock($coreBlock->add(1)) instanceof LiveWood or $level->getBlock($coreBlock->add(-1))){//x
             $cx = self::X_EXTEND;
-        }elseif ($level->getBlock($coreBlock->add(0, 0, 1)) instanceof LiveWood and $level->getBlock($coreBlock->add(0, 0, -1))){//z
+        }elseif ($level->getBlock($coreBlock->add(0, 0, 1)) instanceof LiveWood or $level->getBlock($coreBlock->add(0, 0, -1))){//z
             $cx = self::Z_EXTEND;
         }
         $blocks = self::getBlocks($coreBlock, $cx);
         /** @var Block $block */
         foreach ($blocks as $index => $block){
             $b = $level->getBlock($block);
-            if ($b->getId() != $block->getId() or $b->getDamage() != $block->getDamage())unset($blocks[$index]);
+            if ($b->getId()== $block->getId() and $b->getDamage() == $block->getDamage())unset($blocks[$index]);
         }
         return $blocks;
     }
@@ -76,7 +85,7 @@ class FairyGate extends Entity
             $blocks[] = $block;
         }
         foreach (self::$glimmerLiveWoodsPos as $glimmerLiveWoodsPos){
-            $block = new LiveWood(4);
+            $block = new LiveWood(7);
             $pos = self::getPPosition($coreBlock, $cx, $glimmerLiveWoodsPos[0], $glimmerLiveWoodsPos[1]);
             $block->setComponents($pos->x, $pos->y, $pos->z);
             $blocks[] = $block;
@@ -103,5 +112,14 @@ class FairyGate extends Entity
      */
     public static function getPPosition(Position $pos, int $ys, int $ysz, int $y): Position{
         return $ys == self::X_EXTEND?$pos->add($ysz, $y):$pos->add(0, $y, $ysz);
+    }
+    public function saveNBT()
+    {
+        $this->namedtag->id = new StringTag("id", $this->getSaveId());
+        $this->namedtag->Pos = new ListTag("Pos", [
+            new DoubleTag(0, $this->x),
+            new DoubleTag(1, $this->y),
+            new DoubleTag(2, $this->z)
+        ]);
     }
 }

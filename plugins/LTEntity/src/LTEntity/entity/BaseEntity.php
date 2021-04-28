@@ -91,10 +91,6 @@ abstract class BaseEntity extends Creature
                 new DoubleTag('', 0),
                 new DoubleTag('', cos($i * 12 / 180 * M_PI))
             ]);
-            $nbt->Rotation = new ListTag('Rotation', [
-                new FloatTag('', $i * 12),
-                new FloatTag('', 0)
-            ]);
             $arror = Entity::createEntity('AFalseArrow', $entity->getLevel(), $nbt, $entity, true);
             $arror->setMotion($arror->getMotion()->multiply(2));
             $arror->spawnToAll();

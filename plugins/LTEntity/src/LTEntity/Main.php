@@ -6,6 +6,7 @@ use LTEntity\entity\Boss\SkillsEntity\Sakura;
 use LTEntity\entity\Gaia\GaiaCrystal;
 use LTEntity\entity\Gaia\GaiaGuardians;
 use LTEntity\entity\Guide\Trident;
+use LTEntity\entity\Mana\FairyGate;
 use LTEntity\entity\Process\Fusion;
 use LTItem\SpecialItems\Weapon;
 use LTPet\Commands\RecomeAll;
@@ -222,6 +223,7 @@ class Main extends PluginBase implements Listener
             Fusion::class,
             Trident::class,
             Prisoners::class,
+            FairyGate::class,
             ANPC::class
         ];
         foreach($classes as $name)
@@ -298,10 +300,6 @@ class Main extends PluginBase implements Listener
                         new DoubleTag('', $player->y + 0.5),
                         new DoubleTag('', $player->z+mt_rand(-5, 5))
                     ]);
-                    $nbt->Rotation = new ListTag('Rotation', [
-                        new FloatTag('', 0),
-                        new FloatTag('', 0)
-                    ]);
                     $nbt->Speed = new DoubleTag('Speed', 1.8);
                     for($i = 0; $i < 3; $i++) {
                         $pk = Entity::createEntity('ASilverfish', $level, $nbt);
@@ -327,10 +325,6 @@ class Main extends PluginBase implements Listener
                             new DoubleTag('', $player->x+mt_rand(-3, 3)),
                             new DoubleTag('', $player->y + 1.8),
                             new DoubleTag('', $player->z+mt_rand(-3, 3))
-                        ]);
-                        $nbt->Rotation = new ListTag('Rotation', [
-                            new FloatTag('', 0),
-                            new FloatTag('', 0)
                         ]);
                         $nbt->Speed = new DoubleTag('Speed', 1.8);
                         $skin=$this->getSkin($data['皮肤']);
@@ -418,10 +412,6 @@ class Main extends PluginBase implements Listener
                         new DoubleTag('', $pos->x),
                         new DoubleTag('', $pos->y + ($data['怪物模式']==0?0:0.5)),
                         new DoubleTag('', $pos->z)
-                    ]);
-                    $nbt->Rotation = new ListTag('Rotation', [
-                        new FloatTag('', 0),
-                        new FloatTag('', 0)
                     ]);
                     $nbt->Speed = new DoubleTag('Speed', $data['速度']);
                     if($data['类型'] == 'npc') {

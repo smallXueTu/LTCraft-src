@@ -67,10 +67,6 @@ class Prisoners extends ANPC
                         new DoubleTag("", $pos->y + 0.7),
                         new DoubleTag("", $pos->z)
                     ]);
-                    $nbt->Rotation = new ListTag('Rotation', [
-                        new FloatTag('', 0),
-                        new FloatTag('', 0)
-                    ]);
                     new SpaceTear($this->level, $nbt, $this);
                 }
             }
@@ -83,10 +79,6 @@ class Prisoners extends ANPC
                     new DoubleTag("", $pos->x),
                     new DoubleTag("", $pos->y + 1),
                     new DoubleTag("", $pos->z)
-                ]);
-                $nbt->Rotation = new ListTag('Rotation', [
-                    new FloatTag('', 0),
-                    new FloatTag('', 0)
                 ]);
                 new Sakura($this->level, $nbt, $this);
             }

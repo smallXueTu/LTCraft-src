@@ -57,10 +57,6 @@ class SpaceTear extends Entity
                 //中间 start
                 $high = 2;
                 $nbt = new CompoundTag;
-                $nbt->Rotation = new ListTag('Rotation', [
-                    new FloatTag('', $this->owner->getYaw()),
-                    new FloatTag('', $this->owner->getPitch())
-                ]);
                 $verticals = [4, 2, 0];
                 for ($i = 0; $i <=4; $i++){
                     $vertical = $verticals[$i % 3];

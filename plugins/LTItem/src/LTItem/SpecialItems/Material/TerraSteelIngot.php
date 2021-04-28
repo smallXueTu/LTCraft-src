@@ -86,10 +86,6 @@ class TerraSteelIngot extends Material
                         new DoubleTag("", $target->y+0.5),
                         new DoubleTag("", $target->z+0.5)
                     ]);
-                    $nbt->Rotation = new ListTag('Rotation', [
-                        new FloatTag('', 0),
-                        new FloatTag('', 0)
-                    ]);
                     $entity = new Prompt($target->getLevel(), $nbt);
                     $entity->blocks = $bs;
                     $entity->basePos = $target;

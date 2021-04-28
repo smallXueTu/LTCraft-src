@@ -106,10 +106,6 @@ class GaiaGuardiansIII extends Creature
             new DoubleTag('', $position->y + 1),
             new DoubleTag('', $position->z + 0.5)
         ]);
-        $nbt->Rotation = new ListTag('Rotation', [
-            new FloatTag('', 0),
-            new FloatTag('', 0)
-        ]);
         /** @var GaiaGuardiansIII $entity */
         $entity = new GaiaGuardiansIII($position->getLevel(), $nbt);//实例化盖亚守护者III
         $entity->setPlayerCount($playerCount);//设置玩家数量
@@ -278,10 +274,6 @@ class GaiaGuardiansIII extends Creature
         $count = mt_rand(1, 2);
         $count += $this->getPlayerCount();
         $nbt = new CompoundTag;
-        $nbt->Rotation = new ListTag('Rotation', [
-            new FloatTag('', 0),
-            new FloatTag('', )
-        ]);
         while($count-->0){
             $randX = mt_rand(-10, 10);
             $randZ = mt_rand(-10, 10);
@@ -328,10 +320,6 @@ class GaiaGuardiansIII extends Creature
      */
     public function spawnServant(){
         $nbt = new CompoundTag;
-        $nbt->Rotation = new ListTag('Rotation', [
-            new FloatTag('', 0),
-            new FloatTag('', )
-        ]);
         $v3 = $this->getBasePos();
         $blocks[] = $this->getLevel()->getBlock($v3->add(4, 2, 4))->floor();
         $blocks[] = $this->getLevel()->getBlock($v3->add(4, 2, -4))->floor();
@@ -583,10 +571,6 @@ class GaiaGuardiansIII extends Creature
                 new DoubleTag("", $block->x + 0.5),
                 new DoubleTag("", $block->y),
                 new DoubleTag("", $block->z + 0.5)
-            ]);
-            $nbt->Rotation = new ListTag('Rotation', [
-                new FloatTag('', 0),
-                new FloatTag('', 0)
             ]);
             $entity = new GaiaCrystal($this->getLevel(), $nbt, $this);
             $entity->spawnToAll();

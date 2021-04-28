@@ -47,10 +47,6 @@ class Tear extends Entity
                     new DoubleTag('', (-sin($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI) / 2)),
                     new DoubleTag('', -sin($this->pitch / 180 * M_PI) / 2),
                     new DoubleTag('', (cos($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI) / 2))
-                ]),
-                'Rotation' => new ListTag('Rotation', [
-                    new FloatTag('', $this->yaw),
-                    new FloatTag('', $this->pitch)
                 ])
             ]);
             (new TearMissile($this->level, $nbt))->setOwner($this->owner);

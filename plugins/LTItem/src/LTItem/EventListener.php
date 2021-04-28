@@ -203,10 +203,6 @@ class EventListener implements Listener
                             new DoubleTag("",  $player->y+0.5),
                             new DoubleTag("",  $player->z+0.5)
                         ]);
-                        $nbt->Rotation = new ListTag('Rotation', [
-                            new FloatTag('', 0),
-                            new FloatTag('', 0)
-                        ]);
                         new Sakura( $player->getLevel(), $nbt,  $player);
                         Cooling::$weapon[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD();
                     }
@@ -222,10 +218,6 @@ class EventListener implements Listener
                             new DoubleTag("",  $player->x+0.5),
                             new DoubleTag("",  $player->y+0.5),
                             new DoubleTag("",  $player->z+0.5)
-                        ]);
-                        $nbt->Rotation = new ListTag('Rotation', [
-                            new FloatTag('', 0),
-                            new FloatTag('', 0)
                         ]);
                         new SpaceTear($player->getLevel(), $nbt, $player);
                         Cooling::$weapon[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD();

@@ -83,10 +83,6 @@ class Sakura extends Entity
      */
     public function spawnStar(int $phase){
         $nbt = new CompoundTag;
-        $nbt->Rotation = new ListTag('Rotation', [
-            new FloatTag('', 0),
-            new FloatTag('', 0)
-        ]);
         $start = $phase * (360/5/3);
         for ($i = 0; $i < 5 ; $i++){
             $ii = (($i * 360 / 5) + $start) % 360;

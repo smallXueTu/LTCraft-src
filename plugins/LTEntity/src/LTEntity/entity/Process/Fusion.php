@@ -245,10 +245,6 @@ class Fusion extends Entity implements InventoryHolder
                 new DoubleTag('', 0),
                 new DoubleTag('', 0)
             ]);
-            $nbt->Rotation = new ListTag('Rotation', [
-                new FloatTag('', 0),
-                new FloatTag('', 0)
-            ]);
             $entity = new Fusion($position->getLevel(), $nbt);
             $entity->initFusion($position, $drawings, $player);
             $entity->spawnToAll();
@@ -273,10 +269,6 @@ class Fusion extends Entity implements InventoryHolder
                 new DoubleTag("", $position->x+0.5),
                 new DoubleTag("", $position->y+0.5),
                 new DoubleTag("", $position->z+0.5)
-            ]);
-            $nbt->Rotation = new ListTag('Rotation', [
-                new FloatTag('', 0),
-                new FloatTag('', 0)
             ]);
             $entity = new Prompt($position->getLevel(), $nbt);
             $entity->blocks = $blocks;

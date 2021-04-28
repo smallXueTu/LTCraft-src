@@ -94,10 +94,6 @@ class GaiaGuardians extends Creature
             new DoubleTag('', $position->y + 5),
             new DoubleTag('', $position->z + 0.5)
         ]);
-        $nbt->Rotation = new ListTag('Rotation', [
-            new FloatTag('', 0),
-            new FloatTag('', 0)
-        ]);
         /** @var GaiaGuardians $entity */
          $entity = new GaiaGuardians($position->getLevel(), $nbt);
         $entity->setPlayerCount($playerCount);
@@ -506,10 +502,6 @@ class GaiaGuardians extends Creature
                 new DoubleTag("", $block->x + 0.5),
                 new DoubleTag("", $block->y),
                 new DoubleTag("", $block->z + 0.5)
-            ]);
-            $nbt->Rotation = new ListTag('Rotation', [
-                new FloatTag('', 0),
-                new FloatTag('', 0)
             ]);
             $entity = new GaiaCrystal($this->getLevel(), $nbt, $this);
             $entity->spawnToAll();

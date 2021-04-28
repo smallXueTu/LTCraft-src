@@ -64,21 +64,17 @@ class ManaWand extends BaseMana
                 }
             }
         }elseif ($target instanceof LiveWood and $target->getDamage() == 7){//精灵门
-            $blocks = FairyGate::checkBlocks($target);
+            $blocks = FairyGate::checkBlocks($target, $player);
             $nbt = new CompoundTag;
             $nbt->Pos = new ListTag("Pos", [
                 new DoubleTag("", $target->x),
                 new DoubleTag("", $target->y + 1),
                 new DoubleTag("", $target->z)
             ]);
-            $nbt->Rotation = new ListTag('Rotation', [
-                new FloatTag('', 0),
-                new FloatTag('', 0)
-            ]);
             if (count($blocks) <= 0){
                 new FairyGate($target->getLevel(), $nbt);
             }else{
-                $player->sendMessage("多方块结构检查失败，请根据闪动的方块来放置对应方块！");
+                $player->sendMessage("§c多方块结构检查失败，请根据闪动的方块来放置对应方块！");
                 $entity = new Prompt($target->getLevel(), $nbt);
                 $entity->blocks = $blocks;
             }
