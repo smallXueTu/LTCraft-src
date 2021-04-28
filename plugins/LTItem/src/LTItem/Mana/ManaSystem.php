@@ -54,6 +54,7 @@ class ManaSystem
         self::$manaItems['天翼族之眼'] = ManaOrnaments::class;
         self::$manaItems['王者之剑'] = KingOfMana::class;
         self::$manaItems['泰拉钢刃'] = TerraSword::class;
+        self::$manaItems['百中弓'] = HundredMiddleBow::class;
     }
 
     /**
