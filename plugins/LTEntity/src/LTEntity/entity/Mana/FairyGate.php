@@ -38,6 +38,11 @@ class FairyGate extends Entity
     {
         parent::__construct($level, $nbt);
     }
+    protected function initEntity()
+    {
+        
+        parent::initEntity();
+    }
 
     /**
      * @param Block $coreBlock

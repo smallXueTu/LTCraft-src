@@ -4,12 +4,18 @@
 namespace LTItem\Mana;
 
 
+use LTEntity\entity\Mana\FairyGate;
 use pocketmine\block\Air;
 use pocketmine\block\Block;
 use pocketmine\block\LiveWood;
 use pocketmine\block\ManaCache;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\DoubleTag;
+use pocketmine\nbt\tag\FloatTag;
+use pocketmine\nbt\tag\ListTag;
+use pocketmine\nbt\tag\NamedTag;
 use pocketmine\Player;
 
 class ManaWand extends BaseMana
@@ -61,7 +67,21 @@ class ManaWand extends BaseMana
                 }
             }
         }elseif ($target instanceof LiveWood and $target->getDamage() == 7){//精灵门
-
+            if (FairyGate::checkBlocks($target)){
+                $nbt = new CompoundTag;
+                $nbt->Pos = new ListTag("Pos", [
+                    new DoubleTag("", $target->x),
+                    new DoubleTag("", $target->y + 1),
+                    new DoubleTag("", $target->z)
+                ]);
+                $nbt->Rotation = new ListTag('Rotation', [
+                    new FloatTag('', 0),
+                    new FloatTag('', 0)
+                ]);
+                new FairyGate($target->getLevel(), $nbt);
+            }else{
+                $player->sendMessage("多方块结构检查失败！");
+            }
         }
         return true;
     }
