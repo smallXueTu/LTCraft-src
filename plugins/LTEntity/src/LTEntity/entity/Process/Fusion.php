@@ -50,7 +50,7 @@ use pocketmine\Player;
 class Fusion extends Entity implements InventoryHolder
 {
     /** @var \array[][][] 配方 */
-    public static $formulas = [
+    public static array $formulas = [
         '终极武器图纸' => [
             [
                 ['近战', '桃木剑', 1],
@@ -182,7 +182,7 @@ class Fusion extends Entity implements InventoryHolder
     public Position $center;
     /** @var ItemFrame $itemFramePosition 物品展示框 */
     public ItemFrame $itemFramePosition;
-    /** @var Player $player 玩家 */
+    /** @var ?Player $player 玩家 */
     public ?Player $player = null;
     /** @var boolean $breakd 多方块结构是否被破坏 */
     public bool $breakd = false;
