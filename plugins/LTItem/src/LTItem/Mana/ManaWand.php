@@ -6,6 +6,7 @@ namespace LTItem\Mana;
 
 use pocketmine\block\Air;
 use pocketmine\block\Block;
+use pocketmine\block\LiveWood;
 use pocketmine\block\ManaCache;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
@@ -49,12 +50,9 @@ class ManaWand extends BaseMana
      */
     public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz)
     {
-        var_dump($block);
-        var_dump($target);
         if ($target instanceof ManaCache) {
             /** @var \pocketmine\tile\ManaCache $tile */
             $tile = $level->getTile($target);
-            var_dump($tile);
             if ($player->isSneaking()){//说不定有用
 
             }else{
@@ -62,6 +60,8 @@ class ManaWand extends BaseMana
                     $player->sendMessage('Mana:' .$tile->getMana());
                 }
             }
+        }elseif ($target instanceof LiveWood and $target->getDamage() == 7){//精灵门
+
         }
         return true;
     }

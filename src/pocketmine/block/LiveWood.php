@@ -66,14 +66,14 @@ class LiveWood extends Fallable {
 	 */
 	public function getName(){
 		static $names = [
-			0 => '白色混凝土粉末',
+			0 => '活木',
 			1 => '橙色混凝土粉末',
 			2 => '洋红水泥粉',
 			3 => '浅蓝色混凝土粉',
 			4 => '黄色混凝土粉末',
 			5 => '石灰混凝土粉',
 			6 => '粉红混凝土粉',
-			7 => '灰色混凝土粉末',
+			7 => '微光活木',
 			8 => '银粉混凝土',
 			9 => '青色混凝土粉',
 			10 => '紫色混凝土粉末',
@@ -94,6 +94,8 @@ class LiveWood extends Fallable {
     {
         if (($this->meta & 0x0f) == 0){
             return ['材料', '活木', 1];
+        }elseif (($this->meta & 0x0f) == 7) {
+            return ['材料', '微光活木', 1];
         }else{
             parent::getDrops($item);
         }
