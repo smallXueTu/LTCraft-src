@@ -51,11 +51,19 @@ class FairyGate extends Entity
         }elseif ($level->getBlock($coreBlock->add(0, 0, 1)) instanceof LiveWood and $level->getBlock($coreBlock->add(0, 0, -1))){//z
             $cx = 2;
         }
-        $liveWoods = [];
-        foreach (self::$liveWoodsPos as $liveWoodsPos){
-
-        }
         if ($cx == 0)return false;
+        foreach (self::$liveWoodsPos as $liveWoodsPos){
+            $block = self::getBlock($coreBlock, $cx, $liveWoodsPos[0], $liveWoodsPos[1]);
+            if (!($block instanceof LiveWood) or $block->getDamage() !=0){
+                return false;
+            }
+        }
+        foreach (self::$glimmerLiveWoodsPos as $glimmerLiveWoodsPos){
+            $block = self::getBlock($coreBlock, $cx, $glimmerLiveWoodsPos[0], $glimmerLiveWoodsPos[1]);
+            if (!($block instanceof LiveWood) or $block->getDamage() !=7){
+                return false;
+            }
+        }
         return true;
     }
 
