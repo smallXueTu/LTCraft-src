@@ -22,6 +22,16 @@
 namespace pocketmine\item;
 
 
+use pocketmine\entity\Entity;
+use pocketmine\entity\Arrow;
+use pocketmine\item\enchantment\Enchantment;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\DoubleTag;
+use pocketmine\nbt\tag\FloatTag;
+use pocketmine\nbt\tag\ListTag;
+use pocketmine\nbt\tag\ShortTag;
+use pocketmine\Player;
+
 class BaseBow extends Tool implements Bow{
 	/**
 	 * Bow constructor.
@@ -33,8 +43,66 @@ class BaseBow extends Tool implements Bow{
 		parent::__construct(self::BOW, $meta, $count, "弓");
 	}
 
-    public function getArrow(): string
+    public function spawnArrow(Player $player): ?Entity
     {
-        return "Arrow";
+        $item = $this->getResources($player);
+        if ($item==null){
+            return null;
+        }
+        $nbt = new CompoundTag('', [
+            'Pos' => new ListTag('Pos', [
+                new DoubleTag('', $player->x),
+                new DoubleTag('', $player->y + $player->getEyeHeight()),
+                new DoubleTag('', $player->z)
+            ]),
+            'Motion' => new ListTag('Motion', [
+                new DoubleTag('', -sin($player->yaw / 180 * M_PI) * cos($player->pitch / 180 * M_PI)),
+                new DoubleTag('', -sin($player->pitch / 180 * M_PI)),
+                new DoubleTag('', cos($player->yaw / 180 * M_PI) * cos($player->pitch / 180 * M_PI))
+            ]),
+            'Rotation' => new ListTag('Rotation', [
+                new FloatTag('', $player->yaw),
+                new FloatTag('', $player->pitch)
+            ]),
+            'Fire' => new ShortTag('Fire', $player->isOnFire() ? 45 * 60 : 0),
+            'Potion' => new ShortTag('Potion', $item->getDamage())
+        ]);
+        $diff = ($player->getServer()->getTick() - $player->startAction);
+        $p = $diff / 20;
+        $f = min((($p ** 2) + $p * 2) / 3, 1) * 2;
+        $entity = new Arrow($player->getLevel(), $nbt, $player, 2 == $f);
+        $entity->f = $f;
+        $entity->diff = $diff;
+        if($this->getEnchantmentLevel(Enchantment::TYPE_BOW_INFINITY)!=false)$entity->setCanBePickedUp(false);
+        return $entity;
+    }
+    public function getResources(Player $player): Item{
+        $arrow = null;
+        $index = $player->getInventory()->first(Item::get(Item::ARROW, 0));
+        if($index !== -1){
+            $arrow = $player->getInventory()->getItem($index);
+            $arrow->setCount(1);
+        }elseif($player->isCreative()){
+            $arrow = Item::get(Item::ARROW, 0, 1);
+        }else{
+            $player->getInventory()->sendContents($player);
+        }
+        return $arrow;
+    }
+    public function deductResources(Player $player): bool
+    {
+        $item = $this->getResources($player);
+        if($player->isSurvival()){
+            if(!$this->getEnchantmentLevel(Enchantment::TYPE_BOW_INFINITY)!==false)$player->getInventory()->removeItem($item);
+            if(!$this->isUnbreakable()){
+                $this->setDamage($this->getDamage() + 1);
+                if($this->getDamage() >= 385){
+                    $player->getInventory()->setItemInHand(Item::get(Item::AIR, 0, 0));
+                }else{
+                    $player->getInventory()->setItemInHand($this);
+                }
+            }
+        }
+        return true;
     }
 }

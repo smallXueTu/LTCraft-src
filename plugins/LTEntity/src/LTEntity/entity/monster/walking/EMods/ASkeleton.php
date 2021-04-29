@@ -57,8 +57,9 @@ class ASkeleton extends WalkingMonster implements ProjectileSource{
 					new FloatTag('', $pitch)
 					]),
 				]);
-				$arrow = Entity::createEntity('falseArrow', $this->level, $nbt, $this);
+				$arrow = Entity::createEntity('Arrow', $this->level, $nbt, $this);
 				$arrow->setDamage($this->getDamage());
+                $entity->setCanBePickedUp(false);
 				$arrow->spawnToAll();
 				$this->level->addSound(new LaunchSound($this), $this->getViewers());
 			}

@@ -31,7 +31,6 @@ use pocketmine\event\entity\EntityRegainHealthEvent;
 use LTEntity\entity\monster\Monster;
 use pocketmine\level\particle\HugeExplodeParticle;
 use pocketmine\scheduler\CallbackTask;
-use LTEntity\entity\projectile\falseArrow;
 use LTEntity\Main as LTEntity;
 use LTEntity\DataList;
 use pocketmine\nbt\tag\CompoundTag;

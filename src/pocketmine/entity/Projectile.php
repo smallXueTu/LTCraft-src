@@ -46,6 +46,8 @@ abstract class Projectile extends Entity {
 	public $skill = [null, null];
 	public $calculate = true;
 	public $zs = false;
+    public $f = 0;
+    public $diff = 0;
 
 	/**
 	 * Projectile constructor.

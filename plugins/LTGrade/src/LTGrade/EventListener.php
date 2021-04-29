@@ -106,8 +106,9 @@ class EventListener implements Listener
 							new FloatTag("", $i*12),
 							new FloatTag("", 0)
 						]);
-						$entity = Entity::createEntity("falseArrow", $player->getLevel(), $nbt, $player, true);
+						$entity = Entity::createEntity("Arrow", $player->getLevel(), $nbt, $player, true);
 						$entity->setDamage($grade/2);
+                        $entity->setCanBePickedUp(false);
 						$entity->setMotion($entity->getMotion()->multiply(2));
 						$entity->zs = true;
 						$entity->spawnToAll();

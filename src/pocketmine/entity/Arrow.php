@@ -25,6 +25,7 @@ use pocketmine\item\Potion;
 use pocketmine\level\Level;
 use pocketmine\level\particle\CriticalParticle;
 use pocketmine\level\particle\MobSpellParticle;
+use pocketmine\nbt\tag\ByteTag;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\ShortTag;
 use pocketmine\network\protocol\AddEntityPacket;
@@ -44,6 +45,7 @@ class Arrow extends Projectile {
 
 	protected $isCritical;
 	protected $potionId;
+	protected $canBePickedUp = true;
 
 	/**
 	 * Arrow constructor.
@@ -61,7 +63,33 @@ class Arrow extends Projectile {
 		parent::__construct($level, $nbt, $shootingEntity);
 		$this->potionId = $this->namedtag["Potion"];
 	}
+	protected function initEntity()
+    {
+        parent::initEntity();
+        if (isset($this->namedtag["canBePickedUp"]))$this->canBePickedUp = (bool)$this->namedtag["canBePickedUp"];
+    }
 
+    public function saveNBT()
+    {
+        parent::saveNBT();
+        $this->namedtag["canBePickedUp"] = new ByteTag("canBePickedUp", (int)$this->canBePickedUp);
+    }
+
+    /**
+     * @param bool $canBePickedUp
+     */
+    public function setCanBePickedUp(bool $canBePickedUp): void
+    {
+        $this->canBePickedUp = $canBePickedUp;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCanBePickedUp(): bool
+    {
+        return $this->canBePickedUp;
+    }
 	/**
 	 * @return bool
 	 */

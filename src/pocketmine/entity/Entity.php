@@ -223,7 +223,6 @@ abstract class Entity extends Location implements Metadatable {
   // public $loadOk=false;
 	public static function init(){
 		Entity::registerEntity(Arrow::class);
-		Entity::registerEntity(falseArrow::class);
 		Entity::registerEntity(Bat::class);
 		Entity::registerEntity(Blaze::class);
 		Entity::registerEntity(Boat::class);

@@ -267,7 +267,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
     protected $username;
     protected $iusername;
     protected $displayName;
-    protected $startAction = -1;
+    public $startAction = -1;
     /** @var Vector3 */
     protected $sleeping = null;
     protected $clientID = null;
@@ -1779,7 +1779,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
                 continue;
             }
 
-            if($entity instanceof Arrow and $entity->hadCollision){
+            if($entity instanceof Arrow and $entity->hadCollision and $entity->isCanBePickedUp()){
                 $item = Item::get(Item::ARROW, $entity->getPotionId(), 1);
 
                 $add = false;
@@ -3038,46 +3038,10 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
                                     $this->inventory->sendContents($this);
                                     break;
                                 }
-                                $arrow = null;
-
-                                $index = $this->inventory->first(Item::get(Item::ARROW, 0));
-
-                                if($index !== -1){
-                                    $arrow = $this->inventory->getItem($index);
-                                    $arrow->setCount(1);
-                                }elseif($this->isCreative()){
-                                    $arrow = Item::get(Item::ARROW, 0, 1);
-                                }else{
-                                    $this->inventory->sendContents($this);
-                                    break;
-                                }
-                                $nbt = new CompoundTag('', [
-                                    'Pos' => new ListTag('Pos', [
-                                        new DoubleTag('', $this->x),
-                                        new DoubleTag('', $this->y + $this->getEyeHeight()),
-                                        new DoubleTag('', $this->z)
-                                    ]),
-                                    'Motion' => new ListTag('Motion', [
-                                        new DoubleTag('', -sin($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI)),
-                                        new DoubleTag('', -sin($this->pitch / 180 * M_PI)),
-                                        new DoubleTag('', cos($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI))
-                                    ]),
-                                    'Rotation' => new ListTag('Rotation', [
-                                        new FloatTag('', $this->yaw),
-                                        new FloatTag('', $this->pitch)
-                                    ]),
-                                    'Fire' => new ShortTag('Fire', $this->isOnFire() ? 45 * 60 : 0),
-                                    'Potion' => new ShortTag('Potion', $arrow->getDamage())
-                                ]);
-                                $diff = ($this->server->getTick() - $this->startAction);
-                                $p = $diff / 20;
-                                $f = min((($p ** 2) + $p * 2) / 3, 1) * 2;
-                                /** @var Bow $bow */
-                                if(!$bow->getEnchantmentLevel(Enchantment::TYPE_BOW_INFINITY)!==false)
-                                    $ev = new EntityShootBowEvent($this, $bow, Entity::createEntity($bow->getArrow(), $this->getLevel(), $nbt, $this, $f == 2 ? true : false), $f);
-                                else
-                                    $ev = new EntityShootBowEvent($this, $bow, Entity::createEntity('falseArrow', $this->getLevel(), $nbt, $this, $f == 2 ? true : false), $f);
-                                if($f < 0.1 or $diff < 5){
+                                $entity = $bow->spawnArrow($this);
+                                if ($entity==null)break;
+                                $ev = new EntityShootBowEvent($this, $bow, $entity, $entity->f);
+                                if($entity->f < 0.1 or $entity->diff < 5){
                                     $ev->setCancelled();
                                 }
 
@@ -3088,28 +3052,9 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
                                     $this->inventory->sendContents($this);
                                 }else{
                                     $ev->getProjectile()->setMotion($ev->getProjectile()->getMotion()->multiply($ev->getForce()));
-                                    if($this->isSurvival()){
-                                        if(!$bow->getEnchantmentLevel(Enchantment::TYPE_BOW_INFINITY)!==false)$this->inventory->removeItem($arrow);
-                                        if(!$bow->isUnbreakable()){
-                                            $bow->setDamage($bow->getDamage() + 1);
-                                            if($bow->getDamage() >= 385){
-                                                $this->inventory->setItemInHand(Item::get(Item::AIR, 0, 0));
-                                            }else{
-                                                $this->inventory->setItemInHand($bow);
-                                            }
-                                        }
-                                    }
-                                    if($ev->getProjectile() instanceof Projectile){
-                                        // $this->server->getPluginManager()->callEvent($projectileEv = new ProjectileLaunchEvent($ev->getProjectile()));
-                                        // if($projectileEv->isCancelled()){
-                                        // $ev->getProjectile()->kill();
-                                        // }else{
-                                        $ev->getProjectile()->spawnToAll();
-                                        $this->level->addSound(new LaunchSound($this), $this->getViewers());
-                                        // }
-                                    }else{
-                                        $ev->getProjectile()->spawnToAll();
-                                    }
+                                    $bow->deductResources($this);
+                                    $ev->getProjectile()->spawnToAll();
+                                    $this->level->addSound(new LaunchSound($this), $this->getViewers());
                                 }
                             }
                         }elseif($this->inventory->getItemInHand()->getId() === Item::BUCKET and $this->inventory->getItemInHand()->getDamage() === 1){ //Milk!
