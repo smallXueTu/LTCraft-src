@@ -184,7 +184,7 @@ class FairyGate extends Entity
     {
         $this->namedtag->id = new StringTag("id", $this->getSaveId());
         $this->namedtag->towards = new IntTag("towards", $this->towards);
-        $this->namedtag->coreBlock = new ListTag("Pos", [
+        $this->namedtag->coreBlock = new ListTag("coreBlock", [
             new DoubleTag(0, $this->coreBlock->x),
             new DoubleTag(1, $this->coreBlock->y),
             new DoubleTag(2, $this->coreBlock->z)
@@ -197,13 +197,15 @@ class FairyGate extends Entity
     }
     protected function initEntity()
     {
-        $pos = new Position(
-            $this->namedtag["Pos"][0],
-            $this->namedtag["Pos"][1],
-            $this->namedtag["Pos"][2],
-            $this->level
-        );
-        $this->coreBlock = $this->level->getBlock($pos);
-        $this->towards = (int)$this->namedtag["towards"];
+        if (isset($this->namedtag["coreBlock"])){
+            $pos = new Position(
+                $this->namedtag["coreBlock"][0],
+                $this->namedtag["coreBlock"][1],
+                $this->namedtag["coreBlock"][2],
+                $this->level
+            );
+            $this->coreBlock = $this->level->getBlock($pos);
+        }
+        if (isset($this->namedtag["towards"]))$this->towards = (int)$this->namedtag["towards"];
     }
 }
