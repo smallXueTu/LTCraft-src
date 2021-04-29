@@ -5,6 +5,7 @@ namespace LTEntity\entity\Mana;
 
 
 use LTEntity\entity\BaseEntity;
+use LTEntity\entity\monster\flying\AEnderDragon;
 use pocketmine\entity\Arrow;
 use pocketmine\entity\Creature;
 use pocketmine\entity\Entity;
@@ -33,7 +34,6 @@ class ManaArrow extends Arrow
 {
     protected int $maxAge = 60;
     protected $gravity = 0;
-    public $keepMovement = true;
     public function onUpdate($currentTick)
     {
         if($this->closed){
@@ -44,7 +44,7 @@ class ManaArrow extends Arrow
             return true;
         }
         $this->lastUpdate = $currentTick;
-        $hasUpdate = $this->entityBaseTick($tickDiff);
+        $this->entityBaseTick($tickDiff);
         if($this->isAlive()){
             $list = $this->getLevel()->getCollidingEntities($this->boundingBox->addCoord($this->motionX, $this->motionY, $this->motionZ)->expand(1, 1, 1), $this);
             $entities = [];
@@ -80,20 +80,16 @@ class ManaArrow extends Arrow
             $this->move($this->motionX, $this->motionY, $this->motionZ);
             $this->updateMovement();
         }
-        if(!$this->hadCollision and $this->isCritical){
+        if($this->isCritical){
             $this->level->addParticle(new CriticalParticle($this->add(
                 $this->width / 2 + mt_rand(-100, 100) / 500,
                 $this->height / 2 + mt_rand(-100, 100) / 500,
                 $this->width / 2 + mt_rand(-100, 100) / 500)));
-        }elseif($this->onGround){
-            $this->isCritical = false;
         }
         if($this->age > $this->maxAge){
             $this->kill();
-            $hasUpdate = true;
         }
-
-        return $hasUpdate;
+        return true;
     }
 
     public function getDamage(Entity $entity = null): int
@@ -105,6 +101,12 @@ class ManaArrow extends Arrow
         }else{
             return 6;
         }
+    }
+    public function move($dx, $dy, $dz) : bool{
+        $this->boundingBox->offset($dx, $dy, $dz);
+        $this->setComponents($this->x + $dx, $this->y + $dy, $this->z + $dz);
+        $this->checkChunks();
+        return true;
     }
     public function saveNBT()
     {
