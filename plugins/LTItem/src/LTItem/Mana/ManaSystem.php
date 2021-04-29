@@ -22,9 +22,11 @@ class ManaSystem
     private static $manaItems = [];
 
     /**
+     * @param string $name
      * @param array $conf
      * @param int $count
      * @param CompoundTag $nbt
+     * @param bool $init
      * @return Item
      */
     public static function getManaItem(string $name, array $conf, int $count, CompoundTag $nbt, $init = true)

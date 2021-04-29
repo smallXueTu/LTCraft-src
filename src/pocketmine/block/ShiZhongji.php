@@ -22,10 +22,16 @@
 namespace pocketmine\block;
 
 use pocketmine\item\Item;
+use pocketmine\level\Level;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\IntTag;
+use pocketmine\nbt\tag\NamedTag;
+use pocketmine\nbt\tag\StringTag;
 use pocketmine\Player;
 use pocketmine\Server;
+use pocketmine\tile\Tile;
 
-class ShiZhongji extends ManaFlower {
+class ShiZhongji extends Transparent {
 	protected $id = self::SHIZHONGJI;
 	/**
 	 * ShiZhongji constructor.
@@ -34,37 +40,28 @@ class ShiZhongji extends ManaFlower {
 		$this->meta = $meta;
 	}
 
+
+    /**
+     * @param int $type
+     *
+     * @return bool|int
+     */
+    public function onUpdate($type){
+        if($type === Level::BLOCK_UPDATE_NORMAL){
+            if($this->getSide(0)->isTransparent() === true){
+                $this->getLevel()->useBreakOn($this);
+
+                return Level::BLOCK_UPDATE_NORMAL;
+            }
+        }
+
+        return false;
+    }
 	/**
 	 * @return string
 	 */
 	public function getName() : string{
 		return '石中姬';
-	}
-
-
-	/**
-	 * @param int $type
-	 *
-	 * @return bool|int
-	 */
-	public function onUpdate($type){
-	    if (Server::getInstance()->getTick() - $this->lastUpdate > 10){
-            $this->lastUpdate = Server::getInstance()->getTick();
-            $blocks = [];
-            $blocks[] = $this->level->getBlock($this->add(1));
-            $blocks[] = $this->level->getBlock($this->add(-1));
-            $blocks[] = $this->level->getBlock($this->add(0, 0, 1));
-            $blocks[] = $this->level->getBlock($this->add(0, 0, -1));
-            if ($this->mana < self::MAX_MANA)foreach ($blocks as $block){
-                if ($block instanceof Stone or $block instanceof Cobblestone){
-                    $this->mana += min(15, self::MAX_MANA - $this->mana);
-                    $this->level->setBlock($block, new Air());
-                }
-                if ($this->mana >= self::MAX_MANA)break;
-            }
-            $this->exportMana();
-        }
-		return true;
 	}
 
 	/**
@@ -81,11 +78,18 @@ class ShiZhongji extends ManaFlower {
 	 */
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
-		if($down->isTransparent() === false){
-			$this->getLevel()->setBlock($block, $this, true, true);
+        if($down->getId() === 2 or $down->getId() === 3 or $down->getId() === 60){
+            $this->getLevel()->setBlock($block, $this, true, true);
+            $nbt = new CompoundTag("", [
+                new StringTag("id", Tile::WHITEDAISIES),
+                new IntTag("x", $this->x),
+                new IntTag("y", $this->y),
+                new IntTag("z", $this->z)
+            ]);
 
-			return true;
-		}
+            Tile::createTile("ShiZhongJi", $this->getLevel(), $nbt);
+            return true;
+        }
 
 		return false;
 	}

@@ -1,16 +1,15 @@
 <?php
 
 
-namespace pocketmine\block;
+namespace pocketmine\tile;
 
 
 use LTItem\Mana\ManaSystem;
 use pocketmine\utils\Utils;
 
-abstract class ManaFlower extends Transparent
+class ManaFlower extends Tile
 {
     const MAX_MANA = 1000;
-    protected int $lastUpdate = 0;
     protected int $mana = 0;
     public function exportMana(){
         $manaCaches = ManaSystem::searchManaCache($this);

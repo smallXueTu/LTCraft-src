@@ -57,6 +57,7 @@ abstract class Tile extends Position {
 	const MANACHEST = "ManaChest";
 	const MANACACHE = "ManaCache";
 	const WHITEDAISIES = "WhiteDaisies";
+	const SHIZHONGJI = "ShiZhongJi";
 
 	public static $tileCount = 1;
 
@@ -103,6 +104,7 @@ abstract class Tile extends Position {
 		self::registerTile(ManaChest::class);
 		self::registerTile(ManaCache::class);
 		self::registerTile(WhiteDaisies::class);
+		self::registerTile(ShiZhongji::class);
 	}
 
 	/**
