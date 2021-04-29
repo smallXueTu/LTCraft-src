@@ -236,6 +236,7 @@ class FairyGate extends Entity
     {
         $this->namedtag->id = new StringTag("id", $this->getSaveId());
         $this->namedtag->towards = new IntTag("towards", $this->towards);
+        $this->namedtag->age = new IntTag("age", $this->age);
         $this->namedtag->coreBlock = new ListTag("coreBlock", [
             new DoubleTag(0, $this->coreBlock->x),
             new DoubleTag(1, $this->coreBlock->y),
@@ -259,5 +260,6 @@ class FairyGate extends Entity
             $this->coreBlock = $this->level->getBlock($pos);
         }
         if (isset($this->namedtag["towards"]))$this->towards = (int)$this->namedtag["towards"];
+        if (isset($this->namedtag["age"]))$this->age = (int)$this->namedtag["age"];
     }
 }
