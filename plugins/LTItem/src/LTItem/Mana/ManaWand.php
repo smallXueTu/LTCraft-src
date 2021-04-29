@@ -64,6 +64,12 @@ class ManaWand extends BaseMana
                 }
             }
         }elseif ($target instanceof LiveWood and $target->getDamage() == 7){//精灵门
+            foreach ($target->getLevel()->getEntities() as $entity){
+                if ($entity instanceof FairyGate and $entity->coreBlock->equals($target)){
+                    $entity->kill();
+                    return true;
+                }
+            }
             $blocks = FairyGate::checkBlocks($target, $player);
             $nbt = new CompoundTag;
             $nbt->Pos = new ListTag("Pos", [

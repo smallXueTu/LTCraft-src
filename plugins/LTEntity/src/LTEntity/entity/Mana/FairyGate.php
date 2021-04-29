@@ -57,16 +57,18 @@ class FairyGate extends Entity
         [-1, 2],
     ];
     public int $towards;
-    public Block $coreBlock;
+    public ?Block $coreBlock;
+    private bool $flash = true;
+    private bool $crash = false;
 
     /**
      * FairyGate constructor.
      * @param Level $level
      * @param CompoundTag $nbt
      * @param int $towards 朝向
-     * @param Block $coreBlock
+     * @param Block|null $coreBlock
      */
-    public function __construct(Level $level, CompoundTag $nbt, int $towards, Block $coreBlock)
+    public function __construct(Level $level, CompoundTag $nbt, int $towards = self::DEFAULT_EXTEND, ?Block $coreBlock = null)
     {
         $this->towards = $towards;
         $this->coreBlock = $coreBlock;
@@ -77,38 +79,67 @@ class FairyGate extends Entity
     }
     public function onUpdate($currentTick)
     {
-        $this->age++;
-        if ($this->age % 20 == 0){
-            if (count(self::checkBlocks($this->coreBlock, null, $this->towards)) > 0){
+        if ($this->age % 20 == 0) {
+            if (count(self::checkBlocks($this->coreBlock, null, $this->towards)) > 0) {
                 $this->kill();
                 return false;
             }
-            $this->checkGates();
+        }
+        if ($this->age < 20 * 10 + 10){
+            if ($this->age % 10 == 0){
+                if ($this->flash)
+                    $this->constructGates();
+                else
+                    $this->destroyGates();
+                $this->flash = !$this->flash;
+                if (!$this->siphonMana(100)){
+                    $this->crash = true;
+                }
+            }
+        }elseif ($this->age % 20 == 0){
+            if ($this->crash or !$this->checkGates()){
+                $this->kill();
+                return false;
+            }
             foreach ($this->getLevel()->getCollidingEntities($this->boundingBox) as $entity){
                 if ($entity instanceof Player and $entity->canSelected()){
                     $level = $this->getServer()->getLevelByName("f10");
                     $entity->teleport($level->getSpawnLocation());
                 }
             }
-            $searchManaCache = ManaSystem::searchManaCache($this);//搜索附近魔力缓存器来抽取魔力
-            Utils::vector3Sort($searchManaCache, $this);
-            $mana = 10;
-            foreach ($searchManaCache as $manaCeche){
-                /** @var ManaCache $manaCeche */
-                $m = min($mana, $manaCeche->getMana());
-                if ($manaCeche->putMana($m, $this)){//抽取10 Mana
-                    $mana -= $m;
-                }
-                if ($mana <= 0)break;
-            }
-            if ($mana >= 0){
+            if (!$this->siphonMana(10)){
                 $this->kill();
+                return false;
+            }
+        }
+        $this->age++;
+        return true;
+    }
+    public function siphonMana(int $mana): bool
+    {
+        $searchManaCache = ManaSystem::searchManaCache($this);//搜索附近魔力缓存器来抽取魔力
+        Utils::vector3Sort($searchManaCache, $this);
+        foreach ($searchManaCache as $manaCeche){
+            /** @var ManaCache $manaCeche */
+            $m = min($mana, $manaCeche->getMana());
+            if ($manaCeche->putMana($m, $this)){//抽取10 Mana
+                $mana -= $m;
+            }
+            if ($mana <= 0)break;
+        }
+        return $mana <= 0;
+    }
+    public function checkGates(){
+        $coreBlock = $this->coreBlock->add(0, 1);
+        foreach (self::$gates as $gate){
+            $block = self::getBlock($coreBlock, $this->towards, $gate[0], $gate[1]);
+            if (!($block instanceof StillWater)){
                 return false;
             }
         }
         return true;
     }
-    public function checkGates(){
+    public function constructGates(){
         $coreBlock = $this->coreBlock->add(0, 1);
         foreach (self::$gates as $gate){
             $block = self::getBlock($coreBlock, $this->towards, $gate[0], $gate[1]);
@@ -117,15 +148,17 @@ class FairyGate extends Entity
             }
         }
     }
+    public function destroyGates(){
+        $coreBlock = $this->coreBlock->add(0, 1);
+        foreach (self::$gates as $gate){
+            $block = self::getBlock($coreBlock, $this->towards, $gate[0], $gate[1]);
+            $this->level->setBlock($block, new Air());
+        }
+    }
     public function kill()
     {
         $this->close();
-        foreach (self::$gates as $gate){
-            $block = self::getBlock($this->coreBlock, $this->towards, $gate[0], $gate[1]);
-            if ($block instanceof StillWater){
-                $this->level->setBlock($block, new Air());
-            }
-        }
+        $this->destroyGates();
     }
 
     public static function getTowards(Block $coreBlock, int $towards): int{

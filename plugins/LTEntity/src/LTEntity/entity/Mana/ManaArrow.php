@@ -5,20 +5,13 @@ namespace LTEntity\entity\Mana;
 
 
 use LTEntity\entity\BaseEntity;
-use LTEntity\entity\monster\flying\AEnderDragon;
 use pocketmine\entity\Arrow;
-use pocketmine\entity\Creature;
 use pocketmine\entity\Entity;
 use pocketmine\event\entity\EntityCombustByEntityEvent;
 use pocketmine\event\entity\EntityDamageByChildEntityEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\event\entity\ProjectileHitEvent;
-use pocketmine\item\Potion;
-use pocketmine\level\MovingObjectPosition;
 use pocketmine\level\particle\CriticalParticle;
-use pocketmine\level\particle\MobSpellParticle;
-use pocketmine\math\Vector3;
 use pocketmine\Player;
 
 /**

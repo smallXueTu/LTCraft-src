@@ -60,7 +60,7 @@ class ManaCache extends Tile
             foreach ($arr as $a){//向四周抽取Mana 向上方输出Mana
                 $tile = $this->getLevel()->getTile($this->add($a[0], $a[1], $a[2]));
                 if ($tile !== null and $tile instanceof Chest){
-                    if (($tile->getInventory()->getViewers()) >= 1)continue;
+                    if (count($tile->getInventory()->getViewers()) >= 1)continue;
                     if ($a[1] == 1){
                         foreach ($tile->getInventory()->getContents() as $i => $item){
                             /** @var $item Mana */
