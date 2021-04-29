@@ -72,7 +72,7 @@ class ManaWand extends BaseMana
                 new DoubleTag("", $target->z)
             ]);
             if (count($blocks) <= 0){
-                new FairyGate($target->getLevel(), $nbt, FairyGate::getTowards($target, FairyGate::X_EXTEND));
+                new FairyGate($target->getLevel(), $nbt, FairyGate::getTowards($target, FairyGate::X_EXTEND), $target);
             }else{
                 $player->sendMessage("§c多方块结构检查失败，请根据闪动的方块来放置对应方块！");
                 $entity = new Prompt($target->getLevel(), $nbt);

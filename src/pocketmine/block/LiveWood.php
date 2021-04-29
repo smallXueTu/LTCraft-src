@@ -27,7 +27,7 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
 
-class LiveWood extends Fallable {
+class LiveWood extends Solid {
 
 	protected $id = self::LIVE_WOOD;
 
