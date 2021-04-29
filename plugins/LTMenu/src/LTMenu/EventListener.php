@@ -10,15 +10,15 @@ use LTLogin\Events;
 use LTItem\Main as LTItem;
 use LTItem\SpecialItems\Material;
 class EventListener implements Listener{
-	public function __construct(Main $plugin){
+    private Main $plugin;
+
+    public function __construct(Main $plugin){
 		$this->plugin=$plugin;
 	}
 	public function onDataPacketReceive(DataPacketReceiveEvent $event){
 		$packet=$event->getPacket();
-		// var_dump(get_class($packet));
 		if($packet instanceof ContainerSetSlotPacket){
 			$player=$event->getPlayer();
-			// var_dump($this->plugin->getOpen($player));
 			if(($open=$this->plugin->getOpen($player))!==null){
 				if($packet->windowid==$open->getId()){
 					$open->event($event);

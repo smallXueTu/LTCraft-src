@@ -77,7 +77,7 @@ class RedMushroomBlock extends Solid {
 	public function getDrops(Item $item) : array{
 		if($item->getEnchantmentLevel(Enchantment::TYPE_MINING_SILK_TOUCH) > 0){
 			return [
-				[Item::RED_MUSHROOM_BLOCK, self::RED, 1],
+				[Item::SHIZHONGJI, self::RED, 1],
 			];
 		}else{
 			return [

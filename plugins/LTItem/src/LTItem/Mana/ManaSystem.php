@@ -57,6 +57,7 @@ class ManaSystem
         self::$manaItems['王者之剑'] = KingOfMana::class;
         self::$manaItems['泰拉钢刃'] = TerraSword::class;
         self::$manaItems['百中弓'] = HundredMiddleBow::class;
+        self::$manaItems['旅行背包'] = TravelingBackpack::class;
     }
 
     /**

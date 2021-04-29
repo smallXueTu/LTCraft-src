@@ -115,7 +115,7 @@ class Block extends Position implements BlockIds, Metadatable{
 			self::$list[self::BONE_BLOCK] = Bone::class;
 			self::$list[self::RED_FLOWER] = Flower::class;
 			self::$list[self::WHITE_DAISIES] = WhiteDaisies::class;
-			self::$list[self::RED_MUSHROOM] = RedMushroom::class;
+			self::$list[self::SHIZHONGJI] = ShiZhongji::class;
 			self::$list[self::GOLD_BLOCK] = Gold::class;
 			self::$list[self::IRON_BLOCK] = Iron::class;
 			self::$list[self::DOUBLE_SLAB] = DoubleSlab::class;

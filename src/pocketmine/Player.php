@@ -38,6 +38,7 @@ use pocketmine\event\entity\EntityTeleportEvent;
 use pocketmine\inventory\BaseInventory;
 use pocketmine\inventory\CraftingManager;
 use pocketmine\inventory\FloatingInventory;
+use pocketmine\inventory\TravelingInventory;
 use pocketmine\item\Bow;
 use pocketmine\level\sound\AnvilBreakSound;
 use pocketmine\network\protocol\LevelEventPacket;
@@ -291,6 +292,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
     /** @var Player[] */
     protected $hiddenPlayers = [];
+    public ?TravelingInventory $travel = null;
 
     /** @var Vector3 */
     public $newPosition;
@@ -4965,6 +4967,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
         return -1;
     }
+
     public function setWindow($id, Inventory $inventory){
         $this->windows->detach($this->windowIndex[$id]);
         unset($this->windowIndex[$id]);

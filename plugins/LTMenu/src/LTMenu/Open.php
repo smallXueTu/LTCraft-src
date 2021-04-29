@@ -13,6 +13,7 @@ use pocketmine\network\protocol\UpdateBlockPacket;
 use pocketmine\scheduler\CallbackTask;
 use LTItem\Main as LTItem;
 use pocketmine\entity\Human;
+use pocketmine\utils\BinaryStream;
 
 class Open extends Position{
 	private $player;
@@ -349,4 +350,24 @@ class Open extends Position{
 		$this->id=$this->player->addWindow($this->inventory);
 		$this->setClosePacket($hpk);
 	}
+
+    public static function getOpenBlock(Position $position, Player $player, string $name): UpdateBlockPacket{
+        $pk = new UpdateBlockPacket();
+        $pk->x = $position->x;
+        $pk->z = $position->z;
+        $pk->y = $position->y;
+        $pk->blockId = 54;
+        $pk->blockData = 0;
+        $hpk=clone $pk;
+        $player->dataPacket($pk);
+        $be=new BlockEntityDataPacket();
+        $be->x=$position->x;
+        $be->y=$position->y;
+        $be->z=$position->z;
+        $be->namedtag=Menu::getSpawnCompound($position, $name);
+        $player->dataPacket($be);
+        $hpk->blockId = 0;
+        $hpk->blockData = 0;
+        return $hpk;
+    }
 }

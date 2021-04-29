@@ -7,6 +7,7 @@ namespace pocketmine\tile;
 use LTEntity\entity\Mana\ManaFloating;
 use LTItem\Mana\Mana;
 use LTPet\Main;
+use pocketmine\entity\Entity;
 use pocketmine\inventory\ChestInventory;
 use pocketmine\level\Level;
 use pocketmine\level\particle\DustParticle;
@@ -18,6 +19,7 @@ use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\IntTag;
 use pocketmine\nbt\tag\ListTag;
+use pocketmine\nbt\tag\NamedTag;
 use pocketmine\Server;
 
 class ManaCache extends Tile
@@ -145,7 +147,27 @@ class ManaCache extends Tile
 
     /**
      * @param int $mana
-     * @param Position $position 坐标是动画效果
+     * @param Position|null $position 坐标是动画效果
+     * @return int
+     */
+    public function enterMana(int $mana, Position $position = null): int {
+        if ($position!=null){
+            $nbt = new CompoundTag;
+            $nbt->Pos = new ListTag("Pos", [
+                new DoubleTag("", $position->x+0.5),
+                new DoubleTag("", $position->y+0.5),
+                new DoubleTag("", $position->z+0.5)
+            ]);
+            $entity = new ManaFloating($this->getLevel(), $nbt);
+            $entity->setTarget($this->add(0.5, 0.5, 0.5));
+            $entity->setStarting($position);
+        }
+        return $this->addMana($mana);
+    }
+
+    /**
+     * @param int $mana
+     * @param Position|null $position 坐标是动画效果
      * @return bool
      */
     public function putMana(int $mana, Position $position = null) : bool {

@@ -36,7 +36,7 @@ class MenuInventory extends ContainerInventory {
 
 
 	/**
-	 * EnderChestInventory constructor.
+	 * MenuInventory constructor.
 	 *
 	 * @param Human $owner
 	 * @param null  $contents

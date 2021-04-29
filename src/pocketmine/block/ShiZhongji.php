@@ -22,15 +22,13 @@
 namespace pocketmine\block;
 
 use pocketmine\item\Item;
-use pocketmine\level\Level;
 use pocketmine\Player;
+use pocketmine\Server;
 
-class RedMushroom extends Flowable {
-
-	protected $id = self::RED_MUSHROOM;
-
+class ShiZhongji extends ManaFlower {
+	protected $id = self::SHIZHONGJI;
 	/**
-	 * RedMushroom constructor.
+	 * ShiZhongji constructor.
 	 */
 	public function __construct($meta = 0){
 		$this->meta = $meta;
@@ -40,7 +38,7 @@ class RedMushroom extends Flowable {
 	 * @return string
 	 */
 	public function getName() : string{
-		return '红蘑菇';
+		return '石中姬';
 	}
 
 
@@ -50,15 +48,23 @@ class RedMushroom extends Flowable {
 	 * @return bool|int
 	 */
 	public function onUpdate($type){
-		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if($this->getSide(0)->isTransparent() === true){
-				$this->getLevel()->useBreakOn($this);
-
-				return Level::BLOCK_UPDATE_NORMAL;
-			}
-		}
-
-		return false;
+	    if (Server::getInstance()->getTick() - $this->lastUpdate > 10){
+            $this->lastUpdate = Server::getInstance()->getTick();
+            $blocks = [];
+            $blocks[] = $this->level->getBlock($this->add(1));
+            $blocks[] = $this->level->getBlock($this->add(-1));
+            $blocks[] = $this->level->getBlock($this->add(0, 0, 1));
+            $blocks[] = $this->level->getBlock($this->add(0, 0, -1));
+            if ($this->mana < self::MAX_MANA)foreach ($blocks as $block){
+                if ($block instanceof Stone or $block instanceof Cobblestone){
+                    $this->mana += min(15, self::MAX_MANA - $this->mana);
+                    $this->level->setBlock($block, new Air());
+                }
+                if ($this->mana >= self::MAX_MANA)break;
+            }
+            $this->exportMana();
+        }
+		return true;
 	}
 
 	/**

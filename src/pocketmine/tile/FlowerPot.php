@@ -66,7 +66,7 @@ class FlowerPot extends Spawnable {
 			case Item::DANDELION:
 			case Item::RED_FLOWER:
 			//case Item::BROWN_MUSHROOM:
-			case Item::RED_MUSHROOM:
+//			case Item::RED_MUSHROOM:
 			case Item::CACTUS:
 				return true;
 			default:

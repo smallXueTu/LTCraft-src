@@ -11,6 +11,7 @@ use pocketmine\event\entity\EntityDeathEvent;
 use pocketmine\event\entity\EntityRegainHealthEvent;
 use pocketmine\level\Explosion;
 use pocketmine\math\Vector3;
+use pocketmine\network\protocol\ContainerSetSlotPacket;
 use pocketmine\network\protocol\PlayerActionPacket;
 use pocketmine\network\protocol\SetEntityMotionPacket;
 use pocketmine\network\protocol\UseItemPacket;
@@ -478,6 +479,17 @@ class EventListener implements Listener
                 $entity->setDamage($Hand->getPVPDamage());
                 $entity->setCalculate(false);
                 Cooling::$launch[$player->getName()] = $this->server->getTick()+$Hand->getSpeed();
+            }
+        }elseif ($event->getPacket() instanceof ContainerSetSlotPacket){
+            $player = $event->getPlayer();
+            if ($player->travel != null){
+                /** @var ContainerSetSlotPacket $pk */
+                $pk = $event->getPacket();
+                if ($pk->windowid == 0){
+                    $inv = $player->travel;
+                    $index = $inv->getIndex();
+                    if ($pk->slot == $index)$event->setCancelled(true);
+                }
             }
         }
     }

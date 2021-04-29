@@ -56,6 +56,7 @@ class InventoryType {
 	const SHULKER = 15;
 	const MENU = 16;
 	const ORNAMENTS = 17;
+	const TRAVEL = 18;
 
 	const PLAYER_FLOATING = 254;
 
@@ -99,6 +100,7 @@ class InventoryType {
 			static::SHULKER => new InventoryType(27, "Shulker", InventoryNetworkIds::CONTAINER), //潜匿之贝
 			static::MENU => new InventoryType(27, "Menu", InventoryNetworkIds::CONTAINER), //菜单箱子
 			static::ORNAMENTS => new InventoryType(27, "BaseOrnaments", InventoryNetworkIds::CONTAINER), //饰品
+			static::TRAVEL => new InventoryType(27, "TravelOrnaments", InventoryNetworkIds::CONTAINER), //旅行
 
 			static::PLAYER_FLOATING => new InventoryType(36, "Floating", null) //Mirror all slots of main inventory (needed for large item pickups)
 		];

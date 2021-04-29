@@ -76,7 +76,7 @@ interface BlockIds {
 	const ROSE = 38;
 	const RED_FLOWER = 38;
 	const WHITE_DAISIES = 39;
-	const RED_MUSHROOM = 40;
+	const SHIZHONGJI = 40;
 	const GOLD_BLOCK = 41;
 	const IRON_BLOCK = 42;
 	const DOUBLE_SLAB = 43;
