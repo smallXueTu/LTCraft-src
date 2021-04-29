@@ -38,6 +38,7 @@ use pocketmine\event\entity\EntityTeleportEvent;
 use pocketmine\inventory\BaseInventory;
 use pocketmine\inventory\CraftingManager;
 use pocketmine\inventory\FloatingInventory;
+use pocketmine\item\Bow;
 use pocketmine\level\sound\AnvilBreakSound;
 use pocketmine\network\protocol\LevelEventPacket;
 use pocketmine\block\Air;
@@ -3031,7 +3032,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
                         break;
                     case PlayerActionPacket::ACTION_RELEASE_ITEM:
                         if($this->startAction > -1 and $this->getDataFlag(self::DATA_FLAGS, self::DATA_FLAG_ACTION)){
-                            if($this->inventory->getItemInHand()->getId() === Item::BOW){
+                            if($this->inventory->getItemInHand() instanceof Bow){
                                 $bow = $this->inventory->getItemInHand();
                                 if($this->isSurvival() and !$this->inventory->contains(Item::get(Item::ARROW, 0))){
                                     $this->inventory->sendContents($this);
@@ -3071,8 +3072,9 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
                                 $diff = ($this->server->getTick() - $this->startAction);
                                 $p = $diff / 20;
                                 $f = min((($p ** 2) + $p * 2) / 3, 1) * 2;
+                                /** @var Bow $bow */
                                 if(!$bow->getEnchantmentLevel(Enchantment::TYPE_BOW_INFINITY)!==false)
-                                    $ev = new EntityShootBowEvent($this, $bow, Entity::createEntity('Arrow', $this->getLevel(), $nbt, $this, $f == 2 ? true : false), $f);
+                                    $ev = new EntityShootBowEvent($this, $bow, Entity::createEntity($bow->getArrow(), $this->getLevel(), $nbt, $this, $f == 2 ? true : false), $f);
                                 else
                                     $ev = new EntityShootBowEvent($this, $bow, Entity::createEntity('falseArrow', $this->getLevel(), $nbt, $this, $f == 2 ? true : false), $f);
                                 if($f < 0.1 or $diff < 5){

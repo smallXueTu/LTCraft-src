@@ -208,7 +208,7 @@ class Item implements ItemIds, \JsonSerializable {
             self::$list[self::WOODEN_HOE] = WoodenHoe::class;
             self::$list[self::FLINT_STEEL] = FlintSteel::class;
             self::$list[self::SHEARS] = Shears::class;
-            self::$list[self::BOW] = Bow::class;
+            self::$list[self::BOW] = BaseBow::class;
 
             self::$list[self::RAW_FISH] = Fish::class;
             self::$list[self::COOKED_FISH] = CookedFish::class;
