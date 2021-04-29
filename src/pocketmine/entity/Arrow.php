@@ -37,7 +37,7 @@ class Arrow extends Projectile {
 	public $width = 0.5;
 	public $length = 0.5;
 	public $height = 0.5;
-
+    protected int $maxAge = 1200;
 	protected $gravity = 0.05;
 	protected $drag = 0.01;
 
@@ -138,7 +138,7 @@ class Arrow extends Projectile {
 			$hasUpdate = true;
 		}
 
-		if($this->age > 1200){
+		if($this->age > $this->maxAge){
 			$this->kill();
 			$hasUpdate = true;
 		}

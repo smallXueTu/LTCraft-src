@@ -178,9 +178,9 @@ abstract class Projectile extends Entity {
 
 					$motion = sqrt($this->motionX ** 2 + $this->motionY ** 2 + $this->motionZ ** 2);
 					if($this->calculate)
-						$damage = ceil($motion * $this->damage);
+						$damage = ceil($motion * $this->getDamage($movingObjectPosition->entityHit));
 					else 
-						$damage=$this->damage;
+						$damage=$this->getDamage($movingObjectPosition->entityHit);
 
 					if($this instanceof Arrow and $this->isCritical() and $this->calculate) {
 						$damage += mt_rand(0, (int) ($damage / 2) + 1);
@@ -275,4 +275,12 @@ abstract class Projectile extends Entity {
 		return $hasUpdate;
 	}
 
+    /**
+     * @param Entity|null $entity
+     * @return int
+     */
+    public function getDamage(Entity $entity = null): int
+    {
+        return $this->damage;
+    }
 }
