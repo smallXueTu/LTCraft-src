@@ -392,7 +392,7 @@ abstract class BaseEntity extends Creature
 			}
 			$damager->setlastAttackMob(time());
 			if(!$source->zs){
-				if($this->onPlayer){
+				if($this->onPlayer and $source->getCause()!==EntityDamageEvent::CAUSE_PROJECTILE){
 					$damager->sendCenterTip('§c攻击怪物请进去刷怪点感应范围');
 					return false;
 				}
@@ -400,7 +400,7 @@ abstract class BaseEntity extends Creature
 					$damager->sendCenterTip('§c请取消飞行状态!');
 					return false;
 				}
-				elseif(abs($damager->getY()-$this->getY())>1.2  and $this instanceof WalkingEntity){
+				elseif(abs($damager->getY()-$this->getY())>1.2  and $this instanceof WalkingEntity and $source->getCause()!==EntityDamageEvent::CAUSE_PROJECTILE){
 					$damager->sendCenterTip('§c你跟怪物高度相差太多！');
 					return false;
 				}

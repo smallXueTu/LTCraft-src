@@ -625,8 +625,9 @@ abstract class WalkingMonster extends WalkingEntity
                                             new FloatTag("", $this->pitch)
                                         ]),
                                     ]);
-                                    $pk = new \pocketmine\entity\falseArrow($this->level, $nbt, $this);
+                                    $pk = new \pocketmine\entity\Arrow($this->level, $nbt, $this);
                                     $pk->setMotion($pk->getMotion()->multiply(2));
+                                    $pk->setCanBePickedUp(false);;
                                     $pk->setDamage(30);
                                     $pk->spawnToAll();
                                     $pk->skill = ['Freeze', 3];
@@ -665,8 +666,9 @@ abstract class WalkingMonster extends WalkingEntity
                                             new FloatTag("", $this->pitch)
                                         ]),
                                     ]);
-                                    $pk = new \pocketmine\entity\falseArrow($this->level, $nbt, $this);
+                                    $pk = new \pocketmine\entity\Arrow($this->level, $nbt, $this);
                                     $pk->setMotion($pk->getMotion()->multiply(2));
+                                    $pk->setCanBePickedUp(false);
                                     $pk->setDamage(30);
                                     $pk->spawnToAll();
                                     $pk->skill = ['Vertigo', 1.5];
@@ -706,8 +708,9 @@ abstract class WalkingMonster extends WalkingEntity
                                         ]),
                                         "Potion" => new ShortTag("Potion", 36)
                                     ]);
-                                    $pk = new \pocketmine\entity\falseArrow($this->level, $nbt, $this);
+                                    $pk = new \pocketmine\entity\Arrow($this->level, $nbt, $this);
                                     $pk->setMotion($pk->getMotion()->multiply(2));
+                                    $pk->setCanBePickedUp(false);
                                     $pk->setDamage(30);
                                     $pk->skill = ['weak', 60];
                                     $pk->spawnToAll();
@@ -749,8 +752,9 @@ abstract class WalkingMonster extends WalkingEntity
                                         ]),
                                         "Potion" => new ShortTag("Potion", 34)
                                     ]);
-                                    $pk = new \pocketmine\entity\falseArrow($this->level, $nbt, $this);
+                                    $pk = new \pocketmine\entity\Arrow($this->level, $nbt, $this);
                                     $pk->setMotion($pk->getMotion()->multiply(2));
+                                    $pk->setCanBePickedUp(false);
                                     $pk->skill = ['Power', 60];
                                     $pk->spawnToAll();
                                     $this->pk = $pk;
@@ -792,9 +796,10 @@ abstract class WalkingMonster extends WalkingEntity
                                         ]),
                                         "Potion" => new ShortTag("Potion", 32)
                                     ]);
-                                    $pk = new \pocketmine\entity\falseArrow($this->level, $nbt, $this);
+                                    $pk = new \pocketmine\entity\Arrow($this->level, $nbt, $this);
                                     $pk->setMotion($pk->getMotion()->multiply(2));
                                     $pk->spawnToAll();
+                                    $pk->setCanBePickedUp(false);
                                     $pk->skill = ['Recover', 0];
                                     $this->pk = $pk;
                                     $this->level->addSound(new \pocketmine\level\sound\LaunchSound($this), $this->getViewers());

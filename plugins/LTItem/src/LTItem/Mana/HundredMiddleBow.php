@@ -59,5 +59,6 @@ class HundredMiddleBow extends BaseMana implements Bow
     public function deductResources(Player $player): bool
     {
         $player->getBuff()->consumptionMana(20);
+        $player->getInventory()->sendContents($player);
     }
 }
