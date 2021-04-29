@@ -122,6 +122,7 @@ class FairyGate extends Entity
         foreach ($searchManaCache as $manaCeche){
             /** @var ManaCache $manaCeche */
             $m = min($mana, $manaCeche->getMana());
+            if ($m <= 0)continue;
             if ($manaCeche->putMana($m, $this)){//抽取10 Mana
                 $mana -= $m;
             }
