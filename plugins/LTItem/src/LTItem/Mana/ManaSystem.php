@@ -11,7 +11,9 @@ use pocketmine\block\Leaves2;
 use pocketmine\block\Stone;
 use pocketmine\item\Food;
 use pocketmine\item\Item;
+use pocketmine\level\Position;
 use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\tile\ManaCache;
 use pocketmine\tile\ManaChest;
 
 class ManaSystem
@@ -93,5 +95,23 @@ class ManaSystem
         }else{
             return strtr($mess, ['&MaxMana&'=>$ManaItem->getMaxMana(),'&Mana&'=>$ManaItem->getMana(),'&owner&'=>$ManaItem->getOwner()]);
         }
+    }
+
+
+    /**
+     * 搜索魔力缓存器
+     * @param Position $position
+     * @return array
+     */
+    public static function searchManaCache(Position $position): array
+    {
+        $manaCache = [];
+        $tiles = $position->getLevel()->getTiles();
+        foreach ($tiles as $tile){
+            if ($tile->distance($position) < 10 and $tile instanceof ManaCache){
+                $manaCache[] = $tile;
+            }
+        }
+        return $manaCache;
     }
 }

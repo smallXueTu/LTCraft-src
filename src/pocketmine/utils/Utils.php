@@ -25,6 +25,7 @@
 
 namespace pocketmine\utils;
 
+use pocketmine\math\Vector3;
 use pocketmine\ThreadManager;
 
 /**
@@ -133,8 +134,32 @@ class Utils {
 
 		return $uuid;
 	}
-	/*
-	将秒转换为 年/月/日/小时/分/秒
+
+    /**
+     * Vector3距离排序
+     * @param array $vector3s
+     * @param $vector3
+     */
+	public static function vector3Sort(array &$vector3s, $vector3){
+	    /**
+         * @var int $index
+         * @var Vector3 $v3
+         */
+        foreach ($vector3s as $index => $v3){
+            for ($i = count($vector3s) - 1; $i > $index; $i--){
+                $d1 = $vector3->distance($vector3s[$i]);
+                $d2 = $vector3->distance($vector3s[$i - 1]);
+                if ($d1 < $d2){
+                    $temp = $vector3s[$i];
+                    $vector3s[$i] = $vector3s[$i - 1];
+                    $vector3s[$i - 1] = $temp;
+                }
+            }
+        }
+    }
+
+	/**
+	* 将秒转换为 年/月/日/小时/分/秒
 	*/
 	public static function Sec2Time($time){
 		if(is_numeric($time)){

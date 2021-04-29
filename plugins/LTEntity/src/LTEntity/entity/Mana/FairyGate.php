@@ -4,6 +4,7 @@
 namespace LTEntity\entity\Mana;
 
 
+use LTItem\Mana\ManaSystem;
 use pocketmine\block\Air;
 use pocketmine\block\Block;
 use pocketmine\block\LiveWood;
@@ -20,6 +21,8 @@ use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\NamedTag;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\Player;
+use pocketmine\tile\ManaCache;
+use pocketmine\utils\Utils;
 
 class FairyGate extends Entity
 {
@@ -78,7 +81,6 @@ class FairyGate extends Entity
         if ($this->age % 20 == 0){
             if (count(self::checkBlocks($this->coreBlock, null, $this->towards)) > 0){
                 $this->kill();
-                $this->close();
                 return false;
             }
             $this->checkGates();
@@ -88,12 +90,28 @@ class FairyGate extends Entity
                     $entity->teleport($level->getSpawnLocation());
                 }
             }
+            $searchManaCache = ManaSystem::searchManaCache($this);//搜索附近魔力缓存器来抽取魔力
+            Utils::vector3Sort($searchManaCache, $this);
+            $mana = 10;
+            foreach ($searchManaCache as $manaCeche){
+                /** @var ManaCache $manaCeche */
+                $m = min($mana, $manaCeche->getMana());
+                if ($manaCeche->putMana($m, $this)){//抽取10 Mana
+                    $mana -= $m;
+                }
+                if ($mana <= 0)break;
+            }
+            if ($mana >= 0){
+                $this->kill();
+                return false;
+            }
         }
         return true;
     }
     public function checkGates(){
+        $coreBlock = $this->coreBlock->add(0, 1);
         foreach (self::$gates as $gate){
-            $block = self::getBlock($this->coreBlock, $this->towards, $gate[0], $gate[1]);
+            $block = self::getBlock($coreBlock, $this->towards, $gate[0], $gate[1]);
             if (!($block instanceof StillWater)){
                 $this->level->setBlock($block, new StillWater());
             }
@@ -101,6 +119,7 @@ class FairyGate extends Entity
     }
     public function kill()
     {
+        $this->close();
         foreach (self::$gates as $gate){
             $block = self::getBlock($this->coreBlock, $this->towards, $gate[0], $gate[1]);
             if ($block instanceof StillWater){

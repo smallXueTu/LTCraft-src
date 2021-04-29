@@ -1,8 +1,5 @@
 <?php
-
-
 namespace LTItem\Mana;
-
 
 use pocketmine\entity\Entity;
 use pocketmine\Player;

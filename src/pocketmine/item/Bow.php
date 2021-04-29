@@ -22,7 +22,7 @@
 namespace pocketmine\item;
 
 
-class Bow extends Tool {
+class BaseBow extends Tool {
 	/**
 	 * Bow constructor.
 	 *

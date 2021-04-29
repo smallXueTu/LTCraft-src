@@ -23,6 +23,7 @@ namespace pocketmine\tile;
 
 use LTItem\LTItem;
 use LTItem\Main;
+use LTItem\Mana\ManaSystem;
 use pocketmine\block\Block;
 use pocketmine\block\Cobblestone;
 use pocketmine\block\Lapis;
@@ -62,20 +63,6 @@ class TaraCondensationPlate extends Tile {
         }
         return $entities;
     }
-
-    /**
-     * 搜索魔力缓存器
-     */
-    public function searchManaCache(){
-        $manaCache = [];
-        $tiles = $this->getLevel()->getTiles();
-         foreach ($tiles as $tile){
-             if ($tile->distance($this) < 10 and $tile instanceof ManaCache){
-                 $manaCache[] = $tile;
-             }
-         }
-         return $manaCache;
-    }
     public function checkBlock(){
         $block = $this->getLevel()->getBlock($this->add(0,-1,0));
         if (!($block instanceof LivingStones))return false;//不是活石
@@ -111,7 +98,7 @@ class TaraCondensationPlate extends Tile {
         $drops = $this->getEntities();
         if (count($drops)<=0)return false;
         if (!$this->checkBlock())return false;
-        $searchManaCache = $this->searchManaCache();//搜索附近魔力缓存器来抽取魔力
+        $searchManaCache = ManaSystem::searchManaCache($this);//搜索附近魔力缓存器来抽取魔力
         if (count($searchManaCache)==0){
             $this->sleepTick = 20*30;//等待30 S
             return true;//等待玩家添加魔力缓存器
