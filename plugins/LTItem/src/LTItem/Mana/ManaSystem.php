@@ -77,11 +77,11 @@ class ManaSystem
                 if ($upGrade['咀叶花']) {//有咀叶花升级
                     return 15;
                 }
-            }elseif($item->getBlock() instanceof Cobblestone or $item->getBlock() instanceof Stone){//石头 交给石中姬
+            }/*elseif($item->getBlock() instanceof Cobblestone or $item->getBlock() instanceof Stone){//石头 交给石中姬
                 if ($upGrade['石中姬']) {//有石中姬升级
                     return 15;
                 }
-            }elseif($item instanceof Food){//食物 交给彼方兰
+            }*/elseif($item instanceof Food){//食物 交给彼方兰
                 if ($upGrade['彼方兰']) {//有彼方兰升级
                     return $item->getFoodRestore() * 10;
                 }
