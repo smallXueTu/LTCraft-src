@@ -566,66 +566,12 @@ class EventListener implements Listener
     {
         if($event->isCancelled())return;
         $entity = $event->getEntity();
-        if ($entity instanceof Player){
-            $allMana = 0;
-            $count = 0;
-            /** @var Player $entity */
-            foreach ($entity->getInventory()->getArmorContents() as $item){
-                if ($item instanceof Armor\ManaArmor and $item->getMana() > 0){
-                    $allMana += $item->getMana();
-                    $count++;
-                }
-            }
-            if ($allMana > 0){
-                $finalDamage = $event->getFinalDamage();
-                if ($allMana - $finalDamage / 2 >= 0){
-                    if ($finalDamage > $entity->getHealth())
-                        $entity->sendMessage("§l§c[警告]强大的打击！");
-                    $cb = $finalDamage / 2 / $count;
-                    $avg = $allMana / $count;
-                    $sign = true;
-                    foreach ($entity->getInventory()->getArmorContents() as $index => $item){
-                        if ($item instanceof Armor\ManaArmor and $item->getMana() > 0){
-                            $item->setMana($avg);
-                            if (!$item->consumptionMana($cb))$sign = false;
-                            $entity->getInventory()->setItem($entity->getInventory()->getSize() + $index, $item);
-                        }
-                    }
-                    if ($sign){
-                        Armor\ManaArmor::shield($entity, $event instanceof EntityDamageByEntityEvent?$event->getDamager():null);
-                        return $event->setCancelled(true);
-                    }
-                }elseif($allMana - $finalDamage / 10 >= 0){
-                    $entity->sendMessage("§l§c[警告]强大的打击！");
-                    $entity->setHealth(1);
-                    foreach ($entity->getInventory()->getArmorContents() as $index => $item){
-                        if ($item instanceof Armor\ManaArmor and $item->getMana() > 0){
-                            $item->setMana(0);
-                            $entity->getInventory()->setItem($entity->getInventory()->getSize() + $index, $item);
-                        }
-                    }
-                    Armor\ManaArmor::shield($entity, $event instanceof EntityDamageByEntityEvent?$event->getDamager():null);
-                    return $event->setCancelled();
-                }
-            }
-        }
         if($event instanceof EntityDamageByEntityEvent and self::canCalculate($event->getCause())) {
             $damager = $event->getDamager();
             if(($entity instanceof Player and $damager instanceof Player and $entity->getBuff()->miss()) or ($damager instanceof Creature and $damager->getBlindness())) {
                 new FloatingText($entity, '§c未命中~', 0.8);
                 $entity->newProgress('抱歉，今天不行。', '躲避一次攻击。');
                 return $event->setCancelled(true);
-            }
-            if($entity instanceof Player) {
-                if ($entity->getBuff()->checkOrnamentsInstall('神圣斗篷', '饰品')) {
-                    $health = $entity->getHealth();
-                    if ($health > $entity->getMaxHealth() * 0.8 and $health - $event->getFinalDamage() <= 0 and Cooling::$ornaments[$entity->getName()]['神圣斗篷'] > time()) {//玩家可能在这个事件之后死亡
-                        Cooling::$ornaments[$entity->getName()]['神圣斗篷'] = time() + 10;
-                        $entity->setHealth($entity->getMaxHealth() / 2);
-                        $event->setDamage(1);
-                        $event->setDamage(1, EntityDamageEvent::MODIFIER_REAL_DAMAGE);
-                    }
-                }
             }
             if(!($damager instanceof Player))return;
             if($entity instanceof Player){

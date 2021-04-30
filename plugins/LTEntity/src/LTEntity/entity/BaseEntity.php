@@ -377,7 +377,7 @@ abstract class BaseEntity extends Creature
                 $source->setCancelled();
                 return;
             }
-			if(LTEntity::getCount($damager->getName())>=10){
+			if(LTEntity::getCount($damager->getName())>=30){
 				if(isset($damager->opening)){
 					return;
 				}

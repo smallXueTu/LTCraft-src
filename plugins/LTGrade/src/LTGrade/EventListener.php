@@ -164,6 +164,65 @@ class EventListener implements Listener
 	public function onDamageEvent(EntityDamageEvent $event)
 	{
 		$entity=$event->getEntity();
+        if ($entity instanceof Player){
+            if ($entity->getBuff()->checkOrnamentsInstall('神圣斗篷', '饰品')) {
+                $health = $entity->getHealth();
+                if ($health > $entity->getMaxHealth() * 0.8 and $health - $event->getFinalDamage() <= 0 and Cooling::$ornaments[$entity->getName()]['神圣斗篷'] > time()) {//玩家可能在这个事件之后死亡
+                    Cooling::$ornaments[$entity->getName()]['神圣斗篷'] = time() + 10;
+                    $entity->setHealth($entity->getMaxHealth() / 2);
+                    $event->setDamage(1);
+                    $event->setDamage(1, EntityDamageEvent::MODIFIER_REAL_DAMAGE);
+                }
+            }
+            $allMana = 0;
+            $count = 0;
+            /** @var Player $entity */
+            foreach ($entity->getInventory()->getArmorContents() as $item){
+                if ($item instanceof Armor\ManaArmor){
+                    $allMana += $item->getMana();
+                    $count++;
+                }
+            }
+            if ($allMana > 0){
+                $finalDamage = $event->getFinalDamage();
+                if ($allMana - $finalDamage / 2 >= 0){
+                    if ($finalDamage > $entity->getHealth())
+                        $entity->sendMessage("§l§c[警告]强大的打击！");
+                    $cb = max($finalDamage / 2 / $count, 1);
+                    $avg = $allMana / $count;
+                    $sign = true;
+                    foreach ($entity->getInventory()->getArmorContents() as $index => $item){
+                        if ($item instanceof Armor\ManaArmor){
+                            $item->setMana($avg);
+                            if (!$item->consumptionMana($cb))$sign = false;
+                            $entity->getInventory()->setItem($entity->getInventory()->getSize() + $index, $item);
+                        }
+                    }
+                    if ($sign){
+                        Armor\ManaArmor::shield($entity, $event instanceof EntityDamageByEntityEvent?$event->getDamager():null);
+                        return $event->setCancelled(true);
+                    }
+                }elseif($allMana - $finalDamage / 10 >= 0){
+                    $entity->sendMessage("§l§c[警告]强大的打击！");
+                    $entity->setHealth(1);
+                    foreach ($entity->getInventory()->getArmorContents() as $index => $item){
+                        if ($item instanceof Armor\ManaArmor){
+                            $item->setMana(0);
+                            $entity->getInventory()->setItem($entity->getInventory()->getSize() + $index, $item);
+                        }
+                    }
+                    Armor\ManaArmor::shield($entity, $event instanceof EntityDamageByEntityEvent?$event->getDamager():null);
+                    return $event->setCancelled();
+                }else{
+                    foreach ($entity->getInventory()->getArmorContents() as $index => $item){
+                        if ($item instanceof Armor\ManaArmor){
+                            $item->setMana(0);
+                            $entity->getInventory()->setItem($entity->getInventory()->getSize() + $index, $item);
+                        }
+                    }
+                }
+            }
+        }
 		if($event instanceof EntityDamageByEntityEvent and $entity instanceof Player and ($damager=$event->getDamager()) instanceof Player and $damager->getItemInHand() instanceof Material and $damager->getItemInHand()->getLTName()=='魔法棍' and $damager->getRole()==='医疗'){
 		    /** @var Player $damager */
 			if(isset(Cooling::$material[$damager->getName()][$damager->getItemInHand()->getLTName()]) and Cooling::$material[$damager->getName()][$damager->getItemInHand()->getLTName()]>microtime(true)){

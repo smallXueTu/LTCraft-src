@@ -159,7 +159,7 @@ class Main extends PluginBase implements Listener
         }else{
             self::$instance->killCount[$name] = 1;
         }
-        if(self::$instance->killCount[$name]>7)$player->sendMessage(('§l§c警告:你的击杀次数剩余'. (10-self::$instance->killCount[$name]).'次，请打开菜单验证在线状态来重置！'));
+        if(self::$instance->killCount[$name]>27)$player->sendMessage(('§l§c警告:你的击杀次数剩余'. (10-self::$instance->killCount[$name]).'次，请打开菜单验证在线状态来重置！'));
     }
     public static function resetCount($name){
         self::$instance->killCount[$name]=0;
