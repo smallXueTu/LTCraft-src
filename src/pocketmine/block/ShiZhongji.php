@@ -91,4 +91,13 @@ class ShiZhongji extends Transparent {
 
 		return false;
 	}
+	public function getBoundingBox()
+    {
+        return null;
+    }
+
+    public function getDrops(Item $item): array
+    {
+        return [['材料', '石中姬', 1]];
+    }
 }

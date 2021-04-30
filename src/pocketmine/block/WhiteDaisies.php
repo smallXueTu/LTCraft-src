@@ -115,4 +115,8 @@ class WhiteDaisies extends Flowable {
 		return null;
 	}
 
+    public function getDrops(Item $item): array
+    {
+        return [['材料', '白雏菊', 1]];
+    }
 }
