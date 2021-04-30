@@ -18,6 +18,7 @@ class ShiZhongji extends ManaFlower
     {
         parent::__construct($level, $nbt);
         $this->scheduleUpdate();//加入更新队列
+        $this->lastUpdate = 0;
     }
 
     public function onUpdate()
@@ -31,7 +32,7 @@ class ShiZhongji extends ManaFlower
             $blocks[] = $this->level->getBlock($this->add(0, 0, -1));
             if ($this->mana < self::MAX_MANA)foreach ($blocks as $block){
                 if ($block instanceof Stone or $block instanceof Cobblestone){
-                    $this->mana += min(15, self::MAX_MANA - $this->mana);
+                    $this->mana += min(3, self::MAX_MANA - $this->mana);
                     $this->level->setBlock($block, new Air());
                 }
                 if ($this->mana >= self::MAX_MANA)break;

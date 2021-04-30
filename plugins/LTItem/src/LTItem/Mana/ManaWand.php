@@ -7,6 +7,7 @@ use pocketmine\block\Air;
 use pocketmine\block\Block;
 use pocketmine\block\LiveWood;
 use pocketmine\block\ManaCache;
+use pocketmine\block\ShiZhongji;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\CompoundTag;
@@ -63,7 +64,14 @@ class ManaWand extends BaseMana
                     $player->sendMessage('Mana:' .$tile->getMana());
                 }
             }
+        }elseif($target instanceof ShiZhongji) {
+            /** @var \pocketmine\tile\ShiZhongji $tile */
+            $tile = $level->getTile($target);
+            if ($tile != null) {
+                $player->sendMessage('Mana:' .$tile->getMana());
+            }
         }elseif ($target instanceof LiveWood and $target->getDamage() == 7){//精灵门
+
             foreach ($target->getLevel()->getEntities() as $entity){
                 if ($entity instanceof FairyGate and $entity->coreBlock->equals($target)){
                     $entity->kill();

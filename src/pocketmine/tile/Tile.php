@@ -57,7 +57,7 @@ abstract class Tile extends Position {
 	const MANACHEST = "ManaChest";
 	const MANACACHE = "ManaCache";
 	const WHITEDAISIES = "WhiteDaisies";
-	const SHIZHONGJI = "ShiZhongJi";
+	const SHIZHONGJI = "ShiZhongji";
 
 	public static $tileCount = 1;
 

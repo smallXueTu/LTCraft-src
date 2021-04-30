@@ -25,10 +25,8 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\IntTag;
-use pocketmine\nbt\tag\NamedTag;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\Player;
-use pocketmine\Server;
 use pocketmine\tile\Tile;
 
 class ShiZhongji extends Transparent {
@@ -81,13 +79,13 @@ class ShiZhongji extends Transparent {
         if($down->getId() === 2 or $down->getId() === 3 or $down->getId() === 60){
             $this->getLevel()->setBlock($block, $this, true, true);
             $nbt = new CompoundTag("", [
-                new StringTag("id", Tile::WHITEDAISIES),
+                new StringTag("id", Tile::SHIZHONGJI),
                 new IntTag("x", $this->x),
                 new IntTag("y", $this->y),
                 new IntTag("z", $this->z)
             ]);
 
-            Tile::createTile("ShiZhongJi", $this->getLevel(), $nbt);
+            Tile::createTile("ShiZhongji", $this->getLevel(), $nbt);
             return true;
         }
 
