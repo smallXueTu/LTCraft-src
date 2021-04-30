@@ -36,6 +36,7 @@ class Popup extends PluginBase implements Listener{
 	private $SayManager=array();
 	public $restart=false;
     private $cfg;
+    private int $index = PHP_INT_MAX - 100;
 
     public function restart($send){
 		if($this->restart!==false){
@@ -81,9 +82,11 @@ class Popup extends PluginBase implements Listener{
 				return;
 			}
 		}
-		$colorArray = ['§a','§b','§c','§d','§e','§6','§2','§3'];
-		$QQ=$colorArray[mt_rand(0,7)].'★QQ群号'.$colorArray[mt_rand(0,7)].':862859409★';
-		$top=$colorArray[mt_rand(0,7)].'§l☞'.$colorArray[mt_rand(0,7)].'L'.$colorArray[mt_rand(0,7)].'T'.$colorArray[mt_rand(0,7)].'C'.$colorArray[mt_rand(0,7)].'r'.$colorArray[mt_rand(0,7)].'a'.$colorArray[mt_rand(0,7)].'f'.$colorArray[mt_rand(0,7)].'t '.$colorArray[mt_rand(0,7)].'S'.$colorArray[mt_rand(0,7)].'e'.$colorArray[mt_rand(0,7)].'r'.$colorArray[mt_rand(0,7)].'v'.$colorArray[mt_rand(0,7)].'e'.$colorArray[mt_rand(0,7)].'r'.$colorArray[mt_rand(0,7)].'☜'.PHP_EOL;
+		$colorArray = ['§a','§b','§c','§d','§e','§6','§2','§3','§1','§4','§5'];
+		$length = count($colorArray);
+        $index = $this->index--;
+        $top=$colorArray[++$index % $length].'§l☞'.$colorArray[++$index % $length].'L'.$colorArray[++$index % $length].'T'.$colorArray[++$index % $length].'C'.$colorArray[++$index % $length].'r'.$colorArray[++$index % $length].'a'.$colorArray[++$index % $length].'f'.$colorArray[++$index % $length].'t '.$colorArray[++$index % $length].'S'.$colorArray[++$index % $length].'e'.$colorArray[++$index % $length].'r'.$colorArray[++$index % $length].'v'.$colorArray[++$index % $length].'e'.$colorArray[++$index % $length].'r'.$colorArray[++$index % $length].'☜'.PHP_EOL;
+		$QQ=$colorArray[++$index % $length].'★QQ群号'.$colorArray[++$index % $length].':862859409★';
 		$time=date('Y-m-d').' '.date('H:i:s', time());
 		foreach($this->getServer()->getOnlinePlayers() as $player){
 			if($player->isOnline()){
@@ -155,8 +158,8 @@ class Popup extends PluginBase implements Listener{
 					$additional='§e手持:'.$tip;
 				}else
 					$additional=$QQ;
-				if (($index = $player->getBuff()->getOrnamentsInstallIndex("天翼族之冠"))!==false and $player->isSurvival()){
-                    $additional.=PHP_EOL.$colorArray[mt_rand(0,7)]."飞行能量：".$player->getOrnamentsInventory()->getItem($index)->energy;
+				if (($i = $player->getBuff()->getOrnamentsInstallIndex("天翼族之冠"))!==false and $player->isSurvival()){
+                    $additional.=PHP_EOL.$colorArray[++$index % $length]."飞行能量：".$colorArray[++$index % $length]. $player->getOrnamentsInventory()->getItem($i)->energy;
                 }
                 $allMana = 0;
                 /** @var Player $entity */
@@ -166,9 +169,9 @@ class Popup extends PluginBase implements Listener{
                     }
                 }
                 if ($allMana >0){
-                    $additional.=PHP_EOL.$colorArray[mt_rand(0,7)]."盔甲Mana：".$allMana;
+                    $additional.=PHP_EOL.$colorArray[++$index % $length]."盔甲Mana：".$colorArray[++$index % $length].$allMana;
                 }
-				$player->sendPopup($top.$colorArray[mt_rand(0,7)].'◆橙币:'.$colorArray[mt_rand(0,7)].$m.' '.$colorArray[mt_rand(0,7)].$colorArray[mt_rand(0,7)].'◆坐标:'.$colorArray[mt_rand(0,7)].$sx.':'.$sy.':'.$sz.$colorArray[mt_rand(0,7)].' ◆Mana:'.$colorArray[mt_rand(0,7)].$player->getBuff()->getMana().' '.PHP_EOL .$additional);
+				$player->sendPopup($top.$colorArray[++$index % $length].'◆橙币:'.$colorArray[++$index % $length].$m.' '.$colorArray[++$index % $length].$colorArray[++$index % $length].'◆坐标:'.$colorArray[++$index % $length].$sx.':'.$sy.':'.$sz.$colorArray[++$index % $length].' ◆Mana:'.$colorArray[++$index % $length].$player->getBuff()->getMana().' '.PHP_EOL .$additional);
 			}
 		}
 	}
@@ -311,11 +314,11 @@ class Popup extends PluginBase implements Listener{
 		if(isset($stylePlayers[strtolower($name)])){
 			$title = $stylePlayers[strtolower($name)];
 			if(isset($this->cfg->get('变换头衔', [])[strtolower($name)])){
-				$colorArray = ['§a','§b','§c','§d','§e','§6','§2','§3'];
+                $colorArray = ['§a','§b','§c','§d','§e','§6','§2','§3','§1','§4','§5'];
 				$title=preg_replace('#§.#','',$title);
 				$n='';
 				foreach (self::mb_str_split($title) as $c){
-					$n.=$colorArray[mt_rand(0,7)].$c;
+					$n.=$colorArray[mt_rand(0, 10)].$c;
 				}
 				$title = $n;
 			}
@@ -348,7 +351,7 @@ class Popup extends PluginBase implements Listener{
 		if(isset($stylePlayers[strtolower($name)])){
 				$a='';
 				foreach (self::mb_str_split($m) as $c){
-					$a.=$colorArray[mt_rand(0,7)].$c;
+					$a.=$colorArray[mt_rand(0, 7)].$c;
 				}
 			if($stylePlayers[strtolower($name)]==1){
 				
@@ -361,7 +364,7 @@ class Popup extends PluginBase implements Listener{
 				$ch=trim(preg_replace('#§.#','',$ch));
 				$n='';
 				foreach (self::mb_str_split($ch) as $c){
-					$n.=$colorArray[mt_rand(0,7)].$c;
+					$n.=$colorArray[mt_rand(0, 7)].$c;
 				}
 				if(isset($ev->say)){
 					foreach($ev->say as $p)$p->sendMessage('§e['.$name.']§a'.$n.'§r: '.$a);
@@ -372,7 +375,7 @@ class Popup extends PluginBase implements Listener{
 				$ch=trim(preg_replace('#§.#','',$ch));
 				$n='';
 				foreach (self::mb_str_split($ch) as $c){
-					$n.=$colorArray[mt_rand(0,7)].$c;
+					$n.=$colorArray[mt_rand(0, 7)].$c;
 				}
 				if(isset($ev->say)){
 					foreach($ev->say as $p)$p->sendMessage($n.'§r: '.$a);
