@@ -188,14 +188,16 @@ class EventListener implements Listener
                 if ($allMana - $finalDamage / 2 >= 0){
                     if ($finalDamage > $entity->getHealth())
                         $entity->sendMessage("§l§c[警告]强大的打击！");
-                    $cb = max($finalDamage / 2 / $count, 1);
-                    $avg = $allMana / $count;
+                    $cb = $finalDamage / 2 / $count;
                     $sign = true;
-                    foreach ($entity->getInventory()->getArmorContents() as $index => $item){
-                        if ($item instanceof Armor\ManaArmor){
-                            $item->setMana($avg);
-                            if (!$item->consumptionMana($cb))$sign = false;
-                            $entity->getInventory()->setItem($entity->getInventory()->getSize() + $index, $item);
+                    if ($cb >= 1){
+                        $avg = $allMana / $count;
+                        foreach ($entity->getInventory()->getArmorContents() as $index => $item){
+                            if ($item instanceof Armor\ManaArmor){
+                                $item->setMana($avg);
+                                if (!$item->consumptionMana($cb))$sign = false;
+                                $entity->getInventory()->setItem($entity->getInventory()->getSize() + $index, $item);
+                            }
                         }
                     }
                     if ($sign){
@@ -203,8 +205,11 @@ class EventListener implements Listener
                         return $event->setCancelled(true);
                     }
                 }elseif($allMana - $finalDamage / 10 >= 0){
+                    if ($finalDamage < $entity->getHealth()){
+                        $finalDamage -= $allMana * 2;
+                    }
                     $entity->sendMessage("§l§c[警告]强大的打击！");
-                    $entity->setHealth(1);
+                    $entity->setHealth(max($entity->getHealth() - $finalDamage, 1));
                     foreach ($entity->getInventory()->getArmorContents() as $index => $item){
                         if ($item instanceof Armor\ManaArmor){
                             $item->setMana(0);

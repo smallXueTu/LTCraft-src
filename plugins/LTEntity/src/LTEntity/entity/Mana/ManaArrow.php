@@ -25,8 +25,9 @@ use pocketmine\Player;
  */
 class ManaArrow extends Arrow
 {
-    protected int $maxAge = 60;
+    protected int $maxAge = 100;
     protected $gravity = 0;
+    protected $damagedEntities = [];
     public function onUpdate($currentTick)
     {
         if($this->closed){
@@ -43,9 +44,11 @@ class ManaArrow extends Arrow
             $entities = [];
             foreach($list as $entity){
                 if($entity === $this->shootingEntity and $this->ticksLived < 5)continue;
+                $hash = spl_object_hash($entity);
+                if (isset($this->damagedEntities[$hash]))continue;
+                $this->damagedEntities[$hash] = $entity;
                 $entities[] = $entity;
             }
-
             if(count($entities) > 0){
                 foreach ($entities as $entity){
                     $motion = sqrt($this->motionX ** 2 + $this->motionY ** 2 + $this->motionZ ** 2);
