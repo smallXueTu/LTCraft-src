@@ -4,6 +4,7 @@ namespace LTMenu\Inventorys;
 use LTItem\Mana\Mana;
 use LTItem\SpecialItems\BaseOrnaments;
 use pocketmine\event\server\DataPacketReceiveEvent;
+use pocketmine\item\ItemFrame;
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\IntTag;
@@ -111,6 +112,22 @@ class InlayInventory extends OperationInventory{
                                         $count = 1;
                                     }
                                 break;
+                                case '储魔升级':
+                                    if ($item instanceof Armor\ManaArmor and $item->getStorageUpgrade() < Armor\ManaArmor::STORAGE_UPGRADE_MAX){
+                                        /** @var Armor\ManaArmor $item */
+                                        $yLevel = $item->getStorageUpgrade();
+                                        $item->setStorageUpgrade($item->getStorageUpgrade() + $i->getCount());
+                                        $count = $i->getCount() - ($item->getStorageUpgrade() - $yLevel);
+                                    }
+                                break;
+                                case '注魔升级':
+                                    if ($item instanceof Armor\ManaArmor and $item->getNoteMagicUpgrade() < Armor\ManaArmor::NOTE_MAGIC_UPGRADE_MAX){
+                                        /** @var Armor\ManaArmor $item */
+                                        $yLevel = $item->getNoteMagicUpgrade();
+                                        $item->setNoteMagicUpgrade($item->getNoteMagicUpgrade() + $i->getCount());
+                                        $count = $i->getCount() - ($item->getNoteMagicUpgrade() - $yLevel);
+                                    }
+                                    break;
 								case '时空撕裂技能石':
 								    if ($item instanceof Weapon){
 								        /** @var $item Weapon */

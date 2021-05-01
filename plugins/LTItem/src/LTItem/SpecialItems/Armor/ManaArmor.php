@@ -20,6 +20,8 @@ use pocketmine\Server;
 class ManaArmor extends Armor implements Mana
 {
     private int $Mana;
+    const STORAGE_UPGRADE_MAX = 3;
+    const NOTE_MAGIC_UPGRADE_MAX = 3;
     private int $MaxMana;
     private int $lastDamage = 0;
     private int $lastRecharge = 0;
@@ -115,6 +117,11 @@ class ManaArmor extends Armor implements Mana
         $this->updateName();
         return true;
     }
+
+    /**
+     * 注魔升级
+     * @return int
+     */
     public function getStorageUpgrade(): int
     {
         $tag = $this->getNamedTag();
@@ -128,6 +135,10 @@ class ManaArmor extends Armor implements Mana
         $this->setNamedTag($tag);
         return $this;
     }
+
+    /** 获取储魔升级
+     * @return int
+     */
     public function getNoteMagicUpgrade(): int
     {
         $tag = $this->getNamedTag();
