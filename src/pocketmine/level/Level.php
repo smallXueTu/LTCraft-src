@@ -426,7 +426,7 @@ class Level implements ChunkManager, Metadatable
         $this->tickRate = 1;
         $this->weather = new Weather($this, 0);
 
-	    $this->setDimension(self::DIMENSION_NORMAL);
+        $this->setDimension(self::DIMENSION_NORMAL);
         if ($this->server->netherEnabled and $this->server->netherName == $this->folderName)
             $this->setDimension(self::DIMENSION_NETHER);
         elseif ($this->server->enderEnabled and $this->server->enderName == $this->folderName)
@@ -435,18 +435,18 @@ class Level implements ChunkManager, Metadatable
         if ($this->server->weatherEnabled and $this->getDimension() == self::DIMENSION_NORMAL) {
             $this->weather->setCanCalculate(true);
         } else $this->weather->setCanCalculate(false);
-		foreach($this->server->getOnlinePlayers() as $player)
-			$player->loadLevelHomes($this);
-		if($name==='boss'){
-			$this->stopTime = true;
-			$this->Time = 10000;
-		}
+        foreach($this->server->getOnlinePlayers() as $player)
+            $player->loadLevelHomes($this);
+        if($name==='boss'){
+            $this->stopTime = true;
+            $this->Time = 10000;
+        }
 //		elseif($name==='zc'){
 //			$this->weather->setWeather(1);
 //		}
-		elseif($name==='s2'){
-			$this->weather->setWeather(0);
-		}
+        elseif($name==='s2'){
+            $this->weather->setWeather(0);
+        }
     }
 
     public function setDimension(int $dimension)
@@ -458,27 +458,27 @@ class Level implements ChunkManager, Metadatable
     {
         return $this->dimension;
     }
-	public function addFloatingText(FloatingText $floatingText){
-		$this->FloatingTexts[Level::chunkHash($floatingText->getX() >> 4, $floatingText->getZ() >> 4)][$floatingText->getId()]=$floatingText;
-		$floatingText->spawnToAll();
-	}
-	public function removeFloatingText(FloatingText $floatingText){
-		unset($this->FloatingTexts[Level::chunkHash($floatingText->getX() >> 4, $floatingText->getZ() >> 4)][$floatingText->getId()]);
-		$floatingText->despawnFromAll();
-	}
-	public function getFloatingTexts($X, $Z){
-		return $this->FloatingTexts[Level::chunkHash($X , $Z )]??[];
-	}
-	public function addNPC(NPC $NPC){
-		$this->NPCs[Level::chunkHash($NPC->x >> 4, $NPC->z >> 4)][$NPC->getEID()]=$NPC;
-		$NPC->spawnToAll();
-	}
-	public function removeNPC(NPC $NPC){
-		unset($this->NPCs[Level::chunkHash($NPC->x >> 4, $NPC->z >> 4)][$NPC->getEID()]);
-	}
-	public function getNPCs($X, $Z){
-		return $this->NPCs[Level::chunkHash($X , $Z )]??[];
-	}
+    public function addFloatingText(FloatingText $floatingText){
+        $this->FloatingTexts[Level::chunkHash($floatingText->getX() >> 4, $floatingText->getZ() >> 4)][$floatingText->getId()]=$floatingText;
+        $floatingText->spawnToAll();
+    }
+    public function removeFloatingText(FloatingText $floatingText){
+        unset($this->FloatingTexts[Level::chunkHash($floatingText->getX() >> 4, $floatingText->getZ() >> 4)][$floatingText->getId()]);
+        $floatingText->despawnFromAll();
+    }
+    public function getFloatingTexts($X, $Z){
+        return $this->FloatingTexts[Level::chunkHash($X , $Z )]??[];
+    }
+    public function addNPC(NPC $NPC){
+        $this->NPCs[Level::chunkHash($NPC->x >> 4, $NPC->z >> 4)][$NPC->getEID()]=$NPC;
+        $NPC->spawnToAll();
+    }
+    public function removeNPC(NPC $NPC){
+        unset($this->NPCs[Level::chunkHash($NPC->x >> 4, $NPC->z >> 4)][$NPC->getEID()]);
+    }
+    public function getNPCs($X, $Z){
+        return $this->NPCs[Level::chunkHash($X , $Z )]??[];
+    }
     /**
      * @return Weather
      */
@@ -577,12 +577,12 @@ class Level implements ChunkManager, Metadatable
     public function close()
     {
         assert(!$this->closed, "Tried to close a level which is already closed");
-		
-		if($this->server->isRunning()){
-			foreach($this->server->getOnlinePlayers() as $player)
-				$player->levelCloseTrigger($this);
-			\LTMultiTeleport\Main::getInstance()->upDateWarps($this);
-		}
+
+        if($this->server->isRunning()){
+            foreach($this->server->getOnlinePlayers() as $player)
+                $player->levelCloseTrigger($this);
+            \LTMultiTeleport\Main::getInstance()->upDateWarps($this);
+        }
         if ($this->getAutoSave()) {
             $this->save();
         }
@@ -701,7 +701,7 @@ class Level implements ChunkManager, Metadatable
         if ($this === $this->server->getDefaultLevel() and $force !== true) {
             $ev->setCancelled(true);
         }
-		$this->unloadd=true;
+        $this->unloadd=true;
 
         $this->server->getPluginManager()->callEvent($ev);
 
@@ -717,9 +717,9 @@ class Level implements ChunkManager, Metadatable
                 $player->teleport($this->server->getDefaultLevel()->getSafeSpawn());
             }
         }
-		if($this->server->isRunning())
-			foreach($this->server->getOnlinePlayers() as $player)
-				if($player->lastPos!==null and $player->lastPos->level===$this)$player->lastPos=null;
+        if($this->server->isRunning())
+            foreach($this->server->getOnlinePlayers() as $player)
+                if($player->lastPos!==null and $player->lastPos->level===$this)$player->lastPos=null;
         if ($this === $defaultLevel) {
             $this->server->setDefaultLevel(null);
         }
@@ -852,21 +852,21 @@ class Level implements ChunkManager, Metadatable
     public function doTick(int $currentTick)
     {
         $this->timings->doTick->startTiming();
-		// $this->getServer()->interface->server->addSTAQueue('世界'.$this->getName().'检查时间');
+        // $this->getServer()->interface->server->addSTAQueue('世界'.$this->getName().'检查时间');
         $this->checkTime();
 
         if (++$this->sendTimeTicker === 280) {
             $this->sendTime();
             $this->sendTimeTicker = 0;
         }
-		// $this->getServer()->interface->server->addSTAQueue('世界'.$this->getName().'天气');
+        // $this->getServer()->interface->server->addSTAQueue('世界'.$this->getName().'天气');
         $this->weather->calcWeather($currentTick);
-		// $this->getServer()->interface->server->addSTAQueue('世界'.$this->getName().'卸载块');
+        // $this->getServer()->interface->server->addSTAQueue('世界'.$this->getName().'卸载块');
         $this->unloadChunks();
 
         //Do block updates
         $this->timings->doTickPending->startTiming();
-		// $this->getServer()->interface->server->addSTAQueue('世界'.$this->getName().'更新方块');
+        // $this->getServer()->interface->server->addSTAQueue('世界'.$this->getName().'更新方块');
         if (\LTCraft\Main::isNeedUpdate($this) and $this->updateQueue->count() > 0 and $this->updateQueue->current()["priority"] <= $currentTick) {
             $block = $this->getBlock($this->updateQueue->extract()["data"]);
             unset($this->updateQueueIndex[Level::blockHash($block->x, $block->y, $block->z)]);
@@ -878,14 +878,14 @@ class Level implements ChunkManager, Metadatable
         //Update entities that need update
         Timings::$tickEntityTimer->startTiming();
         foreach ($this->updateEntities as $id => $entity) {
-			try{
-				if ($entity->closed or !$entity->onUpdate($currentTick)) {
-					unset($this->updateEntities[$id]);
-				}
-			}catch(\Throwable $e){
-				$this->server->getLogger()->logException($e);
-				$entity->close();
-			}
+            try{
+                if ($entity->closed or !$entity->onUpdate($currentTick)) {
+                    unset($this->updateEntities[$id]);
+                }
+            }catch(\Throwable $e){
+                $this->server->getLogger()->logException($e);
+                $entity->close();
+            }
         }
         Timings::$tickEntityTimer->stopTiming();
         $this->timings->entityTick->stopTiming();
@@ -893,8 +893,8 @@ class Level implements ChunkManager, Metadatable
         $this->timings->tileEntityTick->startTiming();
         Timings::$tickTileEntityTimer->startTiming();
         //Update tiles that need update
-		// echo '4-';
-		// $this->getServer()->interface->server->addSTAQueue('世界'.$this->getName().'更新Tile');
+        // echo '4-';
+        // $this->getServer()->interface->server->addSTAQueue('世界'.$this->getName().'更新Tile');
         if (\LTCraft\Main::isNeedUpdate($this) and count($this->updateTiles) > 0) {
             foreach ($this->updateTiles as $id => $tile) {
                 if ($tile->onUpdate() !== true) {
@@ -904,14 +904,14 @@ class Level implements ChunkManager, Metadatable
         }
         Timings::$tickTileEntityTimer->stopTiming();
         $this->timings->tileEntityTick->stopTiming();
-		// echo '5-';
+        // echo '5-';
 
         $this->timings->doTickTiles->startTiming();
         if (($currentTick % 2) === 0) $this->tickChunks();
         $this->timings->doTickTiles->stopTiming();
-		// echo '6-';
+        // echo '6-';
 
-		// $this->getServer()->interface->server->addSTAQueue('世界'.$this->getName().'发送方块');
+        // $this->getServer()->interface->server->addSTAQueue('世界'.$this->getName().'发送方块');
         if (count($this->changedBlocks) > 0) {
             if (count($this->players) > 0) {
                 foreach ($this->changedBlocks as $index => $blocks) {
@@ -933,11 +933,11 @@ class Level implements ChunkManager, Metadatable
             $this->changedBlocks = [];
 
         }
-		// echo '7-';
+        // echo '7-';
 
-		// $this->getServer()->interface->server->addSTAQueue('世界'.$this->getName().'processChunkRequest');
+        // $this->getServer()->interface->server->addSTAQueue('世界'.$this->getName().'processChunkRequest');
         $this->processChunkRequest();
-		// $this->getServer()->interface->server->addSTAQueue('世界'.$this->getName().'检查睡眠');
+        // $this->getServer()->interface->server->addSTAQueue('世界'.$this->getName().'检查睡眠');
         if ($this->sleepTicks > 0 and --$this->sleepTicks <= 0) {
             $this->checkSleep();
         }
@@ -980,7 +980,7 @@ class Level implements ChunkManager, Metadatable
                 }
             }
         }
-		// echo '8-';
+        // echo '8-';
 
         $this->chunkPackets = [];
 
@@ -1113,14 +1113,14 @@ class Level implements ChunkManager, Metadatable
 
     private function tickChunks()
     {
-		if($this->getServer()->getTicksPerSecondAverage()>18)
-				$v=16;
-			elseif($this->getServer()->getTicksPerSecondAverage()>15)
-				$v=8;
-			elseif($this->getServer()->getTicksPerSecondAverage()>10)
-				$v=4;
-			else
-				$v=2;
+        if($this->getServer()->getTicksPerSecondAverage()>18)
+            $v=16;
+        elseif($this->getServer()->getTicksPerSecondAverage()>15)
+            $v=8;
+        elseif($this->getServer()->getTicksPerSecondAverage()>10)
+            $v=4;
+        else
+            $v=2;
         if ($this->chunksPerTick <= 0 or count($this->loaders) === 0) {
             $this->chunkTickList = [];
             return;
@@ -1243,32 +1243,32 @@ class Level implements ChunkManager, Metadatable
         $pos = $pos->floor();
         //$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y - 1, $pos->z))));
         //if (!$ev->isCancelled()) {
-            $this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y - 1, $pos->z))->onUpdate(self::BLOCK_UPDATE_NORMAL);
+        $this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y - 1, $pos->z))->onUpdate(self::BLOCK_UPDATE_NORMAL);
         //}
 
         //$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y + 1, $pos->z))));
         //if (!$ev->isCancelled()) {
-            $this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y + 1, $pos->z))->onUpdate(self::BLOCK_UPDATE_NORMAL);
+        $this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y + 1, $pos->z))->onUpdate(self::BLOCK_UPDATE_NORMAL);
         //}
 
         //$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x - 1, $pos->y, $pos->z))));
         //if (!$ev->isCancelled()) {
-            $this->getBlock($this->temporalVector->setComponents($pos->x - 1, $pos->y, $pos->z))->onUpdate(self::BLOCK_UPDATE_NORMAL);
+        $this->getBlock($this->temporalVector->setComponents($pos->x - 1, $pos->y, $pos->z))->onUpdate(self::BLOCK_UPDATE_NORMAL);
         //}
 
         //$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x + 1, $pos->y, $pos->z))));
         //if (!$ev->isCancelled()) {
-            $this->getBlock($this->temporalVector->setComponents($pos->x + 1, $pos->y, $pos->z))->onUpdate(self::BLOCK_UPDATE_NORMAL);
+        $this->getBlock($this->temporalVector->setComponents($pos->x + 1, $pos->y, $pos->z))->onUpdate(self::BLOCK_UPDATE_NORMAL);
         //}
 
         //$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z - 1))));
         //if (!$ev->isCancelled()) {
-             $this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z - 1))->onUpdate(self::BLOCK_UPDATE_NORMAL);
+        $this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z - 1))->onUpdate(self::BLOCK_UPDATE_NORMAL);
         //}
 
         //$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z + 1))));
         //if (!$ev->isCancelled()) {
-             $this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z + 1))->onUpdate(self::BLOCK_UPDATE_NORMAL);
+        $this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z + 1))->onUpdate(self::BLOCK_UPDATE_NORMAL);
         //}
     }
 
@@ -1390,17 +1390,17 @@ class Level implements ChunkManager, Metadatable
         $maxZ = Math::ceilFloat($bb->maxZ);
 
         $collides = [];
-		if ($block) {
-        for ($z = $minZ; $z <= $maxZ; ++$z) {
-            for ($x = $minX; $x <= $maxX; ++$x) {
-                for ($y = $minY; $y <= $maxY; ++$y) {
-                    $block = $this->getBlock($this->temporalVector->setComponents($x, $y, $z));
-                    if (!$block->canPassThrough() and $block->collidesWithBB($bb)) {
-                        $collides[] = $block->getBoundingBox();
+        if ($block) {
+            for ($z = $minZ; $z <= $maxZ; ++$z) {
+                for ($x = $minX; $x <= $maxX; ++$x) {
+                    for ($y = $minY; $y <= $maxY; ++$y) {
+                        $block = $this->getBlock($this->temporalVector->setComponents($x, $y, $z));
+                        if (!$block->canPassThrough() and $block->collidesWithBB($bb)) {
+                            $collides[] = $block->getBoundingBox();
+                        }
                     }
                 }
-            }
-        }}
+            }}
 
         if ($entities) {
             foreach ($this->getCollidingEntities($bb->grow(0.25, 0.25, 0.25), $entity) as $ent) {
@@ -1522,9 +1522,9 @@ class Level implements ChunkManager, Metadatable
     {
         $pos = $pos->floor();
         $index = Level::blockHash($pos->x, $pos->y, $pos->z);
-		if(!isset($this->chunks[$chunkIndex = Level::chunkHash($pos->x >> 4, $pos->z >> 4)])){
-			$this->getChunk($pos->x >> 4, $pos->z >> 4);
-		}
+        if(!isset($this->chunks[$chunkIndex = Level::chunkHash($pos->x >> 4, $pos->z >> 4)])){
+            $this->getChunk($pos->x >> 4, $pos->z >> 4);
+        }
         if ($cached and isset($this->blockCache[$index])) {
             return $this->blockCache[$index];
         } elseif ($pos->y >= 0 and $pos->y < $this->provider->getWorldHeight() and isset($this->chunks[$chunkIndex = Level::chunkHash($pos->x >> 4, $pos->z >> 4)])) {
@@ -1700,10 +1700,10 @@ class Level implements ChunkManager, Metadatable
                 $ev = new BlockUpdateEvent($block);//对于LTCraft来说 这还是完全没必要的事件 删除以节省微量性能
                 //$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($block));
                 //if (!$ev->isCancelled()) {
-                    foreach ($this->getNearbyEntities(new AxisAlignedBB($block->x - 1, $block->y - 1, $block->z - 1, $block->x + 1, $block->y + 1, $block->z + 1)) as $entity) {
-                        $entity->scheduleUpdate();
-                    }
-                    $ev->getBlock()->onUpdate(self::BLOCK_UPDATE_NORMAL);
+                foreach ($this->getNearbyEntities(new AxisAlignedBB($block->x - 1, $block->y - 1, $block->z - 1, $block->x + 1, $block->y + 1, $block->z + 1)) as $entity) {
+                    $entity->scheduleUpdate();
+                }
+                $ev->getBlock()->onUpdate(self::BLOCK_UPDATE_NORMAL);
                 //}
 
                 $this->updateAround($pos);
@@ -1823,7 +1823,7 @@ class Level implements ChunkManager, Metadatable
             }
             $player->lastBreak = PHP_INT_MAX;
 
-             $drops = $ev->getDrops();
+            $drops = $ev->getDrops();
         } elseif ($item !== null and !$target->isBreakable($item)) {
             return false;
         } else {
@@ -1894,7 +1894,7 @@ class Level implements ChunkManager, Metadatable
             } else {
                 $this->getChunk($target->getX() >> 4, $target->getZ() >> 4)->getSubChunk($target->getY() >> 4)->setBlockDrop($target->getX() & 0x0f, $target->getY() & Level::Y_MASK, $target->getZ() & 0x0f, true);
             }
-         }
+        }
         return true;
     }
 
@@ -1914,7 +1914,7 @@ class Level implements ChunkManager, Metadatable
     public function useItemOn(Vector3 $vector, Item &$item, int $face, float $fx = 0.0, float $fy = 0.0, float $fz = 0.0, Player $player = null): bool
     {
         $target = $this->getBlock($vector);
-		if(!(\LTCraft\Main::isNeedUpdate($this)) and $target->canBeActivated() === true)return false;
+        if(!(\LTCraft\Main::isNeedUpdate($this)) and $target->canBeActivated() === true)return false;
         $block = $target->getSide($face);
 
         if ($block->y >= $this->provider->getWorldHeight() or $block->y < 0) {
@@ -1932,20 +1932,20 @@ class Level implements ChunkManager, Metadatable
             }else{
                 $player->attentionSend = false;
             }
-			//var_dump($target->getId());
+            //var_dump($target->getId());
             $ev = new PlayerInteractEvent($player, $item, $target, $face, $target->getId() === 0 ? PlayerInteractEvent::RIGHT_CLICK_AIR : PlayerInteractEvent::RIGHT_CLICK_BLOCK);
             if (!$player->isOp() and ($distance = $this->server->getSpawnRadius()) > -1) {
                 $t = new Vector2($target->x, $target->z);
                 $s = new Vector2($this->getSpawnLocation()->x, $this->getSpawnLocation()->z);
                 if ($t->distance($s) <= $distance and $target->canBeActivated() === true) { //set it to cancelled so plugins can bypass this
-					// $player->sendCenterTip('§c你没有出生点附近的权限');
+                    // $player->sendCenterTip('§c你没有出生点附近的权限');
                     $ev->setCancelled();
-					// return false;
+                    // return false;
                 }
             }
             if ($player->isSpectator()) {
                 $ev->setCancelled();
-				// return false;
+                // return false;
             }
             // var_dump($ev->isCancelled());
             $this->server->getPluginManager()->callEvent($ev);
@@ -2056,19 +2056,19 @@ class Level implements ChunkManager, Metadatable
                 $s = new Vector2($this->getSpawnLocation()->x, $this->getSpawnLocation()->z);
                 if ($t->distance($s) <= $distance) { //set it to cancelled so plugins can bypass this
                     $ev->setCancelled();
-					// $player->sendCenterTip('§c你没有出生点附近的权限');
+                    // $player->sendCenterTip('§c你没有出生点附近的权限');
                 }
             }
-			// if($this->getSpawnLocation()->distanceSquaredNoY($block)<100 and $player->getName()!=='Angel_XX' and $player->getName()!=='XiaoxieQAQ' and $player->getName()!=='uuih'){
-				// $player->sendCenterTip('§c你没有出生点附近的权限');
-				// return false;
-			// }
+            // if($this->getSpawnLocation()->distanceSquaredNoY($block)<100 and $player->getName()!=='Angel_XX' and $player->getName()!=='XiaoxieQAQ' and $player->getName()!=='uuih'){
+            // $player->sendCenterTip('§c你没有出生点附近的权限');
+            // return false;
+            // }
             $this->server->getPluginManager()->callEvent($ev);
             if ($ev->isCancelled()) {
                 return false;
             }
-			
-			$this->addSound(new BlockPlaceSound($hand));
+
+            $this->addSound(new BlockPlaceSound($hand));
         }
 
         if ($hand->place($item, $block, $target, $face, $fx, $fy, $fz, $player) === false) {
@@ -2086,11 +2086,11 @@ class Level implements ChunkManager, Metadatable
     /**
      * @param int $entityId
      *
-     * @return Entity
+     * @return Entity|void
      */
     public function getEntity(int $entityId)
     {
-        return isset($this->entities[$entityId]) ? $this->entities[$entityId] : null;
+        return $this->entities[$entityId] ?? null;
     }
 
     /**
@@ -2124,10 +2124,10 @@ class Level implements ChunkManager, Metadatable
             for ($x = $minX; $x <= $maxX; ++$x) {
                 for ($z = $minZ; $z <= $maxZ; ++$z) {
                     foreach ($this->getChunkEntities($x, $z) as $ent) {
-						if($ent->closed){//修复退出游戏后退出坐标不能放置方块等问题
-							$this->getChunk($x,$z)->removeEntity($ent);
-							continue;
-						}
+                        if($ent->closed){//修复退出游戏后退出坐标不能放置方块等问题
+                            $this->getChunk($x,$z)->removeEntity($ent);
+                            continue;
+                        }
                         if ($ent instanceof Player and $ent->isSpectator()) {
                             continue;
                         }
@@ -2168,10 +2168,10 @@ class Level implements ChunkManager, Metadatable
         for ($x = $minX; $x <= $maxX; ++$x) {
             for ($z = $minZ; $z <= $maxZ; ++$z) {
                 foreach ($this->getChunkEntities($x, $z) as $ent) {
-					if($ent->closed){//修复退出游戏后退出坐标不能放置方块等问题
-						$this->getChunk($x,$z)->removeEntity($ent);
-						continue;
-					}
+                    if($ent->closed){//修复退出游戏后退出坐标不能放置方块等问题
+                        $this->getChunk($x,$z)->removeEntity($ent);
+                        continue;
+                    }
                     if ($ent instanceof Player and $ent->isSpectator()) {
                         continue;
                     }
@@ -2253,7 +2253,7 @@ class Level implements ChunkManager, Metadatable
         $chunk = $this->getChunk($pos->x >> 4, $pos->z >> 4, false);
 
         if ($chunk !== null) {
-			// if($chunk->getTile($pos->x & 0x0f, $pos->y & Level::Y_MASK, $pos->z & 0x0f)===null)echo '找不到tile'.$pos->getX().':'.$pos->getY().':'.$pos->getZ().':'.$this->getName().PHP_EOL;
+            // if($chunk->getTile($pos->x & 0x0f, $pos->y & Level::Y_MASK, $pos->z & 0x0f)===null)echo '找不到tile'.$pos->getX().':'.$pos->getY().':'.$pos->getZ().':'.$this->getName().PHP_EOL;
             return $chunk->getTile($pos->x & 0x0f, $pos->y & Level::Y_MASK, $pos->z & 0x0f);
         }
 
@@ -2503,7 +2503,7 @@ class Level implements ChunkManager, Metadatable
      */
     public function getChunk(int $x, int $z, bool $create = false)
     {
-		// if(!\LTCraft\Main::isNeedUpdate($this))$create=false;
+        // if(!\LTCraft\Main::isNeedUpdate($this))$create=false;
         if (isset($this->chunks[$index = Level::chunkHash($x, $z)])) {
             return $this->chunks[$index];
         } elseif ($this->loadChunk($x, $z, $create)) {
@@ -2664,14 +2664,14 @@ class Level implements ChunkManager, Metadatable
         ]);
 
         $lightning = new Lightning($this, $nbt);
-		if ($owner!=null)$lightning->setOwner($owner);
-		$lightning->setDamage($damage);
-		if($owner and ($pos instanceof \pocketmine\entity\Creature)){
-		    $lightning->setTarget($pos);
+        if ($owner!=null)$lightning->setOwner($owner);
+        $lightning->setDamage($damage);
+        if($owner and ($pos instanceof \pocketmine\entity\Creature)){
+            $lightning->setTarget($pos);
         }
         $lightning->spawnToAll();
-		$this->broadcastLevelSoundEvent($pos, LevelSoundEventPacket::SOUND_THUNDER, 93, -1);
-		$this->broadcastLevelSoundEvent($pos, LevelSoundEventPacket::SOUND_EXPLODE, 93, -1);
+        $this->broadcastLevelSoundEvent($pos, LevelSoundEventPacket::SOUND_THUNDER, 93, -1);
+        $this->broadcastLevelSoundEvent($pos, LevelSoundEventPacket::SOUND_EXPLODE, 93, -1);
         return $lightning;
     }
 
@@ -2881,11 +2881,11 @@ class Level implements ChunkManager, Metadatable
         if ($entity instanceof Player) {
             unset($this->players[$entity->getId()]);
             $this->checkSleep();
-			/*$pk=new RemoveEntityPacket();
-			$pk->eid=$entity->getId();
-			foreach($this->players as $p){
-				$p->dataPacket($pk);
-			}*/
+            /*$pk=new RemoveEntityPacket();
+            $pk->eid=$entity->getId();
+            foreach($this->players as $p){
+                $p->dataPacket($pk);
+            }*/
         }
 
         unset($this->entities[$entity->getId()]);
@@ -2948,7 +2948,6 @@ class Level implements ChunkManager, Metadatable
     {
         return isset($this->chunkLoaders[$index = Level::chunkHash($x, $z)]) and count($this->chunkLoaders[$index]) > 0;
     }
-
     /**
      * @param int $x
      * @param int $z
@@ -2961,7 +2960,7 @@ class Level implements ChunkManager, Metadatable
         if (isset($this->chunks[$index = Level::chunkHash($x, $z)])) {
             return true;
         }
-		// if(!\LTCraft\Main::isNeedUpdate($this))$generate=false;
+        // if(!\LTCraft\Main::isNeedUpdate($this))$generate=false;
         $this->timings->syncChunkLoadTimer->startTiming();
 
         $this->cancelUnloadChunkRequest($x, $z);
@@ -3174,9 +3173,9 @@ class Level implements ChunkManager, Metadatable
         }
 
     }
-   public function setName($name){
-$this->provider->setName($name);
-}
+    public function setName($name){
+        $this->provider->setName($name);
+    }
 
     /**
      * Returns the Level folder name

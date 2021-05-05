@@ -4,6 +4,7 @@
 namespace LTEntity\entity\Mana;
 
 
+use LTEntity\Main;
 use LTItem\Mana\ManaSystem;
 use pocketmine\block\Air;
 use pocketmine\block\Block;
@@ -13,6 +14,7 @@ use pocketmine\block\Water;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\AxisAlignedBB;
+use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\entity\Entity;
 use pocketmine\nbt\tag\DoubleTag;
@@ -60,6 +62,8 @@ class FairyGate extends Entity
     public ?Block $coreBlock;
     private bool $flash = true;
     private bool $crash = false;
+    private bool $natural = false;
+    private array $players = [];
 
     /**
      * FairyGate constructor.
@@ -102,8 +106,24 @@ class FairyGate extends Entity
                 return false;
             }
             foreach ($this->getLevel()->getCollidingEntities($this->boundingBox) as $entity){
+                /** @var Position $lastTeleport */
+                $lastTeleport = $entity->lastPos;
+                if ($lastTeleport instanceof Position){
+                    foreach ($lastTeleport->getLevel()->getEntities() as $e){
+                        if ($e === $this)continue;
+                        if ($e instanceof FairyGate and $e->getBoundingBox()->isVectorInside($lastTeleport)){
+                            continue 2;
+                        }
+                    }
+                }
                 if ($entity instanceof Player and $entity->canSelected()){
-                    $level = $this->getServer()->getLevelByName("f10");
+                    $level = null;
+                    if ($this->level->getName() == 'f10'){
+
+                    }else{
+
+                        $level = $this->getServer()->getLevelByName("f10");
+                    }
                     $entity->teleport($level->getSpawnLocation());
                 }
             }
@@ -111,6 +131,9 @@ class FairyGate extends Entity
                 $this->kill();
                 return false;
             }
+        }
+        if (!isset(Main::getInstance()->gates[$this->getId()]) and $this->age >=  20 * 10 + 10){
+            Main::getInstance()->gates[$this->getId()] = $this;
         }
         $this->age++;
         return true;
@@ -158,6 +181,7 @@ class FairyGate extends Entity
     }
     public function kill()
     {
+        unset(Main::getInstance()->gates[$this->getId()]);
         $this->close();
         $this->destroyGates();
     }
@@ -196,6 +220,22 @@ class FairyGate extends Entity
         }
         return $blocks;
     }
+
+    /**
+     * @return bool
+     */
+    public function isNatural(): bool
+    {
+        return $this->natural;
+    }
+
+    /**
+     * @param bool $natural
+     */
+    public function setNatural(bool $natural): void
+    {
+        $this->natural = $natural;
+    }
     public static function getBlocks(Block $coreBlock, $towards = self::X_EXTEND):array {
         $blocks = [];
         foreach (self::$liveWoodsPos as $liveWoodsPos){
@@ -233,6 +273,10 @@ class FairyGate extends Entity
     public static function getPPosition(Position $pos, int $towards, int $ysz, int $y): Position{
         return $towards == self::X_EXTEND?$pos->add($ysz, $y):$pos->add(0, $y, $ysz);
     }
+
+    /**
+     * 保存
+     */
     public function saveNBT()
     {
         $this->namedtag->id = new StringTag("id", $this->getSaveId());
@@ -262,5 +306,23 @@ class FairyGate extends Entity
         }
         if (isset($this->namedtag["towards"]))$this->towards = (int)$this->namedtag["towards"];
         if (isset($this->namedtag["age"]))$this->age = (int)$this->namedtag["age"];
+    }
+    public function joinPlayer(Player $player){
+        $this->players[$player->getId()] = $player;
+    }
+    public function removePlayer(Player $player){
+        unset($this->players[$player->getId()]);
+    }
+    /**
+     * @param Level $level
+     * @return FairyGate|Entity|null
+     */
+    public static function getGate(Level $level) :?Entity{
+        foreach ($level->getEntities() as $entity){
+            if ($entity instanceof FairyGate){
+                return $entity;
+            }
+        }
+        return null;
     }
 }

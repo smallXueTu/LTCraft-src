@@ -114,6 +114,8 @@ class Main extends PluginBase implements Listener
     public $killCount = [];
     public $errorCount = [];
     public $gaia = [];
+    public array $playerGates = [];
+    public array $gates = [];
     public $skills = [];
     public $fusion = [];
     /** @var array */
