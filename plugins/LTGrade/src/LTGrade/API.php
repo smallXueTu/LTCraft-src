@@ -174,6 +174,9 @@ class API{
 					case 'f9':
 						$name='亚特兰蒂斯';
 					break;
+					case 'f10':
+						$name='亚尔夫海姆';
+					break;
 					case 't1':
 						$name='异界之地';
 					break;

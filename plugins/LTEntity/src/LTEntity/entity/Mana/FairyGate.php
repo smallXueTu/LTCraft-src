@@ -107,7 +107,7 @@ class FairyGate extends Entity
                     $entity->teleport($level->getSpawnLocation());
                 }
             }
-            if (!$this->siphonMana(10)){
+            if ($this->age % 60 == 0 and !$this->siphonMana(10)){
                 $this->kill();
                 return false;
             }
