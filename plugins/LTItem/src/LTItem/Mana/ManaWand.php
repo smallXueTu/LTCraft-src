@@ -15,6 +15,7 @@ use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\ListTag;
 use pocketmine\Player;
+use pocketmine\utils\Utils;
 
 class ManaWand extends BaseMana
 {
@@ -79,12 +80,7 @@ class ManaWand extends BaseMana
                 }
             }
             $blocks = FairyGate::checkBlocks($target, $player);
-            $nbt = new CompoundTag;
-            $nbt->Pos = new ListTag("Pos", [
-                new DoubleTag("", $target->x),
-                new DoubleTag("", $target->y + 1),
-                new DoubleTag("", $target->z)
-            ]);
+            $nbt = Utils::spawnEntityBaseNBT($target->add(0, 1));
             if (count($blocks) <= 0){
                 new FairyGate($target->getLevel(), $nbt, FairyGate::getTowards($target, FairyGate::X_EXTEND), $target);
             }else{

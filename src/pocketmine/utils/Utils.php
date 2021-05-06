@@ -26,6 +26,10 @@
 namespace pocketmine\utils;
 
 use pocketmine\math\Vector3;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\DoubleTag;
+use pocketmine\nbt\tag\ListTag;
+use pocketmine\nbt\tag\NamedTag;
 use pocketmine\ThreadManager;
 
 /**
@@ -135,6 +139,21 @@ class Utils {
 		return $uuid;
 	}
 
+    /**
+     * 生成基础实体NBT
+     * @param Vector3 $vector3
+     * @return CompoundTag
+     */
+    public static function spawnEntityBaseNBT(Vector3 $vector3): CompoundTag
+    {
+        $nbt = new CompoundTag;
+        $nbt->Pos = new ListTag("Pos", [
+            new DoubleTag("", $vector3->x),
+            new DoubleTag("", $vector3->y),
+            new DoubleTag("", $vector3->z)
+        ]);
+        return $nbt;
+    }
     /**
      * Vector3距离排序
      * @param array $vector3s

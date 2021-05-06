@@ -24,6 +24,7 @@ use pocketmine\nbt\tag\NamedTag;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\Player;
 use pocketmine\tile\ManaCache;
+use pocketmine\utils\MainLogger;
 use pocketmine\utils\Utils;
 
 class FairyGate extends Entity
@@ -83,13 +84,13 @@ class FairyGate extends Entity
     }
     public function onUpdate($currentTick)
     {
-        if ($this->age % 20 == 0) {
+        if (!$this->isNatural() and $this->age % 20 == 0) {
             if (count(self::checkBlocks($this->coreBlock, null, $this->towards)) > 0) {
                 $this->kill();
                 return false;
             }
         }
-        if ($this->age < 20 * 10 + 10){
+        if (!$this->isNatural() and $this->age < 20 * 10 + 10){
             if ($this->age % 10 == 0){
                 if ($this->flash)
                     $this->constructGates();
@@ -101,38 +102,52 @@ class FairyGate extends Entity
                 }
             }
         }elseif ($this->age % 20 == 0){
-            if ($this->crash or !$this->checkGates()){
+            if (!$this->isNatural() and ($this->crash or !$this->checkGates())){
                 $this->kill();
                 return false;
             }
             foreach ($this->getLevel()->getCollidingEntities($this->boundingBox) as $entity){
-                /** @var Position $lastTeleport */
-                $lastTeleport = $entity->lastPos;
-                if ($lastTeleport instanceof Position){
-                    foreach ($lastTeleport->getLevel()->getEntities() as $e){
-                        if ($e === $this)continue;
-                        if ($e instanceof FairyGate and $e->getBoundingBox()->isVectorInside($lastTeleport)){
-                            continue 2;
+                if ($entity instanceof Player and $entity->canSelected()){
+                    /** @var Position $lastTeleport */
+                    $lastTeleport = $entity->lastPos;
+                    if ($lastTeleport instanceof Position){
+                        foreach ($lastTeleport->getLevel()->getEntities() as $e){
+                            if ($e === $this)continue;
+                            if ($e instanceof FairyGate and $e->getBoundingBox()->isVectorInside($lastTeleport)){
+                                continue 2;
+                            }
                         }
                     }
-                }
-                if ($entity instanceof Player and $entity->canSelected()){
-                    $level = null;
+                    $position = null;
                     if ($this->level->getName() == 'f10'){
+                        $name = strtolower($entity->getName());
+                        if (isset(Main::getInstance()->playerGates[$name])){
+                            $position = Main::getInstance()->playerGates[$name];
+                        }
 
                     }else{
-
+                        $this->joinPlayer($entity);
                         $level = $this->getServer()->getLevelByName("f10");
+                        if ($level == null){//error
+                            MainLogger::getLogger()->error("找不到精灵世界。");
+                            $this->kill();
+                            return true;
+                        }else{
+                            $position = $level->getSpawnLocation();
+                            $nbt = Utils::spawnEntityBaseNBT($position->floor());
+                            $fg = new FairyGate($level, $nbt, FairyGate::Z_EXTEND, $level->getBlock($position->add(0, -1)));
+                            $fg->setNatural(true);
+                        }
                     }
-                    $entity->teleport($level->getSpawnLocation());
+                    $entity->teleport($position);
                 }
             }
-            if ($this->age % 60 == 0 and !$this->siphonMana(10)){
+            if (!$this->isNatural() and $this->age % 60 == 0 and !$this->siphonMana(10)){
                 $this->kill();
                 return false;
             }
         }
-        if (!isset(Main::getInstance()->gates[$this->getId()]) and $this->age >=  20 * 10 + 10){
+        if (!isset(Main::getInstance()->gates[$this->getId()]) and ($this->age >=  20 * 10 + 10 or $this->isNatural())){
             Main::getInstance()->gates[$this->getId()] = $this;
         }
         $this->age++;
@@ -309,9 +324,10 @@ class FairyGate extends Entity
     }
     public function joinPlayer(Player $player){
         $this->players[$player->getId()] = $player;
+        Main::getInstance()->playerGates[strtolower($player->getName())] = $this;
     }
     public function removePlayer(Player $player){
-        unset($this->players[$player->getId()]);
+        unset($this->players[$player->getId()], Main::getInstance()->playerGates[strtolower($player->getName())]);
     }
     /**
      * @param Level $level
