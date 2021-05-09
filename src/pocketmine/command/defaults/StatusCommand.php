@@ -96,7 +96,7 @@ class StatusCommand extends VanillaCommand {
 			$sender->sendMessage(TextFormat::GOLD . "%pocketmine.command.status.Heapmemory " . TextFormat::RED . number_format(round(($rUsage[0] / 1024) / 1024, 2)) . " MB.");
 			$sender->sendMessage(TextFormat::GOLD . "%pocketmine.command.status.Maxmemorysystem " . TextFormat::RED . number_format(round(($mUsage[2] / 1024) / 1024, 2)) . " MB.");
 			$SMUsage = Utils::getSystemMemoryUsage();
-			if($mUsage!==false){
+			if($SMUsage!==false){
 				$sender->sendMessage(TextFormat::GOLD . "总系统内存 " . TextFormat::RED . number_format($SMUsage[0], 2) . " MB.");
 				$sender->sendMessage(TextFormat::GOLD . "已使用系统内存 " . TextFormat::RED . number_format($SMUsage[1], 2) . " MB.");
 				$sender->sendMessage(TextFormat::GOLD . "剩余系统内存 " . TextFormat::RED . number_format($SMUsage[2],  2) . " MB.");

@@ -6,15 +6,11 @@ use LTEntity\entity\Process\Prompt;
 use pocketmine\block\Air;
 use pocketmine\block\Block;
 use pocketmine\block\LiveWood;
-use pocketmine\block\ManaCache;
-use pocketmine\block\ShiZhongji;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
-use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\nbt\tag\DoubleTag;
-use pocketmine\nbt\tag\FloatTag;
-use pocketmine\nbt\tag\ListTag;
 use pocketmine\Player;
+use pocketmine\tile\ManaCache;
+use pocketmine\tile\ManaFlower;
 use pocketmine\utils\Utils;
 
 class ManaWand extends BaseMana
@@ -55,9 +51,8 @@ class ManaWand extends BaseMana
      */
     public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz)
     {
-        if ($target instanceof ManaCache) {
-            /** @var \pocketmine\tile\ManaCache $tile */
-            $tile = $level->getTile($target);
+        $tile = $level->getTile($target);
+        if ($tile instanceof ManaCache) {
             if ($player->isSneaking()){//说不定有用
 
             }else{
@@ -65,8 +60,7 @@ class ManaWand extends BaseMana
                     $player->sendMessage('Mana:' .$tile->getMana());
                 }
             }
-        }elseif($target instanceof ShiZhongji) {
-            /** @var \pocketmine\tile\ShiZhongji $tile */
+        }elseif($tile instanceof ManaFlower) {
             $tile = $level->getTile($target);
             if ($tile != null) {
                 $player->sendMessage('Mana:' .$tile->getMana());

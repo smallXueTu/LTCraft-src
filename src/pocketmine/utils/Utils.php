@@ -57,6 +57,7 @@ class Utils {
 	}
 
 	public static function getSystemMemoryUsage(){
+	    if (self::getOS() == 'Window')return false;//FIXME
 		if (false === ($str = @file("/proc/meminfo"))) return false;
 		$str = implode("", $str);
 		preg_match_all("/MemTotal\s{0,}\:+\s{0,}([\d\.]+).+?MemFree\s{0,}\:+\s{0,}([\d\.]+).+?Cached\s{0,}\:+\s{0,}([\d\.]+).+?SwapTotal\s{0,}\:+\s{0,}([\d\.]+).+?SwapFree\s{0,}\:+\s{0,}([\d\.]+)/s", $str, $buf);
@@ -68,8 +69,7 @@ class Utils {
 		$res['memUsed'] = $res['memTotal']-$res['memFree'];
 		$res['memRealUsed'] = $res['memTotal'] - $res['memFree'] - $res['memCached'] - $res['memBuffers']; //真实内存使用
 		$res['memRealFree'] = $res['memTotal'] - $res['memRealUsed']; //真实空闲
-		$arr=[$res['memTotal'], $res['memUsed'], $res['memFree'], $res['memRealUsed'], $res['memRealFree']];
-		return $arr;
+        return [$res['memTotal'], $res['memUsed'], $res['memFree'], $res['memRealUsed'], $res['memRealFree']];
 	}
 	/**
 	 * Gets this machine / server instance unique ID

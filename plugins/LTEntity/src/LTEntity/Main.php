@@ -8,12 +8,14 @@ use LTEntity\entity\Gaia\GaiaGuardians;
 use LTEntity\entity\Guide\Trident;
 use LTEntity\entity\Mana\FairyGate;
 use LTEntity\entity\Process\Fusion;
+use LTItem\SpecialItems\Armor\ManaArmor;
 use LTItem\SpecialItems\Weapon;
 use LTPet\Commands\RecomeAll;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\Player;
+use pocketmine\scheduler\CallbackTask;
 use pocketmine\Server;
 use pocketmine\item\Item;
 use pocketmine\math\Vector3;
@@ -129,6 +131,8 @@ class Main extends PluginBase implements Listener
      * @var array 扭曲值
      */
     public array $distorted = [];
+    public Config $RPGSpawn;
+    private Config $gateConfig;
 
     /**
      * @return Main
@@ -237,6 +241,7 @@ class Main extends PluginBase implements Listener
         $Config = new Config($this->getDataFolder().'Config.yml', Config::YAML, []);
         $this->WeeksExp = new Config($this->getDataFolder().'WeeksExp.yml', Config::YAML, []);
         $this->RPGSpawn = new Config($this->getDataFolder().'RPGSpawn.yml', Config::YAML, []);
+        $this->gateConfig = new Config($this->getDataFolder().'Gates.yml', Config::YAML, []);
         $this->EnConfig = $this->RPGSpawn->getAll();
         $cmd = new Commands($this);
         $this->getCommand('ma')->setExecutor($cmd);
@@ -245,10 +250,27 @@ class Main extends PluginBase implements Listener
             onRefresh 方法在LTPopuo中调用了
         */
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
+
+        $this->getServer()->getScheduler()->scheduleDelayedTask(new CallbackTask(function(){
+            foreach ($this->gateConfig->getAll() as $xyz){
+                $info = explode(':', $xyz);
+                $level = Server::getInstance()->getLevelByName($info[0]);
+                if ($level === null)continue;
+                $level->loadChunk($info[1] >> 4, $info[3] >> 4);
+            }
+        }, []), 20);
     }
     public function onDisable(){
         // $this->Data->save(false);
         if(isset($this->WeeksExp))$this->WeeksExp->save(false);
+        if(isset($this->gateConfig)){
+            $this->gateConfig->setAll([]);
+            /** @var FairyGate $gate */
+            foreach ($this->gates as $gate){
+                $this->gateConfig->set($gate->getId(), $gate->getLevel()->getName().":".$gate->getX().":".$gate->getY().":".$gate->getZ());
+            }
+            $this->gateConfig->save();
+        }
     }
     public function killAll(){
 

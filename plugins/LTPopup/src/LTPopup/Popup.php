@@ -141,9 +141,9 @@ class Popup extends PluginBase implements Listener{
 					continue;
 				}
 				$m = EconomyAPI::getInstance()->myMoney($name);
-				$sy=floor($player->getY());
-				$sx=floor($player->getX());
-				$sz=floor($player->getZ());
+				$sy=number_format($player->getY(), 1);
+				$sx=number_format($player->getX(), 1);
+				$sz=number_format($player->getZ(), 1);
 				if($player->freezeTime>0 or $player->vertigoTime>0){
                     $additional='';
                     if($player->freezeTime>0){
