@@ -25,6 +25,7 @@
 namespace pocketmine;
 
 use LTCraft\Main;
+use LTEntity\entity\Mana\FairyGate;
 use LTGrade\API;
 use LTGrade\PlayerTask;
 use LTItem\Buff;
@@ -183,6 +184,7 @@ use pocketmine\plugin\Plugin;
 use pocketmine\resourcepacks\ResourcePack;
 use pocketmine\tile\ItemFrame;
 use pocketmine\tile\Spawnable;
+use pocketmine\utils\MainLogger;
 use pocketmine\utils\TextFormat;
 use pocketmine\utils\UUID;
 use pocketmine\scheduler\CallbackTask;
@@ -4665,10 +4667,11 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
     }
 
     /**
+     * @param int $tick 距离传送的tick
      * @return bool
      */
-    public function canSelected(): bool{
-        return $this->waitingTeleportTask==null and $this->lastTeleportTick!==0 and $this->getServer()->getTick() - $this->lastTeleportTick > 40;
+    public function canSelected(int $tick = 40): bool{
+        return $this->waitingTeleportTask==null and $this->lastTeleportTick!==0 and $this->getServer()->getTick() - $this->lastTeleportTick > $tick;
     }
 
     /**
@@ -4847,6 +4850,14 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
         if($this->level->getName()=='boss' and !$force and (!($pos instanceof Position) or $pos->level===$this->level)){
             $this->sendMessage('§l§a[提示]§c这个世界不能传送!');
             return false;
+        }
+        if(($this->level->getName()=='f10' or ($this->level->getName() != 'login' and $pos instanceof Position and $pos->getLevel()->getName()=='f10')) and !$force and !($pos instanceof FairyGate)){
+            if ($this->isOp())
+                MainLogger::$logger->info($this->username . 'Op强制传送！');
+            else{
+                $this->sendMessage('§l§a[提示]§c找不到这个世界的传送门!');
+                return false;
+            }
         }
         if($pos instanceof Position and $pos->getLevel()->getName()==='login' and !$this->isOp()){
             $this->sendMessage('§l§a[提示]§c这个世界不能通往');
