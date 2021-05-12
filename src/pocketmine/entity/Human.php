@@ -124,7 +124,6 @@ class Human extends Creature implements ProjectileSource, InventoryHolder {
     protected $GTo = 0;
     protected $GeNeAwakening = 0;
     // protected $PVP = 0;
-    protected $EnderChestCount = 0;
     public $canFly = false;
     public $isVIP=false;
 
@@ -346,19 +345,12 @@ class Human extends Creature implements ProjectileSource, InventoryHolder {
     public function setRideEntity($entity){
         $this->rideEntity = $entity;
     }
-
-    public function getEnderChestCount(){
-        return $this->EnderChestCount;
-    }
     public function setGeNeAwakening($v){
         $this->GeNeAwakening = $v;
     }
 
     public function getGeNeAwakening(){
         return $this->GeNeAwakening;
-    }
-    public function setEnderChestCount($v){
-        $this->EnderChestCount = $v;
     }
     // public function getPVPStatus(){
     // return $this->PVP;
@@ -799,10 +791,6 @@ class Human extends Creature implements ProjectileSource, InventoryHolder {
                 $this->namedtag->ForceTP = new ByteTag('ForceTP', 1);
             else
                 $this->setForceTP($this->namedtag['ForceTP']);
-            if(!isset($this->namedtag->EnderChestCount) or !($this->namedtag->EnderChestCount instanceof LongTag))
-                $this->namedtag->EnderChestCount = new ByteTag('EnderChestCount', 1);
-            else
-                $this->setEnderChestCount($this->namedtag['EnderChestCount']);
             if(!isset($this->namedtag->Cape) or !($this->namedtag->Cape instanceof ByteTag))
                 $this->namedtag->Cape = new ByteTag('Cape', 1);
             else
@@ -1099,7 +1087,6 @@ class Human extends Creature implements ProjectileSource, InventoryHolder {
         $this->namedtag->MainTask = new ShortTag('MainTask', (int)$this->getMainTask());
         // $this->namedtag->PVP = new ByteTag('PVP', (int)$this->getPVPStatus());
         $this->namedtag->GTo = new ShortTag('GTo', (int)$this->getGTo());
-        $this->namedtag->EnderChestCount = new LongTag('EnderChestCount', (int)$this->getEnderChestCount());
         switch($this->getGender()){
             case '男':
                 $this->namedtag->Gender = new ByteTag('Gender', 1);

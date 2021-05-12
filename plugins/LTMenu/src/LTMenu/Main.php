@@ -66,12 +66,6 @@ class Main extends PluginBase{
 				$this->initMenus();
 				$sender->sendMessage('§e重载完成！');
 			break;
-			case 'addCount':
-				$player=$this->getServer()->getPlayer($args[1]);
-				if($player and strtolower($player->getName())===strtolower($args[1])){
-					$player->setEnderChestCount($player->getEnderChestCount()+($args[2]??1));
-				}
-			break;
 			case 'get':
 				$inv=$sender->getInventory();
 				if($inv->isNoFull()){
@@ -82,7 +76,6 @@ class Main extends PluginBase{
 			case 'shelves':
 				LTCraft::getInstance()->status[$sender->getName()]='shelves';
 				return $sender->sendMessage('§d你已经进入交易状态，请手拿你要出售的物品。'.PHP_EOL .'在聊天栏输入这个物品需要条件！'.PHP_EOL .'§3如果你想要橙币，直接输入橙币价格即可'.PHP_EOL .'如果你想要其他物品,输入§e类型:名字:数量'.PHP_EOL .'§3例:§e材料:武器精髓:10 §3多个用&区分 例:§e材料:武器精髓:10&材料:盔甲精髓:10&5000'.PHP_EOL .'§3以上则需要武器精髓×10 和盔甲精髓×10 和5000橙币'.PHP_EOL .'§a当前可用类型:[材料 饰品]'.PHP_EOL .'退出输入:exit');
-			break;
 			// case 'test':
 				// $conf=new Config($this->getDataFolder().'Menus'.'/MaterialShop.yml',Config::YAML,array());
 				// foreach($conf->get('items') as $info){
@@ -100,24 +93,6 @@ class Main extends PluginBase{
 					// }
 				// }
 			// break;
-			case 'set':
-			return true;//TODO 在线设置菜单
-            /*
-			if(!isset($args[1]))return $sender->sendMessage('/menu set 菜单');
-			$this->sets[$sender->getName()]=$args[1];
-			$this->openSet($sender,$args[1]);
-			return $sender->sendMessage('已进入设置模式 输入/menu ok 即可推出！');
-            */
-			break;
-			case 'ok': 
-			return true;//TODO
-            /*
-			if(isset($this->sets[$sender->getName()])){
-				unset($this->sets[$sender->getName()]);
-				$sender->sendMessage('已退出设置模式！');
-			}else $sender->sendMessage('你没有进入设置模式！');
-            */
-			break;
 			default:
 				if(isset($this->menus[$args[0]])){
 					$open=$this->openMenu($sender,$args[0]);

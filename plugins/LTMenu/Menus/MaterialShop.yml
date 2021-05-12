@@ -789,7 +789,7 @@ items:
       - item:
           - 384
           - 0
-          - 64
+          - 1
         nametag: |-
           §a亚特兰蒂斯的奖励
           §e§l>>需要奖励袋碎片×64
@@ -798,6 +798,83 @@ items:
         price: 0
         give_item: 材料:亚特兰蒂斯的奖励:1
         cost_item: 材料:奖励袋碎片:64
+        multilevel: false
+  - item:
+      - 397
+      - 4
+      - 1
+    nametag: F10兑换菜单
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: ~
+    cost_item: ~
+    multilevel:
+      - item:
+          - 383
+          - 17
+          - 1
+        nametag: |-
+          §a精灵尘
+          §e§l>>需要虚无头颅
+          §e§l>>需要黑暗头颅
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 材料:精灵尘:1
+        cost_item: 材料:黑暗头颅:1&材料:虚无头颅:1
+        multilevel: false
+      - item:
+          - 383
+          - 17
+          - 1
+        nametag: |-
+          §a源钢头盔
+          §e§l>>需要源质钢锭×5
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 盔甲:源钢头盔:1
+        cost_item: 材料:源质钢锭:5
+        multilevel: false
+      - item:
+          - 383
+          - 17
+          - 1
+        nametag: |-
+          §a源钢胸甲
+          §e§l>>需要源质钢锭×8
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 盔甲:源钢胸甲:1
+        cost_item: 材料:源质钢锭:8
+        multilevel: false
+      - item:
+          - 383
+          - 17
+          - 1
+        nametag: |-
+          §a源钢护腿
+          §e§l>>需要源质钢锭×7
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 盔甲:源钢护腿:1
+        cost_item: 材料:源质钢锭:7
+        multilevel: false
+      - item:
+          - 383
+          - 17
+          - 1
+        nametag: |-
+          §a源钢靴子
+          §e§l>>需要源质钢锭×4
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 盔甲:源钢靴子:1
+        cost_item: 材料:源质钢锭:4
         multilevel: false
   - item:
       - 397
@@ -1078,4 +1155,43 @@ items:
     give_item: 材料:§a新春红包:1
     cost_item: 材料:§aL:1&材料:§aT:1&材料:§aC:1&材料:§ar:1&材料:§aa:1&材料:§af:1&材料:§at:1
     multilevel: false
+  - item:
+      - 383
+      - 17
+      - 1
+    nametag: 精灵交易
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: ~
+    cost_item: ~
+    multilevel:
+      - item:
+          - 383
+          - 46
+          - 1
+        nametag: |-
+          §a源质钢锭
+          §e§l>>需要魔力钢锭
+          §e§l>>需要精灵尘
+        commands: []
+        teleport: ~
+        price: "0"
+        give_item: 材料:源质钢锭:1
+        cost_item: 材料:魔力钢锭:1&材料:精灵尘:1
+        multilevel: false
+      - item:
+          - 383
+          - 48
+          - 1
+        nametag: |-
+          §a龙石
+          §e§l>>需要魔力钻石
+          §e§l>>需要精灵尘
+        commands: []
+        teleport: ~
+        price: "0"
+        give_item: 材料:源质钢锭:1
+        cost_item: 材料:魔力钻石:1&材料:精灵尘:1
+        multilevel: false
 ...

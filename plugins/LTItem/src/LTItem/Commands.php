@@ -158,6 +158,7 @@ class Commands
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args)
 	{
 		if(!isset($args[0]))return true;
+		/** @var Player $sender */
 		switch($args[0]) {
 		    /*
 			case '祝福点':
@@ -185,7 +186,7 @@ class Commands
 				}
 				$this->plugin->config->set('爆炸', $all);
 				$this->plugin->config->save();
-			return;
+			return true;
 			case  '远程':
 				$all = $this->plugin->config->get('远程', []);
 				switch($args[1]) {
@@ -202,7 +203,7 @@ class Commands
 				}
 				$this->plugin->config->set('远程', $all);
 				$this->plugin->config->save();
-			return;
+            return true;
 			case 'get':
 				if(!isset(Cooling::$query[strtolower($sender->getName())]) or Cooling::$query[strtolower($sender->getName())]<time()){
 					$sender->sendMessage('§e正在查询');
@@ -210,7 +211,7 @@ class Commands
 					$this->server->dataBase->pushService('0'.chr(7).chr(strlen($name)).$name."SELECT * FROM wed.items WHERE username='{$name}'");
                     Cooling::$query[strtolower($sender->getName())]=time()+3;
 				}else $sender->sendMessage('§a请等待！');
-			return;
+            return true;
 			case 'buff':
 				if(isset(\LTItem\Main::getInstance()->Buff[strtolower($sender->getName())])){
                     /** @var Config $conf */
@@ -232,7 +233,7 @@ class Commands
 					}
 					$conf->save();
 				}else $sender->sendMessage('§a你还没Buff效果 快来http://www.ltcraft.cn/shop定制吧！');
-			return;
+			return true;
 			case 'info':
 				$hand=$sender->getItemInHand();
 				switch(true){
@@ -248,8 +249,9 @@ class Commands
 							$sender->sendMessage(('§a技能强化等级:'.$hand->SkillCTime()));
 						}
 						if($hand->getDecomposition() instanceof Item){
+						    /** @var Item $item */
 							$item=$hand->getDecomposition();
-							$sender->sendMessage(('§e分解可获得:材料 '.$item->getLTName()));
+							$sender->sendMessage(('§e分解可获得:材料 '.Item::getItemString($item)));
 						}
 						if($hand->getWeaponType()!=='近战'){
 							$sender->sendMessage(('§e武器射速:'.($hand->getSpeed()*0.05).'s/次'));
@@ -435,9 +437,9 @@ class Commands
 						}
 					break;
 				}
-			return;
+			return true;
 		}
-		if(!$sender->isOp())return;
+		if(!$sender->isOp())return true;
 		if(!isset($args[0]))return $sender->sendMessage('§c用法:/tw [add reload give]');
 		switch($args[0]) {
 		case 'add':
@@ -487,7 +489,6 @@ class Commands
 				$attribute = [
 					 '武器名' => $args[2],
 					 '武器ID' => $args[3],
-					 '粒子' => false,
 					 '粒子' => false,
 					 '射速' => 20,
 					 '子弹模型' => 'snowball',

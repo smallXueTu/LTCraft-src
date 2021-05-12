@@ -19,6 +19,7 @@ class DataBase extends \Thread{
 	public $server;
 	public $logger;
 	public $loadPaths;
+	private int $lastHeartbeat;
 	/** @var string $username */
     public string $username;
 	/** @var string $password */
@@ -29,6 +30,7 @@ class DataBase extends \Thread{
 	public string $localhost = '127.0.0.1';
 	public function __construct(\pocketmine\utils\MainLogger $log, Server $server, \ClassLoader $autoloader, string $username, string $password, string $database = 'server', string $localhost = '127.0.0.1'){
 		$this->logger = $log;
+		$this->lastHeartbeat = time();
 		$this->server = $server;
 		$this->autoloader = $autoloader;
 		$this->server = $server;
@@ -100,7 +102,12 @@ class DataBase extends \Thread{
 		}
 		$this->autoloader->register(true);
 		$this->Connection();
-		while(!$this->shutdown or $this->serviceQueue->count()>1){
+		while(!$this->shutdown or $this->serviceQueue->count()>=1){
+		    if (time() - $this->lastHeartbeat > 30){
+                $this->lastHeartbeat = time();
+//		        $this->getLogger()->info("心跳");
+		        self::$connection->query('select * from user where name = \'angel_xx\';');
+            }
 			$this->synchronized(function(){
 				while(strlen($str = $this->readService()) > 0){
 					$offset=0;

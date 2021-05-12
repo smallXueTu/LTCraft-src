@@ -897,7 +897,6 @@ class Server{
 			new StringTag("Guild", '无公会'),
 			new ShortTag("Grade", 0),
 			new ShortTag("GeNeAwakening", 0),
-			new LongTag("EnderChestCount", 0),
 			new LongTag("MaxDamage", 0),
 			new ShortTag("GTo", 0),
 			new ShortTag("Exp", 0),

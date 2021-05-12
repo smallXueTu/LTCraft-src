@@ -87,6 +87,7 @@ class Commands extends PluginBase implements CommandExecutor{
                             "护甲" => 0,
                             "数量" => 1,
                             "刷怪时间" => 10,
+                            "攻击间隔" => 10,
                             "死亡执行命令" => null,
                             "掉落" => [],
                             "参与击杀掉落" => [],

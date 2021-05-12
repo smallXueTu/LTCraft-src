@@ -24,9 +24,9 @@ dp-auto:
   command:
   - p auto
 land-auto:
-  x: 154.4744
+  x: 154.474400
   "y": 65
-  z: 154.4786
+  z: 154.478600
   level: land
   yaw: ""
   pitch: ""
@@ -48,9 +48,9 @@ land-auto:
   command:
   - p auto
 man:
-  x: 743.7
+  x: 743.700000
   "y": 17
-  z: 13.5534
+  z: 13.553400
   level: zc
   yaw: ""
   pitch: ""
@@ -72,9 +72,9 @@ man:
   command:
   - 结婚 性别 男
 girl:
-  x: 743.7
+  x: 743.700000
   "y": 17
-  z: 19.5806
+  z: 19.580600
   level: zc
   yaw: ""
   pitch: ""
@@ -96,9 +96,9 @@ girl:
   command:
   - 结婚 性别 女
 love:
-  x: 743.5838
+  x: 743.583800
   "y": 18
-  z: 9.7
+  z: 9.700000
   level: zc
   yaw: ""
   pitch: ""
@@ -120,9 +120,9 @@ love:
   command:
   - 结婚
 back:
-  x: 750.7057
+  x: 750.705700
   "y": 2
-  z: 5.7869
+  z: 5.786900
   level: zc
   yaw: ""
   pitch: ""
@@ -144,9 +144,9 @@ back:
   command:
   - back
 guild:
-  x: 759.5
+  x: 759.500000
   "y": 10
-  z: 17.5199
+  z: 17.519900
   level: zc
   yaw: ""
   pitch: ""
@@ -168,9 +168,9 @@ guild:
   command:
   - 公会
 jm_auto:
-  x: 318.926
+  x: 318.926000
   "y": 33
-  z: 456.0578
+  z: 456.057800
   level: jm
   yaw: ""
   pitch: ""
@@ -192,9 +192,9 @@ jm_auto:
   command:
   - p auto
 warp-menu:
-  x: 750.7
+  x: 750.700000
   "y": 2
-  z: 27.45
+  z: 27.450000
   level: zc
   yaw: ""
   pitch: ""
@@ -216,9 +216,9 @@ warp-menu:
   command:
   - menu Warp
 assassin:
-  x: 756.7
+  x: 756.700000
   "y": 4
-  z: 60.422
+  z: 60.422000
   level: zc
   yaw: ""
   pitch: ""
@@ -249,9 +249,9 @@ assassin:
   command:
   - grade 选择职业 刺客
 warrior:
-  x: 756.7
+  x: 756.700000
   "y": 4
-  z: 66.4805
+  z: 66.480500
   level: zc
   yaw: ""
   pitch: ""
@@ -281,9 +281,9 @@ warrior:
   command:
   - grade 选择职业 战士
 mage:
-  x: 756.7
+  x: 756.700000
   "y": 4
-  z: 72.5097
+  z: 72.509700
   level: zc
   yaw: ""
   pitch: ""
@@ -314,9 +314,9 @@ mage:
   command:
   - grade 选择职业 法师
 medical:
-  x: 756.512
+  x: 756.512000
   "y": 4
-  z: 77.5914
+  z: 77.591400
   level: zc
   yaw: ""
   pitch: ""
@@ -372,9 +372,9 @@ Mayor:
   command:
   - task
 f2:
-  x: -1492.7
+  x: -1492.700000
   "y": 4
-  z: 1807.3
+  z: 1807.300000
   level: f2
   yaw: ""
   pitch: ""
@@ -396,9 +396,9 @@ f2:
   command:
   - menu MaterialShop 1
 f1:
-  x: 130.7
+  x: 130.700000
   "y": 2
-  z: 131.7
+  z: 131.700000
   level: f1
   yaw: ""
   pitch: ""
@@ -420,9 +420,9 @@ f1:
   command:
   - menu MaterialShop 0
 f3:
-  x: -145.587
+  x: -145.587000
   "y": 4
-  z: -7.3951
+  z: -7.395100
   level: f3
   yaw: ""
   pitch: ""
@@ -444,9 +444,9 @@ f3:
   command:
   - menu MaterialShop 2
 f4:
-  x: -10.4999
+  x: -10.499900
   "y": 74
-  z: 18.4979
+  z: 18.497900
   level: f4
   yaw: ""
   pitch: ""
@@ -468,9 +468,9 @@ f4:
   command:
   - menu MaterialShop 3
 f5:
-  x: -98.5535
+  x: -98.553500
   "y": 13
-  z: -42.5763
+  z: -42.576300
   level: f5
   yaw: ""
   pitch: ""
@@ -566,7 +566,7 @@ f8:
 t1:
   x: -12
   "y": 4
-  z: -35.5247
+  z: -35.524700
   level: t1
   yaw: ""
   pitch: ""
@@ -588,9 +588,9 @@ t1:
   command:
   - menu MaterialShop 9
 startPvp:
-  x: 129.516
+  x: 129.516000
   "y": 46
-  z: 126.4249
+  z: 126.424900
   level: pvp
   yaw: ""
   pitch: ""
@@ -612,9 +612,9 @@ startPvp:
   command:
   - warp pvp
 exitPvp:
-  x: 126.6236
+  x: 126.623600
   "y": 46
-  z: 129.5971
+  z: 129.597100
   level: pvp
   yaw: ""
   pitch: ""
@@ -636,9 +636,9 @@ exitPvp:
   command:
   - w zc
 getW:
-  x: 744.389
+  x: 744.389000
   "y": 2
-  z: 6.4267
+  z: 6.426700
   level: zc
   yaw: ""
   pitch: ""
@@ -660,9 +660,9 @@ getW:
   command:
   - tw get
 getW2:
-  x: -290.6781
+  x: -290.678100
   "y": 102
-  z: 449.7
+  z: 449.700000
   level: pve
   yaw: ""
   pitch: ""
@@ -684,9 +684,9 @@ getW2:
   command:
   - tw get
 info:
-  x: 714.4842
+  x: 714.484200
   "y": 3
-  z: 20.7
+  z: 20.700000
   level: zc
   yaw: ""
   pitch: ""
@@ -711,9 +711,9 @@ info:
   command:
   - tw info
 getMenu:
-  x: 718.7409
+  x: 718.740900
   "y": 3
-  z: 6.473
+  z: 6.473000
   level: zc
   yaw: ""
   pitch: ""
@@ -735,9 +735,9 @@ getMenu:
   command:
   - menu get
 pve:
-  x: 759.5097
+  x: 759.509700
   "y": 2
-  z: 27.6476
+  z: 27.647600
   level: zc
   yaw: ""
   pitch: ""
@@ -759,9 +759,9 @@ pve:
   command:
   - w pve
 shelves:
-  x: 760.7
+  x: 760.700000
   "y": 2
-  z: 5.3
+  z: 5.300000
   level: zc
   yaw: ""
   pitch: ""
@@ -783,9 +783,9 @@ shelves:
   command:
   - menu shelves
 tj:
-  x: 745.5175
+  x: 745.517500
   "y": 3
-  z: 27.7
+  z: 27.700000
   level: zc
   yaw: ""
   pitch: ""
@@ -807,9 +807,9 @@ tj:
   command:
   - warp tj
 openE:
-  x: 761.7
+  x: 761.700000
   "y": 3
-  z: 6.3
+  z: 6.300000
   level: zc
   yaw: ""
   pitch: ""
