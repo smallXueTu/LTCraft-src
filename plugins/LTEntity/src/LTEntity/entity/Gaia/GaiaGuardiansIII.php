@@ -654,6 +654,11 @@ class GaiaGuardiansIII extends Creature
             }
         }
     }
+    public function getDrops()
+    {
+        return ['材料', '英雄勋章', 1];
+    }
+
     /**
      * @inheritDoc
      */

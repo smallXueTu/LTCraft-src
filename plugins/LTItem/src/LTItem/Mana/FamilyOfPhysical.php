@@ -28,7 +28,7 @@ class FamilyOfPhysical extends ManaOrnaments
 				if(!$player->getAllowFlight())$player->setAllowFlight(true);
 			}
             if ($player->isFlying() and $player->getLevel()->getName()!=='zc' and $player->isSurvival()){
-                if(!$player->getBuff()->consumptionMana($install?80:50)){
+                if(!$player->getBuff()->consumptionMana($install?30:20)){
                     $player->setFlying(false);//没魔力
                 }
                 if ($this->energy-- <= 0){

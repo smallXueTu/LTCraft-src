@@ -311,7 +311,7 @@ class EventListener implements Listener
 					        else
                                 $damager->counter['加斯的意志']++;
 					        if ($damager->counter['加斯的意志'] == 18){
-					            if ($damager->getBuff()->consumptionMana(300)){
+					            if ($damager->getBuff()->consumptionMana(30)){
                                     $ab = floor($damager->getMaxHealth() / 4) - 1;
                                     if ($ab <= 0) $ab = 1;
                                     $damager->addEffect(Effect::getEffect(Effect::ABSORPTION)->setDuration(20*5)->setAmplifier($ab));

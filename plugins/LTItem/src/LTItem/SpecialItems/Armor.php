@@ -1,6 +1,7 @@
 <?php
 namespace LTItem\SpecialItems;
 
+use LTItem\SpecialItems\Armor\FairyArmor;
 use LTItem\SpecialItems\Armor\ManaArmor;
 use pocketmine\item\Item;
 use pocketmine\nbt\tag\ByteTag;
@@ -59,10 +60,18 @@ class Armor extends Item implements LTItem{
      */
     public static function initArmor()
     {
-        self::$armors['魔力之靴'] = ManaArmor::class;
-        self::$armors['魔力护腿'] = ManaArmor::class;
-        self::$armors['魔力之帽'] = ManaArmor::class;
-        self::$armors['魔力之甲'] = ManaArmor::class;
+        self::$armors['源钢魔力靴子'] = ManaArmor::class;
+        self::$armors['源钢魔力护腿'] = ManaArmor::class;
+        self::$armors['源钢魔力头盔'] = ManaArmor::class;
+        self::$armors['源钢魔力胸甲'] = ManaArmor::class;
+        self::$armors['虎头皂金魔力靴子'] = ManaArmor::class;
+        self::$armors['虎头皂金魔力护腿'] = ManaArmor::class;
+        self::$armors['虎头皂金魔力头盔'] = ManaArmor::class;
+        self::$armors['虎头皂金魔力胸甲'] = ManaArmor::class;
+        self::$armors['源钢头盔'] = FairyArmor::class;
+        self::$armors['源钢胸甲'] = FairyArmor::class;
+        self::$armors['源钢护腿'] = FairyArmor::class;
+        self::$armors['源钢靴子'] = FairyArmor::class;
     }
 
     public function __construct(array $conf, int $count, CompoundTag $nbt, $init=true){
@@ -323,6 +332,10 @@ class Armor extends Item implements LTItem{
 			case '虎头皂金膝':
 			case '虎头皂金甲':
 			case '虎头皂金帽':
+			case '魔力头盔':
+			case '魔力胸甲':
+			case '魔力护腿':
+			case '魔力靴子':
 				$nbt=$armor->getNamedTag();
 				$nbt['armor'][3] = new StringTag('',(int)$level);
 				$nbt['armor'][4] = new StringTag('',(int)$level);

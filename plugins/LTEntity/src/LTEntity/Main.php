@@ -400,15 +400,17 @@ class Main extends PluginBase implements Listener
                     }
                 }
                 $pDrops=substr($pDrops,0,strlen($pDrops)-1);
+                /*
                 $probability = 1;
                 $add = $data['血量'] / 5000;
                 if ($add > 29)$add = 29;
                 $probability += $add;
+                */
                 if($data['显示'])$this->spawnTmp[$data['刷怪点']]['悬浮字'] = new FloatingText($pos,
                     '§a=============['.$data['刷怪点'].']============= '. PHP_EOL
                     .'§d名字:§3'.$data['名字'].'§d还有： @t '. PHP_EOL
                     .'§6当前怪物数量：@c/'.$data['数量'].PHP_EOL
-                    .'§c掉落Craft任意字符几率：'.$probability.'%'
+                    //.'§c掉落Craft任意字符几率：'.$probability.'%'
                     . ($data['悬浮介绍']!=false?(PHP_EOL . '§3介绍:'.$data['悬浮介绍']):'')
                     . (count($data['掉落'])>0?(PHP_EOL .'§e击杀掉落:'.$drops):'')
                     . (count($data['参与击杀掉落'])>0?(PHP_EOL .'§a参与击杀掉落:'.$pDrops):'')

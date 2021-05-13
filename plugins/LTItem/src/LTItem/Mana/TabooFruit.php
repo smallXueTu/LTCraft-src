@@ -26,7 +26,7 @@ class TabooFruit extends ManaFood{
     {
         //增加饱食度 消耗魔力
         $mana = $player->getBuff()->getMana();
-        if ($mana > 30 and $player->getBuff()->consumptionMana(30)){
+        if ($mana > 30 and $player->getBuff()->consumptionMana(10)){
             $player->addSaturation(0.5);
             $player->addFood(1);
             parent::eatIng($player);

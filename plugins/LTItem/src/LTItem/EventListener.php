@@ -194,7 +194,7 @@ class EventListener implements Listener
                     break;
                 case '樱花的誓约':
                     if(!isset(Cooling::$weapon[$player->getName()][$Hand->getLTName()]) or Cooling::$weapon[$player->getName()][$Hand->getLTName()]<time()){
-                        if (!$player->getBuff()->consumptionMana(500)){
+                        if (!$player->getBuff()->consumptionMana(300)){
                             $player->sendMessage('§cMana不足！');
                             return;
                         }
@@ -210,7 +210,7 @@ class EventListener implements Listener
                     break;
                 case '时空撕裂':
                     if(!isset(Cooling::$weapon[$player->getName()][$Hand->getLTName()]) or Cooling::$weapon[$player->getName()][$Hand->getLTName()]<time()){
-                        if (!$player->getBuff()->consumptionMana(500)){
+                        if (!$player->getBuff()->consumptionMana(300)){
                             $player->sendMessage('§cMana不足！');
                             return;
                         }
@@ -294,7 +294,7 @@ class EventListener implements Listener
                 switch($Hand->getSkillName()){
                     case '凝冻雪球':
                         if(isset(Cooling::$weapon[$player->getName()][$Hand->getLTName()]) and Cooling::$weapon[$player->getName()][$Hand->getLTName()]>time())return;
-                        if (!$player->getBuff()->consumptionMana(1000)){
+                        if (!$player->getBuff()->consumptionMana(30)){
                             $player->sendMessage('§cMana不足！');
                             return;
                         }
@@ -327,7 +327,7 @@ class EventListener implements Listener
                             $player->sendMessage('§a饥饿度不足！！');
                             return;
                         }
-                        if (!$player->getBuff()->consumptionMana(500)){
+                        if (!$player->getBuff()->consumptionMana(30)){
                             $player->sendMessage('§cMana不足！');
                             return;
                         }
@@ -348,7 +348,7 @@ class EventListener implements Listener
                     case '风暴之力':
                         if(isset(Cooling::$weapon[$player->getName()][$Hand->getLTName()]) and Cooling::$weapon[$player->getName()][$Hand->getLTName()]>time())return;
                         if($event->getPacket()->action===18)return;
-                        if (!$player->getBuff()->consumptionMana(1000)){
+                        if (!$player->getBuff()->consumptionMana(30)){
                             $player->sendMessage('§cMana不足！');
                             return;
                         }
@@ -403,7 +403,7 @@ class EventListener implements Listener
                 $all = $this->plugin->config->get('远程', []);
                 if(isset($all[strtolower($player->getName())]) and $all[strtolower($player->getName())] === false)return;
 
-                if ($Hand->getLTName()=='时空劫持者' and !$player->getBuff()->consumptionMana(1000)){
+                if ($Hand->getLTName()=='时空劫持者' and !$player->getBuff()->consumptionMana(10)){
                     $player->sendMessage('§cMana不足！');
                     return;
                 }
@@ -541,6 +541,7 @@ class EventListener implements Listener
                                 $damager->sendMessage('§c你的'.$hand->getLTName().'无耐久了，无法获得荣耀值和击杀数。');
                             }
                         }
+                        /*
                         if (\LTCraft\Main::getCNumber($damager->getName()) < 10){
                             $probability = 1;
                             $add = $entity->getMaxHealth() / 50000;
@@ -554,6 +555,7 @@ class EventListener implements Listener
                                 \LTCraft\Main::addCNumber($damager->getName());
                             }
                         }
+                        */
                     }
                 }
             }

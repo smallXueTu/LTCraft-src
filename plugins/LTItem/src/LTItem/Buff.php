@@ -3,6 +3,8 @@ namespace LTItem;
 
 use LTItem\Mana\Mana;
 use LTItem\Mana\ManaRing;
+use LTItem\SpecialItems\Armor\ReduceMana;
+use pocketmine\item\Item;
 use pocketmine\Player;
 use pocketmine\entity\Effect;
 use pocketmine\entity\Entity;
@@ -295,9 +297,22 @@ class Buff{
     /**
      * 消耗魔力
      * @param int $mana
+     * @param bool $reduce
      * @return bool
      */
-	public function consumptionMana(int $mana){
+	public function consumptionMana(int $mana, bool $reduce = true): bool{
+	    if ($reduce){
+	        $fun = function (Player $player): float{
+                $f = 0.0;
+                foreach ($player->getInventory()->getArmorContents() as $item){
+                    if ($item instanceof ReduceMana){
+                        $f += $item->getReduce();
+                    }
+                }
+                return $f;
+            };
+	        $mana *= (1 - $fun($this->player));
+        }
 	    if ($this->getMana()<$mana)return false;
         foreach ($this->player->getOrnamentsInventory()->getContents() as $index => $item){
             /** @var ManaRing $item */
@@ -315,6 +330,7 @@ class Buff{
                 }
             }
         }
+        return false;
     }
 
     /**

@@ -223,7 +223,7 @@ class Main extends PluginBase implements Listener{
 		//$this->getServer()->getScheduler()->scheduleDelayedRepeatingTask(new CallbackTask([$this,"cleanTime"],[20]),32000,32000);
 //		$this->Data=new Config($this->getDataFolder()."Data.yml",Config::YAML,array());
 		$this->Head=new Config($this->getDataFolder()."Head.yml",Config::YAML,array());
-		$this->number=new Config($this->getDataFolder()."number.yml",Config::YAML,array());
+		//$this->number=new Config($this->getDataFolder()."number.yml",Config::YAML,array());
 		$TutorialRecord = new Config($this->getDataFolder()."TutorialRecord.yml",Config::YAML,array());
 		Tutorial::init($TutorialRecord);
 		$this->r=new Config($this->getDataFolder()."R.yml",Config::YAML,array());

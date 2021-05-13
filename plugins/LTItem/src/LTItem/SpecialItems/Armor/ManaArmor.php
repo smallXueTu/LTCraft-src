@@ -13,11 +13,12 @@ use pocketmine\level\particle\Particle;
 use pocketmine\level\Position;
 use pocketmine\level\sound\AnvilFallSound;
 use pocketmine\math\Vector3;
+use pocketmine\nbt\tag\NamedTag;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\Player;
 use pocketmine\Server;
 
-class ManaArmor extends Armor implements Mana
+class ManaArmor extends Armor implements Mana, ReduceMana
 {
     private int $Mana;
     const STORAGE_UPGRADE_MAX = 3;
@@ -26,21 +27,24 @@ class ManaArmor extends Armor implements Mana
     private int $lastDamage = 0;
     private int $lastRecharge = 0;
     private int $noteMagicSpeed = 1;
+    private int $reduceMana = 5;
 
     public function __construct(array $conf, int $count, \pocketmine\nbt\tag\CompoundTag $nbt, $init = true)
     {
         parent::__construct($conf, $count, $nbt, $init);
 
         $nbt = $this->getNamedTag();
-        if(!isset($nbt['armor'][17])){
+        if(!isset($nbt['armor'][18])){
             $nbt['armor'][15]=new StringTag('',$nbt['armor'][15]??0);//15 对于 ManaArmor来说 15就是Mana
             $nbt['armor'][16]=new StringTag('',$nbt['armor'][16]??1);//16
             $nbt['armor'][17]=new StringTag('',$nbt['armor'][17]??1);//17
+            $nbt['armor'][18]=new StringTag('',$nbt['armor'][17]??5);//18 耗魔减少
             $this->setNamedTag($nbt);
         }
         $this->Mana = $nbt['armor'][15];
         $this->MaxMana = $nbt['armor'][16] * 100;
         $this->noteMagicSpeed = $nbt['armor'][17];
+        $this->reduceMana = $nbt['armor'][18];
         $this->updateName();
     }
 
@@ -124,8 +128,7 @@ class ManaArmor extends Armor implements Mana
      */
     public function getStorageUpgrade(): int
     {
-        $tag = $this->getNamedTag();
-        return (int)$tag['armor'][16];
+        return $this->MaxMana;
     }
     public function setStorageUpgrade(int $value): ManaArmor
     {
@@ -141,8 +144,7 @@ class ManaArmor extends Armor implements Mana
      */
     public function getNoteMagicUpgrade(): int
     {
-        $tag = $this->getNamedTag();
-        return (int)$tag['armor'][17];
+        return $this->noteMagicSpeed;
     }
     public function setNoteMagicUpgrade(int $value): ManaArmor
     {
@@ -228,5 +230,33 @@ class ManaArmor extends Armor implements Mana
                 $level->addParticle(new GenericParticle($v3,Particle::TYPE_REDSTONE));
             }
         }
+    }
+
+    /**
+     * @return int|mixed
+     */
+    public function getReduceMana()
+    {
+        return $this->reduceMana;
+    }
+
+    /**
+     * @param $value
+     * @return ManaArmor
+     */
+    public function setReduceMana($value): ManaArmor
+    {
+        $tag = $this->getNamedTag();
+        $tag['armor'][18] = new StringTag('', $value);
+        $this->reduceMana = $value;
+        $this->setNamedTag($tag);
+        return $this;
+    }
+    public function getReduce(): float
+    {
+        if (substr($this->getLTName(), 0, strlen("源钢")) == '源钢')
+            return $this->getReduceMana() / 100;
+        else
+            return 0;
     }
 }

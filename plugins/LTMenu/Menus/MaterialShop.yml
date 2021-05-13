@@ -876,6 +876,154 @@ items:
         give_item: 盔甲:源钢靴子:1
         cost_item: 材料:源质钢锭:4
         multilevel: false
+      - item:
+          - 383
+          - 17
+          - 1
+        nametag: |-
+          §a源钢魔力头盔
+          §e§l>>需要魔力头盔×1
+          §e§l>>需要魔力石板×1
+          §e§l>>需要红线×20
+          §e§l>>需要龙之石×18
+          §e§l>>需要英雄勋章×1
+          §a继承源钢盔甲属性
+          §d减少魔力消耗
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 盔甲:源钢魔力头盔:1
+        cost_item: 盔甲:源钢头盔:1&魔法:魔力石板:1&材料:龙之石:18&魔法:英雄勋章:1&材料:红线:20
+        multilevel: false
+      - item:
+          - 383
+          - 17
+          - 1
+        nametag: |-
+          §a源钢魔力胸甲
+          §e§l>>需要源钢胸甲×1
+          §e§l>>需要魔力石板×1
+          §e§l>>需要红线×20
+          §e§l>>需要龙之石×18
+          §e§l>>需要英雄勋章×1
+          §a继承源钢盔甲属性
+          §d减少魔力消耗
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 盔甲:源钢魔力胸甲:1
+        cost_item: 盔甲:源钢胸甲:1&魔法:魔力石板:1&材料:龙之石:18&魔法:英雄勋章:1&材料:红线:20
+        multilevel: false
+      - item:
+          - 383
+          - 17
+          - 1
+        nametag: |-
+          §a源钢源钢护腿
+          §e§l>>需要源钢护腿×1
+          §e§l>>需要魔力石板×1
+          §e§l>>需要红线×20
+          §e§l>>需要龙之石×18
+          §e§l>>需要英雄勋章×1
+          §a继承源钢盔甲属性
+          §d减少魔力消耗
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 盔甲:源钢魔力护腿:1
+        cost_item: 盔甲:源钢护腿:1&魔法:魔力石板:1&材料:龙之石:18&魔法:英雄勋章:1&材料:红线:20
+        multilevel: false
+      - item:
+          - 383
+          - 17
+          - 1
+        nametag: |-
+          §a源钢魔力靴子
+          §e§l>>需要源钢靴子×1
+          §e§l>>需要魔力石板×1
+          §e§l>>需要红线×20
+          §e§l>>需要龙之石×18
+          §e§l>>需要英雄勋章×1
+          §a继承源钢盔甲属性
+          §d减少魔力消耗
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 盔甲:源钢魔力靴子:1
+        cost_item: 盔甲:源钢靴子:1&魔法:魔力石板:1&材料:龙之石:18&魔法:英雄勋章:1&材料:红线:20
+        multilevel: false
+      - item:
+          - 310
+          - 0
+          - 1
+        nametag: |-
+          §a虎头皂金魔力头盔
+          §e§l>>需要虎头皂金帽×1
+          §e§l>>需要魔力石板×1
+          §e§l>>需要红线×20
+          §e§l>>需要龙之石×18
+          §e§l>>需要英雄勋章×1
+          §a继承虎头皂金盔甲属性
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 盔甲:虎头皂金魔力头盔:1
+        cost_item: 盔甲:虎头皂金帽:1&魔法:魔力石板:1&材料:龙之石:18&魔法:英雄勋章:1&材料:红线:20
+        multilevel: false
+      - item:
+          - 311
+          - 0
+          - 1
+        nametag: |-
+          §a虎头皂金魔力胸甲
+          §e§l>>需要虎头皂金甲×1
+          §e§l>>需要魔力石板×1
+          §e§l>>需要红线×20
+          §e§l>>需要龙之石×18
+          §e§l>>需要英雄勋章×1
+          §a继承虎头皂金盔甲属性
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 盔甲:虎头皂金魔力胸甲:1
+        cost_item: 盔甲:虎头皂金甲:1&魔法:魔力石板:1&材料:龙之石:18&魔法:英雄勋章:1&材料:红线:20
+        multilevel: false
+      - item:
+          - 312
+          - 0
+          - 1
+        nametag: |-
+          §a虎头皂金源钢护腿
+          §e§l>>需要虎头皂金膝×1
+          §e§l>>需要魔力石板×1
+          §e§l>>需要红线×20
+          §e§l>>需要龙之石×18
+          §e§l>>需要英雄勋章×1
+          §a继承虎头皂金盔甲属性
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 盔甲:虎头皂金源钢护腿:1
+        cost_item: 盔甲:源钢护腿:1&魔法:魔力石板:1&材料:龙之石:18&魔法:英雄勋章:1&材料:红线:20
+        multilevel: false
+      - item:
+          - 313
+          - 0
+          - 1
+        nametag: |-
+          §a虎头皂金魔力靴子
+          §e§l>>需要虎头皂金靴×1
+          §e§l>>需要魔力石板×1
+          §e§l>>需要红线×20
+          §e§l>>需要龙之石×18
+          §e§l>>需要英雄勋章×1
+          §a继承虎头皂金盔甲属性
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 盔甲:虎头皂金魔力靴子:1
+        cost_item: 盔甲:虎头皂金靴:1&魔法:魔力石板:1&材料:龙之石:18&魔法:英雄勋章:1&材料:红线:20
+        multilevel: false
   - item:
       - 397
       - 2
@@ -1191,7 +1339,7 @@ items:
         commands: []
         teleport: ~
         price: "0"
-        give_item: 材料:源质钢锭:1
+        give_item: 材料:龙石:1
         cost_item: 材料:魔力钻石:1&材料:精灵尘:1
         multilevel: false
 ...

@@ -4554,7 +4554,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
             if (!$this->isA())return;
             $hand = $this->getItemInHand();
             if ($hand instanceof Trident and $hand->containWill('图拉的意志') and Cooling::$willOfTula[$this->getName()] < time()){
-                if ($this->getBuff()->consumptionMana(1000)){
+                if ($this->getBuff()->consumptionMana(100)){
                     Cooling::$willOfTula[$this->getName()] = time() + 10;
                     /**
                      * 先计算出玩家 50%最大生命值
