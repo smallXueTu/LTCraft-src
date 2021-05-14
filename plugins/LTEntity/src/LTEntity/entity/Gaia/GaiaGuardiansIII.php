@@ -110,7 +110,7 @@ class GaiaGuardiansIII extends Creature
         $entity = new GaiaGuardiansIII($position->getLevel(), $nbt);//实例化盖亚守护者III
         $entity->setPlayerCount($playerCount);//设置玩家数量
         $entity->setBasePos($position);//设置信标坐标
-        $entity->setMaxHealth(600 + $playerCount * 300);
+        $entity->setMaxHealth(800 + $playerCount * 300);
         $entity->setHealth($entity->getMaxHealth());
         $entity->setNameTagVisible(true);
         $entity->setNameTagAlwaysVisible(true);

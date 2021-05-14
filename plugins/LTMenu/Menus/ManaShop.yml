@@ -226,7 +226,21 @@ items:
     commands: ~
     teleport: ~
     price: 0
-    give_item: 魔法:百中弓:5
+    give_item: 魔法:百中弓:1
     cost_item: 材料:活木枝:15&材料:红线:10&材料:英雄勋章:1
+    multilevel: false
+  - item:
+      - 383
+      - 12
+      - 1
+    nametag: |-
+      §a大师魔力之戒
+      §e§l>>需要:英雄勋章×1
+      §e§l>>需要:高级魔力之戒×1
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 魔法:大师魔力之戒:1
+    cost_item: 魔法:高级魔力之戒:1&材料:英雄勋章:1
     multilevel: false
 ...
