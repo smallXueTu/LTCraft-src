@@ -200,4 +200,47 @@ items:
     give_item: 材料:盖亚魂锭:1
     cost_item: 材料:泰拉钢锭:1&材料:盖亚之魂:4
     multilevel: false
+  - item:
+      - 237
+      - 7
+      - 1
+    nametag: |-
+      §a微光活木
+      §e§l>>需要:活木×5
+      §e§l>>需要:萤石粉×4
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:微光活木:5
+    cost_item: 材料:活木:5&348:0:4
+    multilevel: false
+  - item:
+      - 237
+      - 7
+      - 1
+    nametag: |-
+      §a微光活木
+      §e§l>>需要:活木×5
+      §e§l>>需要:萤石粉×4
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 材料:微光活木:5
+    cost_item: 材料:活木:5&348:0:4
+    multilevel: false
+  - item:
+      - 267
+      - 0
+      - 1
+    nametag: |-
+      §a百中弓
+      §e§l>>需要:英雄勋章×1
+      §e§l>>需要:红线×10
+      §e§l>>需要:活木枝×15
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 魔法:百中弓:5
+    cost_item: 材料:活木枝:15&材料:红线:10&材料:英雄勋章:1
+    multilevel: false
 ...

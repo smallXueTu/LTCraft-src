@@ -38,7 +38,7 @@ class ManaArmor extends Armor implements Mana, ReduceMana
             $nbt['armor'][15]=new StringTag('',$nbt['armor'][15]??0);//15 对于 ManaArmor来说 15就是Mana
             $nbt['armor'][16]=new StringTag('',$nbt['armor'][16]??1);//16
             $nbt['armor'][17]=new StringTag('',$nbt['armor'][17]??1);//17
-            $nbt['armor'][18]=new StringTag('',$nbt['armor'][17]??5);//18 耗魔减少
+            $nbt['armor'][18]=new StringTag('',$nbt['armor'][17]??$this->getConf('消魔减少'));//18 耗魔减少
             $this->setNamedTag($nbt);
         }
         $this->Mana = $nbt['armor'][15];
@@ -241,10 +241,10 @@ class ManaArmor extends Armor implements Mana, ReduceMana
     }
 
     /**
-     * @param $value
-     * @return ManaArmor
+     * @param int $value
+     * @return ReduceMana
      */
-    public function setReduceMana($value): ManaArmor
+    public function setReduceMana(int $value): ReduceMana
     {
         $tag = $this->getNamedTag();
         $tag['armor'][18] = new StringTag('', $value);
@@ -258,5 +258,10 @@ class ManaArmor extends Armor implements Mana, ReduceMana
             return $this->getReduceMana() / 100;
         else
             return 0;
+    }
+    public function getHandMessage(Player $player):string {
+        if($this->canUse($player)){
+            return strtr($this->handMessage,['@h'=>$this->getArmorV(),'%'=>'%%%%','@x'=>$this->getHealth(),'@f'=>$this->getThorns(),'@s'=>$this->getMiss(),'@j'=>$this->getTough(),'@sp'=>$this->getSpeed(),'@k'=>$this->getControlReduce(),'@rm'=>$this->getReduceMana()]);
+        }else return '你不是这个盔甲的拥有者！';
     }
 }

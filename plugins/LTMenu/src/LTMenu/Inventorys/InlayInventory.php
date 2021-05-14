@@ -127,7 +127,15 @@ class InlayInventory extends OperationInventory{
                                         $item->setNoteMagicUpgrade($item->getNoteMagicUpgrade() + $i->getCount());
                                         $count = $i->getCount() - ($item->getNoteMagicUpgrade() - $yLevel);
                                     }
-                                    break;
+                                break;
+                                case '耗魔升级':
+                                    if ($item instanceof Armor\ReduceMana and $item->getReduceMana() < $item->getMaxReduce()){
+                                        /** @var Armor\ReduceMana $item */
+                                        $yLevel = $item->getReduce();
+                                        $item->setReduceMana($item->getReduceMana() + $i->getCount());
+                                        $count = $i->getCount() - ($item->getReduceMana() - $yLevel);
+                                    }
+                                break;
 								case '时空撕裂技能石':
 								    if ($item instanceof Weapon){
 								        /** @var $item Weapon */

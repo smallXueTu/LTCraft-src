@@ -18,7 +18,7 @@ class Armor extends Item implements LTItem{
 	private $miss = 0;
 	private $thorns = 0;
 	private $effect = '';
-	private $handMessage = false;
+	protected $handMessage = false;
 	private $resistanceFire = false;
 	private $speed = 0;
 	private $health = 0;

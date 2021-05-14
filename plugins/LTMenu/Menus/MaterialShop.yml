@@ -953,8 +953,8 @@ items:
         cost_item: 盔甲:源钢靴子:1&魔法:魔力石板:1&材料:龙之石:18&魔法:英雄勋章:1&材料:红线:20
         multilevel: false
       - item:
-          - 310
-          - 0
+          - 383
+          - 27
           - 1
         nametag: |-
           §a虎头皂金魔力头盔
@@ -971,8 +971,8 @@ items:
         cost_item: 盔甲:虎头皂金帽:1&魔法:魔力石板:1&材料:龙之石:18&魔法:英雄勋章:1&材料:红线:20
         multilevel: false
       - item:
-          - 311
-          - 0
+          - 383
+          - 27
           - 1
         nametag: |-
           §a虎头皂金魔力胸甲
@@ -989,8 +989,8 @@ items:
         cost_item: 盔甲:虎头皂金甲:1&魔法:魔力石板:1&材料:龙之石:18&魔法:英雄勋章:1&材料:红线:20
         multilevel: false
       - item:
-          - 312
-          - 0
+          - 383
+          - 27
           - 1
         nametag: |-
           §a虎头皂金源钢护腿
@@ -1007,8 +1007,8 @@ items:
         cost_item: 盔甲:源钢护腿:1&魔法:魔力石板:1&材料:龙之石:18&魔法:英雄勋章:1&材料:红线:20
         multilevel: false
       - item:
-          - 313
-          - 0
+          - 383
+          - 27
           - 1
         nametag: |-
           §a虎头皂金魔力靴子
@@ -1023,6 +1023,48 @@ items:
         price: 0
         give_item: 盔甲:虎头皂金魔力靴子:1
         cost_item: 盔甲:虎头皂金靴:1&魔法:魔力石板:1&材料:龙之石:18&魔法:英雄勋章:1&材料:红线:20
+        multilevel: false
+      - item:
+          - 383
+          - 55
+          - 1
+        nametag: |-
+          §a注魔升级
+          §e§l>>需要风之符文×20
+          §e§l>>需要魔力钻石×16
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 材料:注魔升级:1
+        cost_item: 材料:风之符文:20&材料:魔力钻石:16
+        multilevel: false
+      - item:
+          - 383
+          - 55
+          - 1
+        nametag: |-
+          §a储魔升级
+          §e§l>>需要灵魂符文×20
+          §e§l>>需要魔力石板×16
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 材料:储魔升级:1
+        cost_item: 材料:灵魂符文:20&材料:魔力石板:16
+        multilevel: false
+      - item:
+          - 383
+          - 55
+          - 1
+        nametag: |-
+          §a耗魔升级
+          §e§l>>需要火之符文×20
+          §e§l>>需要魔力珍珠×16
+        commands: ~
+        teleport: ~
+        price: 0
+        give_item: 材料:耗魔升级:1
+        cost_item: 材料:火之符文:20&材料:魔力珍珠:16
         multilevel: false
   - item:
       - 397

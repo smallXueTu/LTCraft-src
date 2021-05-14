@@ -167,7 +167,7 @@ class Main extends PluginBase implements Listener{
 		// $this->Data->save(false);
 		if(isset($this->Head))$this->Head->save(false);
 		$this->config->save(false);
-		$this->number->save(false);
+		//$this->number->save(false);
         $m = new Config($this->getDataFolder()."moveAction.yml",Config::YAML,$this->moveAction);
         $m->save(false);
 		$this->playerConfig->save(false);
@@ -181,13 +181,13 @@ class Main extends PluginBase implements Listener{
 		if(isset($LTCraft->Head))$LTCraft->Head->save(false);
 		$LTCraft->config->save(false);
         $LTCraft->playerConfig->save(false);
-        $LTCraft->number->save(false);
+        //$LTCraft->number->save(false);
 		$LTGrade = \LTGrade\Main::getInstance();
 		$LTGrade->PlayerTaskConf->save(false);
 		$LTGrade->conf->save(false);
 		/** @var \LTMenu\Main $LTMenu */
 		$LTMenu = \LTMenu\Main::getInstance();
-		$LTMenu->getExchange()->save(false);
+		$LTMenu->getExchange()->save();
 		$LTEntity = \LTEntity\Main::getInstance();
 		if(isset($LTEntity->WeeksExp))$LTEntity->WeeksExp->save(false);
 	}
