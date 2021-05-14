@@ -215,21 +215,7 @@ items:
     cost_item: 材料:活木:5&348:0:4
     multilevel: false
   - item:
-      - 237
-      - 7
-      - 1
-    nametag: |-
-      §a微光活木
-      §e§l>>需要:活木×5
-      §e§l>>需要:萤石粉×4
-    commands: ~
-    teleport: ~
-    price: 0
-    give_item: 材料:微光活木:5
-    cost_item: 材料:活木:5&348:0:4
-    multilevel: false
-  - item:
-      - 267
+      - 261
       - 0
       - 1
     nametag: |-

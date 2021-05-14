@@ -112,30 +112,6 @@ class InlayInventory extends OperationInventory{
                                         $count = 1;
                                     }
                                 break;
-                                case '储魔升级':
-                                    if ($item instanceof Armor\ManaArmor and $item->getStorageUpgrade() < Armor\ManaArmor::STORAGE_UPGRADE_MAX){
-                                        /** @var Armor\ManaArmor $item */
-                                        $yLevel = $item->getStorageUpgrade();
-                                        $item->setStorageUpgrade($item->getStorageUpgrade() + $i->getCount());
-                                        $count = $i->getCount() - ($item->getStorageUpgrade() - $yLevel);
-                                    }
-                                break;
-                                case '注魔升级':
-                                    if ($item instanceof Armor\ManaArmor and $item->getNoteMagicUpgrade() < Armor\ManaArmor::NOTE_MAGIC_UPGRADE_MAX){
-                                        /** @var Armor\ManaArmor $item */
-                                        $yLevel = $item->getNoteMagicUpgrade();
-                                        $item->setNoteMagicUpgrade($item->getNoteMagicUpgrade() + $i->getCount());
-                                        $count = $i->getCount() - ($item->getNoteMagicUpgrade() - $yLevel);
-                                    }
-                                break;
-                                case '耗魔升级':
-                                    if ($item instanceof Armor\ReduceMana and $item->getReduceMana() < $item->getMaxReduce()){
-                                        /** @var Armor\ReduceMana $item */
-                                        $yLevel = $item->getReduce();
-                                        $item->setReduceMana($item->getReduceMana() + $i->getCount());
-                                        $count = $i->getCount() - ($item->getReduceMana() - $yLevel);
-                                    }
-                                break;
 								case '时空撕裂技能石':
 								    if ($item instanceof Weapon){
 								        /** @var $item Weapon */
@@ -387,7 +363,7 @@ class InlayInventory extends OperationInventory{
 							$i=$this->getItem($index++);
 							$count=0;
 							if($i->getId()===0)continue;
-							if(!($i instanceof Material))continue;
+							if(!($i instanceof Material) and !($i instanceof Mana))continue;
 							switch($i->getLTName()){
 								case '盔甲精髓':
 									if($nbt['attribute'][11]>=$item->getMaxX())continue 2;
@@ -424,6 +400,30 @@ class InlayInventory extends OperationInventory{
                                         $item->setPhantom(true);
                                     }
                                 break;
+                                case '储魔升级':
+                                    if ($item instanceof Armor\ManaArmor and $item->getStorageUpgrade() < Armor\ManaArmor::STORAGE_UPGRADE_MAX){
+                                        /** @var Armor\ManaArmor $item */
+                                        $yLevel = $item->getStorageUpgrade();
+                                        $item->setStorageUpgrade(min($item->getStorageUpgrade() + $i->getCount() * 100, Armor\ManaArmor::STORAGE_UPGRADE_MAX));
+                                        $count = (int)(($item->getStorageUpgrade() - $yLevel) / 100);
+                                    }
+                                    break;
+                                case '注魔升级':
+                                    if ($item instanceof Armor\ManaArmor and $item->getNoteMagicUpgrade() < Armor\ManaArmor::NOTE_MAGIC_UPGRADE_MAX){
+                                        /** @var Armor\ManaArmor $item */
+                                        $yLevel = $item->getNoteMagicUpgrade();
+                                        $item->setNoteMagicUpgrade(min($item->getNoteMagicUpgrade() + $i->getCount(), Armor\ManaArmor::NOTE_MAGIC_UPGRADE_MAX));
+                                        $count = $item->getNoteMagicUpgrade() - $yLevel;
+                                    }
+                                    break;
+                                case '耗魔升级':
+                                    if ($item instanceof Armor\ReduceMana and $item->getReduceMana() < $item->getMaxReduce()){
+                                        /** @var Armor\ReduceMana $item */
+                                        $yLevel = $item->getReduceMana();
+                                        $item->setReduceMana(min($item->getReduceMana() + $i->getCount(), $item->getMaxReduce()));
+                                        $count = $item->getReduceMana() - $yLevel;
+                                    }
+                                    break;
 								case '黑色金刚石':
 									if($item->getAttribute('附加护甲最大值')==false)continue 2;
 									$count=$nbt['armor'][3];

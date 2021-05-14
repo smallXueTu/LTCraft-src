@@ -21,7 +21,7 @@ use pocketmine\Server;
 class ManaArmor extends Armor implements Mana, ReduceMana
 {
     private int $Mana;
-    const STORAGE_UPGRADE_MAX = 3;
+    const STORAGE_UPGRADE_MAX = 300;
     const NOTE_MAGIC_UPGRADE_MAX = 3;
     private int $MaxMana;
     private int $lastDamage = 0;
@@ -38,7 +38,7 @@ class ManaArmor extends Armor implements Mana, ReduceMana
             $nbt['armor'][15]=new StringTag('',$nbt['armor'][15]??0);//15 对于 ManaArmor来说 15就是Mana
             $nbt['armor'][16]=new StringTag('',$nbt['armor'][16]??1);//16
             $nbt['armor'][17]=new StringTag('',$nbt['armor'][17]??1);//17
-            $nbt['armor'][18]=new StringTag('',$nbt['armor'][17]??$this->getConf('消魔减少'));//18 耗魔减少
+            $nbt['armor'][18]=new StringTag('',$nbt['armor'][18]??$this->getConf('消魔减少'));//18 耗魔减少
             $this->setNamedTag($nbt);
         }
         $this->Mana = $nbt['armor'][15];
@@ -134,8 +134,9 @@ class ManaArmor extends Armor implements Mana, ReduceMana
     {
         $tag = $this->getNamedTag();
         $tag['armor'][16] = new StringTag('', $value);
-        $this->MaxMana = $value * 100;
+        $this->MaxMana = $value;
         $this->setNamedTag($tag);
+        $this->updateName();
         return $this;
     }
 
@@ -163,7 +164,7 @@ class ManaArmor extends Armor implements Mana, ReduceMana
                 $player->attack($player->getMaxHealth() * 0.1, new EntityDamageEvent($player, EntityDamageEvent::CAUSE_PUNISHMENT, $player->getMaxHealth() * 0.1, true));
             }
         }
-        if ($player->getServer()->getTick() - $this->lastRecharge > 40){
+        if ($index >= $inventory->getSize() and $player->getServer()->getTick() - $this->lastRecharge > 40){
             $this->lastRecharge = $player->getServer()->getTick();
             if ($this->getMana() < $this->getMaxMana()){
                 $mana = min($this->getMaxMana() - $this->getMana(), $this->noteMagicSpeed * 4);
@@ -237,7 +238,7 @@ class ManaArmor extends Armor implements Mana, ReduceMana
      */
     public function getReduceMana()
     {
-        return $this->reduceMana;
+        return min($this->reduceMana, 15);
     }
 
     /**
@@ -263,5 +264,10 @@ class ManaArmor extends Armor implements Mana, ReduceMana
         if($this->canUse($player)){
             return strtr($this->handMessage,['@h'=>$this->getArmorV(),'%'=>'%%%%','@x'=>$this->getHealth(),'@f'=>$this->getThorns(),'@s'=>$this->getMiss(),'@j'=>$this->getTough(),'@sp'=>$this->getSpeed(),'@k'=>$this->getControlReduce(),'@rm'=>$this->getReduceMana()]);
         }else return '你不是这个盔甲的拥有者！';
+    }
+
+    public function getMaxReduce(): int
+    {
+        return 15;
     }
 }

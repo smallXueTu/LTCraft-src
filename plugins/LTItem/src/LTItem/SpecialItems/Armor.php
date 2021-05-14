@@ -279,8 +279,9 @@ class Armor extends Item implements LTItem{
     public function setPhantom(bool $value): Armor
     {
         $nbt = $this->getNamedTag();
-        $nbt->Unbreakable=new ByteTag('Unbreakable',(int)$value);
+        $nbt->Unbreakable=new ByteTag('phantom',(int)$value);
         $this->setNamedTag($nbt);
+        $this->setCustomName($this->conf['名字']."\n§d幻影药水染色");
         return $this;
     }
 	public function getSpeed(){

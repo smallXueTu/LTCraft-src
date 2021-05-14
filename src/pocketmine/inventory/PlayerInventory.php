@@ -515,8 +515,6 @@ class PlayerInventory extends BaseInventory {
 		$pk = new MobArmorEquipmentPacket();
 		$pk->eid = $this->getHolder()->getId();
 		$pk->slots = $armor;
-		$pk->encode();
-		$pk->isEncoded = true;
 
 		foreach($target as $player){
 			if($player === $this->getHolder()){
@@ -527,9 +525,9 @@ class PlayerInventory extends BaseInventory {
 				$player->dataPacket($pk2);
 			}else{
                 $hpk = clone $pk;
-                foreach ($pk->slots as $item){
+                foreach ($pk->slots as $i => $item){
                     if ($item instanceof Armor and $item->isPhantom())
-                        $hpk = Item::get(0);
+                        $hpk->slots[$i] = Item::get(0);
                 }
 				$player->dataPacket($hpk);
 			}
@@ -568,8 +566,6 @@ class PlayerInventory extends BaseInventory {
 		$pk = new MobArmorEquipmentPacket();
 		$pk->eid = $this->getHolder()->getId();
 		$pk->slots = $armor;
-		$pk->encode();
-		$pk->isEncoded = true;
 
 		foreach($target as $player){
 			if($player === $this->getHolder()){
@@ -581,9 +577,9 @@ class PlayerInventory extends BaseInventory {
 				$player->dataPacket($pk2);
 			}else{
 			    $hpk = clone $pk;
-			    foreach ($pk->slots as $item){
+			    foreach ($pk->slots as $i => $item){
 			        if ($item instanceof Armor and $item->isPhantom())
-			            $hpk = Item::get(0);
+			            $hpk->slots[$i] = Item::get(0);
                 }
 				$player->dataPacket($hpk);
 			}
