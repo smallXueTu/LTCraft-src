@@ -243,4 +243,18 @@ items:
     give_item: 魔法:大师魔力之戒:1
     cost_item: 魔法:高级魔力之戒:1&材料:英雄勋章:1
     multilevel: false
+  - item:
+      - 383
+      - 39
+      - 1
+    nametag: |-
+      §a神圣斗篷
+      §e§l>>需要:圣布×6
+      §e§l>>需要:白色羊毛×3
+    commands: ~
+    teleport: ~
+    price: 0
+    give_item: 饰品:圣布:1
+    cost_item: 材料:圣布:6&35:0:3
+    multilevel: false
 ...
