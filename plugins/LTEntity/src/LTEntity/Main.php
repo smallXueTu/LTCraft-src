@@ -114,6 +114,7 @@ class Main extends PluginBase implements Listener
     public $spawnTmp = [];
     public $ExpRanking = null;
     public $killCount = [];
+    public $lastKill = [];
     public $errorCount = [];
     public $gaia = [];
     public array $playerGates = [];
@@ -165,7 +166,7 @@ class Main extends PluginBase implements Listener
         }else{
             self::$instance->killCount[$name] = 1;
         }
-        if(self::$instance->killCount[$name]>27)$player->sendMessage(('§l§c警告:你的击杀次数剩余'. (10-self::$instance->killCount[$name]).'次，请打开菜单验证在线状态来重置！'));
+        if(self::$instance->killCount[$name]>7)$player->sendMessage(('§l§c警告:你的击杀次数剩余'. (10-self::$instance->killCount[$name]).'次，请打开菜单验证在线状态来重置！'));
     }
     public static function resetCount($name){
         self::$instance->killCount[$name]=0;
@@ -649,7 +650,13 @@ class Main extends PluginBase implements Listener
                         $PPlayer[0]->sendMessage('§l§c你获得了§e'.Item::getItemString($item).'§c已发送到你的背包~');
                     }
                 }
-                if(($PPlayer[0]->getGrade()>50 or $PPlayer[0]->getGTo()>5) and $entity->enConfig['刷怪点']!=='傀儡')self::addCount($PPlayer[0]);
+                if(($PPlayer[0]->getGrade()>50 or $PPlayer[0]->getGTo()>5)){
+					if($this->lastKill[$PPlayer[0]->getName()]??'' == $entity->enConfig['刷怪点']){
+						$this->lastKill[$PPlayer[0]->getName()] = $entity->enConfig['刷怪点'];
+						self::addCount($PPlayer[0]);
+					}else
+						self::resetCount($PPlayer[0]->getName());
+				}
                 if($PPlayer[0]===$player)continue;
                 $PPlayer[0]->getTask()->action('参与击杀怪物', $entity->enConfig['名字']);
                 $tmpMess=$mess;
@@ -695,7 +702,13 @@ class Main extends PluginBase implements Listener
             $mess.=PHP_EOL .$entity->enConfig['橙币'].'点橙币';
         }
         if(strlen($mess)>$len)$player->sendCenterTip($mess);
-        if(!$entity->enConfig['团队'] and ($player->getGrade()>50 or $player->getGTo()>5) and $entity->enConfig['刷怪点']!=='傀儡')self::addCount($player);
+		if(!$entity->enConfig['团队'] and ($player->getGrade()>50 or $player->getGTo()>5)){
+			if($this->lastKill[$player->getName()]??'' == $entity->enConfig['刷怪点']){
+				$this->lastKill[$player->getName()] = $entity->enConfig['刷怪点'];
+				self::addCount($player);
+			}else
+				self::resetCount($player->getName());
+		}
         // if($entity->enConfig['团队']){
         // $mess='§a§l你参与击杀了'.$entity->enConfig['名字'].'获得了:';
         // $len=strlen($mess);

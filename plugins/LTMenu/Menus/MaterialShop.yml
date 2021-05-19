@@ -1003,8 +1003,8 @@ items:
         commands: ~
         teleport: ~
         price: 0
-        give_item: 盔甲:虎头皂金源钢护腿:1
-        cost_item: 盔甲:源钢护腿:1&魔法:魔力石板:1&材料:龙石:18&材料:英雄勋章:1&材料:红线:20
+        give_item: 盔甲:虎头皂金魔力护腿:1
+        cost_item: 盔甲:虎头皂金膝:1&魔法:魔力石板:1&材料:龙石:18&材料:英雄勋章:1&材料:红线:20
         multilevel: false
       - item:
           - 383

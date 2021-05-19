@@ -626,7 +626,7 @@ class Main extends PluginBase implements Listener{
 						$to->getLevel()->addSound(new \pocketmine\level\sound\DoorSound(new Vector3(67, 94, 31)));
 					}
 				}
-				if(in_array($toName, ['t1', 't2', 't3', 't4', 't5', 't6', 's1'])){
+				if(in_array($toName, ['t1', 't2', 't3', 't4', 't5', 't6', 's1', 'f10'])){
 					if($entity->getGTo()<6){
 						$entity->sendMessage('§l§a[提示]§c你需要完成主线任务才可以进入这个世界！');
 						$event->setCancelled(true);

@@ -48,7 +48,7 @@ class Bomb extends Projectile
 
                 $moveVector = new Vector3($this->x + $this->motionX, $this->y + $this->motionY, $this->z + $this->motionZ);
 
-                $list = $this->getLevel()->getCollidingEntities($this->boundingBox->addCoord($this->motionX, $this->motionY, $this->motionZ)->expand(1, 1, 1), $this);
+                $list = $this->getLevel()->getCollidingEntities($this->boundingBox->addCoord($this->motionX, $this->motionY, $this->motionZ)->expand(2, 2, 2), $this);
 
                 $nearDistance = PHP_INT_MAX;
                 $nearEntity = null;
@@ -95,7 +95,7 @@ class Bomb extends Projectile
             $this->updateMovement();
 
         }
-        if($this->age > 30) { //是相撞的。
+        if($this->age > 30) {
             $this->close();
         }
         return true;

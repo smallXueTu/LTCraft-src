@@ -44,7 +44,7 @@ class ManaArmor extends Armor implements Mana, ReduceMana
         $this->Mana = $nbt['armor'][15];
         $this->MaxMana = $nbt['armor'][16] * 100;
         $this->noteMagicSpeed = $nbt['armor'][17];
-        $this->reduceMana = $nbt['armor'][18];
+        $this->reduceMana = (int)$nbt['armor'][18];
         $this->updateName();
     }
 

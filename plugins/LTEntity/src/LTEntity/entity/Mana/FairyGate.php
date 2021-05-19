@@ -114,7 +114,7 @@ class FairyGate extends Entity implements ChunkLoader
             }
 
             foreach ($this->getLevel()->getCollidingEntities($this->boundingBox, $this) as $entity){
-                if ($entity instanceof Player and $entity->canSelected(5 * 20)){
+                if ($entity instanceof Player and $entity->canSelected(20 * 20)){
                     $position = null;
                     if ($this->level->getName() == 'f10'){
                         $name = strtolower($entity->getName());
@@ -124,13 +124,13 @@ class FairyGate extends Entity implements ChunkLoader
                             $gate = Main::getInstance()->playerGates[$name];
                         }
                         if ($gate === null or $gate->closed){
-                            if (count(Main::getInstance()->playerGates) <= 0){
+                            if (count(Main::getInstance()->gates) <= 0){
                                 $this->kill();
                                 $entity->sendMessage('外部没有开放的精灵门！');
                                 return true;
                             }
                             /** @var FairyGate $gate */
-                            $gate = Main::getInstance()->playerGates[array_rand(Main::getInstance()->playerGates[$name])];
+                            $gate = Main::getInstance()->gates[array_rand(Main::getInstance()->gates)];
                         }
                         $gate->removePlayer($entity);
                         $position = $gate;
@@ -150,7 +150,7 @@ class FairyGate extends Entity implements ChunkLoader
                     $entity->teleport($position);
                 }
             }
-            if (!$this->isNatural() and $this->age % 60 == 0 and !$this->siphonMana(10)){
+            if (!$this->isNatural() and $this->age % 60 == 0 and !$this->siphonMana(30)){
                 $this->kill();
                 return false;
             }
@@ -408,11 +408,13 @@ class FairyGate extends Entity implements ChunkLoader
         foreach (Main::getInstance()->playerGates as $playerName => $gate){
             if ($gate->closed)unset(Main::getInstance()->playerGates[$playerName]);
         }
+        /*
         if (count(Main::getInstance()->playerGates) <=0){
             foreach (Main::getInstance()->gates as $gate){
                 $gate->kill();
             }
         }
+        */
     }
 
     public function getLoaderId()

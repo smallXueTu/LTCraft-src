@@ -202,7 +202,7 @@ class GaiaGuardiansIII extends Creature
                     }
                 }
                 foreach ($player->getOrnamentsInventory()->getContents() as $index => $item){//检查饰品栏
-                    if ($item instanceof BaseOrnaments){
+                    if (($item instanceof BaseOrnaments)){
                         $player->getOrnamentsInventory()->setItem($index, Item::get(0));
                         $player->getLevel()->dropItem($player, $item);
                     }
@@ -298,7 +298,6 @@ class GaiaGuardiansIII extends Creature
     }
     public function setHealth($amount)
     {
-        $oldAmount = $this->getHealth();
         parent::setHealth($amount);
         foreach ([[0.7, 0], [0.3, 1]] as $arr){
             if ($this->getHealth() < $this->getMaxHealth() * $arr[0] and !$this->spawnServantJ[$arr[1]]){
@@ -337,9 +336,13 @@ class GaiaGuardiansIII extends Creature
             $servant->setMaxHealth(50);
             $servant->setHealth($this->getMaxHealth());
             $servant->spawnToAll();
+            $servant->index = $index;;
             $this->servants[$index] = $servant;
         }
     }
+	public function removeServant(string $index){
+		unset($this->servants[$index]);
+	}
     /**
      * 检查看的目标
      */
@@ -656,7 +659,14 @@ class GaiaGuardiansIII extends Creature
     }
     public function getDrops()
     {
-        return ['材料', '英雄勋章', 1];
+        $drop = [];
+		foreach ($this->getPresencePlayer() as $player){
+			/** @var Player $player */
+			if (!$player->isA())continue;
+			$item = \LTItem\Main::getInstance()->createMaterial("英雄勋章");
+			$drop[] = $item;
+		}
+        return $drop;
     }
 
     /**

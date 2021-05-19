@@ -25,6 +25,7 @@ class Servant extends Creature
     private int $lastUpdateSee = 0;
     /** @var ?Position  */
     private ?Position $baseTarget = null;
+	public ?string $index = null;
 
     /**
      * Servant constructor.
@@ -48,6 +49,11 @@ class Servant extends Creature
     {
         parent::setHealth($amount);
         $this->setNameTag("§d仆从\n[".$this->getHealth()."/".$this->getMaxHealth());
+    }
+    public function close()
+    {
+        parent::close();
+		$this->owner->removeServant($this->index);
     }
 
     public function onUpdate($tick)

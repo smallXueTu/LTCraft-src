@@ -5,8 +5,12 @@
   treasure: true
   end: true
   xiaose_: true
+  xiaoxiaoya: true
+  leisw: true
+  nan_yu: true
 受伤爆炸: []
-击杀特效: []
+击杀特效:
+  angel_xx: true
 视野范围:
-  angel_xx: "9999"
+  angel_xx: "22"
 ...

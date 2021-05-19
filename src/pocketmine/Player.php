@@ -3042,6 +3042,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
                                     $this->inventory->sendContents($this);
                                     break;
                                 }
+                                /** @var Bow $bow */
                                 $entity = $bow->spawnArrow($this);
                                 if ($entity==null)break;
                                 $ev = new EntityShootBowEvent($this, $bow, $entity, $entity->f);

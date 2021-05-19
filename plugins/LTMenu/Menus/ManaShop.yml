@@ -245,7 +245,7 @@ items:
     multilevel: false
   - item:
       - 383
-      - 39
+      - 36
       - 1
     nametag: |-
       §a神圣斗篷
@@ -254,7 +254,7 @@ items:
     commands: ~
     teleport: ~
     price: 0
-    give_item: 饰品:圣布:1
+    give_item: 饰品:神圣斗篷:1
     cost_item: 材料:圣布:6&35:0:3
     multilevel: false
 ...

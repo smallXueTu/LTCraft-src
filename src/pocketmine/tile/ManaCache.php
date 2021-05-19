@@ -66,30 +66,26 @@ class ManaCache extends Tile
                     if ($a[1] == 1){
                         foreach ($tile->getInventory()->getContents() as $i => $item){
                             /** @var $item Mana */
-                            if ($item instanceof Mana){
-                                if ($this->getMana() < $item->getMaxMana()){
-                                    $enter = min($item->getMaxMana() - $item->getMana(), 100);                                    if ($enter == 0)continue;
-                                    $this->spawnParticle = true;
-                                    if ($this->putMana($enter)){
-                                        $item->addMana($enter);
-                                        $tile->getInventory()->setItem($i, $item);
-                                        break;
-                                    }
+                            if ($item instanceof Mana and $item->getMana() < $item->getMaxMana() and $this->getMana() > 0){
+                                $enter = min($item->getMaxMana() - $item->getMana(), 100);                                    if ($enter == 0)continue;
+                                $this->spawnParticle = true;
+                                if ($this->putMana($enter)){
+                                    $item->addMana($enter);
+                                    $tile->getInventory()->setItem($i, $item);
+                                    break;
                                 }
                             }
                         }
                     }else{
                         foreach ($tile->getInventory()->getContents() as $i => $item){
                             /** @var $item Mana */
-                            if ($item instanceof Mana and $item->canPutMana()){
-                                if ($item->getMana() > 0){
-                                    $enter = min($item->getMana(), 100);
-                                    if ($enter == 0)continue;
-                                    if ($item->consumptionMana($enter)){
-                                        $this->addMana($enter);
-                                        $tile->getInventory()->setItem($i, $item);
-                                        break;
-                                    }
+                            if ($item instanceof Mana and $item->canPutMana() and $item->getMana() > 0 and $this->getMana() < self::MAX_MANA){
+                                $enter = min($item->getMana(), 100);
+                                if ($enter == 0)continue;
+                                if ($item->consumptionMana($enter)){
+                                    $this->addMana($enter);
+                                    $tile->getInventory()->setItem($i, $item);
+                                    break;
                                 }
                             }
                         }

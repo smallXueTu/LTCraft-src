@@ -6674,7 +6674,7 @@ f10-1:
   显示: true
   抛射物允许反弹: false
   死亡信息: false
-  怪物模式: 1
+  怪物模式: 0
   护甲: 150
   数量: 1
   刷怪时间: 300
@@ -6694,8 +6694,8 @@ f10-1:
   z: 237.500000
   世界: f10
   悬浮介绍: false
-  皮肤: 默认
-  皮肤ID: Standard_Custom
+  皮肤: 赤焰精灵
+  皮肤ID: Standard_CustomSlim
   披风: false
 f10-2:
   刷怪点: f10-2
@@ -6715,7 +6715,7 @@ f10-2:
   显示: true
   抛射物允许反弹: false
   死亡信息: false
-  怪物模式: 1
+  怪物模式: 0
   护甲: 150
   数量: 1
   刷怪时间: 200
@@ -6735,8 +6735,8 @@ f10-2:
   z: 79.500000
   世界: f10
   悬浮介绍: false
-  皮肤: 默认
-  皮肤ID: Standard_Custom
+  皮肤: 灵魂精灵
+  皮肤ID: Standard_CustomSlim
   披风: false
 f10-3:
   刷怪点: f10-3
@@ -6756,7 +6756,7 @@ f10-3:
   显示: true
   抛射物允许反弹: false
   死亡信息: false
-  怪物模式: 1
+  怪物模式: 0
   护甲: 150
   数量: 1
   刷怪时间: 100
@@ -6776,8 +6776,8 @@ f10-3:
   z: 79.500000
   世界: f10
   悬浮介绍: false
-  皮肤: 默认
-  皮肤ID: Standard_Custom
+  皮肤: 风暴精灵
+  皮肤ID: Standard_CustomSlim
   披风: false
 f10-4:
   刷怪点: f10-4
@@ -6797,7 +6797,7 @@ f10-4:
   显示: true
   抛射物允许反弹: false
   死亡信息: false
-  怪物模式: 1
+  怪物模式: 0
   护甲: 150
   数量: 1
   刷怪时间: 100
@@ -6817,7 +6817,7 @@ f10-4:
   z: 237.500000
   世界: f10
   悬浮介绍: false
-  皮肤: 默认
+  皮肤: 嗜血精灵
   皮肤ID: Standard_Custom
   披风: false
 f10-5:
@@ -6858,7 +6858,7 @@ f10-5:
   z: 147.500000
   世界: f10
   悬浮介绍: false
-  皮肤: 默认
+  皮肤: 虚无精灵
   皮肤ID: Standard_Custom
   披风: false
 f10-6:
@@ -6899,7 +6899,7 @@ f10-6:
   z: 100.500000
   世界: f10
   悬浮介绍: false
-  皮肤: 默认
+  皮肤: 虚无精灵
   皮肤ID: Standard_Custom
   披风: false
 f10-8:
@@ -6940,8 +6940,8 @@ f10-8:
   z: 217.500000
   世界: f10
   悬浮介绍: false
-  皮肤: 默认
-  皮肤ID: Standard_Custom
+  皮肤: 黑暗精灵
+  皮肤ID: Standard_CustomSlim
   披风: false
 f10-9:
   刷怪点: f10-9
@@ -6981,8 +6981,8 @@ f10-9:
   z: 169.500000
   世界: f10
   悬浮介绍: false
-  皮肤: 默认
-  皮肤ID: Standard_Custom
+  皮肤: 黑暗精灵
+  皮肤ID: Standard_CustomSlim
   披风: false
 f10-10:
   刷怪点: f10-10
@@ -7022,8 +7022,8 @@ f10-10:
   z: 193.500000
   世界: f10
   悬浮介绍: false
-  皮肤: 默认
-  皮肤ID: Standard_Custom
+  皮肤: 黑暗精灵
+  皮肤ID: Standard_CustomSlim
   披风: false
 f10-7:
   刷怪点: f10-7
@@ -7063,7 +7063,7 @@ f10-7:
   z: 123.500000
   世界: f10
   悬浮介绍: false
-  皮肤: 默认
+  皮肤: 虚无精灵
   皮肤ID: Standard_Custom
   披风: false
 ...
