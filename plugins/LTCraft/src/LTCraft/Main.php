@@ -1407,7 +1407,7 @@ class Main extends PluginBase implements Listener{
 					$this->updateHeadCountConfig();
 					\LTGrade\Main::getInstance()->updateTaskConfig();
 					\LTEntity\Main::getInstance()->updateWeeksExpConfig();
-					$this->number->setAll([]);
+					// $this->number->setAll([]);
 					 foreach($this->server->getOnlinePlayers() as $player){
 						 $this->onlineTime[$player->getName()] = time();
 					 }

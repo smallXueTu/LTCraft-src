@@ -95,7 +95,7 @@ class Bomb extends Projectile
             $this->updateMovement();
 
         }
-        if($this->age > 30) {
+        if($this->age > 30) { //是相撞的。
             $this->close();
         }
         return true;

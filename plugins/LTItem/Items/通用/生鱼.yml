@@ -1,6 +1,6 @@
 ---
 武器名: 生鱼
-武器ID: "349"
+武器ID: "346"
 射速: "20"
 子弹模型: snowball
 粒子: false
@@ -24,8 +24,8 @@ PVP:
   击退: 0
   雷击: false
   冰冻: false
-  击杀提示: 爆炸了...梦醒了 {entity}离别....
-手持提示: false
+  击杀提示: §l§e管理员{damager}制裁了{entity}
+手持提示: '@ed@ex@pd@ex'
 最大星级: false
 等级: 定制
 爆炸: false

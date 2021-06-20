@@ -35,6 +35,7 @@ class Sakura extends Entity
     }
     public function onUpdate($currentTick)
     {
+		$this->close();
         $this->age++;
         if ($this->age % 2 == 0)$this->spawnBorderParticle();
         if ($this->age > 7*10 + 30){

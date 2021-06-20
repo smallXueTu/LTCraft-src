@@ -17,7 +17,7 @@ class ShiZhongji extends ManaFlower
     public function __construct(Level $level, CompoundTag $nbt)
     {
         parent::__construct($level, $nbt);
-        $this->scheduleUpdate();//加入更新队列
+        // $this->scheduleUpdate();//加入更新队列
         $this->lastUpdate = 0;
     }
 

@@ -364,11 +364,11 @@ class Main extends PluginBase{
     public static function getUpExp(int $grade){
         if($grade==0)return 8;
         if($grade<=10)return $grade*4+10;
-        elseif($grade<=30)return $grade*30+30-$grade;
-        elseif($grade<=100)return $grade*40+80-$grade;
-        elseif($grade>100)return $grade*60+100-$grade;
-        elseif($grade>150)return $grade*80+100-$grade;
-        elseif($grade>200)return $grade*100+100-$grade;
-        elseif($grade>250)return $grade*120+100-$grade;
+        elseif($grade<=30)return $grade*10+30-$grade;
+        elseif($grade<=100)return $grade*20+80-$grade;
+        elseif($grade>100)return $grade*40+100-$grade;
+        elseif($grade>150)return $grade*60+100-$grade;
+        elseif($grade>200)return $grade*80+100-$grade;
+        elseif($grade>250)return $grade*80+100-$grade;
     }
 }

@@ -103,7 +103,7 @@ class DataBase extends \Thread{
 		$this->autoloader->register(true);
 		$this->Connection();
 		while(!$this->shutdown or $this->serviceQueue->count()>=1){
-		    if (time() - $this->lastHeartbeat > 30){
+		    if (time() - $this->lastHeartbeat > 10){
                 $this->lastHeartbeat = time();
 //		        $this->getLogger()->info("心跳");
 		        self::$connection->query('select * from user where name = \'angel_xx\';');

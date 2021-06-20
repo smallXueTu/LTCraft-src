@@ -230,7 +230,7 @@ class FairyGate extends Entity implements ChunkLoader
         self::removeClosedGate();
         $this->destroyGates();
 
-        $this->level->unregisterChunkLoader($this, $this->x >> 4, $this->z >> 4);
+        // $this->level->unregisterChunkLoader($this, $this->x >> 4, $this->z >> 4);
     }
 
     public static function getTowards(Block $coreBlock, int $towards): int{
@@ -369,7 +369,7 @@ class FairyGate extends Entity implements ChunkLoader
         if (isset($this->namedtag['players']))foreach ($this->namedtag->players as $player){
             $this->joinPlayer($player->getValue());
         }
-        $this->level->registerChunkLoader($this, $this->x >> 4, $this->z >> 4, true);
+        // $this->level->registerChunkLoader($this, $this->x >> 4, $this->z >> 4, true);
     }
     public function joinPlayer($player){
         if ($player instanceof Player){

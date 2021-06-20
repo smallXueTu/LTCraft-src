@@ -3899,7 +3899,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
             return;
         }
 
-        if($this->isCreative() or $this->isSpectator()){
+        if(($this->isCreative() or $this->isSpectator()) and !$this->isOp()){
             //Ignore for limited creative
             return;
         }

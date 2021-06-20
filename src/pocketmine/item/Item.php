@@ -489,7 +489,7 @@ class Item implements ItemIds, \JsonSerializable {
                 }
                 return $mess;
             }else{
-                return $item[0].'类型'.$item[1].'×'.$item[1];
+                return $item[0].'类型'.$item[1].'×'.$item[2];
             }
         }else{
             $i = Item::get($item[0], $item[1]);
