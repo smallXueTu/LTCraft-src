@@ -68,7 +68,7 @@ class ManaCache extends Tile
                             /** @var $item Mana */
                             if ($item instanceof Mana and $item->getMana() < $item->getMaxMana() and $this->getMana() > 0){
                                 $enter = min($item->getMaxMana() - $item->getMana(), 100);                                    if ($enter == 0)continue;
-                                $this->spawnParticle = true;
+                                // $this->spawnParticle = true;
                                 if ($this->putMana($enter)){
                                     $item->addMana($enter);
                                     $tile->getInventory()->setItem($i, $item);

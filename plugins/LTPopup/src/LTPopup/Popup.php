@@ -86,7 +86,7 @@ class Popup extends PluginBase implements Listener{
 		$length = count($colorArray);
         $index = $this->index--;
         $top=$colorArray[++$index % $length].'§l☞'.$colorArray[++$index % $length].'L'.$colorArray[++$index % $length].'T'.$colorArray[++$index % $length].'C'.$colorArray[++$index % $length].'r'.$colorArray[++$index % $length].'a'.$colorArray[++$index % $length].'f'.$colorArray[++$index % $length].'t '.$colorArray[++$index % $length].'S'.$colorArray[++$index % $length].'e'.$colorArray[++$index % $length].'r'.$colorArray[++$index % $length].'v'.$colorArray[++$index % $length].'e'.$colorArray[++$index % $length].'r'.$colorArray[++$index % $length].'☜'.PHP_EOL;
-		$QQ=$colorArray[++$index % $length].'★QQ群号'.$colorArray[++$index % $length].':862859409★';
+		$QQ=$colorArray[++$index % $length].'★QQ群号'.$colorArray[++$index % $length].':638732016★';
 		$time=date('Y-m-d').' '.date('H:i:s', time());
 		foreach($this->getServer()->getOnlinePlayers() as $player){
 			if($player->isOnline()){

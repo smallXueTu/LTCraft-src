@@ -78,8 +78,8 @@ class MainLogger extends \AttachableThreadedLogger {
 			throw new \RuntimeException("MainLogger has been already created");
 		}
 		static::$logger = $this;
-		@touch('/root/server.log');
-		$this->logFile = '/root/server.log';
+		@touch('/home/Server/temp/server.log');
+		$this->logFile = '/home/Server/temp/server.log';
 		$this->path = $saveFile;
 		$this->logDebug = (bool) $logDebug;
 		$this->logStream = new \Threaded;

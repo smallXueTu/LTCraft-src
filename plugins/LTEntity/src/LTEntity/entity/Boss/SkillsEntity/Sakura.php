@@ -35,18 +35,18 @@ class Sakura extends Entity
     }
     public function onUpdate($currentTick)
     {
-		$this->close();
+		// $this->close();
         $this->age++;
-        if ($this->age % 2 == 0)$this->spawnBorderParticle();
+        if ($this->age % 10 == 0)$this->spawnBorderParticle();
         if ($this->age > 7*10 + 30){
-            $phase = (int)(($this->age - 100) % 720 / 240);
+            $phase = (int)(($this->age - 100) % 720 / 80);
 //            $phase = 0;
             if ($this->lastPhase < $phase){
                 $this->lastPhase = $phase;
                 $this->spawnStar($phase);
             }
         }
-        if ($this->age > 820 or $this->owner->closed or $this->owner->distance($this) > 20){
+        if ($this->age > 320 or $this->owner->closed or $this->owner->distance($this) > 20){
             if ($this->owner instanceof Prisoners){
                 $this->owner->releaseSkillIng = false;
             }

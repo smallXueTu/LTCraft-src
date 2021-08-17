@@ -40,7 +40,7 @@ class FairyArmor extends \LTItem\SpecialItems\Armor implements ReduceMana
     public function setReduceMana(int $value): ReduceMana
     {
         $tag = $this->getNamedTag();
-        $tag['armor'][18] = new StringTag('', $value);
+        $tag['armor'][15] = new StringTag('', $value);
         $this->reduceMana = $value;
         $this->setNamedTag($tag);
         return $this;

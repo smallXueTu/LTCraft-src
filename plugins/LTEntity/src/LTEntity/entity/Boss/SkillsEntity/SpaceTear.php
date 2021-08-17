@@ -32,7 +32,7 @@ class SpaceTear extends Entity
     }
     public function onUpdate($currentTick)
     {
-		$this->close();
+		// $this->close();
         $this->age++;
         $this->owner->attackDelay = 0;
         if ($this->owner->getY() > $this->getBasePos()->add(0, 5, 0)->getY()){

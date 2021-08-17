@@ -13,6 +13,7 @@ use pocketmine\Player;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\StringTag;
 use LTEntity\entity\BaseEntity;
+use LTItem\Cooling;
 use pocketmine\math\Vector3;
 use pocketmine\Server;
 use LTItem\Main;
@@ -666,7 +667,14 @@ class Weapon extends Item implements LTItem {
 			if(!$player->getAStatusIsDone($this->getWlevel())){
 			    $player->addAStatus($this->getWlevel());
             }
-			return strtr($this->handMessage .($this->getAwakening()>1?'觉醒:'.$this->getAwakeningF():''),['@ed'=>$this->getPVEdamage(),'%'=>'%%%%','@ex'=>$this->getPVEvampire()*100,'@pd'=>$this->getPVPdamage(),'@px'=>$this->getPVPvampire()*100,'@eq'=>$this->getGroupsOfBack()]);
+			$mess = strtr($this->handMessage .($this->getAwakening()>1?'觉醒:'.$this->getAwakeningF():''),['@ed'=>$this->getPVEdamage(),'%'=>'%%%%','@ex'=>$this->getPVEvampire()*100,'@pd'=>$this->getPVPdamage(),'@px'=>$this->getPVPvampire()*100,'@eq'=>$this->getGroupsOfBack()]);
+			if($this->getSkillName()!='' and $this->getSkillName()!=false){
+				if(isset(Cooling::$weapon[$player->getName()][$this->getLTName()]) and Cooling::$weapon[$player->getName()][$this->getLTName()]>time())
+					return $mess."\n".'§c技能剩余时间:'.ceil(Cooling::$weapon[$player->getName()][$this->getLTName()]-time()).'秒';
+				else
+					return $mess."\n".'§d点击地面可释放技能';
+			}
+			return $mess;
 		}else return '你不是这个武器的拥有者！';
 	}
 	public function getParticle(){

@@ -2861,7 +2861,7 @@ class Server{
 				break;
 				case DataBase::CHECK_R:
 					$data=unserialize(substr($str, $offset++));
-					\LTCraft\Main::PlayerUpdateGradeTo30Callback($data);
+					\LTCraft\Main::PlayerUpdateGradeTo50Callback($data);
 				break;
 				case DataBase::CHECH_MORE_IP:
 					$len=ord($str[$offset++]);
@@ -2892,7 +2892,7 @@ class Server{
 			}
 			$status['tps']=$this->getTicksPerSecond();
 			$status['load']=$this->getTickUsage();
-			file_put_contents('/root/status3.txt',serialize($status));
+			file_put_contents('/home/Server/temp/status.txt',serialize($status));
 			if($this->tickCounter%1200===0){
 				$mUsage = Utils::getSystemMemoryUsage();
 				if($mUsage!==false and $mUsage[4]<600 and !isset($this->AlreadyReload)){

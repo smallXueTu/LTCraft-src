@@ -3,6 +3,7 @@ namespace LTItem;
 use LTItem\Mana\BaseMana;
 use LTItem\Mana\Mana;
 use LTItem\Mana\ManaSystem;
+use pocketmine\nbt\tag\NamedTag;
 use pocketmine\Server;
 use pocketmine\entity\Entity;
 use pocketmine\plugin\PluginBase;
@@ -510,6 +511,12 @@ class Main extends PluginBase{
 			'Unbreakable'=>new ByteTag('Unbreakable',1),
 			'isSendToInv'=>new ByteTag('isSendToInv',1),
 		]));
+		return $item;
+	}
+	public static function setSendToInv(Item $item){
+        $nbt = $item->getNamedTag();
+        $nbt->isSendToInv=new ByteTag('isSendToInv',1);
+        $item->setNamedTag($nbt);
 		return $item;
 	}
 	public static function createAutoSellItem($ids){

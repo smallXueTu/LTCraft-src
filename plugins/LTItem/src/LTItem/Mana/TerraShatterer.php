@@ -132,7 +132,7 @@ class TerraShatterer extends ManaTool {
         }
         if ($player->getLevel()->getName() == 'zy'){
             foreach ($blocks as $block) {
-                $player->getLevel()->useBreakOn($block, $this, null, ['S', 'SS', 'A']?false:true);
+                $player->getLevel()->useBreakOn($block, $this, null, ['S', 'SS', 'A']?false:true, $player);
             }
         }else{
             foreach ($blocks as $block) {

@@ -68,9 +68,9 @@ class Line extends Entity
             $this->close();
             return false;
         }else{
-            $Mx = 0.25 * ($x / $diff);
-            $My = 0.25 * ($y / $diff);
-            $Mz = 0.25 * ($z / $diff);
+            $Mx = 1 * ($x / $diff);
+            $My = 1 * ($y / $diff);
+            $Mz = 1 * ($z / $diff);
             $this->move($Mx, $My, $Mz);
             $this->vector3s[] = $this->asVector3();
             $radius = $this->width / 2;
@@ -83,7 +83,7 @@ class Line extends Entity
         if ($this->age % 2 == 0){
             $this->checkPlayers();
         }
-        if ($this->target->distance($this) < 0.2 or $this->age > 300 or $this->owner->closed){
+        if ($this->target->distance($this) < 1 or $this->age > 300 or $this->owner->closed){
             $this->close();
             return false;
         }

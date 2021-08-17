@@ -150,6 +150,11 @@ class Main extends PluginBase implements Listener{
     public Config $r;
 
     /**
+     * @var DayUpdate
+     */
+    public DayUpdate $dayUpdate;
+	
+    /**
      * @return Main
      */
 	public static function getInstance(){
@@ -167,7 +172,7 @@ class Main extends PluginBase implements Listener{
 		// $this->Data->save(false);
 		if(isset($this->Head))$this->Head->save(false);
 		$this->config->save(false);
-		//$this->number->save(false);
+		$this->number->save(false);
         $m = new Config($this->getDataFolder()."moveAction.yml",Config::YAML,$this->moveAction);
         $m->save(false);
 		$this->playerConfig->save(false);
@@ -181,7 +186,7 @@ class Main extends PluginBase implements Listener{
 		if(isset($LTCraft->Head))$LTCraft->Head->save(false);
 		$LTCraft->config->save(false);
         $LTCraft->playerConfig->save(false);
-        //$LTCraft->number->save(false);
+        $LTCraft->number->save(false);
 		$LTGrade = \LTGrade\Main::getInstance();
 		$LTGrade->PlayerTaskConf->save(false);
 		$LTGrade->conf->save(false);
@@ -223,7 +228,7 @@ class Main extends PluginBase implements Listener{
 		//$this->getServer()->getScheduler()->scheduleDelayedRepeatingTask(new CallbackTask([$this,"cleanTime"],[20]),32000,32000);
 //		$this->Data=new Config($this->getDataFolder()."Data.yml",Config::YAML,array());
 		$this->Head=new Config($this->getDataFolder()."Head.yml",Config::YAML,array());
-		//$this->number=new Config($this->getDataFolder()."number.yml",Config::YAML,array());
+		$this->number=new Config($this->getDataFolder()."number.yml",Config::YAML,array());
 		$TutorialRecord = new Config($this->getDataFolder()."TutorialRecord.yml",Config::YAML,array());
 		Tutorial::init($TutorialRecord);
 		$this->r=new Config($this->getDataFolder()."R.yml",Config::YAML,array());
@@ -253,6 +258,8 @@ class Main extends PluginBase implements Listener{
 		$moveActionC = new Config($this->getDataFolder()."moveAction.yml",Config::YAML,[]);
 		$this->moveAction = $moveActionC->getAll();
         $this->getServer()->getScheduler()->scheduleDelayedTask(new CallbackTask([$this,"spawn"],[]),20);
+        $this->dayUpdate = new DayUpdate($this);
+        $this->getServer()->getScheduler()->scheduleDelayedRepeatingTask($this->dayUpdate,20, 20);
 	}
 	public function spawn(){
         $nbt = new CompoundTag;
@@ -407,23 +414,26 @@ class Main extends PluginBase implements Listener{
 		$this->r->save(false);
 		unset($this->onlineTime[$player->getName()]);
 	}
-	public static function PlayerUpdateGradeTo30($name){
+	public static function PlayerUpdateGradeTo50($name){
 		$name=strtolower($name);
 		$sql="SELECT * FROM server.recommended WHERE username='{$name}'";//查询记录 然后回调 self::PlayerUpdateGradeTo30Callback()
 		Server::getInstance()->dataBase->pushService('2'.chr(8).$sql);
 	}
-	public static function PlayerUpdateGradeTo30Callback($data){
+	public static function PlayerUpdateGradeTo50Callback($data){
 		$username=strtolower($data['username']);
 		$recommended=strtolower($data['recommended']);
 		$id=$data['ID'];
-		Server::getInstance()->dataBase->pushService('30'.$username.' 1 7');
-		Server::getInstance()->dataBase->pushService('30'.$recommended.' 1 7');
+		Server::getInstance()->dataBase->pushService('30'.$username.' 2 7');
+		Server::getInstance()->dataBase->pushService('30'.$recommended.' 2 7');
 		if(($UPlayer=Server::getInstance()->getPlayerExact($username))){
 			if(!$UPlayer->isVIP()){
 				$UPlayer->setVIP(1);
 			}
 		}
 		if(($RPlayer=Server::getInstance()->getPlayerExact($recommended))){
+			self::sendItem($recommended, ['材料', '勇者武器礼包', 3]);
+			self::sendItem($recommended, ['材料', '宝箱之钥', 3]);
+			self::sendItem($recommended, ['材料', '神秘盔甲礼包', 3]);
 			if(!$RPlayer->isVIP()){
 				$RPlayer->setVIP(1);
 			}
@@ -904,6 +914,10 @@ class Main extends PluginBase implements Listener{
 		if(!($player->getLevel() instanceof Level))return;
 		if($player->getLevel()->getName()==='create')$player->setGamemode(0,false,true);
 		if($this->autoRestart and count($this->getServer()->getOnlinePlayers())===1 and current($this->getServer()->getOnlinePlayers())===$player){
+			$mUsage = Utils::getMemoryUsage(true);
+			if(number_format(round(($mUsage[1] / 1024) / 1024, 2)) > 4096){
+				$this->getServer()->getScheduler()->scheduleDelayedTask(new CallbackTask([$this,"reboot"],[]), 1);
+			}
 		    /*
 			$mUsage = Utils::getSystemMemoryUsage();
 			if($mUsage[4]<1500){
@@ -1016,11 +1030,12 @@ class Main extends PluginBase implements Listener{
 			}else{
 				$player=$data[2];
 				$item=$player->getItemInHand();
-				if(LTItem::isSendToInvItem($item)){
-					foreach($drops as $item){
-						$player->getInventory()->addItem($item);
-					}
-				}elseif(LTItem::isAutoSellItem($item)){
+				// if(LTItem::isSendToInvItem($item)){
+					// foreach($drops as $item){
+						// $player->getInventory()->addItem($item);
+					// }
+				// }else
+					if(LTItem::isAutoSellItem($item)){
 					foreach($drops as $item){
 						$money=LTMenu::getInstance()->getMoney($item, \LTMenu\Inventorys\SellInventory::$priceMenu);
 						if($money<=0){
@@ -1407,7 +1422,7 @@ class Main extends PluginBase implements Listener{
 					$this->updateHeadCountConfig();
 					\LTGrade\Main::getInstance()->updateTaskConfig();
 					\LTEntity\Main::getInstance()->updateWeeksExpConfig();
-					// $this->number->setAll([]);
+					$this->number->setAll([]);
 					 foreach($this->server->getOnlinePlayers() as $player){
 						 $this->onlineTime[$player->getName()] = time();
 					 }

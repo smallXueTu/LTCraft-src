@@ -27,6 +27,7 @@ namespace pocketmine\level;
 
 use LTItem\LTItem;
 use LTItem\Mana\Mana;
+use LTItem\Main;
 use LTItem\Mana\TarraFracture;
 use LTItem\Mana\TerraShatterer;
 use pocketmine\block\Air;
@@ -1773,7 +1774,7 @@ class Level implements ChunkManager, Metadatable
      *
      * @return bool
      */
-    public function useBreakOn(Vector3 $vector, Item &$item = null, Player $player = null, bool $createParticles = true): bool
+    public function useBreakOn(Vector3 $vector, Item &$item = null, Player $player = null, bool $createParticles = true, Player $p = null): bool
     {
         if (!(\LTCraft\Main::isNeedUpdate($this))) return false;
         $target = $this->getBlock($vector);
@@ -1886,9 +1887,18 @@ class Level implements ChunkManager, Metadatable
         }
         if (isset($drops)) {
             if ($this->getChunk($target->getX() >> 4, $target->getZ() >> 4)->getSubChunk($target->getY() >> 4)->getBlockDrop($target->getX() & 0x0f, $target->getY() & Level::Y_MASK, $target->getZ() & 0x0f)) {
-                foreach ($drops as $drop) {
-                    if ($drop->getCount() > 0) {
-                        $this->dropItem($vector->add(0.5, 0.5, 0.5), $drop);
+                if (Main::isSendToInvItem($item) and ($player!=null or $p!=null)){
+                    if ($player == null){
+						$player = $p;
+					}
+                    foreach ($drops as $drop) {
+						$player->getInventory()->addItem($drop);
+					}
+                }else{
+                    foreach ($drops as $drop) {
+                        if ($drop->getCount() > 0) {
+                            $this->dropItem($vector->add(0.5, 0.5, 0.5), $drop);
+                        }
                     }
                 }
             } else {

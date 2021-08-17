@@ -521,8 +521,8 @@ class Human extends Creature implements ProjectileSource, InventoryHolder {
                     $this->sendMessage('§a§l恭喜你达到30级,§e注意:§c如果你死亡将会扣除你橙币余额的0.01%的橙币！');
                     $this->sendMessage('§l§d生命值已经很高了，如果你觉得遮挡视线可以尝试输入/UI设置 血量格式切换');
                     $this->sendMessage('§l§3恭喜你,你解锁了新地图:创造世界！');
-                    LTCraft::PlayerUpdateGradeTo30($this->getName());
                 }elseif($ylevel<50 and $this->getGrade()>=50){
+                    LTCraft::PlayerUpdateGradeTo50($this->getName());
                     $this->sendMessage('§l§3恭喜你,你解锁了新地图:PVP！');
                 }elseif($ylevel<300 and $this->getGrade()>=300){
                     $this->sendMessage('§l§3恭喜你,达到了最高等级限制！');

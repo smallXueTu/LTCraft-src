@@ -45,7 +45,7 @@ class TearMissile extends Entity
             return false;
         }
         $this->move($this->motionX, $this->motionY, $this->motionZ);
-        $this->rendering();
+        if($this->age % 5 == 0)$this->rendering();
         return true;
     }
 

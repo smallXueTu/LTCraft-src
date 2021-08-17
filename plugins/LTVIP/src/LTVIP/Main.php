@@ -289,7 +289,7 @@ class Main extends PluginBase implements Listener
 				} else $sender->sendMessage(self::HEAD.'c实体范围1~120');
 			break;
 			case '附魔':
-				$vip=$this->isVIP($sender->getName());
+				$vip=$sender->isVIP($sender->getName());
 				if($vip===false or $vip<3)return $sender->sendMessage(self::HEAD.'c抱歉，你不是VIP3。');
 				if(count($args)<3)return  $sender->sendMessage(self::HEAD.'c用法/vip 附魔 附魔ID 等级(附魔手持物品！)');
 				$enchantment = Enchantment::getEnchantment((int)$args[1]);

@@ -424,6 +424,28 @@ class InlayInventory extends OperationInventory{
                                         $count = $item->getReduceMana() - $yLevel;
                                     }
                                     break;
+								case '灵魂圣布':
+								    if ($i instanceof Mana){
+								        if ($i->getMana()>=$i->getMaxMana()){
+                                            if($item instanceof Weapon or $item instanceof Armor){
+                                                if(!$item->canUse($event->getPlayer()) and !$event->getPlayer()->isOp()){
+                                                    $open->error('仅支持武器和盔甲。');
+                                                }else{
+                                                    if($item->getWlevel()=='定制'){
+                                                        $open->error('定制不能更换绑定。');
+                                                    }else{
+                                                        $count = 1;
+                                                        $item=$item->setBinding($i->getOwner());
+                                                    }
+                                                }
+                                            }else{
+                                                $open->error('仅支持武器和盔甲。');
+                                            }
+                                        }else{
+                                            $open->error('灵魂圣布未激活。');
+                                        }
+                                    }
+								break;
 								case '黑色金刚石':
 									if($item->getAttribute('附加护甲最大值')==false)continue 2;
 									$count=$nbt['armor'][3];

@@ -697,6 +697,11 @@ class Commands
 				$sender->sendMessage('§a成功赐予玩家'.$player->getName());
 				$player->sendMessage('§a收到工具');
 				return;
+			}elseif($args[2]=='STI'){//这个是挖方块不掉落直接进背包的物品
+				$item=Main::setSendToInv($sender->getItemInHand());
+				$sender->getInventory()->setItemInHand($item);
+				$sender->sendMessage('§a修改成功');
+				return;
 			}elseif($args[2]=='SELL'){//挖方块自动出售
 				$item=Main::createAutoSellItem($args[3]);
 				if(isset($args[4]))

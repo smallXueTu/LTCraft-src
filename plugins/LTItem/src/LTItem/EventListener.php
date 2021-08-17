@@ -194,7 +194,7 @@ class EventListener implements Listener
                     break;
                 case '樱花的誓约':
                     if(!isset(Cooling::$weapon[$player->getName()][$Hand->getLTName()]) or Cooling::$weapon[$player->getName()][$Hand->getLTName()]<time()){
-                        if (!$player->getBuff()->consumptionMana(300)){
+                        if (!$player->getBuff()->consumptionMana(10000)){
                             $player->sendMessage('§cMana不足！');
                             return;
                         }
@@ -205,12 +205,12 @@ class EventListener implements Listener
                             new DoubleTag("",  $player->z+0.5)
                         ]);
                         new Sakura( $player->getLevel(), $nbt,  $player);
-                        Cooling::$weapon[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD();
+                        Cooling::$weapon[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD()+150;
                     }
                     break;
                 case '时空撕裂':
                     if(!isset(Cooling::$weapon[$player->getName()][$Hand->getLTName()]) or Cooling::$weapon[$player->getName()][$Hand->getLTName()]<time()){
-                        if (!$player->getBuff()->consumptionMana(300)){
+                        if (!$player->getBuff()->consumptionMana(10000)){
                             $player->sendMessage('§cMana不足！');
                             return;
                         }
@@ -221,7 +221,7 @@ class EventListener implements Listener
                             new DoubleTag("",  $player->z+0.5)
                         ]);
                         new SpaceTear($player->getLevel(), $nbt, $player);
-                        Cooling::$weapon[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD();
+                        Cooling::$weapon[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD()+150;
                     }
                     break;
             }
@@ -403,7 +403,7 @@ class EventListener implements Listener
                 $all = $this->plugin->config->get('远程', []);
                 if(isset($all[strtolower($player->getName())]) and $all[strtolower($player->getName())] === false)return;
 
-                if ($Hand->getLTName()=='时空劫持者' and !$player->getBuff()->consumptionMana(10)){
+                if ($Hand->getLTName()=='时空劫持者' and !$player->getBuff()->consumptionMana(50)){
                     $player->sendMessage('§cMana不足！');
                     return;
                 }

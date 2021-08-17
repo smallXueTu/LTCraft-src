@@ -34,15 +34,15 @@ class ManaArmor extends Armor implements Mana, ReduceMana
         parent::__construct($conf, $count, $nbt, $init);
 
         $nbt = $this->getNamedTag();
-        if(!isset($nbt['armor'][18])){
+        if(!isset($nbt['armor'][18]) or $nbt['armor'][16] < 100 or $nbt['armor'][16] > 300){
             $nbt['armor'][15]=new StringTag('',$nbt['armor'][15]??0);//15 对于 ManaArmor来说 15就是Mana
-            $nbt['armor'][16]=new StringTag('',$nbt['armor'][16]??1);//16
-            $nbt['armor'][17]=new StringTag('',$nbt['armor'][17]??1);//17
+            $nbt['armor'][16]=new StringTag('',100);//16
+            $nbt['armor'][17]=new StringTag('',1);//17
             $nbt['armor'][18]=new StringTag('',$nbt['armor'][18]??$this->getConf('消魔减少'));//18 耗魔减少
             $this->setNamedTag($nbt);
         }
         $this->Mana = $nbt['armor'][15];
-        $this->MaxMana = $nbt['armor'][16] * 100;
+        $this->MaxMana = $nbt['armor'][16];
         $this->noteMagicSpeed = $nbt['armor'][17];
         $this->reduceMana = (int)$nbt['armor'][18];
         $this->updateName();
