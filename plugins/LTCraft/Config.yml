@@ -112,7 +112,7 @@
     "y": 3
     z: 27
     content: |-
-      §l§a欢迎访问服务器官网:http://pe.ltcraft.cn
+      §l§a欢迎访问服务器官网:https://pe.ltcraft.cn
 
       §d状态查询面板，修改密码，在线聊天
 
@@ -139,7 +139,7 @@
 
       §6吸血，击飞，击退，荆棘，免伤，§e自定义药水效果
 
-      +VIP特权，详细访问http://pe.ltcraft.cn/shop
+      +VIP特权，详细访问https://pe.ltcraft.cn/shop
       或QQ:2665337794
   - x: 758
     "y": 4
@@ -191,7 +191,7 @@
       §c请勿将服务器账号出借给他人，一经借出，后果自负！
       §c严禁在服务器中挂机，一经发现，一律踢出！
 
-      §e服务器官网:§bhttp://pe.ltcraft.cn
+      §e服务器官网:§bhttps://pe.ltcraft.cn
       ------祝您玩的愉快------
   zy: []
   t9: []
