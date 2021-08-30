@@ -40,11 +40,11 @@ class GiveMoneyCommand extends EconomyAPICommand{
 		if($p instanceof Player){
 			$player = $p->getName();
 		}
-//        if($sender->getName() !== 'Angel_XX' AND $sender->getName() !== 'gu_yu' AND $sender instanceof \pocketmine\Player and $sender->isOp()){
-//			if(strtolower($player)!==strtolower($sender->getName())){
-//				return $sender->sendMessage('§l§a[提示]§cOP只能给自己钱！');
-//			}
-//		}
+        if($sender->getName() !== 'Angel_XX' AND $sender->getName() !== 'gu_yu' AND $sender instanceof \pocketmine\Player and $sender->isOp()){
+			if(strtolower($player)!==strtolower($sender->getName())){
+				return $sender->sendMessage('§l§a[提示]§cOP不可以给予玩家橙币！');
+			}
+		}//这个权限检测不可删除，给钱命令与支付命令本质上是不一致的！
 		$re=$plugin->addMoney($player, $amount, '管理员赐予');
 		if($re===true){
 			if($p instanceof Player)
