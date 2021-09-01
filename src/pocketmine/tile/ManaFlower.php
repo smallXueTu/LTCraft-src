@@ -29,7 +29,7 @@ class ManaFlower extends Tile
         foreach ($manaCaches as $manaCache){
             if ($manaCache->getMana() < \pocketmine\tile\ManaCache::MAX_MANA){
                 $m = min(\pocketmine\tile\ManaCache::MAX_MANA - $manaCache->getMana(), $max, $this->mana);
-                $manaCache->enterMana($m, $this);
+                $manaCache->enterMana($m, null);
                 $max -= $m;
             }
             if ($max <= 0 or $this->mana <= 0)break;

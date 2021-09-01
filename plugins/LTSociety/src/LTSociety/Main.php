@@ -99,7 +99,7 @@ class Main extends PluginBase implements Listener{
 		$sender->sendMessage('§l§o§a查看公会成员§d/公会 成员');
 		$sender->sendMessage('§l§o§a全员集合§d/公会 集合');
 		$sender->sendMessage('§l§o§a查看自己公会的管理员§d/公会 管理员列表');
-                $sender->sendMessage('§l§o§a申请加入一个公会§d/公会 申请加入 公会ID');
+        $sender->sendMessage('§l§o§a申请加入一个公会§d/公会 申请加入 公会ID');
 		$sender->sendMessage('§l§o§a查看公会信息§d/公会 信息 [可选公会ID]');
 		$sender->sendMessage('§l§o§a同意申请公会§d/公会 同意加入');
 		$sender->sendMessage('§l§o§a拒绝申请公会§d/公会 拒绝加入');

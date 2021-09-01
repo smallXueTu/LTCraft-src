@@ -48,9 +48,9 @@ class ShiZhongji extends Transparent {
         if($type === Level::BLOCK_UPDATE_NORMAL){
             if($this->getSide(0)->isTransparent() === true){
                 $this->getLevel()->useBreakOn($this);
-
                 return Level::BLOCK_UPDATE_NORMAL;
             }
+            $this->getLevel()->getTile($this)->scheduleUpdate();
         }
 
         return false;

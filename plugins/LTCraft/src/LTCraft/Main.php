@@ -4,6 +4,7 @@ namespace LTCraft;
 use LTEntity\entity\Guide\Trident;
 use LTItem\Mana\Mana;
 use pocketmine\event\server\DataPacketSendEvent;
+use pocketmine\nbt\NBT;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\event\server\QueryRegenerateEvent;
@@ -261,6 +262,12 @@ class Main extends PluginBase implements Listener{
         $this->dayUpdate = new DayUpdate($this);
         $this->getServer()->getScheduler()->scheduleDelayedRepeatingTask($this->dayUpdate,20, 20);
 	}
+	public function test(){
+        $nbt = new NBT(NBT::BIG_ENDIAN);
+        $nbt->readCompressed(file_get_contents( "level.dat"));
+        $levelData = $nbt->getData();
+        var_dump($levelData);
+    }
 	public function spawn(){
         $nbt = new CompoundTag;
         $nbt->Pos = new ListTag('Pos', [
@@ -1008,7 +1015,7 @@ class Main extends PluginBase implements Listener{
                 return;
             }
 			//添加这个坐标的方块为不可掉落方块
-            $block->getLevel()->getChunk($block->getX() >> 4,  $block->getZ() >> 4)->getSubChunk($block->getY() >> 4)->setBlockDrop($block->getX() & 0x0f, $block->getY() & Level::Y_MASK, $block->getZ() & 0x0f, false);
+            $block->getLevel()->getChunk($block->getX() >> 4,  $block->getZ() >> 4)->getSubChunk($block->getY() >> 4)->setBlockDrop($block->getX() & 0x0f, $block->getY() & Level::Y_MASK & 0x0f, $block->getZ() & 0x0f, false);
 		}
 	}
 

@@ -114,6 +114,14 @@ class Main extends PluginBase{
 	}
 	public function openMenu(Player $player,$name){
 		if($player->getGamemode()!=0)return false;
+        if (isset($this->opens[$player->getName()])){
+            /** @var Open $open */
+            $open = $this->opens[$player->getName()];
+            $open->closeAll();
+            $open->close();
+            $player->sendMessage("§c错误，请重新打开菜单！");
+            return null;
+        }
 //		if (isset($this->opens[$player->getName()]))return false;
 		$block=$player->getLevel()->getBlock($player);
 		if(!($block instanceof Air)){
@@ -122,8 +130,8 @@ class Main extends PluginBase{
 		}
 		if(!($block instanceof Block))return $player->sendMessage('§c附近找不到空位置！');
 		$menu=$this->menus[$name];
-		$this->opens[$player->getName()]=new Open($menu, $player, $block);
-		return $this->opens[$player->getName()];
+        $this->opens[$player->getName()]=new Open($menu, $player, $block);
+        return $this->opens[$player->getName()];
 	}
 	public function initMenus(){
 		$this->menus=[];

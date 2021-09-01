@@ -704,10 +704,10 @@ class Main extends PluginBase implements Listener
         if(strlen($mess)>$len)$player->sendCenterTip($mess);
 		if(!$entity->enConfig['团队'] and ($player->getGrade()>50 or $player->getGTo()>5)){
 			if($this->lastKill[$player->getName()]??'' == $entity->enConfig['刷怪点']){
-				$this->lastKill[$player->getName()] = $entity->enConfig['刷怪点'];
 				self::addCount($player);
 			}else
 				self::resetCount($player->getName());
+            $this->lastKill[$player->getName()] = $entity->enConfig['刷怪点'];
 		}
         // if($entity->enConfig['团队']){
         // $mess='§a§l你参与击杀了'.$entity->enConfig['名字'].'获得了:';

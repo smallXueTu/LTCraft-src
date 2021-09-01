@@ -1266,7 +1266,6 @@ class Level implements ChunkManager, Metadatable
         //if (!$ev->isCancelled()) {
         $this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z - 1))->onUpdate(self::BLOCK_UPDATE_NORMAL);
         //}
-
         //$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z + 1))));
         //if (!$ev->isCancelled()) {
         $this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z + 1))->onUpdate(self::BLOCK_UPDATE_NORMAL);
@@ -1696,6 +1695,7 @@ class Level implements ChunkManager, Metadatable
             }
 
             if ($update === true) {
+
                 $this->updateAllLight($block);//更新光源
 
                 $ev = new BlockUpdateEvent($block);//对于LTCraft来说 这还是完全没必要的事件 删除以节省微量性能
@@ -1886,7 +1886,7 @@ class Level implements ChunkManager, Metadatable
             }
         }
         if (isset($drops)) {
-            if ($this->getChunk($target->getX() >> 4, $target->getZ() >> 4)->getSubChunk($target->getY() >> 4)->getBlockDrop($target->getX() & 0x0f, $target->getY() & Level::Y_MASK, $target->getZ() & 0x0f)) {
+            if ($this->getChunk($target->getX() >> 4, $target->getZ() >> 4)->getSubChunk($target->getY() >> 4)->getBlockDrop($target->getX() & 0x0f, $target->getY() & Level::Y_MASK & 0x0f, $target->getZ() & 0x0f)) {
                 if (Main::isSendToInvItem($item) and ($player!=null or $p!=null)){
                     if ($player == null){
 						$player = $p;
@@ -1902,7 +1902,7 @@ class Level implements ChunkManager, Metadatable
                     }
                 }
             } else {
-                $this->getChunk($target->getX() >> 4, $target->getZ() >> 4)->getSubChunk($target->getY() >> 4)->setBlockDrop($target->getX() & 0x0f, $target->getY() & Level::Y_MASK, $target->getZ() & 0x0f, true);
+                $this->getChunk($target->getX() >> 4, $target->getZ() >> 4)->getSubChunk($target->getY() >> 4)->setBlockDrop($target->getX() & 0x0f, $target->getY() & Level::Y_MASK & 0x0f, $target->getZ() & 0x0f, true);
             }
         }
         return true;

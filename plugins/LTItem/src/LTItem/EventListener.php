@@ -316,8 +316,9 @@ class EventListener implements Listener
                             ]),
                         ]);
                         $entity = Entity::createEntity("Snowball", $player->getLevel(), $nbt, $player);
+                        $entity->spawnToAll();
                         $entity->setMotion($entity->getMotion()->multiply(1.5));
-                        $entity->skill=['Freeze',1+ 0.25*$Hand->SkillCTime()];
+                        $entity->skill=['Freeze',1 + 0.25 * ((int)$Hand->SkillCTime())];
                         Cooling::$weapon[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD();
                         break;
                     case '时空穿梭':
@@ -370,7 +371,8 @@ class EventListener implements Listener
                         ]);
                         $entity = Entity::createEntity("EnderPearl", $player->getLevel(), $nbt, $player);
                         $entity->setMotion($entity->getMotion()->multiply(1.5));
-                        $entity->skill=['Vertigo',1+ 0.25*$Hand->SkillCTime()];
+                        $entity->spawnToAll();
+                        $entity->skill=['Vertigo',1 + 0.25 * ((int)$Hand->SkillCTime())];
                         Cooling::$weapon[$player->getName()][$Hand->getLTName()] = time() + $Hand->getSkillCD();
                         break;
                     case '猪年神器':

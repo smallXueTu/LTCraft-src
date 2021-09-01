@@ -1,0 +1,18 @@
+name: DontTapTheWhiteTile
+main: MUedsa\DontTapTheWhiteTile
+version: 0.1.2
+api: 1.8.0
+
+load: POSTWORLD
+author: MUedsa
+description: A Named 'Dont Tap The White Tile' Mini Game
+website: http://www.cattery.cn
+commands:
+ dttt:
+  description: DontTapTheWhiteTile Command
+  usage: "Usage: /dttt <set/del> 设置/删除小游戏"
+  permission: muedsa.command.dttt
+permissions:
+ muedsa.command.dttt:
+  description: "Only OP can use CMD : /dttt "
+  default: op

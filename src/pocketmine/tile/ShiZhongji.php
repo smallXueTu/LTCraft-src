@@ -23,7 +23,7 @@ class ShiZhongji extends ManaFlower
 
     public function onUpdate()
     {
-        if (Server::getInstance()->getTick() - $this->lastUpdate > 10){
+        if (Server::getInstance()->getTick() - $this->lastUpdate > 60){
             $this->lastUpdate = Server::getInstance()->getTick();
             $blocks = [];
             $blocks[] = $this->level->getBlock($this->add(1));
@@ -33,11 +33,12 @@ class ShiZhongji extends ManaFlower
             if ($this->mana < self::MAX_MANA)foreach ($blocks as $block){
                 if ($block instanceof Stone or $block instanceof Cobblestone){
                     $this->mana += min(1, self::MAX_MANA - $this->mana);
-                    $this->level->setBlock($block, new Air());
+                    $this->level->setBlock($block, new Air(), true);
                 }
                 if ($this->mana >= self::MAX_MANA)break;
             }
-            $this->exportMana();
+            if ($this->mana>=100)$this->exportMana();
+            return false;
         }
         return true;
     }
