@@ -120,6 +120,14 @@ class Main extends PluginBase{
             $open->closeAll();
             $open->close();
             $player->sendMessage("§c错误，请重新打开菜单！");
+            $this->server->getScheduler()->scheduleDelayedTask(new CallbackTask(function($player, $id) {
+                if (isset($this->opens[$player->getName()])){
+                    $op = $this->opens[$player->getName()];
+                    if ($op instanceof Open and $op->getId() == $id){
+                        unset($this->opens[$player->getName()]);
+                    }
+                }
+            }, [$player, $open->getId()]), 5);
             return null;
         }
 //		if (isset($this->opens[$player->getName()]))return false;
