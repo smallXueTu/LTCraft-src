@@ -48,6 +48,7 @@ class Open extends Position{
 		$this->menu=$menu;
 		$this->plugin=Main::getInstance();
 		$this->open();
+		$this->id = $player->getServer()->getTick();
 	}
 	public function setClosePacket($pk){
 		$this->closeDataPacket=$pk;
