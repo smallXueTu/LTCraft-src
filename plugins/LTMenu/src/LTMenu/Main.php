@@ -112,6 +112,7 @@ class Main extends PluginBase{
 		}
 		return $this->opens[$player]??null;
 	}
+	//test
 	public function openMenu(Player $player,$name){
 		if($player->getGamemode()!=0)return false;
         if (isset($this->opens[$player->getName()])){
