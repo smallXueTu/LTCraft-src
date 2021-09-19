@@ -85,7 +85,7 @@ class Popup extends PluginBase implements Listener{
 		$colorArray = ['§a','§b','§c','§d','§e','§6','§2','§3','§1','§4','§5'];
 		$length = count($colorArray);
         $index = $this->index--;
-        $top=$colorArray[++$index % $length].'§l☞'.$colorArray[++$index % $length].'L'.$colorArray[++$index % $length].'T'.$colorArray[++$index % $length].'C'.$colorArray[++$index % $length].'r'.$colorArray[++$index % $length].'a'.$colorArray[++$index % $length].'f'.$colorArray[++$index % $length].'t '.$colorArray[++$index % $length].'S'.$colorArray[++$index % $length].'e'.$colorArray[++$index % $length].'r'.$colorArray[++$index % $length].'v'.$colorArray[++$index % $length].'e'.$colorArray[++$index % $length].'r'.$colorArray[++$index % $length].'☜'.PHP_EOL;
+        $top=$colorArray[++$index % $length].'§l☞'.$colorArray[++$index % $length].'L'.$colorArray[++$index % $length].'T'.$colorArray[++$index % $length].'C'.$colorArray[++$index % $length].'r'.$colorArray[++$index % $length].'a'.$colorArray[++$index % $length].'f'.$colorArray[++$index % $length].'t '.$colorArray[++$index % $length].'S'.$colorArray[++$index % $length].'e'.$colorArray[++$index % $length].'r'.$colorArray[++$index % $length].'v'.$colorArray[++$index % $length].'e'.$colorArray[++$index % $length].'r'.$colorArray[++$index % $length].祝您中秋快乐！$colorArray[++$index % $length]'☜'.PHP_EOL;
 		$QQ=$colorArray[++$index % $length].'★QQ群号'.$colorArray[++$index % $length].':638732016★';
 		$time=date('Y-m-d').' '.date('H:i:s', time());
 		foreach($this->getServer()->getOnlinePlayers() as $player){
