@@ -397,7 +397,11 @@ class Events implements Listener{
 					if($this->datas[$name]['qq']==NULL)$player->sendMessage('§l§a[提示]§e你还没绑定QQ，输入§d/login qq QQ号§e来绑定');
 					$os=$player->getDeviceOS()==1?'Android':'IOS';
 					$this->server->broadcastTip('§e来自§d'.$os.'型号'.$player->phone.'§e的玩家§a'.$player->getName().'§e加入游戏',null,2);
-                    $player->teleport($player->getExitPos(),null,null,false, true);
+					if(isset($this->notBack[$name])){
+						$player->teleport($player->getServer()->getDefaultLevel()->getSafeSpawn(),null,null,false, true);
+					}else{
+						$player->teleport($player->getExitPos(),null,null,false, true);
+					}
                     if (!EconomyAPI::getInstance()->checkAccount($player))EconomyAPI::getInstance()->openAccount($player);
 					if($player->isCreative()){
 						$pk = new ContainerSetContentPacket();

@@ -160,6 +160,7 @@ class Main extends PluginBase implements Listener
         return self::$instance->killCount[$name]??0;
     }
     public static function addCount($player){
+		// return;
         $name = $player->getName();
         if(isset(self::$instance->killCount[$name])){
             self::$instance->killCount[$name] += 1;
@@ -652,10 +653,10 @@ class Main extends PluginBase implements Listener
                 }
                 if(($PPlayer[0]->getGrade()>50 or $PPlayer[0]->getGTo()>5)){
 					if($this->lastKill[$PPlayer[0]->getName()]??'' == $entity->enConfig['刷怪点']){
-						$this->lastKill[$PPlayer[0]->getName()] = $entity->enConfig['刷怪点'];
 						self::addCount($PPlayer[0]);
 					}else
 						self::resetCount($PPlayer[0]->getName());
+					$this->lastKill[$PPlayer[0]->getName()] = $entity->enConfig['刷怪点'];
 				}
                 if($PPlayer[0]===$player)continue;
                 $PPlayer[0]->getTask()->action('参与击杀怪物', $entity->enConfig['名字']);
@@ -707,7 +708,7 @@ class Main extends PluginBase implements Listener
 				self::addCount($player);
 			}else
 				self::resetCount($player->getName());
-            $this->lastKill[$player->getName()] = $entity->enConfig['刷怪点'];
+			$this->lastKill[$player->getName()] = $entity->enConfig['刷怪点'];
 		}
         // if($entity->enConfig['团队']){
         // $mess='§a§l你参与击杀了'.$entity->enConfig['名字'].'获得了:';

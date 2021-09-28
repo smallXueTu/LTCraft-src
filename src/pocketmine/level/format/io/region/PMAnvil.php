@@ -139,6 +139,7 @@ class PMAnvil extends Anvil {
 					}
 				}
 			}
+			
 			$result = new Chunk(
 				$chunk["xPos"],
 				$chunk["zPos"],

@@ -112,7 +112,6 @@ class Main extends PluginBase{
 		}
 		return $this->opens[$player]??null;
 	}
-	//test
 	public function openMenu(Player $player,$name){
 		if($player->getGamemode()!=0)return false;
         if (isset($this->opens[$player->getName()])){
@@ -124,11 +123,11 @@ class Main extends PluginBase{
             $this->server->getScheduler()->scheduleDelayedTask(new CallbackTask(function($player, $id) {
                 if (isset($this->opens[$player->getName()])){
                     $op = $this->opens[$player->getName()];
-                    if ($op instanceof Open and $op->getId() == $id){
+                    if ($op instanceof Open and $op->getOpenID() == $id){
                         unset($this->opens[$player->getName()]);
                     }
                 }
-            }, [$player, $open->getId()]), 5);
+            }, [$player, $open->getOpenID()]), 5);
             return null;
         }
 //		if (isset($this->opens[$player->getName()]))return false;

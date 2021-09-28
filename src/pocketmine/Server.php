@@ -2368,8 +2368,8 @@ class Server{
 				$interface->shutdown();
 				$this->network->unregisterInterface($interface);
 			}
-			//copy('/root/server.log', '/root/logs/'.date("Y-m-d H:i:s").'.log');
-			if (!$this->ltcraft->get('test'))unlink('/root/server.log');
+			copy('/home/Server/temp/server.log', '/home/Server/temp/logs/'.date("Y-m-d H:i:s").'.log');
+			if (!$this->ltcraft->get('test'))unlink('/home/Server/temp/server.log');
 			gc_collect_cycles();
 		}catch(\Throwable $e){
 			$this->logger->logException($e);

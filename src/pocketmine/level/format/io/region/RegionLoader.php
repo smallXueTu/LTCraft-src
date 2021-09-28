@@ -130,6 +130,7 @@ class RegionLoader {
 			MainLogger::getLogger()->error("Invalid compression type");
 			return null;
 		}
+
 		$chunk = $this->levelProvider->nbtDeserialize(fread($this->filePointer, $length - 1));
 		if($chunk instanceof Chunk){
 			return $chunk;

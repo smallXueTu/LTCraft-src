@@ -34,6 +34,7 @@ class Buff{
 	private $PVEArmour = 0;
 	private $RealDamage = 0;
 	private $controlReduce = 0;
+	private $coolingDown = 0;
 	private $enable = false;
 	private $info = [];
 	public function __construct(Player $player, $buffInfo='Default'){
@@ -68,6 +69,7 @@ class Buff{
 			$this->armor = (int)$buffInfo['减伤'];
 			$this->lucky = (int)($buffInfo['幸运']??0)+$this->player->isVIP()*10;
 			$this->miss = (int)$buffInfo['闪避'];
+			$this->coolingDown = $buffInfo['冷却缩减']??0;
 			$this->tough = (int)$buffInfo['坚韧'];
 			$this->RealDamage = (int)($buffInfo['真实伤害']??0);
 			$this->controlReduce = (int)$buffInfo['控制减少'];
@@ -148,6 +150,15 @@ class Buff{
 	}
 	public function delArmorV($v){
 		$this->armorV-=$v;
+	}
+	public function getCoolingDown(){
+		return $this->coolingDown;
+	}
+	public function addCoolingDown($v){
+		$this->coolingDown+=$v;
+	}
+	public function delCoolingDown($v){
+		$this->coolingDown-=$v;
 	}
 	public function addTough($v){
 		$this->tough+=$v;

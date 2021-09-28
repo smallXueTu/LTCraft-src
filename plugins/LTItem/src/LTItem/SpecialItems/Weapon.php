@@ -296,7 +296,7 @@ class Weapon extends Item implements LTItem {
 				$this->PVEdamage+=$nbt['attribute'][3];
 				$this->PVEVampire+=$nbt['attribute'][4];
 				$this->groupOfBack+=$nbt['attribute'][12];
-				$this->PVEArmour+=$nbt['attribute'][17];
+				$this->PVEArmour+=(int)$nbt['attribute'][17];
 				$this->addPVEDamgerEffects($nbt['attribute'][14]);
 				if($nbt['attribute'][5]>0){
 					if($this->PVELightning==false)$this->PVELightning=[1, 0];

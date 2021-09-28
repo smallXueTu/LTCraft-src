@@ -118,10 +118,10 @@ abstract class Projectile extends Entity {
 			return false;
 		}
 		
-		if($this->getServer()->getTicksPerSecond()<10 or ($this->getServer()->getTicksPerSecondAverage()<18 and $this->age>10)){
-			$this->kill();
-			$this->hadCollision = true;
-		}
+		// if($this->getServer()->getTicksPerSecond()<10 or ($this->getServer()->getTicksPerSecondAverage()<18 and $this->age>10)){
+			// $this->kill();
+			// $this->hadCollision = true;
+		// }
 		$tickDiff = $currentTick - $this->lastUpdate;
 		if($tickDiff <= 0 and !$this->justCreated){
 			return true;

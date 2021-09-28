@@ -34,6 +34,7 @@ class Open extends Position{
 	private $closeDataPacket = null;
 	private $closeCommand=[];
 	private $id;
+	private $openId;
 	private $status = 0;//0正常 1错误 2背包错误
 
     /**
@@ -48,7 +49,7 @@ class Open extends Position{
 		$this->menu=$menu;
 		$this->plugin=Main::getInstance();
 		$this->open();
-		$this->id = $player->getServer()->getTick();
+		$this->openId = $player->getServer()->getTick();
 	}
 	public function setClosePacket($pk){
 		$this->closeDataPacket=$pk;
@@ -171,6 +172,9 @@ class Open extends Position{
 	}
 	public function getId(){
 		return $this->id;
+	}
+	public function getOpenID(){
+		return $this->openId;
 	}
 	public function event($event){
 		$this->inventory->event($event, $this);

@@ -1541,7 +1541,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
         if($gm < 0 or $gm > 3 or $this->gamemode === $gm or $gm === 2 or ($this->isDie!==false and !$force)){
             return false;
         }
-//        if($gm == 1 and !$this->isOp())return false;
+       // if($gm == 1 and !$this->isOp())return false;
         /* 现在不必要
 		$this->server->getPluginManager()->callEvent($ev = new PlayerGameModeChangeEvent($this, $gm));
 		if($ev->isCancelled()){

@@ -1266,6 +1266,7 @@ class Level implements ChunkManager, Metadatable
         //if (!$ev->isCancelled()) {
         $this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z - 1))->onUpdate(self::BLOCK_UPDATE_NORMAL);
         //}
+
         //$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z + 1))));
         //if (!$ev->isCancelled()) {
         $this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z + 1))->onUpdate(self::BLOCK_UPDATE_NORMAL);
@@ -1693,8 +1694,9 @@ class Level implements ChunkManager, Metadatable
             foreach ($this->getChunkLoaders($pos->x >> 4, $pos->z >> 4) as $loader) {
                 $loader->onBlockChanged($block);
             }
-
+			// var_dump($update);
             if ($update === true) {
+                // try{
 
                 $this->updateAllLight($block);//更新光源
 
@@ -1708,6 +1710,9 @@ class Level implements ChunkManager, Metadatable
                 //}
 
                 $this->updateAround($pos);
+				// }catch (\Throwable $e){
+                    // echo $e->getLine().":".$e->getFile().":".$e->getMessage();
+                // }
             }
 
             $this->timings->setBlock->stopTiming();

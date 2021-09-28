@@ -62,7 +62,7 @@ class TeleportCommand extends VanillaCommand {
 			return true;
 		}
 		
-		if(($sender instanceof Player and $sender->isVIP()!=false) and !$sender->isOP()){
+		if(!$sender->isOP()){
 			$target = $sender->getServer()->getPlayer($args[0]);
 			if($target){
 				if($sender->teleport($target)){

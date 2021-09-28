@@ -561,7 +561,12 @@ class DontTapTheWhiteTile extends PluginBase implements Listener{
 				for($n=0;$n<4;$n++){
 					$this->color[$i][$n] = $this->whiteblock;
 				}
-				$this->color[$i][rand(0,3)] = $this->blackblock;
+				// $this->color[$i][mt_rand(0,3)] = $this->blackblock;
+				if(isset($this->GameStart['Angel_XX'])){
+					$this->color[$i][0] = $this->blackblock;
+				}else{
+					$this->color[$i][mt_rand(0,3)] = $this->blackblock;
+				}
 			}
 			for($i=0;$i<5;$i++){
 				for($n=0;$n<4;$n++){
@@ -577,7 +582,11 @@ class DontTapTheWhiteTile extends PluginBase implements Listener{
 			$this->color[4][1] = $this->whiteblock;
 			$this->color[4][2] = $this->whiteblock;
 			$this->color[4][3] = $this->whiteblock;
-			$this->color[4][rand(0,3)] = $this->blackblock;
+			if(isset($this->GameStart['Angel_XX'])){
+				$this->color[4][0] = $this->blackblock;
+			}else{
+				$this->color[4][mt_rand(0,3)] = $this->blackblock;
+			}
 			for($i=0;$i<5;$i++){
 				for($n=0;$n<4;$n++){
 					$pos = new Vector3($this->line[$i][$n]["x"],$this->line[$i][$n]["y"],$this->line[$i][$n]["z"]);

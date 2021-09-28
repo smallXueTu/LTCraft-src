@@ -118,8 +118,8 @@ class Armor extends Item implements LTItem{
 			}
 			$this->armorV = $conf['护甲']+$nbt['armor'][3];
 			$this->thorns = $conf['反伤']+$nbt['armor'][4];
-			$this->miss = $conf['闪避']+$nbt['armor'][5];
-			$this->lucky = $conf['幸运']??0+$nbt['armor'][14];
+			$this->miss = ($conf['闪避']??0)+$nbt['armor'][5];
+			$this->lucky = ($conf['幸运']??0)+$nbt['armor'][14];
 			if($nbt['armor'][8]=='')
 				$this->effect = $conf['effect'];
 			else $this->effect = $conf['effect']==''?'':($conf['effect'].'@'.$nbt['armor'][8]);

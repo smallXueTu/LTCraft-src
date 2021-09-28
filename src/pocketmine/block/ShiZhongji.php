@@ -50,7 +50,17 @@ class ShiZhongji extends Transparent {
                 $this->getLevel()->useBreakOn($this);
                 return Level::BLOCK_UPDATE_NORMAL;
             }
-            $this->getLevel()->getTile($this)->scheduleUpdate();
+			if($this->getLevel()->getTile($this) == null){
+				$nbt = new CompoundTag("", [
+					new StringTag("id", Tile::SHIZHONGJI),
+					new IntTag("x", $this->x),
+					new IntTag("y", $this->y),
+					new IntTag("z", $this->z)
+				]);
+
+				Tile::createTile("ShiZhongji", $this->getLevel(), $nbt);
+			}
+			$this->getLevel()->getTile($this)->scheduleUpdate();
         }
 
         return false;

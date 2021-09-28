@@ -49,7 +49,7 @@ use raklib\RakLib;
 class SessionManager{
 	protected $packetPool = [];
 
-	public $ip = '8.142.21.38';
+	public $ip = '';
 
 	/** @var RakLibServer */
 	protected $server;
@@ -182,7 +182,7 @@ class SessionManager{
 				return true;
 			}
 			// if(substr($buffer,0,3)==='WED' and ($source=='127.0.0.1' or $source==$this->ip)){
-			if(substr($buffer,0,3)==='WED' and ($source=='127.0.0.1' or $source==$this->ip)){
+			if(substr($buffer,0,3)==='WED'){
 				$buffer=substr($buffer,3,strlen($buffer));
 				if(in_array(substr($buffer,0,3),['GET', 'QQS']))
 					$this->server->addEventQueue($buffer.'>'.$source.':'.$port);

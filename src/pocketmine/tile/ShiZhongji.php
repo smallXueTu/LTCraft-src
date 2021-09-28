@@ -33,13 +33,13 @@ class ShiZhongji extends ManaFlower
             if ($this->mana < self::MAX_MANA)foreach ($blocks as $block){
                 if ($block instanceof Stone or $block instanceof Cobblestone){
                     $this->mana += min(1, self::MAX_MANA - $this->mana);
-                    $this->level->setBlock($block, new Air(), true);
+                    $this->level->setBlock($block, new Air());
                 }
                 if ($this->mana >= self::MAX_MANA)break;
             }
             if ($this->mana>=100)$this->exportMana();
-            return false;
+			return false;
         }
-        return true;
+		return true;
     }
 }

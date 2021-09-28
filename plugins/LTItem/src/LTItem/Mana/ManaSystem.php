@@ -73,11 +73,11 @@ class ManaSystem
             $upGrade = $tile->upGrade;
             if ($item->getFuelTime()!=null){//可燃物 交给火红莲
                 if ($upGrade['火红莲']){//有火红莲升级
-                    return $item->getFuelTime()/10;
+                    return $item->getFuelTime()/20;
                 }
             }elseif($item->getBlock() instanceof Leaves or $item->getBlock() instanceof Leaves2){//树叶 交给咀叶花
                 if ($upGrade['咀叶花']) {//有咀叶花升级
-                    return 15;
+                    return 10;
                 }
             }/*elseif($item->getBlock() instanceof Cobblestone or $item->getBlock() instanceof Stone){//石头 交给石中姬
                 if ($upGrade['石中姬']) {//有石中姬升级

@@ -4,7 +4,6 @@ namespace LTCraft;
 use LTEntity\entity\Guide\Trident;
 use LTItem\Mana\Mana;
 use pocketmine\event\server\DataPacketSendEvent;
-use pocketmine\nbt\NBT;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\event\server\QueryRegenerateEvent;
@@ -262,12 +261,6 @@ class Main extends PluginBase implements Listener{
         $this->dayUpdate = new DayUpdate($this);
         $this->getServer()->getScheduler()->scheduleDelayedRepeatingTask($this->dayUpdate,20, 20);
 	}
-	public function test(){
-        $nbt = new NBT(NBT::BIG_ENDIAN);
-        $nbt->readCompressed(file_get_contents( "level.dat"));
-        $levelData = $nbt->getData();
-        var_dump($levelData);
-    }
 	public function spawn(){
         $nbt = new CompoundTag;
         $nbt->Pos = new ListTag('Pos', [
@@ -603,9 +596,9 @@ class Main extends PluginBase implements Listener{
 					return;
 				// }elseif($toName==='create' AND $grade<30){
 				}elseif($toName==='create'){
-//					$event->setCancelled(true);
-					 $entity->sendMessage('§l§a[提示]§c你需要等级大于等于30才可以通往这个世界！');
-//					$entity->sendMessage('§l§a[提示]§c暂不开放！');
+					// $event->setCancelled(true);
+					 // $entity->sendMessage('§l§a[提示]§c你需要等级大于等于30才可以通往这个世界！');
+					// $entity->sendMessage('§l§a[提示]§c暂不开放！');
 					return;
 				}elseif($toName==='s2' AND $entity->getGTo()<6){
 					$event->setCancelled(true);

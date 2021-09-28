@@ -144,7 +144,7 @@ class EventListener implements Listener
 					$player->sendMessage('§l§a释放技能成功,恢复'.$grade .'生命值！');
 				break;
 			}
-            Cooling::$material[$player->getName()][$player->getItemInHand()->getLTName()]=time()+(200-((int)$grade/2));
+            Cooling::$material[$player->getName()][$player->getItemInHand()->getLTName()]=time()+(200-((int)$grade/2) - $player->getBuff()->getCoolingDown());
 		}
 	}
 	public function onPlaceEvent(BlockPlaceEvent $event) //放置
@@ -318,7 +318,7 @@ class EventListener implements Listener
                                     $damager->addTitle('§l§d触发被动:','§l§a加斯的意志',50,100,50);
                                     $damager->counter['加斯的意志'] = 0;
                                 }else {
-                                    $this->sendMessage('§cMana不足300，无法释放被动技能。');
+                                    $damager->sendMessage('§cMana不足300，无法释放被动技能。');
                                 }
                             }
                         }
