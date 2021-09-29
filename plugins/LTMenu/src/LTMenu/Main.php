@@ -141,6 +141,7 @@ class Main extends PluginBase{
         $this->opens[$player->getName()]=new Open($menu, $player, $block);
         return $this->opens[$player->getName()];
 	}
+	//test
 	public function initMenus(){
 		$this->menus=[];
 		$path=$this->getDataFolder().'Menus';
