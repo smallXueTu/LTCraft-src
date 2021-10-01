@@ -248,7 +248,7 @@ class Popup extends PluginBase implements Listener{
 					}
 				break;
 				case '设置称号':
-//					if($sender->getName()!=='Angel_XX' and $sender instanceof Player)return;
+					if($sender->getName()!=='Angel_XX' and $sender instanceof Player)return;
 					if(!$sender->isOp())return;
 					if(count($args)<3)return $sender->sendMessage('§a[LTcraft温馨提示]§c用法:/ui设置 设置称号 玩家ID 格式');
 					if($args[2]==1 or $args[2]==3 or $args[2]==2 or $args[2]==0){
@@ -263,7 +263,7 @@ class Popup extends PluginBase implements Listener{
 					}else return $sender->sendMessage('§a[LTcraft温馨提示]§a未知格式');
 				break;
 				case '设置头衔':
-//					if($sender->getName()!=='Angel_XX' and $sender instanceof Player)return;
+					if($sender->getName()!=='Angel_XX' and $sender instanceof Player)return;
 					if(!$sender->isOp())return;
 					if(count($args)<3)return $sender->sendMessage('§a[LTcraft温馨提示]§c用法:/ui设置 头衔设置 玩家ID 头衔');
 					$m=$this->cfg->get('头衔');
@@ -281,7 +281,7 @@ class Popup extends PluginBase implements Listener{
 					$sender->sendMessage('§a[LTcraft温馨提示]§a设置成功');
 				break;
 				case '变换头衔':
-//					if($sender->getName()!=='Angel_XX' and $sender instanceof Player)return;
+					if($sender->getName()!=='Angel_XX' and $sender instanceof Player)return;
 					if(!$sender->isOp())return;
 					if(count($args)<2)return $sender->sendMessage('§a[LTcraft温馨提示]§c用法:/ui设置 变换头衔 玩家ID');
 					$m=$this->cfg->get('变换头衔');
