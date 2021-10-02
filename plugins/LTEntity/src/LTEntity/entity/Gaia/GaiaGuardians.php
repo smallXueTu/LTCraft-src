@@ -369,6 +369,9 @@ class GaiaGuardians extends Creature
     public function attack($damage, EntityDamageEvent $source)
     {
         if ($this->age <= 20*20 or ($this->onSky!=0 and $this->onSky < 20*30))return;
+        if ($source->getDamage() > 20){
+            $source->setDamage(20);
+        }
         parent::attack($damage, $source);
         if(!$source->isCancelled()){
 			if ($source instanceof EntityDamageByEntityEvent){

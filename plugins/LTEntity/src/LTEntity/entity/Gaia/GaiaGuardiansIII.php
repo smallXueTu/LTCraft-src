@@ -400,6 +400,9 @@ class GaiaGuardiansIII extends Creature
     public function attack($damage, EntityDamageEvent $source)
     {
         parent::attack($damage, $source);
+        if ($source->getDamage() > 20){
+            $source->setDamage(20);
+        }
         if(!$source->isCancelled()){
             if ($source instanceof EntityDamageByEntityEvent){
                 if ($this->getHealth() <= $this->getMaxHealth()*0.2){
