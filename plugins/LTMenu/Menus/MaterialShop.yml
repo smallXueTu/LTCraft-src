@@ -1342,8 +1342,8 @@ items:
     commands: ~
     teleport: ~
     price: 0
-    give_item: 材料:§a新春红包:1
-    cost_item: 材料:§aL:1&材料:§aT:1&材料:§aC:1&材料:§ar:1&材料:§aa:1&材料:§af:1&材料:§at:1
+    give_item: 材料:§d新春红包:1
+    cost_item: 材料:§dL:1&材料:§dT:1&材料:§dC:1&材料:§dr:1&材料:§da:1&材料:§df:1&材料:§dt:1
     multilevel: false
   - item:
       - 383

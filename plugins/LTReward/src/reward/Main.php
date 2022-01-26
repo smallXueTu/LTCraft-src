@@ -126,48 +126,42 @@ class Main extends PluginBase implements Listener{
 					self::$see=$player->getName();
 					$hand=$player->getItemInHand();
 					if(LTItem::getInstance()->isEquals($hand, ['材料', '§a新春红包'])){
-						if(time()<1613046600){
-							$player->sendTitle('§l§c还没到时间呢', '§l§e请2月11号20点30后再来开启吧~');
-							return;
-						}
-						// if(time()>1549382399){
-							// $player->sendTitle('§l§c你这个红包已经过期了！！');
-							// return;
-						// }
+                         $player->sendTitle('§l§c你这个红包已经过期了！！');
+                         return;
 						self::$s+=8*5;
 						if(self::$s>80)self::$s=80;
 							$rand=mt_rand(1,100);
 							if($rand>=90){
 								switch(mt_rand(1,9)){
 								case 1:
-								case 2://鸡
+								case 2://羊驼
 								case 3:
-									$player->sendTitle('§l§a运气不错,抽到了宠物鸡~');
-									LTPet::getInstance()->addPet($player,'鸡','鸡'.mt_rand(1,999));
-									$this->getServer()->broadcastMessage('§l§a玩家'.$player->getName().'打开红包后获得了鸡!!');
+									$player->sendTitle('§l§a运气不错,抽到了宠物猪~');
+									LTPet::getInstance()->addPet($player,'猪','猪'.mt_rand(1,999));
+									$this->getServer()->broadcastMessage('§l§a玩家'.$player->getName().'打开红包后获得了猪!!');
 								break;
 								case 4:
 								case 5:
+                                case 6:
 									$player->sendTitle('§l§a运气不错,抽到了羊驼~');
 									LTPet::getInstance()->addPet($player,'羊驼','羊驼'.mt_rand(1,999));
 									$this->getServer()->broadcastMessage('§l§a玩家'.$player->getName().'打开红包后获得了羊驼!!');
 								case 7:
-								case 6:
-								case 8://猪
-									$player->sendTitle('§l§a人气爆发,抽到了宠物猪~');
-									LTPet::getInstance()->addPet($player,'猪','猪'.mt_rand(1,999));
-									$this->getServer()->broadcastMessage('§l§a玩家'.$player->getName().'打开红包后获得了猪!!');
-								break;
-								case 9://女仆
-									$player->sendTitle('§l§a人气大爆发不错,抽到了女仆！！');
+								case 8://女仆
+									$player->sendTitle('§l§a人气大爆发不错,抽到了女仆~');
 									LTPet::getInstance()->addPet($player,'女仆','女仆'.mt_rand(1,999));
 									$this->getServer()->broadcastMessage('§l§a玩家'.$player->getName().'打开红包后获得了女仆!!');
 								break;
+								case 9://末影龙
+									$player->sendTitle('§l§a人气大大大爆发不错,抽到了末影龙！！');
+									LTPet::getInstance()->addPet($player,'末影龙','末影龙'.mt_rand(1,999));
+									$this->getServer()->broadcastMessage('§l§a玩家'.$player->getName().'打开红包后获得了末影龙!!');
+								break;
 								}
 							}elseif($rand>=70){
-								$player->getInventory()->addItem(LTItem::getInstance()->createWeapon('近战','牛年神器',$player));
-								$player->sendTitle('§l§a恭喜你 稀有神器','§d抽到了牛年神器~');
-								$this->getServer()->broadcastMessage('§l§a玩家'.$player->getName().'打开红包后获得了牛年神器!!');
+								$player->getInventory()->addItem(LTItem::getInstance()->createWeapon('近战','虎年神器',$player));
+								$player->sendTitle('§l§a恭喜你 稀有神器','§d抽到了虎年神器~');
+								$this->getServer()->broadcastMessage('§l§a玩家'.$player->getName().'打开红包后获得了虎年神器!!');
 							}elseif($rand>=40){
 								switch(mt_rand(1,10)){
 								case 1:

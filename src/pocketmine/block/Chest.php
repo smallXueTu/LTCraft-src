@@ -21,9 +21,14 @@
 
 namespace pocketmine\block;
 
+use LTItem\Main;
 use LTItem\Mana\Mana;
+use LTItem\SpecialItems\Weapon;
+use LTPet\Main as LTPet;
+use onebone\economyapi\EconomyAPI;
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
+use pocketmine\Server;
 use pocketmine\utils\Utils;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\nbt\NBT;
@@ -449,6 +454,9 @@ class Chest extends Transparent {
                     }
                 }elseif($chest->getRewardBoxType()=='奖励箱-基因'){
                     if($player->getItemInHand() instanceof Material and $player->getItemInHand()->getLTName()=='宝箱之钥'){
+                        $hand=$player->getItemInHand();
+                        $hand->setCount($hand->getCount()-1);
+                        $player->getInventory()->setItemInHand($hand);
                         unset($chest->namedtag->OpenTime);
                         unset($chest->namedtag->Name);
                         unset($chest->namedtag->Type);
@@ -469,6 +477,209 @@ class Chest extends Transparent {
                     }else{
                         $player->sendMessage('§l§a[提示]§c你必须手持宝箱之钥来打开它！');
                         return true;
+                    }
+                }elseif ($chest->getRewardBoxType()=='奖励箱-新春'){
+                    if($chest->getOpenTime()!==0) {
+                        if (time() < 1643634000) {
+                            $player->sendTitle('§l§c还没到时间呢', '§l§e请1月31号21点后再来开启吧~');
+//                            return true;
+                        }
+                        try {
+
+                        if ($player->getItemInHand() instanceof Material and $player->getItemInHand()->getLTName() == '宝箱之钥') {
+                            //这个箱子要打开了~
+                            $offering = $chest->getInventory()->getItem(1);
+                            $hand = $player->getItemInHand();
+                            $hand->setCount($hand->getCount() - 1);
+                            $player->getInventory()->setItemInHand($hand);
+                            unset($chest->namedtag->OpenTime);
+                            /** @var $offering Weapon */
+                            $wlevel = $offering instanceof Weapon ? $offering->getWlevel() : "入门";
+                            switch ($wlevel) {
+                                case '中级':
+                                case '中级+':
+                                    switch (mt_rand(1, 9)) {
+                                        case 1:
+                                        case 2://羊驼
+                                            $player->sendTitle('§l§a运气不错,抽到了宠物猪~');
+                                            LTPet::getInstance()->addPet($player, '猪', '猪' . mt_rand(1, 999));
+                                            Server::getInstance()->broadcastMessage('§l§a玩家' . $player->getName() . '打开红包后获得了猪!!');
+                                            break;
+                                        case 3:
+                                        case 4:
+                                            $player->sendTitle('§l§a运气不错,抽到了羊驼~');
+                                            LTPet::getInstance()->addPet($player, '羊驼', '羊驼' . mt_rand(1, 999));
+                                            Server::getInstance()->broadcastMessage('§l§a玩家' . $player->getName() . '打开红包后获得了羊驼!!');
+                                            break;
+                                        case 5:
+                                        case 6:
+                                        case 7:
+                                            $player->getInventory()->addItem(LTItem::getInstance()->createWeapon('近战', '暗影金剑', $player));
+                                            $player->sendTitle('§l§a运气不错,抽到了暗影金剑~');
+                                            Server::getInstance()->broadcastMessage('§l§a玩家' . $player->getName() . '打开红包后获得了暗影金剑!!');
+                                            break;
+                                        case 8:
+                                        case 9:
+                                            $item = LTItem::getInstance()->createWeapon('近战', '神秘之剑', $player);
+                                            $player->getInventory()->addItem($item);
+                                            $player->sendTitle('§l§a运气大爆发', '§d开到了神秘之剑~');
+                                            break;
+                                    }
+                                    break;
+                                case '仙器':
+                                case '高级':
+                                    switch (mt_rand(1, 9)) {
+                                        case 1:
+                                        case 2://羊驼
+                                            $player->sendTitle('§l§a运气不错,抽到了羊驼~');
+                                            LTPet::getInstance()->addPet($player, '羊驼', '羊驼' . mt_rand(1, 999));
+                                            Server::getInstance()->broadcastMessage('§l§a玩家' . $player->getName() . '打开红包后获得了羊驼!!');
+                                            break;
+                                        case 3:
+                                        case 4:
+                                            $player->sendTitle('§l§a人气大爆发不错,抽到了女仆~');
+                                            LTPet::getInstance()->addPet($player, '女仆', '女仆' . mt_rand(1, 999));
+                                            Server::getInstance()->broadcastMessage('§l§a玩家' . $player->getName() . '打开红包后获得了女仆!!');
+                                            break;
+                                        case 5:
+                                        case 6:
+                                        case 7:
+                                            $player->getInventory()->addItem(LTItem::getInstance()->createWeapon('近战', '神龙之刃-中秋节', $player));
+                                            $player->sendTitle('§l§a运气不错,抽到了神龙之刃-中秋节~');
+                                            Server::getInstance()->broadcastMessage('§l§a玩家' . $player->getName() . '打开红包后获得了神龙之刃-中秋节!!');
+                                            break;
+                                        case 8:
+                                        case 9:
+                                            $player->getInventory()->addItem(LTItem::getInstance()->createWeapon('近战', '猪年神器', $player));
+                                            $player->sendTitle('§l§a运气不错,抽到了猪年神器~');
+                                            Server::getInstance()->broadcastMessage('§l§a玩家' . $player->getName() . '打开红包后获得了猪年神器!!');
+                                            break;
+                                    }
+                                    break;
+                                case '终极':
+                                case '勇者':
+                                case '传说':
+                                    switch (mt_rand(1, 9)) {
+                                        case 1:
+                                        case 2://羊驼
+                                            $player->sendTitle('§l§a人气大爆发不错,抽到了女仆~');
+                                            LTPet::getInstance()->addPet($player, '女仆', '女仆' . mt_rand(1, 999));
+                                            Server::getInstance()->broadcastMessage('§l§a玩家' . $player->getName() . '打开红包后获得了女仆!!');
+                                            break;
+                                        case 3:
+                                        case 4:
+                                            $player->getInventory()->addItem(LTItem::getInstance()->createWeapon('近战', '中秋节神龙宝刀', $player));
+                                            $player->sendTitle('§l§a运气不错,开到了中秋节神龙宝刀~');
+                                            Server::getInstance()->broadcastMessage('§l§a玩家' . $player->getName() . '打开红包后获得了中秋节神龙宝刀!!');
+                                            break;
+                                        case 5:
+                                        case 6:
+                                        case 7:
+                                            $player->getInventory()->addItem(LTItem::getInstance()->createWeapon('近战', '青龙剑', $player));
+                                            $player->sendTitle('§l§a恭喜你 稀有神器,开到了远程青龙剑~');
+                                            Server::getInstance()->broadcastMessage('§l§a玩家' . $player->getName() . '打开红包后开获得稀有神器!!');
+                                            break;
+                                        case 8:
+                                        case 9:
+                                            $player->getInventory()->addItem(LTItem::getInstance()->createWeapon('近战', '狗年神器', $player));
+                                            $player->sendTitle('§l§a运气不错', '§d开到了狗年神器~');
+                                            Server::getInstance()->broadcastMessage('§l§a玩家' . $player->getName() . '打开红包后获得了狗年神器!!');
+                                            break;
+                                    }
+                                    break;
+                                case '史诗':
+                                case '神话':
+                                    switch (mt_rand(1, 9)) {
+                                        case 1:
+                                        case 2:
+                                            $player->sendTitle('§l§a人气大大大爆发不错,抽到了末影龙！！');
+                                            LTPet::getInstance()->addPet($player, '末影龙', '末影龙' . mt_rand(1, 999));
+                                            Server::getInstance()->broadcastMessage('§l§a玩家' . $player->getName() . '打开红包后获得了末影龙!!');
+                                            break;
+                                        case 3:
+                                        case 4:
+                                            $player->getInventory()->addItem(LTItem::getInstance()->createMaterial('§e耀魂宝珠'));
+                                            $player->sendTitle('§l§a恭喜你', '§d抽到了§e耀魂宝珠！');
+                                            Server::getInstance()->broadcastMessage('§l§a玩家' . $player->getName() . '打开红包后获得了§e耀魂宝珠！!');
+                                            break;
+                                        case 5:
+                                        case 6:
+                                        case 7:
+                                            $player->getInventory()->addItem(LTItem::getInstance()->createWeapon('近战', '虎年神器', $player));
+                                            $player->sendTitle('§l§a恭喜你 稀有神器,开到了虎年神器~');
+                                            Server::getInstance()->broadcastMessage('§l§a玩家' . $player->getName() . '打开红包后开获得虎年神器!!');
+                                            break;
+                                        case 8:
+                                        case 9:
+                                            $player->getInventory()->addItem(LTItem::getInstance()->createWeapon('近战', '狗年神器', $player));
+                                            $player->sendTitle('§l§a运气不错', '§d开到了狗年神器~');
+                                            Server::getInstance()->broadcastMessage('§l§a玩家' . $player->getName() . '打开红包后获得了狗年神器!!');
+                                            break;
+                                    }
+                                    break;
+                                case '入门':
+                                case '普通':
+                                default:
+                                    switch (mt_rand(1, 9)) {
+                                        case 1:
+                                        case 2:
+                                        case 3:
+                                        case 4:
+                                            if ($player->getGrade() < 300) {
+                                                $exp = mt_rand(500, 2000);
+                                                $player->addExp($exp);
+                                                $player->sendTitle('§l§a恭喜获得' . $exp . '点经验！');
+                                            } else {
+                                                $money = mt_rand(5000, 100000);
+                                                $player->sendTitle('§l§a运气不错,开到了' . $money . '橙币');
+                                                EconomyAPI::getInstance()->addMoney($player, $money);
+                                            }
+                                        break;
+                                        case 5:
+                                        case 6:
+                                        case 7:
+                                            $player->getInventory()->addItem(LTItem::getInstance()->createMaterial('空奖励箱'));
+                                            $player->sendTitle('§l§a恭喜你', '§d抽到了空奖励箱~');
+                                            Server::getInstance()->broadcastMessage('§l§a玩家' . $player->getName() . '打开红包后获得了空奖励箱!');
+                                        break;
+                                        case 8:
+                                        case 9:
+                                            $player->getInventory()->addItem(LTItem::getInstance()->createMaterial('§e耀魂宝珠'));
+                                            $player->sendTitle('§l§a恭喜你', '§d抽到了§e耀魂宝珠！');
+                                            Server::getInstance()->broadcastMessage('§l§a玩家' . $player->getName() . '打开红包后获得了§e耀魂宝珠！!');
+                                        break;
+                                    }
+                                    break;
+                            }
+                            $chest->getInventory()->setContents([]);
+                            $player->sendMessage('§l§aLTCraft祝你新年快乐！ 小小心意请收下吧！');
+                            $explosion = new Explosion($this, 4, $this, true, null);
+                            $explosion->explodeB();
+                            $this->getLevel()->setBlock($this, new Air());
+                            return true;
+                        } else {
+                            $player->sendMessage('§l§a[提示]§c你必须手持宝箱之钥来打开它！');
+                            return true;
+                        }
+
+                        }catch (\Throwable $e){
+                            Main::getInstance()->getLogger()->error($e->getMessage() . ":" . $e->getLine() . ":" . $e->getFile());
+                        }
+                    }else{
+                        if (!($player->getItemInHand() instanceof Material) or $player->getItemInHand()->getLTName() != '§d新春红包'){
+                            $player->sendMessage('§l§a[提示]§c你必须手持§d新春红包§c来打开它！');
+                            return true;
+                        }else{
+                            $item = $player->getItemInHand();
+                            $item->setCount(1);
+                            $chest->getInventory()->setItem(0, $item);
+                            $item->setCount($player->getItemInHand()->getCount() - 1);
+                            if ($item->getCount() > 0){
+                                $player->getInventory()->setItemInHand($item);
+                            }else{
+                                $player->getInventory()->setItemInHand(Item::get(0));
+                            }
+                        }
                     }
                 }
             }

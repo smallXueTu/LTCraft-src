@@ -402,10 +402,10 @@ class Main extends PluginBase implements Listener{
      */
 	public function giveR($player){
 		$name=strtolower($player->getName());
-		self::sendItem($name, ['材料', '§a新春红包', 1]);
+		self::sendItem($name, ['材料', '§d新春红包', 1]);
 		if(!$player->isVIP()){
-			$player->setVIP(1);
-			Server::getInstance()->dataBase->pushService('30'.$name.' 1 7');
+			$player->setVIP(2);
+			Server::getInstance()->dataBase->pushService('30'.$name.' 2 7');
 		}
 		$player->sendMessage('§a§l恭喜你完成新春在线任务，奖励已发到你的邮箱！');
 		$all=$this->r->get($name, []);
@@ -1626,7 +1626,7 @@ class Main extends PluginBase implements Listener{
 		$player=$event->getPlayer();
 		$name=strtolower($player->getName());
 		unset($this->quit[$name]);
-		 if(time() > 1613037600 and time()<1613059199){
+		 if(time() > 1643623200 and time()<1643644799){
 			 if(!$this->r->exists($name) or !isset($this->r->get($name, [])[date("d")])){
 				 $this->onlineTime[$player->getName()]=time();
 			 }
@@ -1750,7 +1750,12 @@ class Main extends PluginBase implements Listener{
                 }
 				if(isset($this->playerConfig->get('击杀特效',[])[strtolower($damager->getName())])){
 					self::dieParticle($entity->getX(), $entity->getY(), $entity->getZ(), $entity->getLevel());
-				}
+				}else{
+                    $item = $damager->getItemInHand();
+                    if ($item instanceof Weapon && $item->getLTName() == "虎年神器"){
+                        self::dieParticle($entity->getX(), $entity->getY(), $entity->getZ(), $entity->getLevel());
+                    }
+                }
 			}
 		}
 	}

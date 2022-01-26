@@ -21,6 +21,7 @@
 
 namespace pocketmine\inventory;
 
+use LTItem\SpecialItems\Weapon;
 use pocketmine\block\TrappedChest;
 use pocketmine\level\Level;
 use pocketmine\network\protocol\BlockEventPacket;
@@ -124,6 +125,15 @@ class ChestInventory extends ContainerInventory {
                 }
                 $tile->namedtag->OpenTime = new LongTag('OpenTime', time()+14400);
                 $tile->namedtag->Lucky = new LongTag('Lucky', 0);
+            }else if($this->getHolder()->getRewardBoxType()=='奖励箱-新春' and ($item=$this->getItem(0)) instanceof Material and in_array($item->getLTName(), ['§d新春红包'])){
+                $tile=$this->getHolder();
+                foreach($this->getContents() as $i=>$item){
+                    if($i==0 or ($i==1 and $item instanceof Weapon))continue;
+                    $dropItem=$level->dropItem($tile, $item);
+                    if($dropItem instanceof entityItem)$dropItem->setOwner(strtolower($who->getName()));
+                    $this->setItem($i, Item::get(0));
+                }
+                $tile->namedtag->OpenTime = new LongTag('OpenTime', time()+14400);
             }
         }
         parent::onClose($who);

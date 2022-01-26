@@ -105,9 +105,9 @@ class Popup extends PluginBase implements Listener{
 				}
 				if($player->getAPI()!==null)$player->getAPI()->upDateTitleAndPercentage($time);
 				$name = $player->getName();
-				 /*if(isset(LTCraft::getInstance()->onlineTime[$name]) and (time() - LTCraft::getInstance()->onlineTime[$name])>600){
+				 if(isset(LTCraft::getInstance()->onlineTime[$name]) and (time() - LTCraft::getInstance()->onlineTime[$name])>600){
 					 LTCraft::getInstance()->giveR($player);
-				 }*/
+				 }
 				if(!isset(Events::$status[strtolower($name)]) or Events::$status[strtolower($name)]!==true)continue;
 				if(isset($this->cfg->get('变换头衔', [])[strtolower($name)]) and isset($this->cfg->get('头衔', [])[strtolower($name)])){
 					$this->updateNameTag($player);

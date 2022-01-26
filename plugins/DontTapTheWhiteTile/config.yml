@@ -1,0 +1,107 @@
+---
+line:
+- - x: 758
+    "y": 17
+    z: 14
+    level: zc
+  - x: 758
+    "y": 17
+    z: 15
+    level: zc
+  - x: 758
+    "y": 17
+    z: 16
+    level: zc
+  - x: 758
+    "y": 17
+    z: 17
+    level: zc
+- - x: 758
+    "y": 18
+    z: 14
+    level: zc
+  - x: 758
+    "y": 18
+    z: 15
+    level: zc
+  - x: 758
+    "y": 18
+    z: 16
+    level: zc
+  - x: 758
+    "y": 18
+    z: 17
+    level: zc
+- - x: 758
+    "y": 19
+    z: 14
+    level: zc
+  - x: 758
+    "y": 19
+    z: 15
+    level: zc
+  - x: 758
+    "y": 19
+    z: 16
+    level: zc
+  - x: 758
+    "y": 19
+    z: 17
+    level: zc
+- - x: 758
+    "y": 20
+    z: 14
+    level: zc
+  - x: 758
+    "y": 20
+    z: 15
+    level: zc
+  - x: 758
+    "y": 20
+    z: 16
+    level: zc
+  - x: 758
+    "y": 20
+    z: 17
+    level: zc
+- - x: 758
+    "y": 21
+    z: 14
+    level: zc
+  - x: 758
+    "y": 21
+    z: 15
+    level: zc
+  - x: 758
+    "y": 21
+    z: 16
+    level: zc
+  - x: 758
+    "y": 21
+    z: 17
+    level: zc
+StartSign:
+  x: 757
+  "y": 18
+  z: 13
+  face: 4
+  level: zc
+Top1:
+  x: 757
+  "y": 19
+  z: 13
+  face: 4
+  level: zc
+Top2:
+  x: 757
+  "y": 20
+  z: 13
+  face: 4
+  level: zc
+Top3:
+  x: 757
+  "y": 21
+  z: 13
+  face: 0
+  level: zc
+...

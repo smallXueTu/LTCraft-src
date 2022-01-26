@@ -3,6 +3,7 @@ namespace LTItem\SpecialItems;
 
 use LTItem\SpecialItems\Material\BraveManWeaponGiftBag;
 use LTItem\SpecialItems\Material\ChallengeCoupon;
+use LTItem\SpecialItems\Material\Character;
 use LTItem\SpecialItems\Material\Coolant;
 use LTItem\SpecialItems\Material\Drawings;
 use LTItem\SpecialItems\Material\EmptyRewardBox;
@@ -56,6 +57,7 @@ class Material extends Item implements LTItem{
         self::$materials['勇者武器礼包'] = BraveManWeaponGiftBag::class;
         self::$materials['高级武器礼包'] = SeniorWeaponGiftBag::class;
         self::$materials['神秘盔甲礼包'] = MysteriousArmorGiftBag::class;
+        self::$materials['§d神秘字符'] = Character::class;
         self::$materials['觉醒石'] = WakeUpStone::class;
         self::$materials['史诗武器图纸'] = Drawings::class;
         self::$materials['史诗战靴图纸'] = Drawings::class;
@@ -68,6 +70,7 @@ class Material extends Item implements LTItem{
         self::$materials['熔炼原石'] = SmeltingStone::class;
         self::$materials['熔炼熔炉'] = SmeltingFurnace::class;
         self::$materials['空奖励箱'] = EmptyRewardBox::class;
+        self::$materials['奖励箱-新春'] = EmptyRewardBox::class;
         self::$materials['奖励箱-基因'] = RewardBoxGene::class;
         self::$materials['魔法棍'] = MagicStick::class;
         self::$materials['挑战券'] = ChallengeCoupon::class;
