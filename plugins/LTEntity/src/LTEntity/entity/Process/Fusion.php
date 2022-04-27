@@ -436,6 +436,7 @@ class Fusion extends Entity implements InventoryHolder
             case 6:
                 return "失去控制";
         }
+        return "非常稳定";
     }
 
     /**
