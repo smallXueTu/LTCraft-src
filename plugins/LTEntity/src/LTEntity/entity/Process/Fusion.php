@@ -413,6 +413,7 @@ class Fusion extends Entity implements InventoryHolder
             case 6:
                 return "六";
         }
+        return $this->process . "";
     }
 
     /**
