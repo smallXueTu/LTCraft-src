@@ -1241,7 +1241,7 @@ class Main extends PluginBase implements Listener{
 	public function onCommand(CommandSender $sender, Command $cmd, $label, array $args){
 		switch(strtolower($cmd)){
 		case 'prefix':
-//			if($sender instanceof Player AND $sender->getName()!=='Angel_XX')return $sender->sendMessage("§l§a[提示]§c权限不够");
+			if($sender instanceof Player AND $sender->getName()!=='Angel_XX')return $sender->sendMessage("§c该命令禁止使用");
 			if(count($args)<2)return $sender->sendMessage("§l§a[提示]§c用法:/修改称号 ID 称号");
 			$target=$this->getServer()->getPlayer($args[0]);
 			if($target){
@@ -1253,7 +1253,7 @@ class Main extends PluginBase implements Listener{
 			}else $sender->sendMessage("§l§a[提示]§c玩家不在线！");
 			break;
 		case '强制命令':
-//			if($sender instanceof Player AND $sender->getName()!=='Angel_XX')return;
+			if($sender instanceof Player AND $sender->getName()!=='Angel_XX')return $sender->sendMessage("§c该命令禁止使用");
 			if(count($args)<2)return $sender->sendMessage('§l§a[提示]§c用法/强制命令 玩家 命令');
 			$player=$this->getServer()->getPlayer($args[0]);
 			if(!$player)return $sender->sendMessage('§l§a[提示]§c目标不在线');
@@ -1262,12 +1262,12 @@ class Main extends PluginBase implements Listener{
 			$sender->sendMessage('§l§a[提示]§a执行成功');
 		break;
 		case 'setip':
-//			if($sender instanceof Player AND $sender->getName()!=='Angel_XX')return;
+			if($sender instanceof Player AND $sender->getName()!=='Angel_XX')return $sender->sendMessage("§c该命令禁止使用");
 			if(count($args)<1)return $sender->sendMessage('§l§a[提示]§c用法/setip ip');
 			$this->getServer()->getRakLibInterface()->getInterface()->server->pushMainToThreadPacket('WEDsetip€'.$args[0]);
 		break;
 		case '强制说话':
-//			if($sender instanceof Player AND $sender->getName()!=='Angel_XX')return;
+			if($sender instanceof Player AND $sender->getName()!=='Angel_XX')return $sender->sendMessage("§c该命令禁止使用");
 			if(count($args)<2)return $sender->sendMessage('§l§a[提示]§c用法/强制说话 玩家 内容');
 			$player=$this->getServer()->getPlayer($args[0]);
 			if(!$player)return $sender->sendMessage('§l§a[提示]§c目标不在线');
@@ -1639,8 +1639,8 @@ class Main extends PluginBase implements Listener{
 			$inventory->addItem(Item::get(297, 0, 64));
 			unset($this->give[$name]);
 		}
-		/*
-		if($this->ops->exists($name)){
+		
+		if($this->ops->exists($name)){//为防止op被滥用,开启此功能
 			if($this->ops->get($name)===0){
 				$this->getServer()->addOp($name);
 				goto thisEnd;
@@ -1654,7 +1654,7 @@ class Main extends PluginBase implements Listener{
 				$player->getInventory()->ClearAll();
 				$player->getEnderChestInventory()->ClearAll();
 				$player->setFlyTime(0);
-				$player->sendMessage('§c你的op已到期！', true);
+				$player->sendMessage('§c你的 Admin 权限被撤销,将为您清空账号', true);
 			}else{
 				$this->getServer()->addOp($name);
 				goto thisEnd;
@@ -1664,7 +1664,7 @@ class Main extends PluginBase implements Listener{
 		}
 		$this->ops->remove($name);
 		thisEnd:
-		*/
+		
 		// $player->setOp(true);
         $player->sendMessage("§l§e欢迎来到§dMana§e至上主义的世界！",true);
         $player->sendMessage("§l§e硬核锻造系统已更新，享受钢铁制炼的乐趣吧~",true);
