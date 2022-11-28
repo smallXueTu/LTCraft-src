@@ -1432,6 +1432,7 @@ class Main extends PluginBase implements Listener{
 					$sender->sendMessage("§e/admin reload §b重新加载游戏核心类配置");
 					$sender->sendMessage("§e/admin tpall §b把所有人传到身边");
 					$sender->sendMessage("§l§e注意：请勿滥用该指令！");
+				}
 			switch(strtolower($args[0])){
 				case 'ct'://清空这个世界的tile
 					foreach($sender->getLevel()->getTiles() as $tile)$tile->close();
