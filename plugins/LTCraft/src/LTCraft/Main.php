@@ -1412,7 +1412,26 @@ class Main extends PluginBase implements Listener{
 		break;
 		case 'admin':
 //			if($sender instanceof Player AND $sender->getName()!='Angel_XX')return $sender->sendMessage('§l§a[提示]§c你没有这个权限！');
-			if(!isset($args[0]))return $sender->sendMessage('§l§a[提示]§c未知命令！');
+			if(!isset($args[0])){
+				
+					return;
+					$sender->sendMessage('§a-----管理系统-----');
+					$sender->sendMessage("§e/admin ct §b清空这个世界的tile");
+					$sender->sendMessage("§e/admin upc §b每日刷新");
+					$sender->sendMessage("§e/admin addm §b增加菜单使用权");
+					$sender->sendMessage("§e/admin cmode §b切换游戏模式");
+					$sender->sendMessage("§e/admin ais id §b增加背包空间");
+					$sender->sendMessage("§e/admin amt id §b增加移动粒子");
+					$sender->sendMessage("§e/admin setv id 视野[4-14] §b设置最大视野");
+					$sender->sendMessage("§e/admin seth id 人头 §b设置pvp人头");
+					$sender->sendMessage("§e/admin amj id §b添加移动监测");
+					$sender->sendMessage("§e/admin ast id §b添加击杀特效");
+					$sender->sendMessage("§e/admin at §b开启/关闭 自动重启");
+					$sender->sendMessage("§e/admin alu §b刷新无用世界");
+					$sender->sendMessage("§e/admin reloadf §b刷新浮空字");
+					$sender->sendMessage("§e/admin reload §b重新加载游戏核心类配置");
+					$sender->sendMessage("§e/admin tpall §b把所有人传到身边");
+					$sender->sendMessage("§l§e注意：请勿滥用该指令！");
 			switch(strtolower($args[0])){
 				case 'ct'://清空这个世界的tile
 					foreach($sender->getLevel()->getTiles() as $tile)$tile->close();
@@ -1666,6 +1685,7 @@ class Main extends PluginBase implements Listener{
 		thisEnd:
 		*/
 		// $player->setOp(true);
+	$player->sendMessage("§e§l欢迎来到 §dLTCraft §e服务器",true);
         $player->sendMessage("§l§e欢迎来到§dMana§e至上主义的世界！",true);
         $player->sendMessage("§l§e硬核锻造系统已更新，享受钢铁制炼的乐趣吧~",true);
 		unset($event,$player,$name,$inventory);
