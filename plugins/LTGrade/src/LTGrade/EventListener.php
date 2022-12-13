@@ -345,49 +345,41 @@ class EventListener implements Listener
 			}
 		}
 	}
-	public function BlockBreakCallback($id, $count){
-		if(isset($this->events[$id])){
-			$data=$this->events[$id];
-			unset($this->events[$id]);
-			$id=$data[0];
-			$player=$data[2];
-			if($player->getGamemode()!==0)return;
-			switch($id) {
-				case '14'://金矿
-					$player->addExp(20);
-					// if(mt_rand(0, 100)>97 and \LTCraft\Main::calculateS($player->getName()))$pos->level->dropItem($pos->add(0.5, 0.5, 0.5), LTItem::getInstance()->createMaterial('LTCraft'{mt_rand(0, 6)}));
-				break;
-				case '15'://铁矿
-					$player->addExp(10);
-					// if(mt_rand(0, 100)>97 and \LTCraft\Main::calculateS($player->getName()))$pos->level->dropItem($pos->add(0.5, 0.5, 0.5), LTItem::getInstance()->createMaterial('LTCraft'{mt_rand(0, 6)}));
-				break;
-				case '16'://煤矿
-					$player->addExp(8);
-					// if(mt_rand(0, 200)>199 and \LTCraft\Main::calculateS($player->getName()))$pos->level->dropItem($pos->add(0.5, 0.5, 0.5), LTItem::getInstance()->createMaterial('LTCraft'{mt_rand(0, 6)}));
-				break;
-				case '73'://红石矿
-					$player->addExp(20);
-					// if(mt_rand(0, 100)>98 and \LTCraft\Main::calculateS($player->getName()))$pos->level->dropItem($pos->add(0.5, 0.5, 0.5), LTItem::getInstance()->createMaterial('LTCraft'{mt_rand(0, 6)}));
-				break;
-				case '21'://青晶石矿
-				   $player->addExp(30);
-					// if(mt_rand(0, 100)>98 and \LTCraft\Main::calculateS($player->getName()))$pos->level->dropItem($pos->add(0.5, 0.5, 0.5), LTItem::getInstance()->createMaterial('LTCraft'{mt_rand(0, 6)}));
-				break;
-				case '129'://绿宝石矿
-					$player->addExp(50);
-					// if(mt_rand(0, 1000)>95 and \LTCraft\Main::calculateS($player->getName()))$pos->level->dropItem($pos->add(0.5, 0.5, 0.5), LTItem::getInstance()->createMaterial('LTCraft'{mt_rand(0, 6)}));
-				break;
-				case '56'://钻石矿
-					$player->addExp(30);
-
-					// if(mt_rand(0, 100)>98 and \LTCraft\Main::calculateS($player->getName()))$pos->level->dropItem($pos->add(0.5, 0.5, 0.5), LTItem::getInstance()->createMaterial('LTCraft'{mt_rand(0, 6)}));
-				break;
-			}
-			$player->getTask()->action('破坏方块', $id);
-		}
-	}
 	public function onBlockBreak(BlockBreakEvent $event)
 	{
-        $this->BlockBreakCallback($event->getBlock()->getId(), 0);
+        $player = $event->getPlayer();
+        $id = $event->getBlock()->getId();
+        switch($id) {
+            case '14'://金矿
+                $player->addExp(20);
+                // if(mt_rand(0, 100)>97 and \LTCraft\Main::calculateS($player->getName()))$pos->level->dropItem($pos->add(0.5, 0.5, 0.5), LTItem::getInstance()->createMaterial('LTCraft'{mt_rand(0, 6)}));
+                break;
+            case '15'://铁矿
+                $player->addExp(10);
+                // if(mt_rand(0, 100)>97 and \LTCraft\Main::calculateS($player->getName()))$pos->level->dropItem($pos->add(0.5, 0.5, 0.5), LTItem::getInstance()->createMaterial('LTCraft'{mt_rand(0, 6)}));
+                break;
+            case '16'://煤矿
+                $player->addExp(8);
+                // if(mt_rand(0, 200)>199 and \LTCraft\Main::calculateS($player->getName()))$pos->level->dropItem($pos->add(0.5, 0.5, 0.5), LTItem::getInstance()->createMaterial('LTCraft'{mt_rand(0, 6)}));
+                break;
+            case '73'://红石矿
+                $player->addExp(20);
+                // if(mt_rand(0, 100)>98 and \LTCraft\Main::calculateS($player->getName()))$pos->level->dropItem($pos->add(0.5, 0.5, 0.5), LTItem::getInstance()->createMaterial('LTCraft'{mt_rand(0, 6)}));
+                break;
+            case '21'://青晶石矿
+                $player->addExp(30);
+                // if(mt_rand(0, 100)>98 and \LTCraft\Main::calculateS($player->getName()))$pos->level->dropItem($pos->add(0.5, 0.5, 0.5), LTItem::getInstance()->createMaterial('LTCraft'{mt_rand(0, 6)}));
+                break;
+            case '129'://绿宝石矿
+                $player->addExp(50);
+                // if(mt_rand(0, 1000)>95 and \LTCraft\Main::calculateS($player->getName()))$pos->level->dropItem($pos->add(0.5, 0.5, 0.5), LTItem::getInstance()->createMaterial('LTCraft'{mt_rand(0, 6)}));
+                break;
+            case '56'://钻石矿
+                $player->addExp(30);
+
+                // if(mt_rand(0, 100)>98 and \LTCraft\Main::calculateS($player->getName()))$pos->level->dropItem($pos->add(0.5, 0.5, 0.5), LTItem::getInstance()->createMaterial('LTCraft'{mt_rand(0, 6)}));
+                break;
+        }
+        $player->getTask()->action('破坏方块', $id);
 	}
 }
