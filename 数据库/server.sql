@@ -5,19 +5,6 @@ SET foreign_key_checks = 0;
 SET time_zone = 'SYSTEM';
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
-DROP TABLE IF EXISTS `expblocks`;
-CREATE TABLE `expblocks` (
-  `X` int(10) NOT NULL,
-  `Y` int(10) NOT NULL,
-  `Z` int(10) NOT NULL,
-  `L` char(10) NOT NULL,
-  KEY `index_Z` (`Z`),
-  KEY `index_X` (`X`),
-  KEY `index_Y` (`Y`),
-  KEY `index_L` (`L`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1
-/*!50100 PARTITION BY HASH (X)
-PARTITIONS 5 */;
 
 
 DROP TABLE IF EXISTS `user`;

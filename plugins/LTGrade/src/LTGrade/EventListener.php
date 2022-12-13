@@ -147,15 +147,6 @@ class EventListener implements Listener
             Cooling::$material[$player->getName()][$player->getItemInHand()->getLTName()]=time()+(200-((int)$grade/2) - $player->getBuff()->getCoolingDown());
 		}
 	}
-	public function onPlaceEvent(BlockPlaceEvent $event) //放置
-	{
-		if($event->isCancelled())return;
-		$block=$event->getBlock();
-		if(in_array($block->getId(), [14, 15, 16, 73, 21, 129, 56])){
-			$sql="INSERT INTO ExpBlocks(X,Y,Z,L) VALUES ('".$block->getX()."','".$block->getY()."','".$block->getZ()."','".$block->getLevel()->getName()."')";
-			$this->plugin->getServer()->dataBase->pushService('1'.chr(2).$sql);
-		}
-	}
 	public function thorns($entity,$targer,$damage)
 	{
 		$thornsEvent = new EntityDamageByEntityEvent($entity, $targer, EntityDamageEvent::CAUSE_THORNS,(int)$damage, 0);
@@ -357,13 +348,7 @@ class EventListener implements Listener
 	public function BlockBreakCallback($id, $count){
 		if(isset($this->events[$id])){
 			$data=$this->events[$id];
-			$pos=$data[1];
 			unset($this->events[$id]);
-			if($count>=1) {
-				$sql="delete FROM ExpBlocks WHERE X='{$pos->getX()}' AND Y='{$pos->getY()}' AND Z='{$pos->getZ()}' AND L='{$pos->getLevel()->getName()}'";
-				$this->plugin->getServer()->dataBase->pushService('1'.chr(2).$sql);
-				return;
-			}
 			$id=$data[0];
 			$player=$data[2];
 			if($player->getGamemode()!==0)return;
@@ -403,14 +388,6 @@ class EventListener implements Listener
 	}
 	public function onBlockBreak(BlockBreakEvent $event)
 	{
-		if($event->isCancelled())return;
-		$player=$event->getPlayer();
-		$block=$event->getBlock();
-		if(in_array($block->getId(), [14, 15, 16, 73, 21, 129, 56])){
-			$eventID=self::$eventID++;
-			$this->events[$eventID]=[$block->getId(), $block->asPosition(), $player];
-			$sql="SELECT * FROM ExpBlocks WHERE X='{$block->getX()}' AND Y='{$block->getY()}' AND Z='{$block->getZ()}' AND L='{$block->getLevel()->getName()}' LIMIT 1";
-			$this->plugin->getServer()->dataBase->pushService('0'.chr(3).chr(strlen($eventID)).$eventID .$sql);
-		}
+        $this->BlockBreakCallback($event->getBlock()->getId(), 0);
 	}
 }
