@@ -70,7 +70,7 @@ class BanCommand extends VanillaCommand {
 		$sender->getServer()->getNameBans()->addBan($name, $reason, null, $sender->getName());
 
 		if(($player = $sender->getServer()->getPlayerExact($name)) instanceof Player){
-			$player->kick($reason !== "" ? '你被服务器LTCraft永久禁封 ' . $reason : '如有任何提议，请加腐竹qq:2665337794');
+			$player->kick($reason !== "" ? '您已被 §eLTCraft §r封禁\n' . $reason : '如需申诉,请前往官方QQ群:862859409');
 		}
 
 		Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.ban.success", [$player !== null ? $player->getName() : $name]));
